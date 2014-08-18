@@ -1,0 +1,81 @@
+
+\documentclass[a4paper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{charter} % tipografia
+%~ \usepackage{graphicx}
+%~ \usepackage{makeidx}
+%~ \usepackage{float}
+%~ \usepackage{amsmath}
+%~ \usepackage{sectsty}
+%~ \usepackage{charter}
+%~ \usepackage{wrapfig}
+%~ \usepackage{listings}
+%~ %\lstset{language=C}
+%~ \input{codesnippet}
+%~ \input{page.layout}
+%~ % \setcounter{secnumdepth}{2}
+%~ \usepackage{underscore}
+%~ \usepackage{caratula}
+%~ \usepackage{url}
+
+
+\begin{document}
+
+
+\section{Problema 1}
+
+1) El problema nos pide implementar un algoritmo que, de ser posible, calcule la
+cantidad mínima de saltos que debe dar un concursante de una competencia para
+poder cruzar un puente, el cual tiene ciertos tablones rotos. Los mismos están
+marcados y deben ser evitados para lograr su supervivencia. Cada uno de los
+participantes puede saltar una determinada cantidad de tablones como máximo.
+
+El algoritmo debe decidir si dicha hazaña es posible, y de serlo, debe especificar
+la cantidad de saltos a dar y a qué tablones hacerlo.
+
+\textbf{Ejemplos}
+\begin{itemize}
+  \item Para un puente de 10 tablones, y un participante capaz de saltar de a 3
+  tablones, con los tablones 1, 4, 6, 8 y 9 rotos, la salida podría ser saltar al
+  tablón 3, luego al 5, luego al 7, luego al 10 y luego afuera del puente.
+  \item Si en cambio, en el ejemplo anterior, el tablón 7 también estuviese roto,
+  el algoritmo debe informarnos que no es posible realizar la hazaña.
+\end{itemize}
+
+
+2) Para resolver el problema, propusimos un algoritmo goloso, pues en cada iteración
+buscamos saltar la mayor cantidad posible de tablones, siempre y cuando el tablón
+al que vamos a saltar esté sano. Caso contrario, se saltará al tablón anterior.
+Si todos los tablones anteriores hasta la posición actual están rotos, el problema
+no tiene solución.
+
+saltarPuente(n : tablones, c : saltoMaximo)
+  // n cantidad de tablones
+  // c cantidad de tablones maximos a saltar
+  //primer tablon = 1
+  //c >= 1
+  
+  saltos = 0
+  posicionActual = 0
+  
+  mientras(posicionActual <= n)
+    saltoActual = c
+    mientras ( noEstaSano(posicionActual + saltoActual) )
+      saltoActual -- 
+      si saltoActual == 0 entonces no hay solucion
+    
+    posicionActual += saltoActual
+    saltos ++
+
+3) Próximamente.
+
+4) Próximamente.
+
+5) Próximamente.
+
+6) Próximamente.
+
+
+\end{document}

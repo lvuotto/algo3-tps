@@ -19,3 +19,8 @@
 *.exe
 *.out
 *.app
+
+# PDFs
+*.aux
+*.log
+*.pdf

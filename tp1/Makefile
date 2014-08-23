@@ -2,7 +2,7 @@
 BINDIR = bin
 SRCDIR = src
 INFORMEDIR = informe
-TESTDIR = test
+TESTDIR = tests
 
 
 -PHONY: all clean

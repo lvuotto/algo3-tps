@@ -1,6 +1,6 @@
 
 CXX = g++
-CXXFLAGS = -Wall -Wextra -Werror -pedantic -g -O3 -std=c++11
+CXXFLAGS = -Wall -Wextra -Werror -pedantic -g -O3 -std=c++0x
 BINS = ej1 ej2 ej3
 BINDIR = ../bin
 

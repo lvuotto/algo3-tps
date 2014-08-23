@@ -39,6 +39,9 @@ int main () {
  * ó una lista vacía si es imposible.
  **/
 vector<int> cruzar_puente (int salto_maximo, vector<int>& puente) {
+  if (salto_maximo <= 0)
+	return vector<int>();
+  
   vector<int> saltos;
   
   unsigned int salto_actual;

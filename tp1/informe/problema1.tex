@@ -1,0 +1,128 @@
+\noindent
+\textbf{1.1. Descripción del problema.}
+
+\vspace*{0.3cm}
+
+Este problema se trata de implementar un algoritmo que, de ser posible, calcule la
+cantidad mínima de saltos que debe dar un participante para poder cruzar un puente de cierto tamaño (fijo),
+el cual presenta algunos de sus tablones rotos. Estos se encuentran marcados y deben ser evitados,
+de otro modo, el participante fracasa en su intento y puede llegar a perder la vida. Cada uno
+de los participantes puede saltar una determinada cantidad de tablones como máximo.
+
+El algoritmo debe decidir si dicha hazaña es posible, y de ser así, especificar
+la cantidad de saltos a dar y a qué tablones hacerlo.
+
+Asumimos que tanto la longitud del puente como la cantidad de saltos máximos por participante
+son valores naturales.
+
+\textbf{Ejemplos}
+\begin{itemize}
+  \item Para un puente de 10 tablones, y un participante capaz de saltar de a 3
+  tablones, con los tablones 1, 4, 6, 8 y 9 rotos, la salida podría ser saltar al
+  tablón 3, luego al 5, luego al 7, luego al 10 y luego afuera del puente.
+  \item Si en cambio, en el ejemplo anterior, el tablón 7 también estuviese roto,
+  el algoritmo debe informarnos que no es posible realizar la hazaña.
+  \item agregar un ejemplo mas con dibujitos y cosas lindas
+\end{itemize}
+
+
+\vspace*{0.75cm} \noindent
+
+
+
+\noindent
+\textbf{1.2. Desarrollo de la idea y pseudocódigo.}
+
+\vspace*{0.3cm}
+
+Para resolver el problema, propusimos un algoritmo goloso, pues en cada iteración
+buscamos saltar la mayor cantidad posible de tablones, siempre y cuando el tablón
+al que vamos a saltar esté sano. Caso contrario, se saltará al tablón anterior.
+Si todos los tablones anteriores hasta la posición actual están rotos, el problema
+no tiene solución. Si el valor del salto máximo del participante es no positivo,
+el problema tampoco tiene solución.
+
+cruzarPuente(n : tablones, c : saltoMáximo)
+  // n cantidad de tablones
+  // c cantidad de tablones maximos a saltar
+  // primer tablon = 1
+
+  si no esPosibleCruzar(puente, saltoMáximo) entonces retornar $\emptyset$
+
+  posicionActual $\gets$ 0
+  solución $\gets \emptyset$
+
+  mientras posicionActual $\leq$ n
+    saltoActual $\gets$ saltoMáximo
+    mientras no puedeSaltar(puente, posicionActual + saltoActual - 1)
+      saltoActual $\gets$ saltoActual - 1
+
+    posicionActual += saltoActual
+    solución = solución $\cup \{\text{posicionActual}\}$
+
+  retornar solución
+
+puedeSaltar(puente, tablón)
+  retornar tablón $\geq$ tamaño(puente) $\lor$ puente[tablón] está sano
+
+esPosibleCruzar(puente, saltoMáximo)
+  tablonesRotosConsecutivos $\gets$ 0
+
+  para i entre 0 y tamaño(puente) - 1
+    si puedeSaltar(puente, i)
+      tablonesRotosConsecutivos $\gets$ 0
+    sino
+      tablonesRotosConsecutivos $\gets$ tablonesRotosConsecutivos + 1
+
+    si tablonesRotosConsecutivos $\geq$ saltoMáximo
+      retornar falso
+
+  retornar verdadero
+
+
+\vspace*{0.75cm} \noindent
+
+
+
+\noindent
+\textbf{1.3. Justificación de la resolución y demostración de correctitud.}
+
+\vspace*{0.3cm}
+
+desarrollo.
+
+
+\vspace*{0.75cm} \noindent
+
+
+
+\noindent
+\textbf{1.4. Análisis de complejidad.}
+
+\vspace*{0.3cm}
+
+desarrollo.
+
+
+\vspace*{0.75cm} \noindent
+
+
+
+\noindent
+\textbf{1.5. Partes relevantes del código (hacer referencia al apéndice).}
+
+\vspace*{0.3cm}
+
+desarrollo.
+
+
+\vspace*{0.75cm} \noindent
+
+
+
+\noindent
+\textbf{1.6. Experimentación.}
+
+\vspace*{0.3cm}
+
+desarrollo.

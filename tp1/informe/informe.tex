@@ -1,102 +1,99 @@
-
 \documentclass[a4paper]{article}
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{fancyhdr}
-\usepackage{charter} % tipografia
-%~ \usepackage{graphicx}
-%~ \usepackage{makeidx}
-%~ \usepackage{float}
-\usepackage{amsmath}
-%~ \usepackage{sectsty}
-%~ \usepackage{charter}
-%~ \usepackage{wrapfig}
-%~ \usepackage{listings}
-%~ %\lstset{language=C}
-%~ \input{codesnippet}
-%~ \input{page.layout}
-%~ % \setcounter{secnumdepth}{2}
-%~ \usepackage{underscore}
-%~ \usepackage{caratula}
-%~ \usepackage{url}
+\usepackage{charter}   % tipografia
+\usepackage{graphicx}
+\usepackage{makeidx}
+
+\usepackage{float}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{charter}
+\usepackage{wrapfig}
+\usepackage{listings}
+%\lstset{language=C}
+
+
+\input{codesnippet}
+\input{page.layout}
+% \setcounter{secnumdepth}{2}
+\usepackage{underscore}
+\usepackage{caratula}
+\usepackage{url}
+
+
 
 
 \begin{document}
 
 
+\thispagestyle{empty}
+\materia{Algoritmos y Estructuras de Datos III}
+\submateria{Segundo Cuatrimestre de 2014}
+\titulo{Trabajo Práctico I}
+\subtitulo{Problemas de optimización}
+\integrante{González Alba, Pablo}{476/10}{pablo.gonzalez.alba@gmail.com}
+\integrante{Quiroz, Nicol\'as}{450/11}{nquiroz@dc.uba.ar}
+\integrante{Vaghi, Agustín}{790/07}{vaghiagustin@gmail.com}
+\integrante{Vuotto, Lucas}{385/12}{lvuotto@dc.uba.ar}
+
+\maketitle
+\newpage
+
+\thispagestyle{empty}
+\vfill
+\begin{abstract}
+    completar resumen.
+\end{abstract}
+
+\thispagestyle{empty}
+\vspace{3cm}
+\tableofcontents
+\newpage
+
+
+%\normalsize
+\newpage
+
+\section{Objetivos generales}
+  completar.
+
+\newpage
+
+\section{Plataforma de pruebas}
+    el tp se corrió y probó en la máquina X del labo 4, con tal hw, etc.
+
+\newpage
+
 \section{Problema 1}
+\input{problema1}
 
-1) El problema nos pide implementar un algoritmo que, de ser posible, calcule la
-cantidad mínima de saltos que debe dar un concursante de una competencia para
-poder cruzar un puente, el cual tiene ciertos tablones rotos. Los mismos están
-marcados y deben ser evitados para lograr su supervivencia. Cada uno de los
-participantes puede saltar una determinada cantidad de tablones como máximo.
+\newpage
 
-El algoritmo debe decidir si dicha hazaña es posible, y de serlo, debe especificar
-la cantidad de saltos a dar y a qué tablones hacerlo.
+\section{Problema 2}
+\input{problema2}
 
-\textbf{Ejemplos}
-\begin{itemize}
-  \item Para un puente de 10 tablones, y un participante capaz de saltar de a 3
-  tablones, con los tablones 1, 4, 6, 8 y 9 rotos, la salida podría ser saltar al
-  tablón 3, luego al 5, luego al 7, luego al 10 y luego afuera del puente.
-  \item Si en cambio, en el ejemplo anterior, el tablón 7 también estuviese roto,
-  el algoritmo debe informarnos que no es posible realizar la hazaña.
-  \item agregar un ejemplo mas con dibujitos y cosas lindas
-\end{itemize}
+\newpage
 
+\section{Problema 3}
+\input{problema3}
 
-2) Para resolver el problema, propusimos un algoritmo goloso, pues en cada iteración
-buscamos saltar la mayor cantidad posible de tablones, siempre y cuando el tablón
-al que vamos a saltar esté sano. Caso contrario, se saltará al tablón anterior.
-Si todos los tablones anteriores hasta la posición actual están rotos, el problema
-no tiene solución. Si el valor del salto máximo del participante es no positivo,
-el problema tampoco tiene solución.
+\newpage
+\section{Acerca de los tests}
+    escribir algo acerca de cómo se pensaron los tests, cómo medimos, cómo se generaron los casos aleatorios, 
+    cosas generales que valga para todos los problemas, los detalles particulares los aclaramos en cada uno después.
 
-cruzarPuente(n : tablones, c : saltoMáximo)
-  // n cantidad de tablones
-  // c cantidad de tablones maximos a saltar
-  // primer tablon = 1
+\newpage
 
-  si no esPosibleCruzar(puente, saltoMáximo) entonces retornar $\emptyset$
+\section{Conclusiones}
+    escribir alguna conclusión para cerrar el tp y todos felices.
 
-  posicionActual $\gets$ 0
-  solución $\gets \emptyset$
+\newpage
 
-  mientras posicionActual $\leq$ n
-    saltoActual $\gets$ saltoMáximo
-    mientras no puedeSaltar(puente, posicionActual + saltoActual - 1)
-      saltoActual $\gets$ saltoActual - 1
-
-    posicionActual += saltoActual
-    solución = solución $\cup \{\text{posicionActual}\}$
-
-  retornar solución
-
-puedeSaltar(puente, tablón)
-  retornar tablón $\geq$ tamaño(puente) $\lor$ puente[tablón] está sano
-
-esPosibleCruzar(puente, saltoMáximo)
-  tablonesRotosConsecutivos $\gets$ 0
-
-  para i entre 0 y tamaño(puente) - 1
-    si puedeSaltar(puente, i)
-      tablonesRotosConsecutivos $\gets$ 0
-    sino
-      tablonesRotosConsecutivos $\gets$ tablonesRotosConsecutivos + 1
-
-    si tablonesRotosConsecutivos $\geq$ saltoMáximo
-      retornar falso
-
-  retornar verdadero
-
-3)
-
-4) Próximamente.
-
-5) Próximamente.
-
-6) Próximamente.
+\section{Apéndice: secciones relevantes del código}
+    en cada problema hacer referencia a la parte correspondiente de este apéndice.
 
 
 \end{document}

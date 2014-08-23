@@ -53,29 +53,44 @@ Si todos los tablones anteriores hasta la posición actual están rotos, el prob
 no tiene solución. Si el valor del salto máximo del participante es no positivo,
 el problema tampoco tiene solución.
 
-saltarPuente(n : tablones, c : saltoMaximo)
+cruzarPuente(n : tablones, c : saltoMáximo)
   // n cantidad de tablones
   // c cantidad de tablones maximos a saltar
   // primer tablon = 1
-  
-  si c $\leq$ 0
-	retornar $\emptyset$
-  
+
+  si no esPosibleCruzar(puente, saltoMáximo) entonces retornar $\emptyset$
+
   posicionActual $\gets$ 0
   solución $\gets \emptyset$
-  
+
   mientras posicionActual $\leq$ n
-    saltoActual $\gets$ c
-    mientras noEstaSano(posicionActual + saltoActual)
-      saltoActual $\gets$ saltoActual - 1 
-      si saltoActual = 0 entonces retornar $\emptyset$
-    
+    saltoActual $\gets$ saltoMáximo
+    mientras no puedeSaltar(puente, posicionActual + saltoActual - 1)
+      saltoActual $\gets$ saltoActual - 1
+
     posicionActual += saltoActual
     solución = solución $\cup \{\text{posicionActual}\}$
-   
+
   retornar solución
 
-3) 
+puedeSaltar(puente, tablón)
+  retornar tablón $\geq$ tamaño(puente) $\lor$ puente[tablón] está sano
+
+esPosibleCruzar(puente, saltoMáximo)
+  tablonesRotosConsecutivos $\gets$ 0
+
+  para i entre 0 y tamaño(puente) - 1
+    si puedeSaltar(puente, i)
+      tablonesRotosConsecutivos $\gets$ 0
+    sino
+      tablonesRotosConsecutivos $\gets$ tablonesRotosConsecutivos + 1
+
+    si tablonesRotosConsecutivos $\geq$ saltoMáximo
+      retornar falso
+
+  retornar verdadero
+
+3)
 
 4) Próximamente.
 

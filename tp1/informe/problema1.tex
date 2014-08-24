@@ -3,26 +3,28 @@
 
 \vspace*{0.3cm}
 
-Este problema se trata de implementar un algoritmo que, de ser posible, calcule la
-cantidad mínima de saltos que debe dar un participante para poder cruzar un puente de cierto tamaño (fijo),
-el cual presenta algunos de sus tablones rotos. Estos se encuentran marcados y deben ser evitados,
-de otro modo, el participante fracasa en su intento y puede llegar a perder la vida. Cada uno
-de los participantes puede saltar una determinada cantidad de tablones como máximo.
+Este problema se trata de implementar un algoritmo que, de ser posible, 
+\textbf{calcule la cantidad mínima de saltos} que debe dar un participante para poder cruzar un 
+puente de cierto tamaño (fijo), el cual presenta \textbf{algunos de sus tablones rotos}. Estos se encuentran 
+marcados y \textbf{deben ser evitados}, de otro modo, el participante fracasa en su intento y puede llegar a 
+perder la vida. Cada uno de los participantes puede saltar una \textbf{determinada cantidad de tablones como máximo}. \medskip
 
-El algoritmo debe decidir si dicha hazaña es posible, y de ser así, especificar
-la cantidad de saltos a dar y a qué tablones hacerlo.
+El algoritmo debe decidir si dicha hazaña es posible, y de ser así, 
+\textbf{especificar la cantidad de saltos a dar y a qué tablones hacerlo}. \medskip
 
-Asumimos que tanto la longitud del puente como la cantidad de saltos máximos por participante
-son valores naturales.
+Asumimos que tanto la \textbf{longitud del puente como la cantidad de saltos máximos por participante
+son valores naturales}.
 
-\textbf{Ejemplos}
+\vspace*{0.5cm}
+
+\textbf{Ejemplos:}
 \begin{itemize}
-  \item Para un puente de 10 tablones, y un participante capaz de saltar de a 3
-  tablones, con los tablones 1, 4, 6, 8 y 9 rotos, la salida podría ser saltar al
-  tablón 3, luego al 5, luego al 7, luego al 10 y luego afuera del puente.
+  \item Para un puente de 10 tablones y un participante capaz de saltar de a 3
+  tablones como máximo, teniendo los tablones 1, 4, 6, 8 y 9 rotos, la salida podría ser: 
+  primero saltar al tablón 3, luego al 5, luego al 7, luego al 10 y luego afuera del puente.
   \item Si en cambio, en el ejemplo anterior, el tablón 7 también estuviese roto,
-  el algoritmo debe informarnos que no es posible realizar la hazaña.
-  \item agregar un ejemplo mas con dibujitos y cosas lindas
+  el algoritmo debe informarnos que, bajo esas condiciones, no es posible cruzar el puente.
+  \item < agregar un ejemplo mas con dibujitos y cosas lindas >
 \end{itemize}
 
 
@@ -35,12 +37,40 @@ son valores naturales.
 
 \vspace*{0.3cm}
 
-Para resolver el problema, propusimos un algoritmo goloso, pues en cada iteración
-buscamos saltar la mayor cantidad posible de tablones, siempre y cuando el tablón
-al que vamos a saltar esté sano. Caso contrario, se saltará al tablón anterior.
-Si todos los tablones anteriores hasta la posición actual están rotos, el problema
-no tiene solución. Si el valor del salto máximo del participante es no positivo,
-el problema tampoco tiene solución.
+Para resolver este problema, propusimos un algoritmo de tipo \textit{greedy}, pues en cada iteración
+del mismo buscamos siempre saltar \textbf{la mayor cantidad posible de tablones} (siempre y cuando el 
+tablón al que vamos a saltar esté sano), caso contrario, se saltará al tablón anterior.
+Si todos los tablones anteriores, incluyendo la posición actual, están rotos, el problema
+\textbf{no tiene solución}.
+
+\vspace*{0.5cm}
+
+
+\begin{codebox}
+\Procname{$\proc{cruzarPuente}(n,c)$}
+\li \Comment n: cantidad de tablones del puente 
+\li \Comment c: cantidad de tablones máximos a saltar 
+\li \Comment el primer tablón es el 1
+\li \If $\neg(\proc{esPosibleCruzar}(puente, c))$
+\li     \Then 
+            \Return $\emptyset$
+        \End
+\li $\id{posicionActual} \gets 0$
+\li $\id{solucion} \gets \emptyset$
+\li \While $\id{posicionActual} \leq \id{n}$
+\li     \Do 
+            $saltoActual \gets c$
+        \End
+\li     \While $\neg(\proc{puedeSaltar}(puente, posicionActual + saltoActual - 1))$
+\li         \Do 
+                $saltoActual \gets saltoActual - 1$
+            \End
+\li     $\id{posicionActual} \gets \id{posicionActual} + \id{saltoActual}$
+\li     $\id{solucion} \gets \id{solucion} \cup \id{posicionActual}$
+\li \Return $\id{solucion}$
+\end{codebox}      
+
+
 
 cruzarPuente(n : tablones, c : saltoMáximo)
   // n cantidad de tablones
@@ -62,8 +92,49 @@ cruzarPuente(n : tablones, c : saltoMáximo)
 
   retornar solución
 
+
+
+\vspace*{0.5cm}
+
+
+
+\begin{codebox}
+\Procname{$\proc{puedeSaltar}(puente, tablon)$}
+    \Return $\id{tablon} \geq \proc{tamanio}(puente) \lor \proc{estaSano}(puente[tablon])$
+\end{codebox}
+
+
+
 puedeSaltar(puente, tablón)
   retornar tablón $\geq$ tamaño(puente) $\lor$ puente[tablón] está sano
+
+
+
+\vspace*{0.5cm}
+
+
+
+\begin{codebox}
+\Procname{$\proc{esPosibleCruzar}(puente, c)$}
+\li \Comment c: cantidad de tablones máximos a saltar
+\li $\id{tablonesRotosConsecutivos} \gets 0$
+\li \For $i \gets 0$ \To $\proc{tamanio}(puente) - 1$
+\li     \Do 
+            \If $\proc{puedeSaltar}(puente, i)$
+\li             \Then
+                    $\id{tablonesRotosConsecutivos} \gets 0$
+\li         \Else
+\li             $\id{tablonesRotosConsecutivos} \gets \id{tablonesRotosConsecutivos} + 1$
+            \End
+\li         \If $\id{tablonesRotosConsecutivos} \geq c$
+\li             \Then
+                    \Return $\const{false}$
+            \End
+        \End
+\li \Return $\const{true}$   
+\end{codebox}
+
+
 
 esPosibleCruzar(puente, saltoMáximo)
   tablonesRotosConsecutivos $\gets$ 0

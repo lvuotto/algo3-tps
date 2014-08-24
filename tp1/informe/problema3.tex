@@ -7,11 +7,77 @@ desarrollo.
 
 \vspace*{0.75cm} \noindent
 
+El objetivo de este problema es, distribuir N productos en C camiones, minimizando
+C. Al combinarse los elementos se obtienen distintintos niveles de peligrosidad.
+Para minimizar C, se debe tener en cuenta que contamos con un umbral de peligrosidad
+M, el cual no debe ser superado por la suma de los niveles de peligrosidad de los
+elementos que contiene.
 
+\textbf{Ejemplos}
+\begin{itemize}
+  \item Dado $M = 7$ y 4 productos $p_1, p_2, p_3$ y $p_4$, con una relación
+  de peligrosidad $h_{1,2} = 5, h_{1,3} = 3, h_{1,4} = 4, h_{2,3} = 6, h_{2,4} =
+  3$ y $h_{3,4} = 5$, la solución óptima es utilizar 2 camiones, el primero
+  transportando $p_1$ y $p_3$, y el segundo transportando $p_2$ y $p_4$.
+  \item Agregar otro ejemplo.
+\end{itemize}
 
 \noindent
 \textbf{3.2. Desarrollo de la idea y pseudocódigo.}
 
+Cargamos el primer camión con el primer elemento y continuamos cargando el resto 
+de los elementos hasta alcanzar el umbral M. Luego, proseguimos con la misma 
+técnica en los camiones siguientes, hasta agotar los productos. De esta forma, 
+obtenemos una solución candidata (no necesariamente óptima).
+
+En las siguientes iteraciones, si la cantidad de camiones utilizados hasta el 
+momento es C-1 y al agregar el pŕoximo elemento pasamos a utilizar C camiones, 
+esa solución queda descartada.
+
+
+biohazard(n, l, m)
+  while noVacio(conjProductos(p))
+    camion_actual <- conjVacio(Nat)
+    lista(camion) lista_camiones <- listaVacia()
+    while (sumatoria_coeficientes(camion_actual) <= m)
+      agregar(camion_actual, dameUno(conjProductos(p))
+      producto q <- dameUno(conjProductos(p))
+      conjProductos(p) - dameUno(conjProductos(p))
+      if (sumatoria_coeficientes(camion_actual) > m)
+        camion_actual - dameUno(conjProductos)
+        agregar(conjProductos(p), q)
+    agregarAtras(l, camion_actual)
+  return 
+  
+  
+  El = conj(e)  {e = elementos}
+  P = conj(p)   {p = peligrosidad de 2 elementos}
+  
+  biohazard (Elementos, LimitePeligrosidad, CoefPeligrosidades)
+
+  SolOptima = Elementos.cantidad
+  Camiones
+    Foreach( e in Elementos){
+      Camion c
+      c.agregar(e)
+      TempEl = Elementos
+      TempEl.eliminar(e)
+      Foreach(i in iteracionesde(TempEl)){
+        If(IndiceP(c.agregar(i)) >= LimitePeligrosidad){
+          Camiones.agregar(Camion c2))
+          if(Camiones.cantidad >= SolOptima){
+            Next
+          }
+        }
+        Else{
+          c.agregar(i)
+        }
+      }
+    }
+    
+  
+
+ 
 \vspace*{0.3cm}
 
 desarrollo.

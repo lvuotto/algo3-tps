@@ -60,37 +60,15 @@ Si todos los tablones anteriores, incluyendo la posición actual, están rotos, 
 \li \While $\id{posicionActual} \leq \id{n}$
 \li     \Do 
             $saltoActual \gets c$
-        \End
-\li     \While $\neg(\proc{puedeSaltar}(puente, posicionActual + saltoActual - 1))$
+\li         \While $\neg(\proc{puedeSaltar}(puente, posicionActual + saltoActual - 1))$
 \li         \Do 
                 $saltoActual \gets saltoActual - 1$
             \End
 \li     $\id{posicionActual} \gets \id{posicionActual} + \id{saltoActual}$
-\li     $\id{solucion} \gets \id{solucion} \cup \id{posicionActual}$
+\li     $\proc{agregar}(solucion, posicionActual)$    
+        \End
 \li \Return $\id{solucion}$
 \end{codebox}      
-
-
-
-cruzarPuente(n : tablones, c : saltoMáximo)
-  // n cantidad de tablones
-  // c cantidad de tablones maximos a saltar
-  // primer tablon = 1
-
-  si no esPosibleCruzar(puente, saltoMáximo) entonces retornar $\emptyset$
-
-  posicionActual $\gets$ 0
-  solución $\gets \emptyset$
-
-  mientras posicionActual $\leq$ n
-    saltoActual $\gets$ saltoMáximo
-    mientras no puedeSaltar(puente, posicionActual + saltoActual - 1)
-      saltoActual $\gets$ saltoActual - 1
-
-    posicionActual += saltoActual
-    solución = solución $\cup \{\text{posicionActual}\}$
-
-  retornar solución
 
 
 
@@ -172,7 +150,7 @@ desarrollo.
 
 \vspace*{0.3cm}
 
-desarrollo.
+explicar complejidades de las funciones del vector usadas.
 
 
 \vspace*{0.75cm} \noindent

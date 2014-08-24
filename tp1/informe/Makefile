@@ -6,7 +6,7 @@ BINDIR = ../bin
 .PHONY: all clean
 
 
-%.pdf: %.tex
+informe.pdf: informe.tex problema1.tex problema2.tex problema3.tex
 	pdflatex $<
 	mv $@ $(BINDIR)
 

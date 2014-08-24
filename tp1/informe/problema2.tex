@@ -3,7 +3,21 @@
 
 \vspace*{0.3cm}
 
-desarrollo.
+El objetivo de este problema es, dado un conjunto de edificios, representados
+por la posición de sus paredes izquierda y derecha y su altura, representar el
+contorno en el horizonte formado por la superposición de los mismos, excluyendo
+las líneas internas. \medskip
+
+\textbf{Ejemplos:}
+\begin{itemize}
+  \item Para un conjunto de 3 edificios, cuyas coordenadas son (4, 2, 11),
+  (5, 4, 7) y (9, 5, 12), dónde la primer coordenada es la ubicación de la pared
+  izquierda sobre el eje X, la segunda coordenada es la altura en el eje Y y la
+  tercer coordenada es la ubicación de la pared derecha sobre el eje X, la
+  solución debe ser 4 2 5 4 7 2 9 5 12 0
+  \item Agregar un ejemplo más e imágenes
+\end{itemize}
+
 
 \vspace*{0.75cm} \noindent
 
@@ -14,7 +28,32 @@ desarrollo.
 
 \vspace*{0.3cm}
 
-desarrollo.
+Para resolver este problema, primero se cargan los vértices de todos los
+edificios, indicando su coordenada X, Y, aclarando si es un vértice izquierdo o
+derecho.
+
+Luego se ordenan los puntos por su coordenada X en orden ascendente y, en caso
+de empate entre 2 puntos, por su coordenada Y en forma ascendente.
+
+Se crea una lista para guardar los puntos de las soluciones y un multiconjunto
+para mantener las alturas actuales de los edificios.
+
+Se empieza cargando el punto con coordenada Y=0 y coordenada X igual al primer
+punto de la lista. Y luego ese mismo punto.
+
+Posteriormente se recorren todos los otros puntos en orden, y:
+Si el punto es un vértice izquierdo: Se carga su coordenada Y en el
+multiconjunto de alturas. Además si su altura es mayor a la altura del último
+punto, y su coordenada X es mayor a la correspondiente del último punto, se
+carga el punto generado con la coordenada X del punto actual y la coordenada Y
+del punto anterior.
+Si el punto es un vértice derecho: Se elimina su coordenada Y del multiconjunto
+de alturas. Luego si el máximo de alturas es menor a la coordenada Y, se carga
+el punto actual y luego el punto generado por la coordenada X y la altura máxima
+como coordenada Y.
+
+Finalmente se agrega el punto con coordenada Y=0 y coordenada X igual a la del
+último punto cargado.
 
 
 \vspace*{0.75cm} \noindent
@@ -25,7 +64,8 @@ desarrollo.
 
 \vspace*{0.3cm}
 
-desarrollo.
+desarrollo
+
 
 
 \vspace*{0.75cm} \noindent
@@ -37,7 +77,12 @@ desarrollo.
 
 \vspace*{0.3cm}
 
-desarrollo.
+
+
+desarrollo
+
+
+explicar lo del multiset y las complejidades y bla.
 
 
 \vspace*{0.75cm} \noindent

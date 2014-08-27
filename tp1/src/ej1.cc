@@ -41,11 +41,15 @@ int main () {
  * ó una lista vacía si es imposible.
  **/
 vector<unsigned int> cruzar_puente (unsigned int salto_maximo, vector<unsigned int>& puente) {
-  if (!posible_cruzar(salto_maximo, puente)) {
-    return vector<unsigned int>();
-  }
-
   vector<unsigned int> saltos;
+
+  if (salto_maximo > puente.size()) {
+    saltos.push_back(salto_maximo);
+    return saltos;
+  }
+  if (!posible_cruzar(salto_maximo, puente)) {
+    return saltos;
+  }
 
   unsigned int salto_actual;
   unsigned int posicion_actual = 0;

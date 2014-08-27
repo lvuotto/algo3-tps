@@ -24,7 +24,7 @@ son valores naturales}.
   primero saltar al tablón 3, luego al 5, luego al 7, luego al 10 y luego afuera del puente.
   \item Si en cambio, en el ejemplo anterior, el tablón 7 también estuviese roto,
   el algoritmo debe informarnos que, bajo esas condiciones, no es posible cruzar el puente.
-  \item < agregar un ejemplo mas con dibujitos y cosas lindas >
+  \item \textcolor{red}{\textbf{agregar un ejemplo mas con dibujitos y cosas lindas}}
 \end{itemize}
 
 
@@ -37,26 +37,32 @@ son valores naturales}.
 
 \vspace*{0.3cm}
 
-Para resolver este problema, propusimos un algoritmo de tipo \textit{greedy}, pues en cada iteración
-del mismo buscamos siempre saltar \textbf{la mayor cantidad posible de tablones} (siempre y cuando el 
-tablón al que vamos a saltar esté sano), caso contrario, se saltará al tablón anterior.
-Si todos los tablones anteriores, incluyendo la posición actual, están rotos, el problema
+Para resolver este problema, propusimos un algoritmo de tipo \textit{greedy}, que en cada iteración
+del mismo busca siempre saltar \textbf{la mayor cantidad posible de tablones}, siempre y cuando el 
+tablón al que vamos a saltar esté sano. Caso contrario, se saltará al tablón anterior, y así sucesivamente.
+Si retrocediendo de este modo se llega a la posición en la que se encuentran el competidor, el problema
 \textbf{no tiene solución}.
 
 \vspace*{0.5cm}
 
 
 \begin{codebox}
-\Procname{$\proc{cruzarPuente}(n,c)$}
-\li \Comment n: cantidad de tablones del puente 
-\li \Comment c: cantidad de tablones máximos a saltar 
+\Procname{$\proc{cruzarPuente}(n,c,puente)$}
+\li \Comment n: cantidad de tablones del puente puente es el vector 
+\li \Comment c: cantidad de tablones máximos a saltar
+\li \Comment puente: es el conjunto de tablones 
 \li \Comment el primer tablón es el 1
+\li $\id{solucion} \gets \emptyset$
+\li \If $\id{c} > \id{n}$
+\li     \Then 
+            $\proc{agregar}(solucion, c)$
+\li         \Return $\id{solucion}$
+        \End
 \li \If $\neg(\proc{esPosibleCruzar}(puente, c))$
 \li     \Then 
             \Return $\emptyset$
         \End
 \li $\id{posicionActual} \gets 0$
-\li $\id{solucion} \gets \emptyset$
 \li \While $\id{posicionActual} \leq \id{n}$
 \li     \Do 
             $saltoActual \gets c$
@@ -80,11 +86,6 @@ Si todos los tablones anteriores, incluyendo la posición actual, están rotos, 
 \Procname{$\proc{puedeSaltar}(puente, tablon)$}
     \Return $\id{tablon} \geq \proc{tamanio}(puente) \lor \proc{estaSano}(puente[tablon])$
 \end{codebox}
-
-
-
-puedeSaltar(puente, tablón)
-  retornar tablón $\geq$ tamaño(puente) $\lor$ puente[tablón] está sano
 
 
 
@@ -114,21 +115,6 @@ puedeSaltar(puente, tablón)
 
 
 
-esPosibleCruzar(puente, saltoMáximo)
-  tablonesRotosConsecutivos $\gets$ 0
-
-  para i entre 0 y tamaño(puente) - 1
-    si puedeSaltar(puente, i)
-      tablonesRotosConsecutivos $\gets$ 0
-    sino
-      tablonesRotosConsecutivos $\gets$ tablonesRotosConsecutivos + 1
-
-    si tablonesRotosConsecutivos $\geq$ saltoMáximo
-      retornar falso
-
-  retornar verdadero
-
-
 \vspace*{0.75cm} \noindent
 
 
@@ -138,7 +124,27 @@ esPosibleCruzar(puente, saltoMáximo)
 
 \vspace*{0.3cm}
 
-desarrollo.
+Antes de comenzar con la demostración, diremos que una solución $S$ es de la forma $s \ t_1 \dots t_s$,
+donde $s$ es la cantidad de saltos y $t_i$ es el $i$-ésimo tablón al cual saltar, y $S$ se considera
+\textit{óptima} si $s$ es mínimo. También definiremos la relación entre soluciones $\sqsubseteq$, que
+dadas soluciones $S = s \ t_1 \dots t_s$ y $H = h \ u_1 \dots u_h$, se define del seguiente modo:
+\begin{align*}
+  S \sqsubseteq H \iff s \leq h \wedge \bigwedge_{i=1}^s t_i = u_i
+\end{align*}
+
+Para demostrar que el algoritmo propuesto es correcto para la resolución de este problema, 
+separaremos las entradas en casos y analizaremos cada uno por separado.
+
+\begin{itemize}
+  \item $c > n$: en este caso, la solución será de la forma $1 \ k$, con $k > n$. Como $c > n$, la 
+  solución $1 \ c$ es una solución posible (y óptima).
+  
+  \item $c \leq n$: si la instancia no tiene solución, es porque hay $c$ o más tablones consecutivos rotos.
+  En tal caso, la función \textsc{esPosibleCruzar} se encarga de decirnos si hay solución.
+  
+  \textcolor{red}{\textbf{hace falta DEMOSTRAR QUE esPosibleCruzar ES CORRECTO?!}}
+
+\end{itemize}
 
 
 \vspace*{0.75cm} \noindent
@@ -150,7 +156,47 @@ desarrollo.
 
 \vspace*{0.3cm}
 
-explicar complejidades de las funciones del vector usadas.
+Para el análisis de complejidad nos basaremos en el pseudocódigo del punto 1.2.
+
+\begin{enumerate}
+\item Todas las operaciones realizadas sobre el contenedor \verb|vector| de la \textit{STL} (size, push_back, empty y la creación de iteradores) 
+toman tiempo constante $O(1)$.
+
+\item Las asignaciones realizadas (11, 13, 15, 16 y 17) también se realizan en tiempo constante $O(1)$.
+
+\item Si $c$ es mayor que $n$ (línea 6), retornamos el vector de soluciones que contiene la cantidad de saltos realizados (cero) y
+el "tablón" $c$ hacia el cual saltamos. Como dijimos anteriormente, realizar estas operaciones sobre \verb|vector| 
+toma tiempo constante $O(1)$.
+
+\item En la línea 9, ejecutamos el condicional \verb|esPosibleCruzar(puente, c)|. La complejidad de esta función la
+analizaremos luego, pero adelantamos que es lineal, $O(n)$.
+
+\item En la línea 12 (tener en cuenta que en este caso vale $c \leq n$), en el peor caso ($c = 1$), realizamos $n$ iteraciones, 
+pues recorremos el puente de a un tablón (siempre y cuando no haya tablones rotos, pues no tendría solución). Con $c \neq n$,  
+en cualquier iteración podemos realizar a lo sumo $c$ retrocesos, pero en las siguientes esto es compensado, pues sabiendo que
+hay solución, la metodología empleada no pregunta más de 1 vez el estado de un mismo tablón. Este procedimiento tiene como peores
+casos los siguientes:
+  \begin{itemize}
+    \item $c = 1$, con todos los tablones sanos, de manera que haya que chequear todos los tablones del puente.
+    
+    \item $c = 2$, con un patrón de tablones sano - roto - sano, como se puede ver en la figura \textcolor{red}{\textbf{QUE DESPUES AGREGAMOS!}}
+    
+    \item $c = n$, con todos los tablones rotos salvo el primero, de manera que haya que chequear todos los tablones del puente. 
+  \end{itemize}
+
+\item La complejidad de \verb|esPosibleCruzar(puente, c)| (línea 9) es $O(n)$, pues en el peor caso recorre el puente entero.
+
+\item La complejidad de \verb|puedeSaltar(puente, tablón)| es $O(1)$, pues obtenemos el tamaño del puente en tiempo constante 
+mediante la función \verb|size| y preguntar si un tablón está sano ó no es constante.
+
+\end{enumerate}
+
+Por lo tanto, la \textbf{complejidad total} del algoritmo implementado para este problema es
+
+\begin{align*}
+  O(1) + O(1) + O(n) + O(n)*O(1) = \textit{\textbf{O(n)}}
+\end{align*}
+
 
 
 \vspace*{0.75cm} \noindent

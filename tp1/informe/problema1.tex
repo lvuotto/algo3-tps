@@ -124,16 +124,16 @@ Si retrocediendo de este modo se llega a la posición en la que se encuentran el
 
 \vspace*{0.3cm}
 
-Antes de comenzar con la demostración, diremos que una solución $S$ es de la forma $s \ t_1 \dots t_s$,
-donde $s$ es la cantidad de saltos y $t_i$ es el $i$-ésimo tablón al cual saltar, y $S$ se considera
-\textit{óptima} si $s$ es mínimo. También definiremos la relación entre soluciones $\sqsubseteq$, que
-dadas soluciones $S = s \ t_1 \dots t_s$ y $H = h \ u_1 \dots u_h$, se define del seguiente modo:
+Antes de comenzar, diremos que una solución $S$ es de la forma $s \ t_1 \dots t_s$,
+siendo $s$ la cantidad de saltos y $t_i$ el $i$-ésimo tablón al cual saltar. $S$ se considera
+\textit{óptima} si $s$ es mínimo. También definiremos la relación entre soluciones $\sqsubseteq$, que,
+dadas $S = s \ t_1 \dots t_s$ y $H = h \ u_1 \dots u_h$, se define del siguiente modo:
 \begin{align*}
   S \sqsubseteq H \iff s \leq h \wedge \bigwedge_{i=1}^s t_i = u_i
 \end{align*}
 
 Para demostrar que el algoritmo propuesto es correcto para la resolución de este problema, 
-separaremos las entradas en casos y analizaremos cada uno por separado.
+separaremos las entradas en casos y analizaremos éstos a continuación.
 
 \begin{itemize}
   \item $c > n$: en este caso, la solución será de la forma $1 \ k$, con $k > n$. Como $c > n$, la 

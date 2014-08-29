@@ -139,14 +139,66 @@ separaremos las entradas en casos y analizaremos éstos a continuación.
   \item $c > n$: en este caso, la solución será de la forma $1 \ k$, con $k > n$. Como $c > n$, la
   solución $1 \ c$ es una solución posible (y óptima).
 
-  \item $c \leq n$: si la instancia no tiene solución, es porque hay $c$ o más tablones consecutivos rotos.
-  En tal caso, la función \textsc{esPosibleCruzar} se encarga de decirnos si hay solución.
+  \item $c \leq n$: si la instancia no tiene solución, es porque hay $c$ o más tablones 
+  consecutivos rotos. En tal caso, la función \textsc{esPosibleCruzar} se encarga de 
+  decirnos si hay solución. Más adelante demostraremos que \textsc{esPosibleCruzar} 
+  es correcta. \medskip
+  
+  En cambio, si tiene solución, plantearemos el siguiente esquema
+  
+  \begin{codebox}
+  \Procname{$\proc{Greedy}(S,f,p)$}
+  \li \Comment S es el conjunto de tablones
+  \li \Comment f es una función que elige el tablón mas lejano que se puede saltar
+  \li \Comment p(A,x) es una función que indica si a una sub-solución A se le puede agregar el tablón x 
+  \li $\id{S^{opt}} \gets \emptyset$
+  \li \While $\id{S} \neq \emptyset$
+  \li     \Do
+    			$\id{x} \gets f(S)$
+  \li  			$\id{S} \gets \id{S} \setminus \{\id{x}\}$
+  \li			\If $p(S^{opt}, x)$
+  \li				\Then
+    					$\id{S^{opt}} \gets \id{S^{opt}} \cup \{\id{x}\}$
+    				\End
+    		\End
+  \li \Return $\id{S^{opt}}$  
+  \end{codebox}
 
-  \textcolor{red}{\textbf{hace falta DEMOSTRAR QUE esPosibleCruzar ES CORRECTO?!}}
+  Demostración:
+  \begin{itemize}
+    \item Definimos a una subsolución, como un conjunto de tablones que
+    es subconjunto de una solución óptima.
+    \item $S^{opt}$ empieza siendo $\emptyset$ que es subconjunto de cualquier
+    solución óptima, si existe una. Pero como primero se calcula si
+    existe una forma de cruzar el puente, al llegar a este punto en el
+    algoritmo, se puede estar seguro que existe una solución.
+    \item Suponemos que estamos en la iteración k-ésima, al iniciar
+    el ciclo, $S^{opt}$ es una subsolución de la solución óptima $S*$.
+    Sea $S^{opt} \sqsubseteq S*$.
+    Sea $\id{x} \gets F(S)$.
+    En esta iteración, podemos:
+    (a) No agregar $x$ a $S^{opt}$
+    (b) Agregar $x$ a $S^{opt}$
+    Si sucede (a), entonces no se modifica $S^{opt}$, por lo tanto sigue
+    siendo subsolución de $S*$, una solución óptima.
+    Si sucede (b), agregamos $x$, que es $f(S)$, es decir, el tablón más
+    lejano al cuál se puede saltar. Y, como lo estamos agregando, vale
+    $p(S^{opt}, x)$, es decir, que $x$ es un tablón sano.
+    Sea $S'^{opt} \gets S^{opt} \cup \{x\}$, queremos ver que existe una
+    solución óptima $S'*$, tal que $S'^{opt} \sqsubseteq S'*$.
+    Hay dos casos, si $x \in S*$, entonces $S'^{opt} \sqsubseteq S*$, 
+    tomamos $S'* \gets S*$, una solución óptima.
+    Si $x \notin S*$, 
+    
+  \end{itemize}
 
 \end{itemize}
 
-\textcolor{red}{\textbf{SI! Aca va: (sin latexizar)}}
+
+
+
+
+\textcolor{red}{\textbf{Dem de esPosibleCruzar}}
 
 Es posible cruzar un puente si, y solo si, su cantidad de tablones rotos
 consecutivos es menor al salto máximo.

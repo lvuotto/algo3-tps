@@ -9,30 +9,38 @@ using namespace std;
 
 enum posicion_t {IZQUIERDA, DERECHA};
 
-enum direccion_t {HORIZONTAL, VERTICAL};
-
-struct Punto {
+struct Vertice {
   unsigned int x;
   unsigned int y;
-  posicion_t posicion;
+  posicion_t posicion_pared;
 
-  Punto(unsigned int _x, unsigned int _y, posicion_t _posicion) {
+  Vertice(unsigned int _x, unsigned int _y, posicion_t _posicion_pared) {
     x = _x;
     y = _y;
-    posicion = _posicion;
+    posicion_pared = _posicion_pared;
   }
 
-  Punto() {
+  Vertice() {
   }
 
-  bool operator < (const Punto& otro) const {
+  bool operator < (const Vertice& otro) const {
     return x < otro.x || (x == otro.x && y < otro.y);
   }
 };
 
-vector<unsigned int> calcular_horizonte (vector<Punto>& puntos);
-void                 imprimir_horizonte (vector<unsigned int>& solucion);
-unsigned int         maximo             (multiset<unsigned int>& alturas);
+struct Punto {
+  unsigned int x;
+  unsigned int y;
+
+  Punto(unsigned int _x, unsigned int _y) {
+    x = _x;
+    y = _y;
+  }
+};
+
+vector<Punto> calcular_horizonte (vector<Vertice>& vertices);
+void          imprimir_horizonte (vector<Punto>& horizonte);
+unsigned int  maximo             (multiset<unsigned int>& alturas);
 
 
 int main () {
@@ -41,20 +49,19 @@ int main () {
   cin >> cant_edificios;
 
   while (cant_edificios != 0) {
-    vector<Punto> puntos;
-    puntos.resize(cant_edificios * 2);
+    vector<Vertice> vertices;
+    vertices.resize(cant_edificios * 2);
 
     for (unsigned int i = 0; i < cant_edificios; i++) {
-      /* Para cada edificio se agregan las coordenadas de los dos puntos
-         que lo definen */
+      /* Para cada edificio se agregan los 2 vértices que lo definen */
       cin >> izquierda >> altura >> derecha;
 
-      puntos[i * 2] = Punto(izquierda, altura, IZQUIERDA);
-      puntos[i * 2 + 1] = Punto(derecha, altura, DERECHA);
+      vertices[i * 2] = Vertice(izquierda, altura, IZQUIERDA);
+      vertices[i * 2 + 1] = Vertice(derecha, altura, DERECHA);
     }
 
-    vector<unsigned int> solucion = calcular_horizonte(puntos);
-    imprimir_horizonte(solucion);
+    vector<Punto> horizonte = calcular_horizonte(vertices);
+    imprimir_horizonte(horizonte);
 
     cin >> cant_edificios;
   }
@@ -65,61 +72,51 @@ int main () {
 /**
  * Devuelve los puntos necesarios para formar el horizonte de los edificios.
  **/
-vector<unsigned int> calcular_horizonte (vector<Punto>& puntos) {
+vector<Punto> calcular_horizonte (vector<Vertice>& vertices) {
   multiset<unsigned int> alturas;
 
-  vector<unsigned int> solucion;
-  
-  sort(puntos.begin(), puntos.end());
-  
-  auto punto = puntos.begin();
-  
-  solucion.push_back(punto->x);
-  solucion.push_back(punto->y);
-  
-  while (punto->x == solucion[0]) {
-    solucion[1] = punto->y;
-    alturas.insert(punto->y);
-    punto++;
-  }
+  vector<Punto> horizonte;
 
-  while (punto != puntos.end()) {
-    if (punto->posicion == IZQUIERDA) {
+  sort(vertices.begin(), vertices.end());
+
+  auto vertice = vertices.begin();
+
+  horizonte.push_back(Punto(vertice->x, vertice->y));
+  alturas.insert(vertice->y);
+  vertice++;
+
+  while (vertice != vertices.end()) {
+    if (vertice->posicion_pared == IZQUIERDA) {
       /**
-       * 
+       * Si es un vértice más alto, pero sobre la misma coordenada X, se
+       * actualiza la altura del último punto.
+       * Pero si además está más adelante en X, se carga un nuevo punto
+       * para marcar el horizonte.
        **/
-      if (punto->y > solucion.back()) {
-        if (punto->x > solucion[solucion.size() - 2]) {
-          solucion.push_back(punto->x);
-          solucion.push_back(punto->y);
+      if (vertice->y > horizonte.back().y) {
+        if (vertice->x > horizonte.back().x) {
+          horizonte.push_back(Punto(vertice->x, vertice->y));
         } else {
-          solucion[solucion.size() - 1] = punto->y;
+          horizonte[horizonte.size() - 1].y = vertice->y;
         }
       }
 
-      alturas.insert(punto->y);
+      alturas.insert(vertice->y);
     } else {
+      alturas.erase(alturas.find(vertice->y));
       /**
-       * 
+       * Si es un vértice de pared derecha y es la última de su altura, se
+       * carga el punto que se forma al bajar a la siguiente altura.
        **/
-      if (punto->y == maximo(alturas)) {
-        alturas.erase(alturas.find(punto->y));
-
-        if (punto->y > maximo(alturas)) {
-          solucion.push_back(punto->x);
-          solucion.push_back(maximo(alturas));
-        }
-      } else {
-        if (!alturas.empty()) {
-          alturas.erase(alturas.find(punto->y));
-        }
+      if (vertice->y > maximo(alturas)) {
+        horizonte.push_back(Punto(vertice->x, maximo(alturas)));
       }
     }
-    
-    punto++;
+
+    vertice++;
   }
 
-  return solucion;
+  return horizonte;
 }
 
 
@@ -138,13 +135,13 @@ unsigned int maximo (multiset<unsigned int>& alturas) {
 /**
  * Imprime los puntos requeridos para marcar el horizonte.
  **/
-void imprimir_horizonte (vector<unsigned int>& solucion) {
-  auto it = solucion.begin();
+void imprimir_horizonte (vector<Punto>& horizonte) {
+  auto it = horizonte.begin();
 
-  cout << *it;
+  cout << it->x << " " << it->y;
 
-  for (it++; it != solucion.end(); it++) {
-    cout << " " << *it;
+  for (it++; it != horizonte.end(); it++) {
+    cout << " " << it->x << " " << it->y;
   }
 
   cout << endl;

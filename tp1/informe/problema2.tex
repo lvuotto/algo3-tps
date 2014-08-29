@@ -28,32 +28,60 @@ las líneas internas. \medskip
 
 \vspace*{0.3cm}
 
-Para resolver este problema, primero se cargan los vértices de todos los
-edificios, indicando su coordenada X, Y, aclarando si es un vértice izquierdo o
-derecho.
+La idea para resolver este problema consiste en tomar a los edificios por los 2
+vértices que lo identifican (sus puntos con Y $\neq$ 0).
 
-Luego se ordenan los puntos por su coordenada X en orden ascendente y, en caso
-de empate entre 2 puntos, por su coordenada Y en forma ascendente.
+Recorriendo esos vértices en orden, los que correspondan a una pared izquierda
+generarán un nuevo punto del horizonte si son más altos que el último punto y
+los que correspondan a una pared derecha, si son el fin correspondiente de la
+altura actual, generarán un punto en la intersección con la siguiente altura
+más alta.
 
-Se crea una lista para guardar los puntos de las soluciones y un multiconjunto
-para mantener las alturas actuales de los edificios.
+Para saber hasta dónde se debe bajar luego de un vértice de pared derecha, se
+mantiene un multiconjunto de alturas, cada vértice de pared izquierda carga su
+altura y los de pared derecha la eliminan.
 
-Se empieza cargando el punto con coordenada Y=0 y coordenada X igual al primer
-punto de la lista. Y luego ese mismo punto.
+\begin{codebox}
+\Procname{$\proc{calcularHorizonte}(vertices)$}
+\li \Comment vertices: vector de vértices
+\li $\id{horizonte} \gets \emptyset$
+\li $\id{alturas} \gets \emptyset$
 
-Posteriormente se recorren todos los otros puntos en orden, y:
-Si el punto es un vértice izquierdo: Se carga su coordenada Y en el
-multiconjunto de alturas. Además si su altura es mayor a la altura del último
-punto, y su coordenada X es mayor a la correspondiente del último punto, se
-carga el punto generado con la coordenada X del punto actual y la coordenada Y
-del punto anterior.
-Si el punto es un vértice derecho: Se elimina su coordenada Y del multiconjunto
-de alturas. Luego si el máximo de alturas es menor a la coordenada Y, se carga
-el punto actual y luego el punto generado por la coordenada X y la altura máxima
-como coordenada Y.
+\li $\proc{sort}(vertices)$
 
-Finalmente se agrega el punto con coordenada Y=0 y coordenada X igual a la del
-último punto cargado.
+\li $\id{vertice} \gets \proc{primero}(vertices)$
+
+
+\li $\proc{agregar}(horizonte, <vertice.x, vertice.y>)$
+\li $\proc{agregar}(alturas, vertice.y)$
+
+
+\li \While $\id{vertice} no es el ultimo$
+      \Do
+\li     \If $vertice.posicion_pared == izquierda$
+          \Then
+\li         \If $vertice.y > \proc{ultimo}(horizonte).y$
+              \Then
+\li             \If $vertice.x > \proc{ultimo}(horizonte).x$
+                  \Then
+\li                 $\proc{agregar}(horizonte, <vertice.x, vertice.y>)$
+\li               \Else
+\li                 $\proc{ultimo}(horizonte).y \gets vertice.y$
+                 \End
+              \End
+\li         $\proc{agregar}(alturas, vertice.y)$
+\li       \Else
+\li         $\proc{quitar}(alturas, vertice.y)$
+\li         \If $vertice.y > \proc{maximo}(alturas)$
+              \Then
+\li             $\proc{agregar}(horizonte, <vertice.x, maximo(alturas)>)$
+              \End
+          \End
+\li     $\id{vertice} \gets \id{vertice} + 1$
+      \End
+
+\li \Return $\id{horizonte}$
+\end{codebox}
 
 
 \vspace*{0.75cm} \noindent

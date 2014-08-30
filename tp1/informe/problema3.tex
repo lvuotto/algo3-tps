@@ -25,57 +25,52 @@ elementos que contiene.
 \noindent
 \textbf{3.2. Desarrollo de la idea y pseudocódigo.}
 
-Cargamos el primer camión con el primer elemento y continuamos cargando el resto 
-de los elementos hasta alcanzar el umbral M. Luego, proseguimos con la misma 
-técnica en los camiones siguientes, hasta agotar los productos. De esta forma, 
-obtenemos una solución candidata (no necesariamente óptima).
+Para resovler el problema, empezamos con un camión e intentamos ubicar todos los
+elementos en el mismo. De no ser posible, se agrega otro camión y se vuelve a
+intentar todas las combinaciones de elementos en los mismos. Si no caben los
+elementos en un solo camión, se agrega un camión más y se vuelve a empezar.
 
-En las siguientes iteraciones, si la cantidad de camiones utilizados hasta el 
-momento es C-1 y al agregar el pŕoximo elemento pasamos a utilizar C camiones, 
-esa solución queda descartada.
+Se repite el proceso hasta encontrar una cantidad de camiones que pueda transportar
+todos los elementos. Por la estrategia planteada para el problema, la solución
+encontrada será una solución óptima.
+
+Para facilitar los cálculos y permitir mejores podas, se utilizará una estructura
+adicional que contendrá, para cada elemento, dado un camión, la peligrosidad que
+pasaría a tener dicho camión si se agregase tal elemento. Esta estructura se
+actualizará cada vez que se agregue un elemento a algún camión. 
+
+biohazard(elementos, maximaPeligrosidad) {
+  camiones = []
+  agregar(camiones, camion)
+  
+  while (!backtracking(camiones, elementos, aux)) {
+    agregar(camiones, camion)
+  }
+  
+  return camiones
+}
 
 
-biohazard(n, l, m)
-  while noVacio(conjProductos(p))
-    camion_actual <- conjVacio(Nat)
-    lista(camion) lista_camiones <- listaVacia()
-    while (sumatoria_coeficientes(camion_actual) <= m)
-      agregar(camion_actual, dameUno(conjProductos(p))
-      producto q <- dameUno(conjProductos(p))
-      conjProductos(p) - dameUno(conjProductos(p))
-      if (sumatoria_coeficientes(camion_actual) > m)
-        camion_actual - dameUno(conjProductos)
-        agregar(conjProductos(p), q)
-    agregarAtras(l, camion_actual)
-  return 
-  
-  
-  El = conj(e)  {e = elementos}
-  P = conj(p)   {p = peligrosidad de 2 elementos}
-  
-  biohazard (Elementos, LimitePeligrosidad, CoefPeligrosidades)
 
-  SolOptima = Elementos.cantidad
-  Camiones
-    Foreach( e in Elementos){
-      Camion c
-      c.agregar(e)
-      TempEl = Elementos
-      TempEl.eliminar(e)
-      Foreach(i in iteracionesde(TempEl)){
-        If(IndiceP(c.agregar(i)) >= LimitePeligrosidad){
-          Camiones.agregar(Camion c2))
-          if(Camiones.cantidad >= SolOptima){
-            Next
-          }
-        }
-        Else{
-          c.agregar(i)
-        }
-      }
-    }
-    
+booleano backtracking(camiones: conjunto, elementos: conjunto, aux: auxiliar)
+  si vacio(elementos)
+    retornar verdadero
   
+  elemento = dameUno(elementos)
+  elementos = elementos - elemento
+  
+  para camion en camiones
+    si entra(elemento, camion, aux)
+      agregar(camion, elemento)
+      actualizar(aux)
+      si backtracking(camiones, elementos, aux)
+        retornar verdadero
+      sino
+        borrar(camion, elemento)
+  fin para
+  
+  retornar falso
+
 
  
 \vspace*{0.3cm}

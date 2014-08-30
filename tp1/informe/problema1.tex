@@ -159,8 +159,9 @@ separaremos las entradas en casos y analizaremos éstos a continuación.
     			$\id{x} \gets f(S)$
   \li  			$\id{S} \gets \id{S} \setminus \{\id{x}\}$
   \li			\If $p(S^{opt}, x)$
-  \li				\Then
-    					$\id{S^{opt}} \gets \id{S^{opt}} \cup \{\id{x}\}$
+    				\Then
+  \li					$\id{S} \gets \id{S} \setminus \{\id{c} \mid \id{c} < \id{x}\}$
+  \li					$\id{S^{opt}} \gets \id{S^{opt}} \cup \{\id{x}\}$
     				\End
     		\End
   \li \Return $\id{S^{opt}}$
@@ -176,30 +177,45 @@ separaremos las entradas en casos y analizaremos éstos a continuación.
     algoritmo, se puede estar seguro que existe una solución.
     \item Suponemos que estamos en la iteración k-ésima, al iniciar
     el ciclo, $S^{opt}$ es una subsolución de la solución óptima $S*$.
+    
     Sea $S^{opt} \sqsubseteq S*$.
+    
     Sea $\id{x} \gets F(S)$.
+    
     En esta iteración, podemos:
+    
     (a) No agregar $x$ a $S^{opt}$
+    
     (b) Agregar $x$ a $S^{opt}$
+    
     Si sucede (a), entonces no se modifica $S^{opt}$, por lo tanto sigue
     siendo subsolución de $S*$, una solución óptima.
+    
     Si sucede (b), agregamos $x$, que es $f(S)$, es decir, el tablón más
     lejano al cuál se puede saltar. Y, como lo estamos agregando, vale
     $p(S^{opt}, x)$, es decir, que $x$ es un tablón sano.
+    
     Sea $S'^{opt} \gets S^{opt} \cup \{x\}$, queremos ver que existe una
     solución óptima $S'*$, tal que $S'^{opt} \sqsubseteq S'*$.
+    
     Hay dos casos, si $x \in S*$, entonces $S'^{opt} \sqsubseteq S*$,
     tomamos $S'* \gets S*$, una solución óptima.
+    
     Si $x \notin S*$:
+    
     Sea $x'$ el mínimo valor de $S* \setminus S^{opt}$.
+    
     Sea $u$ el máximo valor de $S^{opt}$, es decir, la última posición a la que
     se saltó.
+    
     Y sea $u'$ el mínimo valor de $S* \setminus S^{opt} \setminus \{x'\}$, es
     decir, el valor siguiente a $x'$ en $S*$.
+    
     Como $x \notin S*$, $x$ no puede ser igual a $x'$. Entonces o $x' > x$,
     pero el salto de $u$ hacia $x'$ es válido, porque $S*$ es una solución
     válida, es absurdo porque nosotros definimos a $f$ como la función que nos
     daba la posición mayor válida y nos dio $x$ y no $x'$.
+    
     Por lo tando solo puede ser $x > x'$. Y en este caso, consideremos a
     $S'* \gets S* \setminus \{x'\} \cup \{x\}$, el salto de $u$ hacia $x$ es
     válido, porque así lo indicó $p(S^{opt}, x)$ y el salto de $x$ hacia $u'$
@@ -207,8 +223,16 @@ separaremos las entradas en casos y analizaremos éstos a continuación.
     el de $x$ también debe ser válido. Y la cantidad de saltos de esta $S'*$
     es exactamente igual a la de $S*$, ya que consiste en reemplazar un elemento
     por otro.
+    
     Entonces, $S^{opt} \sqsubseteq S'*$, es una subsolución de una solución óptima.
-    \item AGREGAR CUANDO TERMINAMOS
+    \item Al terminar el ciclo, pasamos por todos los tablones y tenemos $S^{opt}$
+    que es subsolución de una solución óptima. Sea $S*$ tal solución óptima.
+    Si $S \gets S*$ entonces $S^{opt}$ es una solución óptima.
+    Si no, $existe x \in S* \setminus S^{opt}$, Pero $x \in S y p(S*, x) \gets TRUE$,
+    por lo tanto $p(S^{opt}, x) \gets TRUE y P(X, x) \gets TRUE$ para todo prefijo
+    X de $S^{opt}$. Entonces, al momento de sacar $x$ de $S$ e intentar agregarlo
+    a nuesta $S^{opt}$, deberíamos haberlo podido agregar, y no lo hicimos. Esto
+    no puede pasar, luego no existe $x$, y $S* \gets S^{opt}$.
 
   \end{itemize}
 

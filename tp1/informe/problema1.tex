@@ -1,5 +1,4 @@
-\noindent
-\textbf{1.1. Descripción del problema.}
+\subsection{1.1. Descripción del problema.}
 
 \vspace*{0.3cm}
 
@@ -21,25 +20,24 @@ son valores naturales}.
 \begin{itemize}
   \item Para un puente de 10 tablones y un participante capaz de saltar de a 3
   tablones como máximo, teniendo los tablones 1, 4, 6, 8 y 9 rotos, la salida podría ser:
-  primero saltar al tablón 3, luego al 5, luego al 7, luego al 10 y luego afuera del puente.
+  primero saltar al tablón 3, luego al 5, luego al 7, luego al 10 y luego fuera del puente.
   \item Si en cambio, en el ejemplo anterior, el tablón 7 también estuviese roto,
   el algoritmo debe informarnos que, bajo esas condiciones, no es posible cruzar el puente.
-  \item \textcolor{red}{\textbf{agregar un ejemplo mas con dibujitos y cosas lindas}}
+  \item \textcolor{red}{\textbf{agregar un ejemplo mas con dibujitos y cosas lindas!}}
 \end{itemize}
 
 
-\vspace*{0.75cm} \noindent
 
 
 
-\noindent
-\textbf{1.2. Desarrollo de la idea y pseudocódigo.}
+\subsection{1.2. Desarrollo de la idea y pseudocódigo.}
 
 \vspace*{0.3cm}
 
 Para resolver este problema, propusimos un algoritmo de tipo \textit{greedy}, que en cada iteración
 del mismo busca siempre saltar \textbf{la mayor cantidad posible de tablones}, siempre y cuando el
-tablón al que vamos a saltar esté sano. Caso contrario, se saltará al tablón anterior, y así sucesivamente.
+tablón al que nos dirijamos esté sano. Caso contrario, se saltará al tablón anterior (ó al anterior), 
+y así sucesivamente, hasta encontrar un tablón válido.
 Si retrocediendo de este modo se llega a la posición en la que se encuentran el competidor, el problema
 \textbf{no tiene solución}.
 
@@ -115,12 +113,9 @@ Si retrocediendo de este modo se llega a la posición en la que se encuentran el
 
 
 
-\vspace*{0.75cm} \noindent
 
 
-
-\noindent
-\textbf{1.3. Justificación de la resolución y demostración de correctitud.}
+\subsection{1.3. Justificación de la resolución y demostración de correctitud.}
 
 \vspace*{0.3cm}
 
@@ -142,17 +137,17 @@ separaremos las entradas en casos y analizaremos éstos a continuación.
   \item $c \leq n$: si la instancia no tiene solución, es porque hay $c$ o más tablones
   consecutivos rotos. En tal caso, la función \textsc{esPosibleCruzar} se encarga de
   decirnos si hay solución. Más adelante demostraremos que \textsc{esPosibleCruzar}
-  es correcta. \medskip
+  también es correcta. \medskip
 
-  En cambio, si tiene solución, plantearemos el siguiente esquema
+  En cambio, si tiene solución, plantearemos el siguiente esquema:
 
   \begin{codebox}
   \Procname{$\proc{Greedy}(S,f,p)$}
-  \li \Comment S es el conjunto de tablones
-  \li \Comment f es una función que elige el tablón mas lejano que se puede saltar
-  \li \Comment p(A,x) es una función que indica si a una sub-solución A se le
-  \li \Comment   puede agregar el tablón x. Es decir, si está sano y a una distancia
-  \li \Comment   a lo sumo igual al salto máximo del último tablón agregado
+  \li \Comment $S$ es el conjunto de tablones
+  \li \Comment $f$ es una función que elige el tablón mas lejano que se puede saltar
+  \li \Comment $p(A, x)$ es una función que indica si a una subsolución $A$ se le
+  \li \Comment   puede agregar el tablón $x$. Es decir, si está sano y a una distancia
+  \li \Comment   a lo sumo igual al salto máximo del último tablón agregado.
   \li $\id{S^{opt}} \gets \emptyset$
   \li \While $\id{S} \neq \emptyset$
   \li     \Do
@@ -167,89 +162,86 @@ separaremos las entradas en casos y analizaremos éstos a continuación.
   \li \Return $\id{S^{opt}}$
   \end{codebox}
 
-  Demostración:
+  \textbf{Demostración (\textsc{cruzarPuente}):}
   \begin{itemize}
-    \item Definimos a una subsolución, como un conjunto de tablones que
-    es subconjunto de una solución óptima.
-    \item $S^{opt}$ empieza siendo $\emptyset$ que es subconjunto de cualquier
-    solución óptima, si existe una. Pero como primero se calcula si
-    existe una forma de cruzar el puente, al llegar a este punto en el
+    \item Definimos como \textbf{subsolución} a un conjunto de tablones, que
+    es \textbf{subconjunto de una solución óptima}.
+    \item $S^{opt}$ empieza siendo $\emptyset$, que es subconjunto de cualquier
+    solución óptima (si tal solución existe). Inicialmente se calcula si
+    existe forma de cruzar el puente, por lo que al llegar a este punto del
     algoritmo, se puede estar seguro que existe una solución.
-    \item Suponemos que estamos en la iteración k-ésima, al iniciar
-    el ciclo, $S^{opt}$ es una subsolución de la solución óptima $S*$.
+    \item Supongamos que estamos en la iteración k-ésima. Al iniciar
+    el ciclo, $S^{opt}$ es una subsolución de la solución óptima $S^{*}$. \medskip
     
-    Sea $S^{opt} \sqsubseteq S*$.
+    Sea $S^{opt} \sqsubseteq S^{*}$ y $\id{x} \gets F(S)$. \medskip
     
-    Sea $\id{x} \gets F(S)$.
+    En esta iteración, podemos: \medskip
     
-    En esta iteración, podemos:
+    $(a)$ No agregar $x$ a $S^{opt}$
     
-    (a) No agregar $x$ a $S^{opt}$
+    $(b)$ Agregar $x$ a $S^{opt}$ \medskip
     
-    (b) Agregar $x$ a $S^{opt}$
+    Si sucede $(a)$, entonces no se modifica $S^{opt}$, por lo tanto sigue
+    siendo \textbf{subsolución de $S^{*}$}, es decir, es una \textbf{solución óptima}. \medskip
     
-    Si sucede (a), entonces no se modifica $S^{opt}$, por lo tanto sigue
-    siendo subsolución de $S*$, una solución óptima.
+    Si sucede $(b)$, agregamos $x$ (aplicamos $f(S)$), es decir, el tablón más
+    lejano al cuál se puede saltar. Como lo estamos agregando, vale
+    $p(S^{opt}, x)$, es decir, que $x$ es un tablón sano. \medskip
     
-    Si sucede (b), agregamos $x$, que es $f(S)$, es decir, el tablón más
-    lejano al cuál se puede saltar. Y, como lo estamos agregando, vale
-    $p(S^{opt}, x)$, es decir, que $x$ es un tablón sano.
+    Sea $S'^{opt} \gets S^{opt} \cup \{x\}$. Queremos ver que existe una
+    solución óptima $S'^{*}$, tal que $S'^{opt} \sqsubseteq S'^{*}$. \medskip
     
-    Sea $S'^{opt} \gets S^{opt} \cup \{x\}$, queremos ver que existe una
-    solución óptima $S'*$, tal que $S'^{opt} \sqsubseteq S'*$.
+    Tenemos, nuevamente, dos casos: \medskip 
     
-    Hay dos casos, si $x \in S*$, entonces $S'^{opt} \sqsubseteq S*$,
-    tomamos $S'* \gets S*$, una solución óptima.
+    $(a')$ $x \in S^{*}$
     
-    Si $x \notin S*$:
+    $(b')$ $x \notin S^{*}$ \medskip
     
-    Sea $x'$ el mínimo valor de $S* \setminus S^{opt}$.
+    Si sucede $(a')$, entonces $S'^{opt} \sqsubseteq S^{*}$. 
+    Tomamos $S'^{*} \gets S^{*}$, una solución óptima. \medskip 
     
-    Sea $u$ el máximo valor de $S^{opt}$, es decir, la última posición a la que
-    se saltó.
+    Caso $(b')$. Sean $x'$ el \textbf{mínimo valor} de $S^{*} \setminus S^{opt}$, 
+    $u$ el máximo valor de $S^{opt}$ (es decir, la última posición a la que
+    se saltó) y $u'$ el mínimo valor de $S^{*} \setminus (S^{opt} \setminus \{x'\})$, es
+    decir, el valor siguiente a $x'$ en $S^{*}$.
     
-    Y sea $u'$ el mínimo valor de $S* \setminus S^{opt} \setminus \{x'\}$, es
-    decir, el valor siguiente a $x'$ en $S*$.
+    Como $x \notin S^{*}$, $x$ no puede ser igual a $x'$. Entonces $x' > x$.
+    Pero el salto de $u$ hacia $x'$ es válido, porque $S^{*}$ es una solución
+    válida. Es \textbf{absurdo}, porque definimos $f$ como la función que nos
+    da la mayor posición válida y en este caso retornó $x$ en lugar de $x'$.
     
-    Como $x \notin S*$, $x$ no puede ser igual a $x'$. Entonces o $x' > x$,
-    pero el salto de $u$ hacia $x'$ es válido, porque $S*$ es una solución
-    válida, es absurdo porque nosotros definimos a $f$ como la función que nos
-    daba la posición mayor válida y nos dio $x$ y no $x'$.
+    Por lo tanto, sólo puede valer $x > x'$. En este caso, consideremos a
+    $S'^{*} \gets S^{*} \setminus (\{x'\} \cup \{x\})$. El salto de $u$ hacia $x$ es
+    válido, porque así lo indica $p(S^{opt}, x)$ y el salto de $x$ hacia $u'$
+    es menor que el de $x'$ hacia $u'$. Por lo tanto, si el salto de $x'$ es válido,
+    el de $x$ también. La cantidad de saltos de $S'^{*}$ es exactamente igual a la de 
+    $S^{*}$, ya que consiste simplemente en reemplazar un elemento por otro.
     
-    Por lo tando solo puede ser $x > x'$. Y en este caso, consideremos a
-    $S'* \gets S* \setminus \{x'\} \cup \{x\}$, el salto de $u$ hacia $x$ es
-    válido, porque así lo indicó $p(S^{opt}, x)$ y el salto de $x$ hacia $u'$
-    es menor que el de $x'$ hacia $u'$. Por lo tanto si el de $x'$ es válido,
-    el de $x$ también debe ser válido. Y la cantidad de saltos de esta $S'*$
-    es exactamente igual a la de $S*$, ya que consiste en reemplazar un elemento
-    por otro.
+    Entonces $S^{opt} \sqsubseteq S'^{*}$, es una \textbf{subsolución de una solución óptima}.
     
-    Entonces, $S^{opt} \sqsubseteq S'*$, es una subsolución de una solución óptima.
-    \item Al terminar el ciclo, pasamos por todos los tablones y tenemos $S^{opt}$
-    que es subsolución de una solución óptima. Sea $S*$ tal solución óptima.
-    Si $S \gets S*$ entonces $S^{opt}$ es una solución óptima.
-    Si no, $existe x \in S* \setminus S^{opt}$, Pero $x \in S y p(S*, x) \gets TRUE$,
-    por lo tanto $p(S^{opt}, x) \gets TRUE y P(X, x) \gets TRUE$ para todo prefijo
-    X de $S^{opt}$. Entonces, al momento de sacar $x$ de $S$ e intentar agregarlo
-    a nuesta $S^{opt}$, deberíamos haberlo podido agregar, y no lo hicimos. Esto
-    no puede pasar, luego no existe $x$, y $S* \gets S^{opt}$.
+    \item Al terminar el ciclo, recorremos todos los tablones y vemos que $S^{opt}$ 
+    es subsolución de una solución óptima. Sea $S^{*}$ tal solución óptima.
+    Si $S \gets S^{*}$ entonces $S^{opt}$ es una solución óptima.
+    
+    Si no, $\exists x \in (S^{*} \setminus S^{opt})$. Pero $x \in S$ y $p(S^{*}, x) \gets \const{true}$,
+    por lo tanto $p(S^{opt}, x) \gets \const{true}$ y $P(X, x) \gets \const{true}$, para todo prefijo
+    X de $S^{opt}$. Entonces, al momento de sacar $x$ de $S$ e intentar agregarlo a $S^{opt}$, 
+    deberíamos poder, pero no es lo que sucede. 
+    
+    Esto no puede pasar, luego no existe $x$, y $S^{*} \gets S^{opt}$.
 
   \end{itemize}
 
-\end{itemize}
+\newpage
 
-
-
-
-
-\textcolor{red}{\textbf{Dem de esPosibleCruzar}}
-
-La función esPosibleCruzar mantiene un contador de tablones rotos consecutivos
-que empieza en 0. Recorre todos los tablones, en orden, y si el tablón actual
-está sano, resetea el contador a 0, pero si está roto, suma 1 al contador.
-Luego si en algún momento el contador es mayor o igual al salto máximo posible,
-devuelve falso. Si se recorren todos los tablones y esto no sucede, devuelve
-verdadero.
+\textbf{Demostración (\textsc{esPosibleCruzar}):} 
+  
+  La función \textsc{esPosibleCruzar} mantiene un \textbf{contador de tablones rotos consecutivos},
+inicializado en 0. Recorre todos los tablones \textbf{en orden}; si el tablón actual
+está sano, resetea el contador a 0, sino (está roto) le suma 1.
+Luego, si en algún momento el contador es \textbf{mayor ó igual al salto máximo posible},
+devuelve \textbf{falso}. En cambio, si se recorren todos los tablones y esto no sucede, 
+la función devuelve \textbf{verdadero}.
 
 Por lo tanto la función devuelve falso $\iff$ existe en algún momento una
 cantidad de tablones rotos consecutivos mayor o igual al salto máximo. Veamos
@@ -278,49 +270,50 @@ menor a t_0.
 O t_0 $\leq$ s_1 < t_c, pero entonces el salto se hubiera realizado en un
 tablón roto.
 
-Absurdo que vino de suponer que existía una solución cuando la cantidad de
+\textbf{Absurdo}, que vino de suponer que existía una solución cuando la cantidad de
 tablones rotos consecutivos es igual o mayor al salto máximo.
 
-La vuelta:
-Sea un puente de n tablones con un salto máximo de c y k la cantidad máxima de
-tablones rotos consecutivos, con k < c.
-Sea S la solución que consiste en caer en todos los tablones sanos y luego al
+\textbf{La vuelta:}
+Sea un puente de $n$ tablones con salto máximo $c$ y $k$ la cantidad máxima de
+tablones rotos consecutivos, con $k < c$.
+Sea $S$ la solución que consiste en caer en todos los tablones sanos y luego al
 otro lado del puente.
 Esta solución cruza el puente completamente.
-Y para cada posición s_i $\in$ S, 1 $\leq$ s_{i+1} - s_i $\leq$ k, ya que no
+Y para cada posición $s_i \in S, 1 \leq s_{i+1} - s_i \leq k$, ya que no
 saltea tablones sanos.
-Entonces s_{i+1} - s_i $\leq$ k => s_{i+1} - s_i $\leq$ c. Por lo tanto todos
-los saltos en S son válidos y la solución existe.
+Entonces $s_{i+1} - s_i \leq k => s_{i+1} - s_i \leq c$. Por lo tanto todos
+los saltos en $S$ son válidos y la solución existe.
 
-\vspace*{0.75cm} \noindent
+\end{itemize}
 
 
 
-\noindent
-\textbf{1.4. Análisis de complejidad.}
+
+
+\subsection{1.4. Análisis de complejidad.}
 
 \vspace*{0.3cm}
 
-Para el análisis de complejidad nos basaremos en el pseudocódigo del punto 1.2.
+Para el análisis de complejidad nos basaremos en el pseudocódigo del punto \textbf{1.2}.
 
 \begin{enumerate}
-\item Todas las operaciones realizadas sobre el contenedor \verb|vector| de la \textit{STL} (size, push_back, empty y la creación de iteradores)
-toman tiempo constante $O(1)$.
+  \item Todas las operaciones realizadas sobre el contenedor \verb|vector| de la \textit{STL} (size, push_back, empty y la creación de iteradores)
+  toman tiempo constante $O(1)$.
 
-\item Las asignaciones realizadas (11, 13, 15, 16 y 17) también se realizan en tiempo constante $O(1)$.
+  \item Las asignaciones realizadas (11, 13, 15, 16 y 17) también se realizan en tiempo constante $O(1)$.
 
-\item Si $c$ es mayor que $n$ (línea 6), retornamos el vector de soluciones que contiene la cantidad de saltos realizados (cero) y
-el "tablón" $c$ hacia el cual saltamos. Como dijimos anteriormente, realizar estas operaciones sobre \verb|vector|
-toma tiempo constante $O(1)$.
+  \item Si $c$ es mayor que $n$ (línea 6), retornamos el vector de soluciones que contiene la cantidad de saltos realizados (cero) y
+  el "tablón" $c$ hacia el cual saltamos. Como dijimos anteriormente, realizar estas operaciones sobre \verb|vector|
+  toma tiempo constante $O(1)$.
 
-\item En la línea 9, ejecutamos el condicional \verb|esPosibleCruzar(puente, c)|. La complejidad de esta función la
-analizaremos luego, pero adelantamos que es lineal, $O(n)$.
+  \item En la línea 9, ejecutamos el condicional \verb|esPosibleCruzar(puente, c)|. La complejidad de esta función la
+  analizaremos luego, pero adelantamos que es lineal, $O(n)$.
 
-\item En la línea 12 (tener en cuenta que en este caso vale $c \leq n$), en el peor caso ($c = 1$), realizamos $n$ iteraciones,
-pues recorremos el puente de a un tablón (siempre y cuando no haya tablones rotos, pues no tendría solución). Con $c \neq n$,
-en cualquier iteración podemos realizar a lo sumo $c$ retrocesos, pero en las siguientes esto es compensado, pues sabiendo que
-hay solución, la metodología empleada no pregunta más de 1 vez el estado de un mismo tablón. Este procedimiento tiene como peores
-casos los siguientes:
+  \item En la línea 12 (tener en cuenta que en este caso vale $c \leq n$), en el peor caso ($c = 1$), realizamos $n$ iteraciones,
+  pues recorremos el puente de a un tablón (siempre y cuando no haya tablones rotos, pues no tendría solución). Con $c \neq n$,
+  en cualquier iteración podemos realizar a lo sumo $c$ retrocesos, pero en las siguientes esto es compensado, pues sabiendo que
+  hay solución, la metodología empleada no pregunta más de 1 vez el estado de un mismo tablón. Este procedimiento tiene como peores
+  casos los siguientes:
   \begin{itemize}
     \item $c = 1$, con todos los tablones sanos, de manera que haya que chequear todos los tablones del puente.
 
@@ -329,10 +322,10 @@ casos los siguientes:
     \item $c = n$, con todos los tablones rotos salvo el primero, de manera que haya que chequear todos los tablones del puente.
   \end{itemize}
 
-\item La complejidad de \verb|esPosibleCruzar(puente, c)| (línea 9) es $O(n)$, pues en el peor caso recorre el puente entero.
+  \item La complejidad de \verb|esPosibleCruzar(puente, c)| (línea 9) es $O(n)$, pues en el peor caso recorre el puente entero.
 
-\item La complejidad de \verb|puedeSaltar(puente, tablón)| es $O(1)$, pues obtenemos el tamaño del puente en tiempo constante
-mediante la función \verb|size| y preguntar si un tablón está sano ó no es constante.
+  \item La complejidad de \verb|puedeSaltar(puente, tablón)| es $O(1)$, pues obtenemos el tamaño del puente en tiempo constante
+  mediante la función \verb|size| y preguntar si un tablón está sano ó no es constante.
 
 \end{enumerate}
 
@@ -344,24 +337,19 @@ Por lo tanto, la \textbf{complejidad total} del algoritmo implementado para este
 
 
 
-\vspace*{0.75cm} \noindent
 
 
-
-\noindent
-\textbf{1.5. Partes relevantes del código (hacer referencia al apéndice).}
+\subsection{1.5. Partes relevantes del código (hacer referencia al apéndice).}
 
 \vspace*{0.3cm}
 
 desarrollo.
 
 
-\vspace*{0.75cm} \noindent
 
 
 
-\noindent
-\textbf{1.6. Experimentación.}
+\subsection{1.6. Experimentación y gráficos.}
 
 \vspace*{0.3cm}
 

@@ -140,6 +140,6 @@ void mostrar_solucion (vector<camion>& camiones, int cantidadElementos) {
   
   cout << camiones.size();
   for (auto it = solucion.begin(); it != solucion.end(); it++)
-    cout << " " << *it;
+    cout << " " << *it + 1;
   cout << endl;
 }

@@ -5,7 +5,7 @@ INFORMEDIR = informe
 TESTDIR = tests
 
 
--PHONY: all clean
+.PHONY: all clean
 
 
 tp:

@@ -24,7 +24,7 @@ struct Vertice {
   }
 
   bool operator < (const Vertice& otro) const {
-    return x < otro.x || (x == otro.x && y < otro.y);
+    return x < otro.x || (x == otro.x && (y < otro.y || (y == otro.y && posicion_pared < otro.posicion_pared)));
   }
 };
 

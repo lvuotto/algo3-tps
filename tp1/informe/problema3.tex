@@ -52,8 +52,6 @@ biohazard(elementos, maximaPeligrosidad) {
   return camiones
 }
 
-
-
 booleano backtracking(camiones: conjunto, elementos: conjunto, aux: auxiliar)
   si vacio(elementos)
     retornar verdadero
@@ -90,7 +88,8 @@ desarrollo.
 
 \vspace*{0.3cm}
 
-desarrollo.
+
+opcional
 
 
 \vspace*{0.75cm} \noindent
@@ -103,8 +102,31 @@ desarrollo.
 
 \vspace*{0.3cm}
 
-desarrollo.
 
+La función \verb|backtracking| es llamada desde la función \verb|biohazard|, en
+el peor de los casos, tantas veces como elementos haya para insertar en los camiones.
+Una vez que se comienza a hacer la recursión, por cada camión que podemos utilizar,
+se vuelve a hacer con un elemento menos. La recursión finaliza en el momento en 
+el que se la invoca con un conjunto vacío de elementos. Como la cantidad de 
+elementos siempre disminuye en 1 con cada llamado recursivo, en $n$ llamados se
+corta la recurrencia.
+
+Por lo tanto, en el peor caso, cuando todos los elementos tengan que ir en un 
+camión diferente se requerirán $n$ camiones, con $n$ llamadas recursivas con 
+$n - 1$ elementos que a su vez harán $n$ llamadas recursivas cada uno, hasta que
+la cantidad de elementos sea 0, dando una complejidad de $O(n^n)$.
+
+\textbf{FALTA:}
+
+entra: O(1) + O(calcularPeligrosidad)
+
+calcularPeligrosidad: ¿?
+
+agregarElemento: ¿?
+
+eliminarElemento: log n + O(calcularPeligrosidad)
+
+agregar las complejidades de las funciones usadas de vector, set y camion
 
 \vspace*{0.75cm} \noindent
 

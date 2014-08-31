@@ -98,6 +98,7 @@ vector<camion> biohazard (set<int>& elementos)
   vector<camion> camiones;
   do {    
     camiones.push_back(camion());
+    cerr << "#camiones = " << camiones.size() << endl;
   } while (!backtracking(camiones, elementos));
   return camiones;
 }

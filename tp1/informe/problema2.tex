@@ -43,16 +43,10 @@ altura y los de pared derecha la eliminan.
 \li \Comment vertices: vector de vértices
 \li $\id{horizonte} \gets \emptyset$
 \li $\id{alturas} \gets \emptyset$
-
 \li $\proc{sort}(vertices)$
-
 \li $\id{vertice} \gets \proc{primero}(vertices)$
-
-
 \li $\proc{agregar}(horizonte, <vertice.x, vertice.y>)$
 \li $\proc{agregar}(alturas, vertice.y)$
-
-
 \li \While $\id{vertice} no es el ultimo$
       \Do
 \li     \If $vertice.posicion_pared == izquierda$
@@ -76,7 +70,6 @@ altura y los de pared derecha la eliminan.
           \End
 \li     $\id{vertice} \gets \id{vertice} + 1$
       \End
-
 \li \Return $\id{horizonte}$
 \end{codebox}
 
@@ -88,26 +81,70 @@ altura y los de pared derecha la eliminan.
 
 \vspace*{0.3cm}
 
-desarrollo
 
+Dado un conjunto de edificios $E$, la solución será un conjunto de puntos
+$S_E = \{p \in \mathbb{Z}^2 : \exists e \in E / (p_x = e_i \land p_y = e_y) \land
+p \notin T_E\} \cup \{p \in \mathbb{Z}^2 : \exists e \in E / (p_x = e_d \land p
+\notin T_E) \land p_y = \max{\{e_y : e \in E \land e_i \leq p_x < e_d\} \cup \{0\}}\}$,
+donde $T_E = \{p \in \mathbb{Z}^2 : \exists e \in E / (e_i \leq p_x \leq e_d \land p_y < e_y)\}$
 
+Para demostrar la correctitud de este algoritmo, veremos que cumple con la 
+definición dada más arriba. 
 
+Primero, el algoritmo recorre en orden todos los puntos de los edificios. 
+(completar con las lineas correspondientes del pseudocodigo)
+Luego, para cada punto, chequea si cumple las condiciones necesarias para ser 
+incorporado a la solución, es decir:
+
+\begin{itemize}
+  \item si es un vértice izquierdo del edificio, que el último punto cargado en
+  la solución no se encuentre por encima de éste. Además, si la coordenada $x$ 
+  del último punto cargado es igual a la de éste, se reemplaza el último punto 
+  agregado por el actual.
+  
+  \item si es un vértice derecho, dado el conjunto de alturas, si la altura 
+  máxima es menor a la altura del punto, se agrega a la solución el punto con 
+  coordenada $x = x_{vertice}$ e $y = max(conj(altura))$
+\end{itemize}
+ 
 
 
 \subsection{2.4. Análisis de complejidad.}
 
 \vspace*{0.3cm}
 
+Respecto de las operaciones utilizadas de \verb|vector|, \verb|size| $\in O(1)$,
+\verb|back| $\in O(1)$, \verb|resize| $\in O(n)$, \verb|push_back| $\in O(1)$, 
+\verb|begin| $\in O(1)$, \verb|end| $\in O(1)$ y \verb|operator[]| $\in O(1)$.
+
+\noindent
+En \verb|Vertice|, el constructor y el \verb|operator<| son $O(1)$. También 
+tiene complejidad constante el constructor de \verb|Punto|.
+
+\noindent
+En las operaciones utilizadas de \verb|multiset|, \verb|insert| $\in O(\log n)$, 
+\verb|erase| $\in O(1)$, \verb|find| $\in O(\log n)$, \verb|empty| $\in O(1)$ y 
+\verb|rbegin| $\in O(1)$.
+
+\noindent
+Sobre los iteradores, se realizan las operaciones \verb|++| y \verb|*|, ambas
+con complejidad constante.
+
+\noindent
+Se implementó la función \verb|maximo|, que dado un \verb|multiset|, devuelve 
+el mayor de sus elementos, o 0 si el \verb|multiset| está vacío. Dicha función
+tiene complejidad constante, pues \verb|empty| $\in O(1)$ y \verb|rbegin| $\in O(1)$.
+
+\noindent
+El algoritmo \verb|sort| utilizado tiene complejidad $O(n \log n)$.
+
+\noindent
+Se itera sobre cada vértice y en cada iteración, en el peor de los casos, se 
+realiza una operación de complejidad logarítmica. Al tener $2n$ vértices, esto se
+traduce en $O(n \log n)$.
 
 
-desarrollo
-
-
-explicar lo del multiset y las complejidades y bla.
-
-
-
-
+\textcolor{red}{\textbf{FALTA DESCRIBIR BIEN EL ALGORITMO, $i.e.$, EL ÚLTIMO PÁRRAFO}}
 
 \subsection{2.5. Partes relevantes del código (hacer referencia al apéndice).}
 

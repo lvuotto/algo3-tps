@@ -5,7 +5,7 @@
 El objetivo de este problema es, dado un conjunto de edificios representados
 por la posición de sus paredes izquierda, derecha y su altura, representar el
 contorno en el horizonte formado por la superposición de los mismos, excluyendo
-las líneas internas. 
+las líneas internas.
 
 \vspace*{0.5cm}
 
@@ -16,7 +16,7 @@ las líneas internas.
   izquierda sobre el eje $X$, la segunda coordenada es la altura en el eje $Y$ y la
   tercer coordenada es la ubicación de la pared derecha sobre el eje $X$, la
   solución debe ser 4 2 5 4 7 2 9 5 12 0 (es única).
-  
+
   \item \textcolor{red}{Agregar un ejemplo más y algún esquema/dibujo}
 \end{itemize}
 
@@ -26,11 +26,11 @@ las líneas internas.
 
 \vspace*{0.3cm}
 
-El algoritmo propuesto para resolver este problema consiste en tomar a los edificios 
+El algoritmo propuesto para resolver este problema consiste en tomar a los edificios
 por los 2 vértices que lo identifican (sus puntos con $Y \neq 0$).
 
 Recorriendo esos vértices en orden, los pertenecientes a una pared izquierda
-generarán un nuevo punto en el horizonte si son más altos que el último punto agregado 
+generarán un nuevo punto en el horizonte si son más altos que el último punto agregado
 y los que correspondan a una pared derecha, si corresponden al final de la
 altura actual, generarán un punto en la intersección con la siguiente altura mayor.
 
@@ -83,28 +83,54 @@ altura y los de pared derecha la eliminan.
 Dado un conjunto de edificios $E$, la solución será un conjunto de puntos
 $S_E = \{p \in \mathbb{Z}^2 : \exists e \in E / (p_x = e_i \land p_y = e_y) \land
 p \notin T_E\} \cup \{p \in \mathbb{Z}^2 : \exists e \in E / (p_x = e_d \land p
-\notin T_E) \land p_y = \max{\{e_y : e \in E \land e_i \leq p_x < e_d\} \cup \{0\}}\}$,
-donde $T_E = \{p \in \mathbb{Z}^2 : \exists e \in E / (e_i \leq p_x \leq e_d \land p_y < e_y)\}$
+\notin T_E) \land p_y = \max({\{e_y : e \in E \land e_i \leq p_x < e_d\} \cup \{0\}})\}$,
+donde $T_E = \{p \in \mathbb{Z}^2 : \exists e \in E / (e_i \leq p_x \leq e_d \land p_y \leq e_y)\}$
+son los puntos cubiertos por todos los edificios.
 
-Para demostrar la correctitud de este algoritmo, veremos que cumple con la 
-definición dada más arriba. 
+Para demostrar la correctitud de este algoritmo, veremos que cumple con la
+definición dada más arriba.
 
-Primero, el algoritmo recorre en orden todos los puntos de los edificios. 
-(completar con las lineas correspondientes del pseudocodigo)
-Luego, para cada punto, chequea si cumple las condiciones necesarias para ser 
-incorporado a la solución, es decir:
+Primero, el algoritmo ordena y recorre en orden todos los puntos de los edificios.
+
+Por cada punto $p$, se revisa si corresponde agregar o modificar un punto a la
+solución parcial, de la siguiente manera:
 
 \begin{itemize}
-  \item si es un vértice izquierdo del edificio, que el último punto cargado en
-  la solución no se encuentre por encima de éste. Además, si la coordenada $x$ 
-  del último punto cargado es igual a la de éste, se reemplaza el último punto 
-  agregado por el actual.
-  
-  \item si es un vértice derecho, dado el conjunto de alturas, si la altura 
-  máxima es menor a la altura del punto, se agrega a la solución el punto con 
-  coordenada $x = x_{vertice}$ e $y = max(conj(altura))$
+  \item Si es un vértice izquierdo del edificio, $p = <e_i, e_y>$, se carga su
+  altura en el multiconjunto de alturas.
+  \begin{itemize}
+    \item Si su altura es menor o igual a la del último punto cargado, como
+    vamos recorriendo en orden, podemos asegurar que $\exists e \in E / e_i \leq p_x \leq e_d \land p_y \leq e_y$,
+    por lo tanto está cubierto por un edificio y no corresponde cargarlo.
+
+    \item Si su altura es mayor a la del último punto y también su coordenada $X$,
+    entonces podemos asegurar que $\nexists e \in E / e_i < p_x \land p_y \leq e_y$,
+    es decir, no está cubierto por un edificio que comience antes, entonces cargamos
+    el punto. Pero:
+
+    \item Si su altura es mayor a la del último punto y sus coordenadas $X$ son
+    iguales, quiere decir que el punto cargado no estaba cubierto por uno que comience
+    antes, sino por uno que comienza en el mismo punto, pero que es más alto.
+    En este caso reemplazamos la atura cargada en el último punto, por la altura
+    de este.
+  \end{itemize}
+
+  \item Si es un vértice derecho del edificio, $p = <e_d, e_y>$, se elimina su
+  altura del munticonjunto.
+  \begin{itemize}
+    \item Si su altura sigue siendo igual a la máxima del multiconjunto, podemos
+    afirmar que $\exists e \in E / e_i \leq p_x \leq e_d \land p_y \leq e_y$ y
+    no corresponde cargar un nuevo punto.
+
+    \item Si su altura es mayor a la máxima del multiconjunto,
+    $\nexists e \in E / e_i < p_x \land p_y \leq e_y$, por lo tanto marca el
+    final de un edificio en el horizonte. Y se carga el punto $p' = <e_d, \max(alturas)>$,
+    ya que al recorrer en orden, en alturas quedan $\{e_y \in \mathbb{Z} : e \in E / e_i \leq p_x < e_x\}$
+  \end{itemize}
 \end{itemize}
 
+De esta forma, nos aseguramos de considerar todos los puntos posibles y terminando
+únicamente con los que corresponden.
 
 
 \subsection{Análisis de complejidad.}
@@ -112,16 +138,16 @@ incorporado a la solución, es decir:
 \vspace*{0.3cm}
 
 Respecto de las operaciones utilizadas de \verb|vector|, \verb|size| $\in O(1)$,
-\verb|back| $\in O(1)$, \verb|resize| $\in O(n)$, \verb|push_back| $\in O(1)$, 
+\verb|back| $\in O(1)$, \verb|resize| $\in O(n)$, \verb|push_back| $\in O(1)$,
 \verb|begin| $\in O(1)$, \verb|end| $\in O(1)$ y \verb|operator[]| $\in O(1)$.
 
 \noindent
-En \verb|Vertice|, el constructor y el \verb|operator<| son $O(1)$. También 
+En \verb|Vertice|, el constructor y el \verb|operator<| son $O(1)$. También
 tiene complejidad constante el constructor de \verb|Punto|.
 
 \noindent
-En las operaciones utilizadas de \verb|multiset|, \verb|insert| $\in O(\log n)$, 
-\verb|erase| $\in O(1)$, \verb|find| $\in O(\log n)$, \verb|empty| $\in O(1)$ y 
+En las operaciones utilizadas de \verb|multiset|, \verb|insert| $\in O(\log n)$,
+\verb|erase| $\in O(1)$, \verb|find| $\in O(\log n)$, \verb|empty| $\in O(1)$ y
 \verb|rbegin| $\in O(1)$.
 
 \noindent
@@ -129,7 +155,7 @@ Sobre los iteradores, se realizan las operaciones \verb|++| y \verb|*|, ambas
 con complejidad constante.
 
 \noindent
-Se implementó la función \verb|maximo|, que dado un \verb|multiset|, devuelve 
+Se implementó la función \verb|maximo|, que dado un \verb|multiset|, devuelve
 el mayor de sus elementos, o 0 si el \verb|multiset| está vacío. Dicha función
 tiene complejidad constante, pues \verb|empty| $\in O(1)$ y \verb|rbegin| $\in O(1)$.
 
@@ -137,13 +163,22 @@ tiene complejidad constante, pues \verb|empty| $\in O(1)$ y \verb|rbegin| $\in O
 El algoritmo \verb|sort| utilizado tiene complejidad $O(n \log n)$.
 
 \noindent
-Se itera sobre cada vértice y en cada iteración, en el peor de los casos, se 
-realiza una operación de complejidad logarítmica. Al tener $2n$ vértices, esto se
-traduce en $O(n \log n)$.
 
+\begin{enumerate}
+  \item Se iteran todos los edificios y se cargan sus 2 vértices, dentro
+  del ciclo la asignación es constante. Por lo tanto el ciclo $\in O(n)$
 
-\textcolor{red}{\textbf{FALTA DESCRIBIR BIEN EL ALGORITMO, $i.e.$, EL ÚLTIMO PÁRRAFO}}
+  \item Se ordenan los vértices con \verb|sort|, con la función de comparación
+  constante. Este paso se realiza en $O(n)$
 
+  \item Se itera sobre cada vértice y en cada iteración se realizan una cantidad
+  constante de comparaciones, asignaciones, todas $\in O(1)$. Y hasta una operación
+  (\verb|agregar| o \verb|quitar|) $\in O(\log n)$.
+
+  \item Al tener $2n$ vértices, la complejidad total del ciclo $\in O(n \log n)$.
+
+  \item La complejidad total es la suma de estos pasos: $O(n \log n)$
+\end{enumerate}
 
 
 \subsection{Partes relevantes del código (hacer referencia al apéndice).}

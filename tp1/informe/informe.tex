@@ -65,8 +65,14 @@
 \newpage
 
 \section{Plataforma de pruebas}
-    \textcolor{red}{\textbf{completar!}} \medskip
-    (el tp se corrió y probó en la máquina X del labo 4, con tal hw, etc.)
+El testeo de los algoritmos implementados fue realizado, principalmente, en las máquinas del laboratorio 3 del DC. \newline
+\begin{itemize}
+  \item \textbf{Sistema Operativo:} Ubuntu Linux 12.04 x86_64, kernel 3.2.0-30-generic
+  
+  \item \textbf{Especificaciones del Software:} el código está implementado en C++. Utilizamos Bash y Ruby para los scripts.
+  
+  \item \textbf{Especificaciones del Hardware:} Intel(R) Core(TM) i5-2500K CPU @ 3.30GHz, 8GB de RAM.
+\end{itemize}
 
 \newpage
 
@@ -85,9 +91,27 @@
 
 \newpage
 \section{Acerca de los tests}
-    \textcolor{red}{\textbf{completar!}} \medskip
-    escribir algo acerca de cómo se pensaron los tests, cómo medimos, cómo se generaron los casos aleatorios, 
-    cosas generales que valga para todos los problemas, los detalles particulares los aclaramos en cada uno después.
+Los casos aleatorios se generan mediante los scripts \verb|ejN.random.rb|, donde 
+N es el número correspondiente al ejercicio. Estos scripts toman siempre dos parámetros, 
+siendo el primero la semilla que utilizamos para generar números pseudoaleatorios, que 
+por defecto toma el valor 0 si no es especificado y el segundo parámetro corresponde 
+al tamaño de la entrada. 
+
+Además de los tests con casos aleatorios, tenemos en cuenta los mejores y peores 
+casos de cada algoritmo, fijando los valores adecuados de los parámetros para 
+obtenerlos.
+
+En cuanto a la metodología para medir el tiempo, utilizamos el archivo \verb|tiempo.h|, 
+que define macros para contar la cantidad de ciclos de clock producidos entre dos instantes. 
+Cada instancia se repite 25 veces para reducir el impacto de los \textit{outliers}, quedándonos 
+con el valor mínimo en cada caso. Estos valores se vuelcan a un archivo \verb|info.n.dat|, que 
+es utilizado luego para generar los gráficos mediante gnuplot.
+
+Para correr los tests estáticos, se ejecuta \verb|make; make test| y para los 
+casos aleatorios (utilizados para los gráficos), \verb|make; make plot|. 
+
+Todos los archivos \verb|.cc| son compilados utilizando la optimización \verb|-O3|. 
+  
 
 \newpage
 

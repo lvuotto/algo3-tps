@@ -4,6 +4,11 @@
 #include <set>
 #include <algorithm>
 
+#include "tiempo.h"
+
+
+#define CANTIDAD 25
+
 
 using namespace std;
 
@@ -60,7 +65,19 @@ int main () {
       vertices[i * 2 + 1] = Vertice(derecha, altura, DERECHA);
     }
 
-    vector<Punto> horizonte = calcular_horizonte(vertices);
+    vector<Punto> horizonte;
+    unsigned long inicio, fin, min;
+    MEDIR_TIEMPO_START(inicio);
+    horizonte = calcular_horizonte(vertices);
+    MEDIR_TIEMPO_STOP(fin);
+    min = fin - inicio;
+    for (int i = 1; i < CANTIDAD; i++) {
+      MEDIR_TIEMPO_START(inicio);
+      horizonte = calcular_horizonte(vertices);
+      MEDIR_TIEMPO_STOP(fin);
+      min = fin - inicio < min ? fin - inicio : min;
+    }
+    cerr << cant_edificios << " " << min << endl;
     imprimir_horizonte(horizonte);
 
     cin >> cant_edificios;

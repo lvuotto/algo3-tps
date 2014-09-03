@@ -37,7 +37,7 @@ int main () {
     saltos = cruzar_puente(c, puente);
     MEDIR_TIEMPO_STOP(fin);
     min = fin - inicio;
-    for (int i = 0; i < CANTIDAD; i++) {
+    for (int i = 1; i < CANTIDAD; i++) {
       MEDIR_TIEMPO_START(inicio);
       saltos = cruzar_puente(c, puente);
       MEDIR_TIEMPO_STOP(fin);

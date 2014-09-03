@@ -1,41 +1,41 @@
-\subsection{2.1. Descripción del problema.}
+\subsection{Descripción del problema.}
 
 \vspace*{0.3cm}
 
-El objetivo de este problema es, dado un conjunto de edificios, representados
-por la posición de sus paredes izquierda y derecha y su altura, representar el
+El objetivo de este problema es, dado un conjunto de edificios representados
+por la posición de sus paredes izquierda, derecha y su altura, representar el
 contorno en el horizonte formado por la superposición de los mismos, excluyendo
-las líneas internas. \medskip
+las líneas internas. 
+
+\vspace*{0.5cm}
 
 \textbf{Ejemplos:}
 \begin{itemize}
   \item Para un conjunto de 3 edificios, cuyas coordenadas son (4, 2, 11),
   (5, 4, 7) y (9, 5, 12), dónde la primer coordenada es la ubicación de la pared
-  izquierda sobre el eje X, la segunda coordenada es la altura en el eje Y y la
-  tercer coordenada es la ubicación de la pared derecha sobre el eje X, la
-  solución debe ser 4 2 5 4 7 2 9 5 12 0
-  \item Agregar un ejemplo más e imágenes
+  izquierda sobre el eje $X$, la segunda coordenada es la altura en el eje $Y$ y la
+  tercer coordenada es la ubicación de la pared derecha sobre el eje $X$, la
+  solución debe ser 4 2 5 4 7 2 9 5 12 0 (es única).
+  
+  \item \textcolor{red}{Agregar un ejemplo más y algún esquema/dibujo}
 \end{itemize}
 
 
 
-
-
-\subsection{2.2. Desarrollo de la idea y pseudocódigo.}
+\subsection{Desarrollo de la idea y pseudocódigo.}
 
 \vspace*{0.3cm}
 
-La idea para resolver este problema consiste en tomar a los edificios por los 2
-vértices que lo identifican (sus puntos con Y $\neq$ 0).
+El algoritmo propuesto para resolver este problema consiste en tomar a los edificios 
+por los 2 vértices que lo identifican (sus puntos con $Y \neq 0$).
 
-Recorriendo esos vértices en orden, los que correspondan a una pared izquierda
-generarán un nuevo punto del horizonte si son más altos que el último punto y
-los que correspondan a una pared derecha, si son el fin correspondiente de la
-altura actual, generarán un punto en la intersección con la siguiente altura
-más alta.
+Recorriendo esos vértices en orden, los pertenecientes a una pared izquierda
+generarán un nuevo punto en el horizonte si son más altos que el último punto agregado 
+y los que correspondan a una pared derecha, si corresponden al final de la
+altura actual, generarán un punto en la intersección con la siguiente altura mayor.
 
 Para saber hasta dónde se debe bajar luego de un vértice de pared derecha, se
-mantiene un multiconjunto de alturas, cada vértice de pared izquierda carga su
+mantiene un multiconjunto de alturas. Cada vértice de pared izquierda carga su
 altura y los de pared derecha la eliminan.
 
 \begin{codebox}
@@ -75,9 +75,7 @@ altura y los de pared derecha la eliminan.
 
 
 
-
-
-\subsection{2.3. Justificación de la resolución y demostración de correctitud.}
+\subsection{Justificación de la resolución y demostración de correctitud.}
 
 \vspace*{0.3cm}
 
@@ -106,10 +104,10 @@ incorporado a la solución, es decir:
   máxima es menor a la altura del punto, se agrega a la solución el punto con 
   coordenada $x = x_{vertice}$ e $y = max(conj(altura))$
 \end{itemize}
- 
 
 
-\subsection{2.4. Análisis de complejidad.}
+
+\subsection{Análisis de complejidad.}
 
 \vspace*{0.3cm}
 
@@ -146,7 +144,9 @@ traduce en $O(n \log n)$.
 
 \textcolor{red}{\textbf{FALTA DESCRIBIR BIEN EL ALGORITMO, $i.e.$, EL ÚLTIMO PÁRRAFO}}
 
-\subsection{2.5. Partes relevantes del código (hacer referencia al apéndice).}
+
+
+\subsection{Partes relevantes del código (hacer referencia al apéndice).}
 
 \vspace*{0.3cm}
 
@@ -154,9 +154,7 @@ desarrollo.
 
 
 
-
-
-\subsection{2.6. Experimentación y gráficos.}
+\subsection{Experimentación y gráficos.}
 
 \vspace*{0.3cm}
 

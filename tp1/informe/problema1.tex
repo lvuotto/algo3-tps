@@ -1,4 +1,4 @@
-\subsection{1.1. Descripción del problema.}
+\subsection{Descripción del problema.}
 
 \vspace*{0.3cm}
 
@@ -28,9 +28,7 @@ son valores naturales}.
 
 
 
-
-
-\subsection{1.2. Desarrollo de la idea y pseudocódigo.}
+\subsection{Desarrollo de la idea y pseudocódigo.}
 
 \vspace*{0.3cm}
 
@@ -75,9 +73,7 @@ Si retrocediendo de este modo se llega a la posición en la que se encuentran el
 \end{codebox}
 
 
-
 \vspace*{0.5cm}
-
 
 
 \begin{codebox}
@@ -86,9 +82,7 @@ Si retrocediendo de este modo se llega a la posición en la que se encuentran el
 \end{codebox}
 
 
-
 \vspace*{0.5cm}
-
 
 
 \begin{codebox}
@@ -113,9 +107,7 @@ Si retrocediendo de este modo se llega a la posición en la que se encuentran el
 
 
 
-
-
-\subsection{1.3. Justificación de la resolución y demostración de correctitud.}
+\subsection{Justificación de la resolución y demostración de correctitud.}
 
 \vspace*{0.3cm}
 
@@ -235,66 +227,67 @@ separaremos las entradas en casos y analizaremos éstos a continuación.
 \newpage
 
 \textbf{Demostración (\textsc{esPosibleCruzar}):} 
-  
-  La función \textsc{esPosibleCruzar} mantiene un \textbf{contador de tablones rotos consecutivos},
+\begin{itemize}
+\item La función \textsc{esPosibleCruzar} mantiene un \textbf{contador de tablones rotos consecutivos},
 inicializado en 0. Recorre todos los tablones \textbf{en orden}; si el tablón actual
 está sano, resetea el contador a 0, sino (está roto) le suma 1.
 Luego, si en algún momento el contador es \textbf{mayor ó igual al salto máximo posible},
 devuelve \textbf{falso}. En cambio, si se recorren todos los tablones y esto no sucede, 
 la función devuelve \textbf{verdadero}.
 
-Por lo tanto la función devuelve falso $\iff$ existe en algún momento una
-cantidad de tablones rotos consecutivos mayor o igual al salto máximo. Veamos
-que esto es equivalente a que el puente pueda ser cruzado:
+Por lo tanto, la función devuelve falso $\iff$ existe en algún momento una
+cantidad de tablones rotos consecutivos mayor o igual al salto máximo. 
 
-Teorema: Es posible cruzar un puente $\iff$ su cantidad de tablones rotos
-consecutivos es menor al salto máximo.
+Veamos que esto es equivalente a que el puente pueda ser cruzado: \medskip
 
-Demostremos la ida:
-Sea un puente de n tablones con un salto máximo de c y k la cantidad máxima de
-tablones rotos consecutivos.
-Supongamos k $\geq$ c.
-Si es posible cruzarlo, entonces existe una solución S, que consiste en una
+\textbf{Teorema:} Es posible cruzar un puente $\iff$ su cantidad de tablones rotos
+consecutivos es menor al salto máximo. \medskip
+
+\item \textbf{Demostremos la ida:}
+Sea un puente de $n$ tablones, con un salto máximo de $c$ y una cantidad máxima de
+tablones rotos consecutivos $k$.
+Supongamos $k \geq c$.
+Si es posible cruzarlo, entonces existe una solución $S$, que consiste en una
 secuencia de saltos.
-Sean t_1 el primero de ellos y t_c al tablón en la posición c de los rotos
-consecutivos, que existe porque c $\leq$ k.
-Sea s_0 $\in$ S la posición (en tierra o en un tablón) máxima anterior a t_1.
-Y sea s_1 $\in$ S la posición inmediata siguiente a s_0.
-Dado que c es el salto máximo, entonces s_1 - s_0 $\leq$ c o, lo que es lo
-mismo, s_0 + c $\geq$ s_1.
-Elegimos s_0 < t_0, entonces s_0 + c < t_0 + c.
-Pero esto es s_0 + c < t_c y s_1 $\leq$ s_0 + c < t_c.
+Sean $t_1$ el primero de los tablones y $t_c$ el tablón correspondiente a la posición $c$, entre 
+los tablones consecutivos rotos (que sabemos que existe porque c $\leq$ k).
+Sea $s_0 \in S$ la posición (en tierra o en un tablón) máxima anterior a $t_1$ y sea $s_1 \in S$ 
+la posición inmediata siguiente a $s_0$.
+Dado que $c$ es el salto máximo, entonces $s_1 - s_0 \leq c$ ó, lo que es lo
+mismo, $s_0 + c \geq s_1$.
+Elegimos $s_0 < t_0$, entonces $s_0 + c < t_0 + c$.
+Pero esto es $s_0 + c < t_c$ y $s_1 \leq s_0 + c < t_c$.
 
-Entonces o s_1 < t_0, pero que es imposible porque se eligió s_0 como el máximo
-menor a t_0.
-O t_0 $\leq$ s_1 < t_c, pero entonces el salto se hubiera realizado en un
-tablón roto.
+Entonces, o bien $s_1 < t_0$ (que resulta imposible, pues se eligió $s_0$ como el máximo
+menor a $t_0$), ó $t_0 \leq s_1 < t_c$, pero entonces el salto se hubiera realizado a un
+tablón roto. \medskip
 
-\textbf{Absurdo}, que vino de suponer que existía una solución cuando la cantidad de
-tablones rotos consecutivos es igual o mayor al salto máximo.
+\textbf{¡Absurdo!}, que viene de suponer que existe una solución cuando la cantidad de
+tablones rotos consecutivos es igual o mayor al salto máximo. \medskip
 
-\textbf{La vuelta:}
-Sea un puente de $n$ tablones con salto máximo $c$ y $k$ la cantidad máxima de
-tablones rotos consecutivos, con $k < c$.
+\item \textbf{Demostremos la vuelta:}
+Sea un puente de $n$ tablones, con salto máximo $c$ y cantidad máxima de
+tablones rotos consecutivos $k$, con $k < c$.
 Sea $S$ la solución que consiste en caer en todos los tablones sanos y luego al
-otro lado del puente.
-Esta solución cruza el puente completamente.
-Y para cada posición $s_i \in S, 1 \leq s_{i+1} - s_i \leq k$, ya que no
-saltea tablones sanos.
-Entonces $s_{i+1} - s_i \leq k => s_{i+1} - s_i \leq c$. Por lo tanto todos
-los saltos en $S$ son válidos y la solución existe.
+otro lado del puente (es decir, cruzarlo).
+
+Esta solución cruza el puente completamente y para cada posición 
+$s_i \in S, 1 \leq s_{i+1} - s_i \leq k$, ya que no saltea tablones sanos.
+Entonces $s_{i+1} - s_i \leq k => s_{i+1} - s_i \leq c$. 
+
+Por lo tanto todos los saltos en $S$ son válidos y la solución existe.
+\end{itemize}
 
 \end{itemize}
 
 
 
-
-
-\subsection{1.4. Análisis de complejidad.}
+\subsection{Análisis de complejidad.}
 
 \vspace*{0.3cm}
 
-Para el análisis de complejidad nos basaremos en el pseudocódigo del punto \textbf{1.2}.
+Para el análisis de complejidad nos basaremos en el pseudocódigo de la función 
+\textsc{cruzarPuente}, correspondiente al ítem \textbf{3.2}.
 
 \begin{enumerate}
   \item Todas las operaciones realizadas sobre el contenedor \verb|vector| de la \textit{STL} (size, push_back, empty y la creación de iteradores)
@@ -337,9 +330,7 @@ Por lo tanto, la \textbf{complejidad total} del algoritmo implementado para este
 
 
 
-
-
-\subsection{1.5. Partes relevantes del código (hacer referencia al apéndice).}
+\subsection{Partes relevantes del código (hacer referencia al apéndice).}
 
 \vspace*{0.3cm}
 
@@ -347,9 +338,7 @@ desarrollo.
 
 
 
-
-
-\subsection{1.6. Experimentación y gráficos.}
+\subsection{Experimentación y gráficos.}
 
 \vspace*{0.3cm}
 

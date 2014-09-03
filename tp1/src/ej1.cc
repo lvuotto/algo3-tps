@@ -43,8 +43,8 @@ int main () {
       MEDIR_TIEMPO_STOP(fin);
       min = fin - inicio < min ? fin - inicio : min;
     }
-    cerr << n << " " << c << " " << min <<
-        (saltos.empty() ? " no" : " si") << endl;
+    cerr << n << " " << c << " " << min
+         << " " << saltos.size()  << endl;
     imprimir_saltos(saltos);
 
     cin >> n;

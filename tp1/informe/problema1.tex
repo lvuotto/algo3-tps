@@ -342,16 +342,26 @@ desarrollo.
 
 \vspace*{0.3cm}
 
-\subsubsection{Test 1 - distribución aleatoria de tablones}
+\subsubsection{Test 1 - con variación de tablones rotos/sanos}
 
 En este test, fijamos el valor de $c$ (salto máximo) en 20, mientras que $n$ (cantidad de tablones) 
-se inicializa en 1000 y va incrementándose también de a 1000, hasta alcanzar 1000000. La 
+se inicializa en 100 y va incrementándose también de a 100, hasta alcanzar 100000. La 
 distribución de los tablones rotos/sanos se genera aleatoriamente, de forma uniforme. 
 Se toma el valor mínimo de cantidad de ciclos luego de 25 corridas. 
 
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=2]{imagenes/XXX.jpg}
+  \end{center}
+\end{figure}
 
 \vspace*{0.5cm}
 
 
-\subsubsection{Test 2 - }
+\subsubsection{Test 2 - peor caso}
+
+En este test, fijamos el valor de $c$ (salto máximo) en 1, mientras que $n$ (cantidad de tablones) 
+se inicializa en 100 y va incrementándose también de a 100, hasta alcanzar 100000. Todos los 
+tablones se encuentran rotos. 
+Se toma el valor mínimo de cantidad de ciclos luego de 25 corridas.
 

@@ -3,6 +3,6 @@
 N=100
 
 for i in {1..100}; do
-  tests/ej2.random.rb 176 $N | bin/ej1 > /dev/null
+  tests/ej2.random.rb 176 $N | bin/ej2 > /dev/null
   N=$((N + 100))
 done

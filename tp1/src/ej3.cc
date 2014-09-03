@@ -2,6 +2,11 @@
 #include <set>
 #include <vector>
 
+#include "tiempo.h"
+
+
+#define CANTIDAD 10
+
 
 using namespace std;
 
@@ -83,7 +88,24 @@ int main ()
       elementos.insert(i);
     }
     
-    vector<camion> solucion = biohazard(elementos);
+    set<int> backup_elementos = elementos;
+    vector<camion> solucion;
+    unsigned long inicio, fin, min;
+    MEDIR_TIEMPO_START(inicio);
+    solucion = biohazard(elementos);
+    MEDIR_TIEMPO_STOP(fin);
+    elementos = backup_elementos;
+    min = fin - inicio;
+    for (int i = 0; i < CANTIDAD; i++) {
+      MEDIR_TIEMPO_START(inicio);
+      solucion = biohazard(elementos);
+      MEDIR_TIEMPO_STOP(fin);
+      elementos = backup_elementos;
+      min = fin - inicio < min ? fin - inicio : min;
+    }
+    cerr << cantidadElementos << " "
+         << kMaximaPeligrosidad << " "
+         << min << endl;
     mostrar_solucion(solucion, cantidadElementos);
     
     cin >> cantidadElementos;
@@ -98,7 +120,6 @@ vector<camion> biohazard (set<int>& elementos)
   vector<camion> camiones;
   do {    
     camiones.push_back(camion());
-    cerr << "#camiones = " << camiones.size() << endl;
   } while (!backtracking(camiones, elementos));
   return camiones;
 }

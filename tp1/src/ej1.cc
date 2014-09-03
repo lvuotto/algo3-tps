@@ -2,6 +2,11 @@
 #include <iostream>
 #include <vector>
 
+#include "tiempo.h"
+
+
+#define CANTIDAD 25
+
 
 using namespace std;
 
@@ -26,7 +31,20 @@ int main () {
       cin >> puente[i];
     }
 
-    vector<unsigned int> saltos = cruzar_puente(c, puente);
+    vector<unsigned int> saltos;
+    unsigned long inicio, fin, min;
+    MEDIR_TIEMPO_START(inicio);
+    saltos = cruzar_puente(c, puente);
+    MEDIR_TIEMPO_STOP(fin);
+    min = fin - inicio;
+    for (int i = 1; i < CANTIDAD; i++) {
+      MEDIR_TIEMPO_START(inicio);
+      saltos = cruzar_puente(c, puente);
+      MEDIR_TIEMPO_STOP(fin);
+      min = fin - inicio < min ? fin - inicio : min;
+    }
+    cerr << n << " " << c << " " << min <<
+        (saltos.empty() ? " no" : " si") << endl;
     imprimir_saltos(saltos);
 
     cin >> n;

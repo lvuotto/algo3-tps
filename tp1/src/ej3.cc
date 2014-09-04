@@ -5,7 +5,7 @@
 #include "tiempo.h"
 
 
-#define CANTIDAD 10
+#define CANTIDAD 5
 
 
 using namespace std;

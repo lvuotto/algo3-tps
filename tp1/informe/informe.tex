@@ -12,8 +12,6 @@
 \usepackage{sectsty}
 \usepackage{wrapfig}
 \usepackage{listings}
-%\lstset{language=C}
-
 
 \input{codesnippet}
 \input{page.layout}
@@ -30,6 +28,17 @@
 
 \begin{document}
 
+\lstset{
+  language=C++,
+  backgroundcolor=\color{white},   % choose the background color
+  basicstyle=\footnotesize,        % size of fonts used for the code
+  breaklines=true,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{mymauve},     % string literal style
+}
 
 \thispagestyle{empty}
 \materia{Algoritmos y Estructuras de Datos III}
@@ -122,8 +131,70 @@ Todos los archivos \verb|.cc| son compilados utilizando la optimización \verb|-
 \newpage
 
 \section{Apéndice: secciones relevantes del código}
-    \textcolor{red}{\textbf{completar!}} \medskip
-    en cada problema hacer referencia a la parte correspondiente de este apéndice.
+
+\subsubsection{Problema 1}
+
+
+
+\begin{lstlisting}
+vector<unsigned int> cruzar_puente (unsigned int salto_maximo, vector<unsigned int>& puente) {
+  vector<unsigned int> saltos;
+  if (salto_maximo > puente.size()) {
+    saltos.push_back(salto_maximo);
+    return saltos;
+  }
+  if (!posible_cruzar(salto_maximo, puente)) {
+    return saltos;
+  }
+  unsigned int salto_actual;
+  unsigned int posicion_actual = 0;
+  while (posicion_actual <= puente.size()) {
+    salto_actual = salto_maximo;
+    while (!puede_saltar(puente, posicion_actual + salto_actual - 1)) {
+      salto_actual--;
+    }
+    posicion_actual += salto_actual;
+    saltos.push_back(posicion_actual);
+  }
+  return saltos;
+}
+\end{lstlisting} 
+
+\vspace*{0.5cm}
+
+\begin{lstlisting}
+bool posible_cruzar (unsigned int salto_maximo, vector<unsigned int>& puente) {
+  unsigned int tablones_rotos_consecutivos = 0;
+  for (unsigned int i = 0; i < puente.size(); i++) {
+    if (puede_saltar(puente, i)) {
+      tablones_rotos_consecutivos = 0;
+    } else {
+      tablones_rotos_consecutivos++;
+    }
+    if (tablones_rotos_consecutivos >= salto_maximo) {
+      return false;
+    }
+  }
+  return true;
+}
+\end{lstlisting}
+
+\vspace*{0.5cm}
+
+\begin{lstlisting}
+bool puede_saltar (vector<unsigned int>& puente, unsigned int tablon) {
+  return tablon >= puente.size() || puente[tablon] == 0;
+}
+\end{lstlisting}
+
+
+
+\subsubsection{Problema 2}
+
+
+
+\subsubsection{Problema 3}
+
 
 
 \end{document}

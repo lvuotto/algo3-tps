@@ -1,4 +1,4 @@
-	\documentclass[a4paper]{article}
+\documentclass[a4paper]{article}
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{fancyhdr}
@@ -105,7 +105,8 @@ El testeo de los algoritmos implementados fue realizado, principalmente, en las 
 \begin{itemize}
   \item \textbf{Sistema Operativo:} Ubuntu Linux 12.04 x86_64, kernel 3.2.0-30-generic
   
-  \item \textbf{Especificaciones del Software:} el código está implementado en C++. Utilizamos Bash y Ruby para los scripts.
+  \item \textbf{Especificaciones del Software:} el código está implementado en C++, compilado con \verb|-std=c++0x|. 
+  Utilizamos Bash y Ruby para los scripts. Los gráficos fueron realizados con gnuplot.
   
   \item \textbf{Especificaciones del Hardware:} Intel(R) Core(TM) i5-2500K CPU @ 3.30GHz, 8GB de RAM.
 \end{itemize}
@@ -160,7 +161,7 @@ Todos los archivos \verb|.cc| son compilados utilizando la optimización \verb|-
 
 \section{Apéndice: secciones relevantes del código}
 
-\subsubsection{Problema 1}
+\subsection{Código del Problema 1}
 
 
 
@@ -217,7 +218,7 @@ bool puede_saltar (vector<unsigned int>& puente, unsigned int tablon) {
 
 \newpage
 
-\subsubsection{Problema 2}
+\subsection{Código del Problema 2}
 
 
 
@@ -318,7 +319,7 @@ unsigned int maximo(multiset<unsigned int>& alturas)
 
 \newpage
 
-\subsubsection{Problema 3}
+\subsection{Código del Problema 3}
 
 
 

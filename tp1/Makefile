@@ -21,6 +21,7 @@ test:
 
 plot:
 	$(BENCHDIR)/run.sh $(BENCHDIR) $(IMGDIR)
+	$(BENCHDIR)/run_especial.sh $(BENCHDIR) $(IMGDIR)
 
 
 all: tp

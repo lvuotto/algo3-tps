@@ -1,8 +1,11 @@
 set terminal pngcairo size 1280,800
 set output outfile
-set title 'Test aleatorio 1'
-set xlabel 'Cantidad de tablones'
+set title titulo
+set xlabel 'Cantidad de productos químicos'
 set ylabel 'Ciclos de clock'
-set format x '%.0f'
-set format y '%.0f'
-plot datafile using 1:2 with lines
+#set format x '%.0f'
+#set format y '%.0f'
+f(x) = a*gamma(x+1)
+FIT_LIMIT = 1e-6
+fit f(x) datafile using 1:3 via a
+plot datafile using 1:3 with lines title 'clock'

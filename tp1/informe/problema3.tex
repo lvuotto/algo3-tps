@@ -44,7 +44,7 @@ transportar todos los elementos. Por la estrategia planteada para el problema,
 \Procname{$\proc{biohazard}(elementos, maximaPeligrosidad)$}
 \li $\id{camiones} \gets []$
 \li $\proc{agregar}(camiones, camion)$
-\li \While $\neg(\proc{backtracking}(camiones, elementos))$
+\li \While $(\neg\proc{backtracking}(camiones, elementos))$
 \li     \Do
             $\proc{agregar}(camiones, camion)$
         \End
@@ -76,6 +76,7 @@ transportar todos los elementos. Por la estrategia planteada para el problema,
                     \End    
             \End
         \End
+\li $\id{elementos} \gets elementos \cup \{elemento\}$
 \li \Return $\const{false}$
 \end{codebox}
 

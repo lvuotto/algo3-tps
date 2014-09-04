@@ -1,4 +1,4 @@
-\documentclass[a4paper]{article}
+	\documentclass[a4paper]{article}
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{fancyhdr}
@@ -56,7 +56,13 @@
 \thispagestyle{empty}
 \vfill
 \begin{abstract}
-    \textcolor{red}{\textbf{completar!}}
+    En este trabajo práctico, resolveremos problemas de optimización, aplicando diferentes técnicas 
+    algorítmicas (como \textit{backtracking}, \textit{algoritmos golosos}, \textit{podas} en árboles, etc). 
+    Luego, realizaremos diferentes análisis teóricos sobre la complejidad 
+    y correctitud de los mismos. \medskip
+    
+    Finalmente pondremos nuestros algoritmos a prueba en diferentes escenarios, ilustrando con gráficos 
+    representativos y sacando conclusiones en base a los resultados obtenidos.
 \end{abstract}
 
 \thispagestyle{empty}
@@ -69,7 +75,28 @@
 \newpage
 
 \section{Objetivos generales}
-  \textcolor{red}{\textbf{completar!}}
+Entre los objetivos planteados se encuentran los siguientes:
+\begin{itemize}
+  \item como mencionamos anteriormente, utilizar diferentes técnicas algorítmicas para
+  resolver los problemas.
+  
+  \item hallar una solución óptima para el problema. Esto implica que la complejidad de los 
+  algoritmos utilizados no supere cierta cota superior, en sus peores casos.  
+  
+  \item escribir el pseudocódigo correspondiente a la solución de cada problema y el código
+  (basado en el pseudocódigo), utilizando las diferentes estructuras y contenedores que nos 
+  brinda la \textit{STL} de C++, para simplificar el desarrollo.
+  
+  \item justificar que las implementaciones utilizadas resuelven efectivamente los problemas y
+  además son correctas.
+  
+  \item realizar un análisis de complejidad de los algoritmos propuestos, mostrando que cumplen
+  con las cotas pedidas.
+  
+  \item realizar diferentes experimentaciones y gráficos que muestren el comportamiento de nuestros
+  algoritmos para isntancias variadas, contrastando esta información empírica con las demostraciones
+  teóricas.
+\end{itemize}
 
 \newpage
 
@@ -100,23 +127,24 @@ El testeo de los algoritmos implementados fue realizado, principalmente, en las 
 
 \newpage
 \section{Acerca de los tests}
-Los casos aleatorios se generan mediante los scripts \verb|ejN.random.rb|, donde 
-N es el número correspondiente al ejercicio. Estos scripts toman siempre dos parámetros, 
+Los \textbf{casos aleatorios se generan mediante los scripts} (en Ruby) \verb|ejN.random.rb|, donde 
+N es el número correspondiente al problema. Estos scripts toman siempre \textbf{dos parámetros}, 
 siendo el primero la semilla que utilizamos para generar números pseudoaleatorios, que 
-por defecto toma el valor 0 si no es especificado y el segundo parámetro corresponde 
-al tamaño de la entrada. 
+\textbf{por defecto toma el valor 0} si no es especificado y \textbf{el segundo parámetro corresponde 
+al tamaño de la entrada}. 
 
-Además de los tests con casos aleatorios, tenemos en cuenta los mejores y peores 
-casos de cada algoritmo, fijando los valores adecuados de los parámetros para 
+Además de los tests con casos aleatorios, \textbf{tenemos en cuenta los mejores y peores 
+casos de cada algoritmo}, fijando los valores adecuados de los parámetros para 
 obtenerlos.
 
 En cuanto a la metodología para medir el tiempo, utilizamos el archivo \verb|tiempo.h|, 
-que define macros para contar la cantidad de ciclos de clock producidos entre dos instantes. 
-Cada instancia se repite 25 veces para reducir el impacto de los \textit{outliers}, quedándonos 
-con el valor mínimo en cada caso. Estos valores se vuelcan a un archivo \verb|info.n.dat|, que 
-es utilizado luego para generar los gráficos mediante gnuplot.
+que define macros para contar la \textbf{cantidad de ciclos de clock} producidos entre dos instantes. 
 
-Para correr los tests estáticos, se ejecuta \verb|make; make test| y para los 
+Cada instancia se repite varias veces para reducir el impacto de los \textit{outliers}, quedándonos 
+con el \textbf{valor mínimo} en cada caso. Estos valores se vuelcan a un archivo \verb|info.n.dat|, que 
+es utilizado luego para generar los gráficos mediante \textbf{gnuplot}.
+
+Para correr los tests estáticos (sin variables aleatorias), se ejecuta \verb|make; make test| y para los 
 casos aleatorios (utilizados para los gráficos), \verb|make; make plot|. 
 
 Todos los archivos \verb|.cc| son compilados utilizando la optimización \verb|-O3|. 
@@ -187,14 +215,196 @@ bool puede_saltar (vector<unsigned int>& puente, unsigned int tablon) {
 }
 \end{lstlisting}
 
-
+\newpage
 
 \subsubsection{Problema 2}
 
 
 
+\begin{lstlisting}
+enum posicion_t {
+  IZQUIERDA,
+  DERECHA
+};
+
+struct Vertice {
+  unsigned int x;
+  unsigned int y;
+  posicion_t posicion_pared;
+
+  Vertice(unsigned int _x, unsigned int _y, posicion_t _posicion_pared)
+  {
+    x = _x;
+    y = _y;
+    posicion_pared = _posicion_pared;
+  }
+
+  Vertice() {}
+
+  bool operator<(const Vertice& otro) const
+  {
+    return x < otro.x ||
+           (x == otro.x &&
+           (y < otro.y ||
+           (y == otro.y && posicion_pared < otro.posicion_pared)));
+  }
+};
+
+struct Punto {
+  unsigned int x;
+  unsigned int y;
+
+  Punto(unsigned int _x, unsigned int _y)
+  {
+    x = _x;
+    y = _y;
+  }
+};
+
+vector<Punto> calcular_horizonte(vector<Vertice>& vertices);
+void imprimir_horizonte(vector<Punto>& horizonte);
+unsigned int  maximo(multiset<unsigned int>& alturas);
+\end{lstlisting} 
+
+\newpage	
+
+\begin{lstlisting}
+vector<Punto> calcular_horizonte(vector<Vertice>& vertices)
+{
+  multiset<unsigned int> alturas;
+  vector<Punto> horizonte;
+  sort(vertices.begin(), vertices.end());
+  auto vertice = vertices.begin();
+
+  horizonte.push_back(Punto(vertice->x, vertice->y));
+  alturas.insert(vertice->y);
+  vertice++;
+
+  while (vertice != vertices.end()) {
+    if (vertice->posicion_pared == IZQUIERDA) {
+      if (vertice->y > horizonte.back().y) {
+        if (vertice->x > horizonte.back().x) {
+          horizonte.push_back(Punto(vertice->x, vertice->y));
+        } else {
+          horizonte[horizonte.size() - 1].y = vertice->y;
+        }
+      }
+
+      alturas.insert(vertice->y);
+    } else {
+      alturas.erase(alturas.find(vertice->y));
+      
+      if (vertice->y > maximo(alturas)) {
+        horizonte.push_back(Punto(vertice->x, maximo(alturas)));
+      }
+    }
+    vertice++;
+  }
+  return horizonte;
+}
+\end{lstlisting}
+
+\vspace*{0.5cm}
+
+\begin{lstlisting}
+unsigned int maximo(multiset<unsigned int>& alturas)
+{
+  if (alturas.empty()) {
+    return 0;
+  }
+  return *(alturas.rbegin());
+}
+\end{lstlisting}
+
+\newpage
+
 \subsubsection{Problema 3}
 
+
+
+\vspace*{0.5cm}
+
+\begin{lstlisting}
+typedef vector<vector<int> > matriz;
+
+int umbral;
+matriz peligrosidades;
+
+struct camion {
+  camion() : peligrosidad_(0) {}
+
+  void agregar_elemento(int elemento)
+  {
+    peligrosidad_ += calcular_peligrosidad(elemento);
+    elementos.insert(elemento);
+  }
+  void eliminar_elemento(int elemento)
+  {
+    elementos.erase(elemento);
+    peligrosidad_ -= calcular_peligrosidad(elemento);
+  }
+  bool entra(int elemento) const
+  {
+    return elementos.empty() ||
+           (peligrosidad_ + calcular_peligrosidad(elemento) <= umbral);
+  }
+  int calcular_peligrosidad(int elemento) const
+  {
+    int suma = 0;
+    for (auto el = elementos.begin(); el != elementos.end(); el++) {
+      suma += peligrosidades[*el][elemento - 1];
+    }
+    return suma;
+  }
+
+  set<int> elementos;
+
+private:
+  int peligrosidad_;
+};
+
+vector<camion> biohazard(set<int>& elementos);
+bool backtracking(vector<camion>& camiones, set<int>& elementos);
+void mostrar_solucion(vector<camion>& camiones, int cantidad_elementos);
+\end{lstlisting}
+
+\vspace*{0.5cm}
+
+\begin{lstlisting}
+vector<camion> biohazard(set<int>& elementos)
+{
+  vector<camion> camiones;
+  do {
+    camiones.push_back(camion());
+  } while (!backtracking(camiones, elementos));
+  return camiones;
+}
+\end{lstlisting}
+
+\newpage
+
+\begin{lstlisting}
+bool backtracking(vector<camion>& camiones, set<int>& elementos)
+{
+  if (elementos.empty()) {
+    return true;
+  }
+  int elemento = *elementos.begin();
+  elementos.erase(elementos.begin());
+  for (auto c = camiones.begin(); c != camiones.end(); c++) {
+    if (c->entra(elemento)) {
+      c->agregar_elemento(elemento);
+      if (backtracking(camiones, elementos)) {
+        return true;
+      } else {
+        c->eliminar_elemento(elemento);
+      }
+    }
+  }
+  elementos.insert(elemento);
+  return false;
+}
+\end{lstlisting}
 
 
 \end{document}

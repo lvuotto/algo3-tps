@@ -15,12 +15,12 @@ for i in 1 2 3; do
   gnuplot -e "datafile='$BENCHDIR/info.$i.peor.dat'" \
           -e "outfile='$IMGDIR/grafico.$i.peor.png'" \
           -e "titulo='Problema $i - test 2'" \
-          $BENCHDIR/plotter.$i.gnu
+          $BENCHDIR/plotter.$i.peor.gnu
 #  xdg-open $IMGDIR/grafico.$i.peor.png
   $BENCHDIR/benchmark.$i.mejor.sh 2> $BENCHDIR/info.$i.mejor.dat
   gnuplot -e "datafile='$BENCHDIR/info.$i.mejor.dat'" \
           -e "outfile='$IMGDIR/grafico.$i.mejor.png'" \
           -e "titulo='Problema $i - test 3'" \
-          $BENCHDIR/plotter.$i.gnu
+          $BENCHDIR/plotter.$i.mejor.gnu
 #  xdg-open $IMGDIR/grafico.$i.mejor.png
 done

@@ -5,6 +5,6 @@ set xlabel 'Cantidad de tablones'
 set ylabel 'Ciclos de clock (miles)'
 f(x) = a*x
 FIT_LIMIT = 1e-6
-fit f(x) datafile u 1:3:3 via a
+fit f(x) datafile u 1:3 via a
 plot datafile u 1:($3/1000) w lines t 'clock', \
      f(x)/1000 w lines t sprintf('%f*x', a)

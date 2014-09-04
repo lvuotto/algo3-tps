@@ -8,4 +8,4 @@ set ylabel 'Ciclos de clock'
 f(x) = a*gamma(x+1)
 FIT_LIMIT = 1e-6
 fit f(x) datafile using 1:3 via a
-plot datafile using 1:3 with lines title 'clock'
+plot datafile using 1:3 with lines title 'clock', f(x) with lines

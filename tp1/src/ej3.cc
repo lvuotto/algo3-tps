@@ -14,80 +14,80 @@ using namespace std;
 typedef vector<vector<int> > matriz;
 
 
-int kMaximaPeligrosidad;
+int umbral;
 matriz peligrosidades;
 
 
 struct camion {
-  camion () : peligrosidad_(0) {};
-  
-  void agregarElemento (int elemento) {
-    peligrosidad_ += calcularPeligrosidad(elemento);
+  camion() : peligrosidad_(0) {}
+
+  void agregar_elemento(int elemento)
+  {
+    peligrosidad_ += calcular_peligrosidad(elemento);
     elementos.insert(elemento);
   }
-  
-  void eliminarElemento (int elemento) {
+
+  void eliminar_elemento(int elemento)
+  {
     elementos.erase(elemento);
-    peligrosidad_ -= calcularPeligrosidad(elemento);
+    peligrosidad_ -= calcular_peligrosidad(elemento);
   }
-  
-  bool entra (int elemento) const {
+
+  bool entra(int elemento) const
+  {
     return elementos.empty() ||
-           (peligrosidad_ + calcularPeligrosidad(elemento) <=
-            kMaximaPeligrosidad);
+           (peligrosidad_ + calcular_peligrosidad(elemento) <= umbral);
   }
-  
-  int calcularPeligrosidad (int elemento) const {
+
+  int calcular_peligrosidad(int elemento) const
+  {
     int suma = 0;
-    
     for (auto el = elementos.begin(); el != elementos.end(); el++) {
       suma += peligrosidades[*el][elemento - 1];
     }
-  
-    return suma; 
+
+    return suma;
   }
-  
+
   set<int> elementos;
-  
+
 private:
   int peligrosidad_;
 };
 
 
-vector<camion> biohazard        (set<int>& elementos);
-bool           backtracking     (vector<camion>& camiones,
-                                 set<int>& elementos);
-void           mostrar_solucion (vector<camion>& camiones,
-                                 int cantidadElementos);
+vector<camion> biohazard(set<int>& elementos);
+bool backtracking(vector<camion>& camiones, set<int>& elementos);
+void mostrar_solucion(vector<camion>& camiones, int cantidad_elementos);
 
 
-int main ()
+int main()
 {
-  int cantidadElementos;
-  
-  cin >> cantidadElementos;
-  while (cantidadElementos != 0) {
-    cin >> kMaximaPeligrosidad;
-    peligrosidades.resize(cantidadElementos - 1);
-    
+  int cantidad_elementos;
+
+  cin >> cantidad_elementos;
+  while (cantidad_elementos != 0) {
+    cin >> umbral;
+    peligrosidades.resize(cantidad_elementos - 1);
+
     for (auto it = peligrosidades.begin(); it != peligrosidades.end(); it++) {
-      it->resize(cantidadElementos - 1);
+      it->resize(cantidad_elementos - 1);
     }
-    
-    for (int i = 0; i < cantidadElementos - 1; i++) {
+
+    for (int i = 0; i < cantidad_elementos - 1; i++) {
       for (int j = 0; j < i; j++) {
         peligrosidades[i][j] = 0;
       }
-      for (int j = i; j < cantidadElementos - 1; j++) {
+      for (int j = i; j < cantidad_elementos - 1; j++) {
         cin >> peligrosidades[i][j];
       }
     }
 
     set<int> elementos;
-    for (int i = 0; i < cantidadElementos; i++) {
+    for (int i = 0; i < cantidad_elementos; i++) {
       elementos.insert(i);
     }
-    
+
     set<int> backup_elementos = elementos;
     vector<camion> solucion;
     unsigned long inicio, fin, min;
@@ -103,63 +103,64 @@ int main ()
       elementos = backup_elementos;
       min = fin - inicio < min ? fin - inicio : min;
     }
-    cerr << cantidadElementos << " "
-         << kMaximaPeligrosidad << " "
+    cerr << cantidad_elementos << " "
+         << umbral << " "
          << min << endl;
-    mostrar_solucion(solucion, cantidadElementos);
-    
-    cin >> cantidadElementos;
+    mostrar_solucion(solucion, cantidad_elementos);
+
+    cin >> cantidad_elementos;
   }
-  
+
   return 0;
 }
 
 
-vector<camion> biohazard (set<int>& elementos)
+vector<camion> biohazard(set<int>& elementos)
 {
   vector<camion> camiones;
-  do {    
+  do {
     camiones.push_back(camion());
   } while (!backtracking(camiones, elementos));
   return camiones;
 }
 
 
-bool backtracking (vector <camion>& camiones, set <int>& elementos)
+bool backtracking(vector<camion>& camiones, set<int>& elementos)
 {
   if (elementos.empty()) {
     return true;
   }
-  
+
   int elemento = *elementos.begin();
   elementos.erase(elementos.begin());
   for (auto c = camiones.begin(); c != camiones.end(); c++) {
     if (c->entra(elemento)) {
-      c->agregarElemento(elemento);
+      c->agregar_elemento(elemento);
       if (backtracking(camiones, elementos)) {
         return true;
       } else {
-        c->eliminarElemento(elemento);
+        c->eliminar_elemento(elemento);
       }
     }
   }
   elementos.insert(elemento);
-  
+
   return false;
 }
 
 
-void mostrar_solucion (vector<camion>& camiones, int cantidadElementos) {
+void mostrar_solucion(vector<camion>& camiones, int cantidad_elementos)
+{
   vector<int> solucion;
-  solucion.resize(cantidadElementos);
-  
+  solucion.resize(cantidad_elementos);
+
   int c = 0;
   for (auto i = camiones.begin(); i != camiones.end(); i++, c++) {
     for (auto j = i->elementos.begin(); j != i->elementos.end(); j++) {
       solucion[*j] = c;
     }
   }
-  
+
   cout << camiones.size();
   for (auto it = solucion.begin(); it != solucion.end(); it++)
     cout << " " << *it + 1;

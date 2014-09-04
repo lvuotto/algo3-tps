@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <vector>
 
@@ -11,13 +10,15 @@
 using namespace std;
 
 
-vector<unsigned int> cruzar_puente   (unsigned int salto_maximo, vector<unsigned int>& puente);
-bool                 posible_cruzar  (unsigned int salto_maximo, vector<unsigned int>& puente);
-bool                 puede_saltar    (vector<unsigned int>& puente, unsigned int tablon);
-void                 imprimir_saltos (vector<unsigned int>& saltos);
+vector<unsigned int> cruzar_puente(unsigned int salto_maximo,
+                                   vector<unsigned int>& puente);
+bool posible_cruzar(unsigned int salto_maximo, vector<unsigned int>& puente);
+bool puede_saltar(vector<unsigned int>& puente, unsigned int tablon);
+void imprimir_saltos(vector<unsigned int>& saltos);
 
 
-int main () {
+int main()
+{
   unsigned int n, c;
 
   cin >> n;
@@ -58,7 +59,8 @@ int main () {
  * Devuelve una lista con los tablones a los cuales se debe saltar
  * ó una lista vacía si es imposible.
  **/
-vector<unsigned int> cruzar_puente (unsigned int salto_maximo, vector<unsigned int>& puente) {
+vector<unsigned int> cruzar_puente(unsigned int salto_maximo, vector<unsigned int>& puente)
+{
   vector<unsigned int> saltos;
 
   if (salto_maximo > puente.size()) {
@@ -93,7 +95,8 @@ vector<unsigned int> cruzar_puente (unsigned int salto_maximo, vector<unsigned i
  * Calcula si los tablones rotos consecutivos son siempre menores al salto
  * máximo, es decir, si se puede cruzar el puente
  **/
-bool posible_cruzar (unsigned int salto_maximo, vector<unsigned int>& puente) {
+bool posible_cruzar(unsigned int salto_maximo, vector<unsigned int>& puente)
+{
   unsigned int tablones_rotos_consecutivos = 0;
 
   for (unsigned int i = 0; i < puente.size(); i++) {
@@ -115,12 +118,14 @@ bool posible_cruzar (unsigned int salto_maximo, vector<unsigned int>& puente) {
 /**
  * Devuelve verdadero cuando es un tablón sano o si se terminó el puente
  **/
-bool puede_saltar (vector<unsigned int>& puente, unsigned int tablon) {
+bool puede_saltar(vector<unsigned int>& puente, unsigned int tablon)
+{
   return tablon >= puente.size() || puente[tablon] == 0;
 }
 
 
-void imprimir_saltos (vector<unsigned int>& saltos) {
+void imprimir_saltos(vector<unsigned int>& saltos)
+{
   if (saltos.empty()) {
     cout << "no" << endl;
   } else {

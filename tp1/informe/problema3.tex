@@ -16,8 +16,6 @@ elementos que contiene}.
   de peligrosidad $h_{1,2} = 5, h_{1,3} = 3, h_{1,4} = 4, h_{2,3} = 6, h_{2,4} =
   3$ y $h_{3,4} = 5$, la solución óptima es utilizar 2 camiones, el primero
   transportando $p_1$ y $p_3$, y el segundo transportando $p_2$ y $p_4$.
-  
-  \item \textcolor{red}{Agregar otro ejemplo.}
 \end{itemize}
 
 
@@ -78,18 +76,6 @@ transportar todos los elementos. Por la estrategia planteada para el problema,
 
 
 
-\subsection{Justificación de la resolución y demostración de correctitud.}
-
-\vspace*{0.3cm}
-
-
-opcional
-
-
-\vspace*{0.75cm} \noindent
-
-
-
 \subsection{Análisis de complejidad.}
 
 \vspace*{0.3cm}
@@ -123,24 +109,28 @@ agregar las complejidades de las funciones usadas de vector, set y camion
 \vspace*{0.75cm} \noindent
 
 
-
+\newpage
 \subsection{Experimentación y gráficos.}
 
 \vspace*{0.3cm}
 
 \subsubsection{Test 1 - benchmark caso aleatorio}
 
-En este test, .
+(ver \verb|info.3.dat|) \medskip
+
+En este test, tenemos $n$ elementos en cada instancia, con $n$ inicializado en 1 e incrementándose 
+también en 1 hasta alcanzar 20 y un umbral $m$ de peligrosidad, que se inicializa en 2 y se incrementa 
+en 2 en cada instancia, hasta alcanzar el valor 40.
  
-Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}. 
+Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{20 corridas}. 
 
 \vspace*{0.5cm}
 
-%\begin{figure}[h]
-%  \begin{center}
-%    \includegraphics[scale=0.35]{imagenes/grafico-3.png}
-%  \end{center}
-%\end{figure}
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grafico-3.png}
+  \end{center}
+\end{figure}
 
 \vspace*{0.5cm}
 
@@ -148,21 +138,26 @@ En este gráfico podemos apreciar que, .
 
 
 \newpage
-
-
 \subsubsection{Test 2 - benchmark del peor caso}
 
-En este test, .
+(ver \verb|info.3.peor.dat|) \medskip
 
-Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}.
+\textbf{NOTA:} para el peor caso redujimos la cantidad de instancias a 16 por fines prácticos, dada la complejidad 
+del algoritmo y el tiempo de ejecución requerido para finalizar más instancias. \medskip
+
+En este test, tenemos $n$ elementos en cada instancia, con $n$ inicializado en 1 e incrementándose 
+también en 1 hasta alcanzar 16 y un umbral $m$ de peligrosidad, que se mantiene constante en 0 para todas las 
+instancias, .
+ 
+Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{16 corridas}.
 
 \vspace*{0.5cm}
 
-%\begin{figure}[h]
-%  \begin{center}
-%    \includegraphics[scale=2]{imagenes/grafico-3-peor.png}
-%  \end{center}
-%\end{figure}
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grafico-3-peor.png}
+  \end{center}
+\end{figure}
 
 \vspace*{0.5cm}
 
@@ -170,20 +165,22 @@ En este gráfico podemos apreciar que,
 
 
 \newpage
-
-
 \subsubsection{Test 3 - benchmark del mejor caso}
 
-En este test, .
+(ver \verb|info.3.mejor.dat|) \medskip
 
-Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}.
-
-
-%\begin{figure}[h]
-%  \begin{center}
-%    \includegraphics[scale=2]{imagenes/grafico-3-mejor.png}
-%  \end{center}
-%\end{figure}
+En este test, tenemos $n$ elementos en cada instancia, con $n$ inicializado en 1 e incrementándose 
+también en 1 hasta alcanzar 20 y un umbral $m$ de peligrosidad, que se inicializa en 1000000 y se incrementa 
+también de a 1000000 en cada instancia, hasta alcanzar el valor 20000000.
+ 
+Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{20 corridas}.
 
 
-En este gráfico podemos apreciar que, .
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grafico-3-mejor.png}
+  \end{center}
+\end{figure}
+
+
+En este gráfico podemos apreciar que,

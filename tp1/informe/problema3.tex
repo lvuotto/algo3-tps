@@ -10,7 +10,7 @@ elementos que contiene}.
 
 \vspace*{0.5cm}
 
-\textbf{Ejemplos:}
+\textbf{Ejemplo:}
 \begin{itemize}
   \item Dado $M = 7$ y 4 productos $p_1, p_2, p_3$ y $p_4$, con una relación
   de peligrosidad $h_{1,2} = 5, h_{1,3} = 3, h_{1,4} = 4, h_{2,3} = 6, h_{2,4} =
@@ -22,13 +22,13 @@ elementos que contiene}.
 
 \subsection{Desarrollo de la idea y pseudocódigo.}
 
-Para resovler el problema, empezamos utilizando un solo camión e intentamos ubicar 
-todos los elementos en el mismo. De no ser posible, se agrega otro camión y se vuelven 
+Para resovler el problema, empezamos utilizando un solo camión e intentamos ubicar
+todos los elementos en el mismo. De no ser posible, se agrega otro camión y se vuelven
 a intentar todas las combinaciones de elementos en los mismos. Si siguen sin caber los
 elementos, se agrega un camión más y se vuelve a empezar.
 
-Este proceso continúa hasta encontrar una cierta cantidad de camiones, capaz de 
-transportar todos los elementos. Por la estrategia planteada para el problema, 
+Este proceso continúa hasta encontrar una cierta cantidad de camiones, capaz de
+transportar todos los elementos. Por la estrategia planteada para el problema,
 \textbf{la solución encontrada será una solución óptima}.
 
 \vspace*{0.5cm}
@@ -46,7 +46,7 @@ transportar todos los elementos. Por la estrategia planteada para el problema,
 \end{codebox}
 
 
-\vspace*{0.5cm} 
+\vspace*{0.5cm}
 
 
 \begin{codebox}
@@ -67,7 +67,7 @@ transportar todos los elementos. Por la estrategia planteada para el problema,
 \li                         \Return $\const{true}$
 \li                 \Else
 \li                     $\proc{borrar}(camion, elemento)$
-                    \End    
+                    \End
             \End
         \End
 \li $\id{elementos} \gets elementos \cup \{elemento\}$
@@ -76,6 +76,7 @@ transportar todos los elementos. Por la estrategia planteada para el problema,
 
 
 
+\newpage
 \subsection{Análisis de complejidad.}
 
 \vspace*{0.3cm}
@@ -84,13 +85,13 @@ transportar todos los elementos. Por la estrategia planteada para el problema,
 La función \verb|backtracking| es llamada desde la función \verb|biohazard|, en
 el peor de los casos, tantas veces como elementos haya para insertar en los camiones.
 Una vez que se comienza a hacer la recursión, por cada camión que podemos utilizar,
-se vuelve a hacer con un elemento menos. La recursión finaliza en el momento en 
-el que se la invoca con un conjunto vacío de elementos. Como la cantidad de 
+se vuelve a hacer con un elemento menos. La recursión finaliza en el momento en
+el que se la invoca con un conjunto vacío de elementos. Como la cantidad de
 elementos siempre disminuye en 1 con cada llamado recursivo, en $n$ llamados se
 corta la recurrencia.
 
-Por lo tanto, en el peor caso, cuando todos los elementos tengan que ir en un 
-camión diferente se requerirán $n$ camiones, con $n$ llamadas recursivas con 
+Por lo tanto, en el peor caso, cuando todos los elementos tengan que ir en un
+camión diferente se requerirán $n$ camiones, con $n$ llamadas recursivas con
 $n - 1$ elementos que a su vez harán $n$ llamadas recursivas cada uno, hasta que
 la cantidad de elementos sea 0, dando una complejidad de $O(n^n)$.
 
@@ -118,11 +119,11 @@ agregar las complejidades de las funciones usadas de vector, set y camion
 
 (ver \verb|info.3.dat|) \medskip
 
-En este test, tenemos $n$ elementos en cada instancia, con $n$ inicializado en 1 e incrementándose 
-también en 1 hasta alcanzar 20 y un umbral $m$ de peligrosidad, que se inicializa en 2 y se incrementa 
+En este test, tenemos $n$ elementos en cada instancia, con $n$ inicializado en 1 e incrementándose
+también en 1 hasta alcanzar 20 y un umbral $m$ de peligrosidad, que se inicializa en 2 y se incrementa
 en 2 en cada instancia, hasta alcanzar el valor 40.
- 
-Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{20 corridas}. 
+
+Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{20 corridas}.
 
 \vspace*{0.5cm}
 
@@ -142,13 +143,13 @@ En este gráfico podemos apreciar que, .
 
 (ver \verb|info.3.peor.dat|) \medskip
 
-\textbf{NOTA:} para el peor caso redujimos la cantidad de instancias a 16 por fines prácticos, dada la complejidad 
+\underline{\textbf{NOTA:}} para el peor caso redujimos la cantidad de instancias a 16 por fines prácticos, dada la complejidad
 del algoritmo y el tiempo de ejecución requerido para finalizar más instancias. \medskip
 
-En este test, tenemos $n$ elementos en cada instancia, con $n$ inicializado en 1 e incrementándose 
-también en 1 hasta alcanzar 16 y un umbral $m$ de peligrosidad, que se mantiene constante en 0 para todas las 
+En este test, tenemos $n$ elementos en cada instancia, con $n$ inicializado en 1 e incrementándose
+también en 1 hasta alcanzar 16 y un umbral $m$ de peligrosidad, que se mantiene constante en 0 para todas las
 instancias, .
- 
+
 Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{16 corridas}.
 
 \vspace*{0.5cm}
@@ -161,7 +162,7 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 
 \vspace*{0.5cm}
 
-En este gráfico podemos apreciar que, 
+En este gráfico podemos apreciar que,
 
 
 \newpage
@@ -169,10 +170,10 @@ En este gráfico podemos apreciar que,
 
 (ver \verb|info.3.mejor.dat|) \medskip
 
-En este test, tenemos $n$ elementos en cada instancia, con $n$ inicializado en 1 e incrementándose 
-también en 1 hasta alcanzar 20 y un umbral $m$ de peligrosidad, que se inicializa en 1000000 y se incrementa 
+En este test, tenemos $n$ elementos en cada instancia, con $n$ inicializado en 1 e incrementándose
+también en 1 hasta alcanzar 20 y un umbral $m$ de peligrosidad, que se inicializa en 1000000 y se incrementa
 también de a 1000000 en cada instancia, hasta alcanzar el valor 20000000.
- 
+
 Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{20 corridas}.
 
 

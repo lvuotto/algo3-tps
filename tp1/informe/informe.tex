@@ -136,7 +136,7 @@ El testeo de los algoritmos implementados fue realizado, principalmente, en las 
 
 \newpage
 
-\section{Acerca de los tests}
+\section{Apéndice 1: acerca de los tests}
 Los \textbf{casos aleatorios se generan mediante los scripts} (en Ruby) \verb|ejN.random.rb|, donde
 N es el número correspondiente al problema. Estos scripts toman siempre \textbf{dos parámetros},
 siendo el primero la semilla que utilizamos para generar números pseudoaleatorios, que
@@ -145,24 +145,27 @@ al tamaño de la entrada}.
 
 Además de los tests con casos aleatorios, \textbf{tenemos en cuenta los mejores y peores
 casos de cada algoritmo}, fijando los valores adecuados de los parámetros para
-obtenerlos.
+obtenerlos. \medskip
 
 En cuanto a la metodología para medir el tiempo, utilizamos el archivo \verb|tiempo.h|,
-que define macros para contar la \textbf{cantidad de ciclos de clock} producidos entre dos instantes.
+que define macros para contar la \textbf{cantidad de ciclos de clock} producidos entre dos instantes. \medskip
 
 Cada instancia se repite varias veces para reducir el impacto de los \textit{outliers}, quedándonos
-con el \textbf{valor mínimo} en cada caso. Estos valores (de entrada y salida) se vuelcan a un archivo 
-\verb|info.n.dat| dentro de la carpeta \textit{benchmark}, que es utilizado luego para generar los gráficos 
-mediante \textbf{gnuplot}.
+con el \textbf{valor mínimo} en cada caso. Estos valores (de entrada y salida) se vuelcan a un archivo
+\verb|info.n.dat| dentro de la carpeta \textit{benchmark}, que es utilizado luego para generar los gráficos
+mediante \textbf{gnuplot}. \medskip
 
 Para correr los tests estáticos (sin variables aleatorias), se ejecuta \verb|make; make test| y para los
 casos aleatorios (utilizados para los gráficos), \verb|make; make plot|.
 
-Todos los archivos \verb|.cc| son compilados utilizando la optimización \verb|-O3|.
+Todos los archivos \verb|.cc| son compilados utilizando la optimización \verb|-O3|. \medskip
 
+Tener en cuenta que, a pesar de ejecutar los tests reiteradas veces, aún es posible que estén presentes ciertos
+valores atípicos (menores o mayores a los esperados), ya sea por optimizaciones que realice el procesador, sobrecarga
+del mismo, etc.
 \newpage
 
-\section{Apéndice: secciones relevantes del código}
+\section{Apéndice 2: secciones relevantes del código}
 En esta sección, adjuntamos parte del código correspondiente a la resolución de cada problema
 que consideramos más \textbf{relevante}. Omitimos los encabezados, bibliotecas incluídas,
 funciones \verb|main| y de impresión de resultados. El código se encuentra comentado en los

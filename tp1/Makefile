@@ -7,7 +7,7 @@ BENCHDIR = benchmark
 IMGDIR = $(INFORMEDIR)/imagenes
 
 
-.PHONY: all clean
+.PHONY: all informe test clean
 
 
 tp:
@@ -15,6 +15,7 @@ tp:
 
 informe:
 	make -C $(INFORMEDIR)
+	xdg-open $(BINDIR)/informe.pdf
 
 test:
 	make -C $(TESTDIR)

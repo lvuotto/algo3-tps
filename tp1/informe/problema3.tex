@@ -90,22 +90,21 @@ el que se la invoca con un conjunto vacío de elementos. Como la cantidad de
 elementos siempre disminuye en 1 con cada llamado recursivo, en $n$ llamados se
 corta la recurrencia.
 
-Por lo tanto, en el peor caso, cuando todos los elementos tengan que ir en un
-camión diferente se requerirán $n$ camiones, con $n$ llamadas recursivas con
-$n - 1$ elementos que a su vez harán $n$ llamadas recursivas cada uno, hasta que
-la cantidad de elementos sea 0, dando una complejidad de $O(n^n)$.
+En el peor de los casos, cuando nos veamos obligados a recorrer
+todos los árboles de decisiones, al intentar poner los productos en un
+camión, tendremos un árbol $1$-ario de altura $n$. Al hacerlo con 2
+camiones, tendremos un árbol $2$-ario de altura $n$, pero sabemos que los
+productos no entran en un camión y el algoritmo nunca intentará poner los
+$n$ elementos en un solo camión. Por lo tanto, la altura de este árbol será
+de $n - 1$. Generalizano, al intentar distribuir los $n$ productos en $k$
+camiones, tendremos un árbol $k$-ario de altura $n - k + 1$.
 
-\textbf{FALTA:}
+La complejidad del algoritmo va a ser la suma de todos los nodos sobre
+los árboles de decisiones. Dicho de otro modo, la complejidad será
 
-entra: O(1) + O(calcularPeligrosidad)
-
-calcularPeligrosidad: ¿?
-
-agregarElemento: ¿?
-
-eliminarElemento: log n + O(calcularPeligrosidad)
-
-agregar las complejidades de las funciones usadas de vector, set y camion
+\begin{align*}
+  O(\sum_{k=1}^n k^{n - k + 1})
+\end{align*}
 
 \vspace*{0.75cm} \noindent
 
@@ -135,7 +134,10 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 
 \vspace*{0.5cm}
 
-En este gráfico podemos apreciar que, .
+En este gráfico podemos apreciar que el comportamiento del algoritmo es
+sumamente aleatorio en el caso promedio. Esto se debe a la naturaleza poco
+predecible del mismo, ya que en base a cómo sean los valores de entrada, las
+podas se realizan en momentos diferentes.
 
 
 \newpage
@@ -148,7 +150,7 @@ del algoritmo y el tiempo de ejecución requerido para finalizar más instancias
 
 En este test, tenemos $n$ elementos en cada instancia, con $n$ inicializado en 1 e incrementándose
 también en 1 hasta alcanzar 16 y un umbral $m$ de peligrosidad, que se mantiene constante en 0 para todas las
-instancias, .
+instancias.
 
 Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{16 corridas}.
 
@@ -162,7 +164,10 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 
 \vspace*{0.5cm}
 
-En este gráfico podemos apreciar que,
+En este gráfico podemos apreciar que a partir de los 10 elementos, el
+crecimiento de la cantidad de ciclos de clocks necesarios para completar las
+instancias crece exponencialmente, llegando a un pico de casi 6 billones de
+ciclos de clock.
 
 
 \newpage
@@ -184,4 +189,7 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 \end{figure}
 
 
-En este gráfico podemos apreciar que,
+En este gráfico podemos apreciar que el algoritmo, tiene un comportamieno
+muy veloz en comparación contra instancias aleatorias o de peor caso. Esto
+se debe a que el mismo se reduce a realizar una pequeña serie de sumas en el
+caso de que todos los elementos entren en un solo camión.

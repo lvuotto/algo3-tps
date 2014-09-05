@@ -169,7 +169,6 @@ Para el análisis de complejidad nos basaremos en el pseudocódigo de la funció
 
 \begin{enumerate}
    \item Las siguientes operaciones realizadas sobre el \textit{contenedor} \verb|vector| de la \textit{STL} toman tiempo constante $O(1)$:
-<<<<<<< Updated upstream
    \verb|size|, \verb|push_back|, \verb|back|, \verb|empty|, creación y manipulación de iteradores, \verb|begin|, \verb|end|
    y \verb|operator[]|.
 
@@ -197,37 +196,6 @@ Para el análisis de complejidad nos basaremos en el pseudocódigo de la funció
    constantes o logarítmicas, por lo tanto están acotadas por $O(n)$.
 
    \item Las comparaciones y asignaciones realizadas sobre cada vértice, toman tiempo constante,  $\in O(1)$.
-=======
-   \verb|size|, \verb|push_back|, \verb|back|, \verb|empty|, al igual que la
-   creación y manipulación de iteradores, llevada a cabo mediante
-   \verb|begin|, \verb|rbegin| \verb|end|, \verb|operator++|,
-   \verb|operator*| y \verb|operator[]|.
- 
-   \item La operación \verb|resize| es lineal, $\in O(n)$.
-% 
-%   \item En el \verb|struct Vertice|, el \textit{constructor} y el \verb|operator<| son $O(1)$. También
-%   tiene complejidad constante el constructor del \verb|struct Punto|.
-% 
-%   \item En las operaciones utilizadas de \verb|multiset|, \verb|insert| y \verb|find| son logarítmicas, 
-%   $\in O(\log n)$, mientras que \verb|erase|, \verb|empty| y \verb|rbegin| son constantes, $\in O(1)$.
-% 
-%   \item Sobre los iteradores, se realizan las operaciones \verb|++| y \verb|*|, ambas
-%   con complejidad también constante.
-% 
-%   \item Se implementó la función \verb|maximo|, que dado un \verb|multiset|, devuelve
-%   el mayor de sus elementos ó 0, si el \verb|multiset| está vacío. Dicha función
-%   tiene complejidad constante, pues \verb|empty| y \verb|rbegin| son constantes, $\in O(1)$.
-% 
-%   \item El algoritmo \verb|sort| de la \textit{STL} utilizado (línea 4) para ordenar los vértices 
-%   por altura, tiene complejidad $O(n \log n)$.
- 
-%   \item En la línea 8, se itera sobre todos los edificios y se cargan sus 2 vértices. Dentro
-%   de este ciclo, la asignación resulta constante. Por lo tanto, ejecutar este ciclo 
-%   toma tiempo lineal, $\in O(n)$. Dentro de este ciclo, todas las operaciones realizadas son
-%   constantes o logarítmicas, por lo tanto están acotadas por $O(n)$.
- 
-   \item Las comparaciones y asignaciones realizadas sobre cada vértice toman tiempo constante $\in O(1)$. 
->>>>>>> Stashed changes
    Las operaciones \verb|agregar| y \verb|quitar| son logarítmicas, $\in O(\log n)$.
 
    \item Retornar el resultado es lineal en función del tamaño del vector.
@@ -281,7 +249,7 @@ luego superarla}, tal como se comportaría una curva del estilo $y = x \log x$, 
 
 En este test, $n$ (cantidad de edificios) se inicializa en 100 y va incrementándose también de a 100,
 hasta alcanzar 100000. Tomamos como peor caso, una instancia en la cual se generan alturas de 1 a $n$,
-se mezclan y luego se generan paredes que van "achicándose", es decir, para la primer altura tenemos
+se mezclan y luego se generan paredes que van ''achicándose'', es decir, para la primer altura tenemos
 \verb|1 2n|, para la segunda \verb|2 2n-1| y así sucesivamente.
 
 Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}.

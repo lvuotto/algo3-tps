@@ -2,29 +2,29 @@
 
 \vspace*{0.3cm}
 
-El objetivo de este problema es, dado un conjunto de edificios representados
+El objetivo de este problema es, \textbf{dado un conjunto de edificios} representados
 por la posición de sus paredes izquierda, derecha y su altura, representar el
-contorno en el horizonte formado por la superposición de los mismos, excluyendo
-las líneas internas.
+contorno en el horizonte formado por la superposición de los mismos, \textbf{excluyendo
+las líneas internas}.
 
 \vspace*{0.5cm}
 
 \textbf{Ejemplo:}
 \begin{itemize}
   \item Para un conjunto de 3 edificios, cuyas coordenadas son (4, 2, 11),
-  (5, 4, 7) y (9, 5, 12), dónde la primer coordenada es la ubicación de la pared
-  izquierda sobre el eje $X$, la segunda coordenada es la altura en el eje $Y$ y la
-  tercer coordenada es la ubicación de la pared derecha sobre el eje $X$, la
-  solución debe ser 4 2 5 4 7 2 9 5 12 0 (es única).
+  (5, 4, 7) y (9, 5, 12), donde la primer coordenada es la ubicación de la pared
+  izquierda sobre el eje $x$, la segunda coordenada es la altura en el eje $y$ y la
+  tercer coordenada es la ubicación de la pared derecha sobre el eje $x$, la
+  solución debe ser 4 2 5 4 7 2 9 5 12 0 (es \textbf{única}).
   
-  En la figura 5, que se encuentra debajo, puede visualizarse mejor este ejemplo.
+  En la \textbf{figura 5}, que se encuentra debajo, puede visualizarse mejor este ejemplo.
 \end{itemize}
 
 \begin{figure}[h]
   \begin{center}
-    \includegraphics[scale=0.25]{imagenes/ej2.jpg}
+    \includegraphics[scale=0.35]{imagenes/ej2.jpg}
   \end{center}
-    \caption{}
+    \caption{ejemplo de puntos de entrada y su correspondiente salida.}
 \end{figure}
 
 
@@ -36,15 +36,15 @@ las líneas internas.
 \vspace*{0.3cm}
 
 El algoritmo propuesto para resolver este problema consiste en tomar a los edificios
-por los 2 vértices que lo identifican (sus puntos con $Y \neq 0$).
+por los 2 vértices que lo identifican (sus puntos con coordenada $y \neq 0$).
 
-Recorriendo esos vértices en orden, los pertenecientes a una pared izquierda
+\textbf{Recorriendo esos vértices en orden}, los pertenecientes a una pared izquierda
 generarán un nuevo punto en el horizonte si son más altos que el último punto agregado
 y los que correspondan a una pared derecha, si corresponden al final de la
 altura actual, generarán un punto en la intersección con la siguiente altura mayor.
 
-Para saber hasta dónde se debe bajar luego de un vértice de pared derecha, se
-mantiene un multiconjunto de alturas. Cada vértice de pared izquierda carga su
+Para saber hasta dónde se debe ''bajar'' luego de un vértice de pared derecha, se
+mantiene un \textbf{multiconjunto de alturas}. Cada vértice de pared izquierda carga su
 altura y los de pared derecha la eliminan.
 
 \begin{codebox}
@@ -199,6 +199,8 @@ El algoritmo \verb|sort| utilizado tiene complejidad $O(n \log n)$.
 
 \subsubsection{Test 1 - benchmark caso aleatorio}
 
+(ver \verb|info.2.dat|) \medskip
+
 En este test, $n$ (cantidad de edificios) se inicializa en 100 y va incrementándose también de a 100, 
 hasta alcanzar 100000. Las coordenadas de los vértices se genera aleatoriamente, de forma uniforme.
  
@@ -216,13 +218,15 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 
 En este gráfico podemos apreciar que, los valores que toma la curva que representa la cantidad de ciclos 
 de clock empieza tomando valores \textbf{menores} a nuestra curva de referencia, para después \textbf{acercarse} bastante \textbf{y 
-luego superarla}, tal como se comportaría una curva del estilo $y = x*log x$, pero en este caso está más 
+luego superarla}, tal como se comportaría una curva del estilo $y = x \log x$, pero en este caso está más 
 "linealizada" por tratarse del caso aleatorio.
 
 \newpage
 
 
 \subsubsection{Test 2 - benchmark del peor caso}
+
+(ver \verb|info.2.peor.dat|) \medskip
 
 En este test, $n$ (cantidad de edificios) se inicializa en 100 y va incrementándose también de a 100, 
 hasta alcanzar 100000. Tomamos como peor caso, una instancia en la cual se generan alturas de 1 a $n$, 
@@ -243,7 +247,7 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 
 En este gráfico podemos apreciar que, al igual que en el experimento aleatorio, los valores que toma la curva 
 que representa la cantidad de ciclos de clock empieza tomando valores menores a nuestra curva de referencia, 
-para después acercarse bastante y luego superarla, tal como se comportaría una curva del estilo $y = x*log x$, 
+para después acercarse bastante y luego superarla, tal como se comportaría una curva del estilo $y = x*log(x)$, 
 pero, a diferencia del anterior, en el punto donde la curva de referencia es superada, \textbf{la curva que mide nuestro 
 algoritmo crece a mayor velocidad} . Para $n$ = 90000 aproximadamente, la curva de referencia ya se ve superada, 
 mientras que en el experimento aleatorio se mantenían en valores similares.
@@ -253,6 +257,8 @@ mientras que en el experimento aleatorio se mantenían en valores similares.
 
 
 \subsubsection{Test 3 - benchmark del mejor caso}
+
+(ver \verb|info.2.mejor.dat|) \medskip
 
 En este test, $n$ (cantidad de edificios) se inicializa en 100 y va incrementándose también de a 100, 
 hasta alcanzar 100000. Tomamos como mejor caso una instancia con un \textit{gran edificio}, que posee dentro 

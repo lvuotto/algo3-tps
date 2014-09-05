@@ -8,7 +8,7 @@ BINDIR = ../bin
 .PHONY: all clean
 
 
-%: %.cc
+%: %.cc %.h
 	$(CXX) $(CXXFLAGS) -o $@ $<
 	mv $@ $(BINDIR)/$@
 

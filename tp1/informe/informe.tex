@@ -66,16 +66,17 @@
 \thispagestyle{empty}
 \vfill
 \begin{abstract}
-    En este trabajo práctico, resolveremos problemas de \textbf{optimización}, aplicando diferentes técnicas 
-    algorítmicas (como \textit{backtracking}, \textit{algoritmos golosos}, \textit{podas} en árboles, etc). 
-    Luego, realizaremos diferentes análisis teóricos sobre la complejidad y correctitud de los mismos. \medskip
-    
-    Finalmente pondremos nuestros algoritmos a prueba en diferentes escenarios, ilustrando con gráficos 
+    \vspace{0.5cm}
+    En este trabajo práctico, resolveremos problemas de \textbf{optimización}, aplicando diferentes técnicas
+    algorítmicas (como \textit{backtracking}, \textit{algoritmos golosos}, \textit{podas} en árboles, etc).
+    Luego, realizaremos diferentes \textbf{análisis teóricos sobre la complejidad y correctitud} de los mismos. \medskip
+
+    Finalmente pondremos nuestros algoritmos a prueba en \textbf{diferentes escenarios}, ilustrando con gráficos
     representativos y sacando conclusiones en base a los resultados obtenidos.
 \end{abstract}
 
 \thispagestyle{empty}
-\vspace{3cm}
+\vspace{1.5cm}
 \tableofcontents
 \newpage
 
@@ -86,20 +87,20 @@
 \section{Objetivos generales}
 \begin{itemize}
   \item Utilizar \textbf{diferentes técnicas algorítmicas} para resolver los problemas.
-  
-  \item Hallar una \textbf{solución óptima} para el problema. Esto implica que la complejidad de los 
-  algoritmos utilizados no supere cierta cota superior (salvo en el problema 3), en sus peores casos.  
-  
+
+  \item Hallar una \textbf{solución óptima} para el problema. Esto implica que la complejidad de los
+  algoritmos utilizados no supere cierta cota superior (salvo en el problema 3), en sus peores casos.
+
   \item Escribir el \textbf{pseudocódigo correspondiente a la solución} de cada problema y el código
-  (basado en el anterior), utilizando las diferentes estructuras y \textit{contenedores} que nos 
+  (basado en el anterior), utilizando las diferentes estructuras y \textit{contenedores} que nos
   brinda la \textit{STL} de C++, para simplificar el desarrollo.
-  
+
   \item Justificar que las implementaciones utilizadas \textbf{resuelven efectivamente los problemas} y
   además son \textbf{correctas}.
-  
+
   \item Realizar un \textbf{análisis de complejidad de los algoritmos propuestos}, mostrando que cumplen
   con las cotas pedidas.
-  
+
   \item Realizar diferentes \textbf{experimentaciones y gráficos} que muestren el comportamiento de nuestros
   algoritmos para instancias variadas, contrastando esta información empírica con las demostraciones
   teóricas.
@@ -111,10 +112,10 @@
 El testeo de los algoritmos implementados fue realizado, principalmente, en las máquinas del laboratorio 3 del DC. \newline
 \begin{itemize}
   \item \textbf{Sistema Operativo:} Ubuntu Linux 12.04 x86_64, kernel 3.2.0-30-generic
-  
-  \item \textbf{Especificaciones del Software:} el código está implementado en \textbf{C++}, compilado con \verb|-std=c++0x|. 
+
+  \item \textbf{Especificaciones del Software:} el código está implementado en \textbf{C++}, compilado con \verb|-std=c++0x|.
   Utilizamos \textbf{Bash} y \textbf{Ruby} para los scripts. Los gráficos fueron realizados con \textbf{gnuplot}.
-  
+
   \item \textbf{Especificaciones del Hardware:} Intel(R) Core(TM) i5-2500K CPU @ 3.30GHz, 8GB de RAM.
 \end{itemize}
 
@@ -136,31 +137,36 @@ El testeo de los algoritmos implementados fue realizado, principalmente, en las 
 \newpage
 
 \section{Acerca de los tests}
-Los \textbf{casos aleatorios se generan mediante los scripts} (en Ruby) \verb|ejN.random.rb|, donde 
-N es el número correspondiente al problema. Estos scripts toman siempre \textbf{dos parámetros}, 
-siendo el primero la semilla que utilizamos para generar números pseudoaleatorios, que 
-\textbf{por defecto toma el valor 0} si no es especificado y \textbf{el segundo parámetro corresponde 
-al tamaño de la entrada}. 
+Los \textbf{casos aleatorios se generan mediante los scripts} (en Ruby) \verb|ejN.random.rb|, donde
+N es el número correspondiente al problema. Estos scripts toman siempre \textbf{dos parámetros},
+siendo el primero la semilla que utilizamos para generar números pseudoaleatorios, que
+\textbf{por defecto toma el valor 0} si no es especificado y \textbf{el segundo parámetro corresponde
+al tamaño de la entrada}.
 
-Además de los tests con casos aleatorios, \textbf{tenemos en cuenta los mejores y peores 
-casos de cada algoritmo}, fijando los valores adecuados de los parámetros para 
+Además de los tests con casos aleatorios, \textbf{tenemos en cuenta los mejores y peores
+casos de cada algoritmo}, fijando los valores adecuados de los parámetros para
 obtenerlos.
 
-En cuanto a la metodología para medir el tiempo, utilizamos el archivo \verb|tiempo.h|, 
-que define macros para contar la \textbf{cantidad de ciclos de clock} producidos entre dos instantes. 
+En cuanto a la metodología para medir el tiempo, utilizamos el archivo \verb|tiempo.h|,
+que define macros para contar la \textbf{cantidad de ciclos de clock} producidos entre dos instantes.
 
-Cada instancia se repite varias veces para reducir el impacto de los \textit{outliers}, quedándonos 
-con el \textbf{valor mínimo} en cada caso. Estos valores se vuelcan a un archivo \verb|info.n.dat|, que 
-es utilizado luego para generar los gráficos mediante \textbf{gnuplot}.
+Cada instancia se repite varias veces para reducir el impacto de los \textit{outliers}, quedándonos
+con el \textbf{valor mínimo} en cada caso. Estos valores (de entrada y salida) se vuelcan a un archivo 
+\verb|info.n.dat| dentro de la carpeta \textit{benchmark}, que es utilizado luego para generar los gráficos 
+mediante \textbf{gnuplot}.
 
-Para correr los tests estáticos (sin variables aleatorias), se ejecuta \verb|make; make test| y para los 
-casos aleatorios (utilizados para los gráficos), \verb|make; make plot|. 
+Para correr los tests estáticos (sin variables aleatorias), se ejecuta \verb|make; make test| y para los
+casos aleatorios (utilizados para los gráficos), \verb|make; make plot|.
 
-Todos los archivos \verb|.cc| son compilados utilizando la optimización \verb|-O3|.   
+Todos los archivos \verb|.cc| son compilados utilizando la optimización \verb|-O3|.
 
 \newpage
 
 \section{Apéndice: secciones relevantes del código}
+En esta sección, adjuntamos parte del código correspondiente a la resolución de cada problema
+que consideramos más \textbf{relevante}. Omitimos los encabezados, bibliotecas incluídas,
+funciones \verb|main| y de impresión de resultados. El código se encuentra comentado en los
+archivos \verb|.cc|.
 
 \subsection{Código del Problema 1}
 
@@ -188,7 +194,7 @@ vector<unsigned int> cruzar_puente (unsigned int salto_maximo, vector<unsigned i
   }
   return saltos;
 }
-\end{lstlisting} 
+\end{lstlisting}
 
 \vspace*{0.5cm}
 
@@ -266,9 +272,9 @@ struct Punto {
 vector<Punto> calcular_horizonte(vector<Vertice>& vertices);
 void imprimir_horizonte(vector<Punto>& horizonte);
 unsigned int  maximo(multiset<unsigned int>& alturas);
-\end{lstlisting} 
+\end{lstlisting}
 
-\newpage	
+\newpage
 
 \begin{lstlisting}
 vector<Punto> calcular_horizonte(vector<Vertice>& vertices)
@@ -295,7 +301,7 @@ vector<Punto> calcular_horizonte(vector<Vertice>& vertices)
       alturas.insert(vertice->y);
     } else {
       alturas.erase(alturas.find(vertice->y));
-      
+
       if (vertice->y > maximo(alturas)) {
         horizonte.push_back(Punto(vertice->x, maximo(alturas)));
       }

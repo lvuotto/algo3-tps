@@ -20,24 +20,13 @@ son valores naturales}.
 \begin{itemize}
   \item Para un puente de 10 tablones y un participante capaz de saltar de a 3
   tablones como máximo, teniendo los tablones 1, 4, 6, 8 y 9 rotos, la salida podría ser:
-  primero saltar al tablón 3, luego al 5, luego al 7, luego al 10 y luego fuera del puente.
-  
+  primero saltar al tablón 3, luego al 5, luego al 7, luego al 10 y luego fuera del puente
+  (\textbf{figuras 1 y 2}).
+
   \item Si en cambio, en el ejemplo anterior, el tablón 7 también estuviese roto,
-  el algoritmo debe informarnos que, bajo esas condiciones, no es posible cruzar el puente.
+  el algoritmo debe informarnos que, bajo esas condiciones, no es posible cruzar el puente
+  (\textbf{figura 3}).
 \end{itemize}
-
-
-
-\subsection{Desarrollo de la idea y pseudocódigo.}
-
-\vspace*{0.3cm}
-
-Para resolver este problema, propusimos un algoritmo de tipo \textit{greedy}, que en cada iteración
-del mismo busca siempre saltar \textbf{la mayor cantidad posible de tablones}, siempre y cuando el
-tablón al que nos dirijamos esté sano. Caso contrario, se saltará al tablón anterior (ó al anterior), 
-y así sucesivamente, hasta encontrar un tablón válido.
-Si retrocediendo de este modo se llega a la posición en la que se encuentran el competidor, el problema
-\textbf{no tiene solución}.
 
 
 \begin{figure}[htb]
@@ -47,6 +36,7 @@ Si retrocediendo de este modo se llega a la posición en la que se encuentran el
   \caption{ejemplo de puente.}
 \end{figure}
 
+\newpage
 
 \begin{figure}[htb]
   \begin{center}
@@ -64,6 +54,17 @@ Si retrocediendo de este modo se llega a la posición en la que se encuentran el
 \end{figure}
 
 
+\newpage
+\subsection{Desarrollo de la idea y pseudocódigo.}
+
+\vspace*{0.3cm}
+
+Para resolver este problema, propusimos un algoritmo de tipo \textit{greedy}, que en cada iteración
+del mismo busca siempre saltar \textbf{la mayor cantidad posible de tablones}, siempre y cuando el
+tablón al que nos dirijamos esté sano. Caso contrario, se saltará al tablón anterior (ó al anterior),
+y así sucesivamente, hasta encontrar un tablón válido.
+Si retrocediendo de este modo se llega a la posición en la que se encuentran el competidor, el problema
+\textbf{no tiene solución}.
 
 \begin{codebox}
 \Procname{$\proc{cruzarPuente}(n,c,puente)$}
@@ -129,7 +130,7 @@ Si retrocediendo de este modo se llega a la posición en la que se encuentran el
 \end{codebox}
 
 
-
+\newpage
 \subsection{Justificación de la resolución y demostración de correctitud.}
 
 \vspace*{0.3cm}
@@ -187,79 +188,79 @@ separaremos las entradas en casos y analizaremos éstos a continuación.
     algoritmo, se puede estar seguro que existe una solución.
     \item Supongamos que estamos en la iteración k-ésima. Al iniciar
     el ciclo, $S^{opt}$ es una subsolución de la solución óptima $S^{*}$. \medskip
-    
+
     Sea $S^{opt} \sqsubseteq S^{*}$ y $\id{x} \gets F(S)$. \medskip
-    
+
     En esta iteración, podemos: \medskip
-    
+
     $(a)$ No agregar $x$ a $S^{opt}$
-    
+
     $(b)$ Agregar $x$ a $S^{opt}$ \medskip
-    
+
     Si sucede $(a)$, entonces no se modifica $S^{opt}$, por lo tanto sigue
     siendo \textbf{subsolución de $S^{*}$}, es decir, es una \textbf{solución óptima}. \medskip
-    
+
     Si sucede $(b)$, agregamos $x$ (aplicamos $f(S)$), es decir, el tablón más
     lejano al cuál se puede saltar. Como lo estamos agregando, vale
     $p(S^{opt}, x)$, es decir, que $x$ es un tablón sano. \medskip
-    
+
     Sea $S'^{opt} \gets S^{opt} \cup \{x\}$. Queremos ver que existe una
     solución óptima $S'^{*}$, tal que $S'^{opt} \sqsubseteq S'^{*}$. \medskip
-    
-    Tenemos, nuevamente, dos casos: \medskip 
-    
+
+    Tenemos, nuevamente, dos casos: \medskip
+
     $(a')$ $x \in S^{*}$
-    
+
     $(b')$ $x \notin S^{*}$ \medskip
-    
-    Si sucede $(a')$, entonces $S'^{opt} \sqsubseteq S^{*}$. 
-    Tomamos $S'^{*} \gets S^{*}$, una solución óptima. \medskip 
-    
-    Caso $(b')$. Sean $x'$ el \textbf{mínimo valor} de $S^{*} \setminus S^{opt}$, 
+
+    Si sucede $(a')$, entonces $S'^{opt} \sqsubseteq S^{*}$.
+    Tomamos $S'^{*} \gets S^{*}$, una solución óptima. \medskip
+
+    Caso $(b')$. Sean $x'$ el \textbf{mínimo valor} de $S^{*} \setminus S^{opt}$,
     $u$ el máximo valor de $S^{opt}$ (es decir, la última posición a la que
     se saltó) y $u'$ el mínimo valor de $S^{*} \setminus (S^{opt} \setminus \{x'\})$, es
     decir, el valor siguiente a $x'$ en $S^{*}$.
-    
+
     Como $x \notin S^{*}$, $x$ no puede ser igual a $x'$. Entonces $x' > x$.
     Pero el salto de $u$ hacia $x'$ es válido, porque $S^{*}$ es una solución
     válida. Es \textbf{absurdo}, porque definimos $f$ como la función que nos
     da la mayor posición válida y en este caso retornó $x$ en lugar de $x'$.
-    
+
     Por lo tanto, sólo puede valer $x > x'$. En este caso, consideremos a
     $S'^{*} \gets S^{*} \setminus (\{x'\} \cup \{x\})$. El salto de $u$ hacia $x$ es
     válido, porque así lo indica $p(S^{opt}, x)$ y el salto de $x$ hacia $u'$
     es menor que el de $x'$ hacia $u'$. Por lo tanto, si el salto de $x'$ es válido,
-    el de $x$ también. La cantidad de saltos de $S'^{*}$ es exactamente igual a la de 
+    el de $x$ también. La cantidad de saltos de $S'^{*}$ es exactamente igual a la de
     $S^{*}$, ya que consiste simplemente en reemplazar un elemento por otro.
-    
+
     Entonces $S^{opt} \sqsubseteq S'^{*}$, es una \textbf{subsolución de una solución óptima}.
-    
-    \item Al terminar el ciclo, recorremos todos los tablones y vemos que $S^{opt}$ 
+
+    \item Al terminar el ciclo, recorremos todos los tablones y vemos que $S^{opt}$
     es subsolución de una solución óptima. Sea $S^{*}$ tal solución óptima.
     Si $S \gets S^{*}$ entonces $S^{opt}$ es una solución óptima.
-    
+
     Si no, $\exists x \in (S^{*} \setminus S^{opt})$. Pero $x \in S$ y $p(S^{*}, x) \gets \const{true}$,
     por lo tanto $p(S^{opt}, x) \gets \const{true}$ y $P(X, x) \gets \const{true}$, para todo prefijo
-    X de $S^{opt}$. Entonces, al momento de sacar $x$ de $S$ e intentar agregarlo a $S^{opt}$, 
-    deberíamos poder, pero no es lo que sucede. 
-    
+    X de $S^{opt}$. Entonces, al momento de sacar $x$ de $S$ e intentar agregarlo a $S^{opt}$,
+    deberíamos poder, pero no es lo que sucede.
+
     Esto no puede pasar, luego no existe $x$, y $S^{*} \gets S^{opt}$.
 
   \end{itemize}
 
 \newpage
 
-\textbf{Demostración (\textsc{esPosibleCruzar}):} 
+\textbf{Demostración (\textsc{esPosibleCruzar}):}
 \begin{itemize}
 \item La función \textsc{esPosibleCruzar} mantiene un \textbf{contador de tablones rotos consecutivos},
 inicializado en 0. Recorre todos los tablones \textbf{en orden}; si el tablón actual
 está sano, resetea el contador a 0, sino (está roto) le suma 1.
 Luego, si en algún momento el contador es \textbf{mayor ó igual al salto máximo posible},
-devuelve \textbf{falso}. En cambio, si se recorren todos los tablones y esto no sucede, 
+devuelve \textbf{falso}. En cambio, si se recorren todos los tablones y esto no sucede,
 la función devuelve \textbf{verdadero}.
 
 Por lo tanto, la función devuelve falso $\iff$ existe en algún momento una
-cantidad de tablones rotos consecutivos mayor o igual al salto máximo. 
+cantidad de tablones rotos consecutivos mayor o igual al salto máximo.
 
 Veamos que esto es equivalente a que el puente pueda ser cruzado: \medskip
 
@@ -272,9 +273,9 @@ tablones rotos consecutivos $k$.
 Supongamos $k \geq c$.
 Si es posible cruzarlo, entonces existe una solución $S$, que consiste en una
 secuencia de saltos.
-Sean $t_1$ el primero de los tablones y $t_c$ el tablón correspondiente a la posición $c$, entre 
+Sean $t_1$ el primero de los tablones y $t_c$ el tablón correspondiente a la posición $c$, entre
 los tablones consecutivos rotos (que sabemos que existe porque c $\leq$ k).
-Sea $s_0 \in S$ la posición (en tierra o en un tablón) máxima anterior a $t_1$ y sea $s_1 \in S$ 
+Sea $s_0 \in S$ la posición (en tierra o en un tablón) máxima anterior a $t_1$ y sea $s_1 \in S$
 la posición inmediata siguiente a $s_0$.
 Dado que $c$ es el salto máximo, entonces $s_1 - s_0 \leq c$ ó, lo que es lo
 mismo, $s_0 + c \geq s_1$.
@@ -294,9 +295,9 @@ tablones rotos consecutivos $k$, con $k < c$.
 Sea $S$ la solución que consiste en caer en todos los tablones sanos y luego al
 otro lado del puente (es decir, cruzarlo).
 
-Esta solución cruza el puente completamente y para cada posición 
+Esta solución cruza el puente completamente y para cada posición
 $s_i \in S, 1 \leq s_{i+1} - s_i \leq k$, ya que no saltea tablones sanos.
-Entonces $s_{i+1} - s_i \leq k => s_{i+1} - s_i \leq c$. 
+Entonces $s_{i+1} - s_i \leq k => s_{i+1} - s_i \leq c$.
 
 Por lo tanto todos los saltos en $S$ son válidos y la solución existe.
 \end{itemize}
@@ -309,7 +310,7 @@ Por lo tanto todos los saltos en $S$ son válidos y la solución existe.
 
 \vspace*{0.3cm}
 
-Para el análisis de complejidad nos basaremos en el pseudocódigo de la función 
+Para el análisis de complejidad nos basaremos en el pseudocódigo de la función
 \textsc{cruzarPuente}, correspondiente al ítem \textbf{3.2}.
 
 \begin{enumerate}
@@ -333,14 +334,7 @@ Para el análisis de complejidad nos basaremos en el pseudocódigo de la funció
   \begin{itemize}
     \item $c = 1$, con todos los tablones sanos, de manera que haya que chequear todos los tablones del puente.
 
-    \item $c = 2$, con un patrón de tablones sano - roto - sano, como se puede ver en la figura 4.
-    
-    \begin{figure}[htb]
-      \begin{center}
-        \includegraphics[scale=0.25]{imagenes/ej1-complejidad.jpg}
-      \end{center}
-      \caption{}
-    \end{figure}
+    \item $c = 2$, con un patrón de tablones sano - roto - sano, como se puede ver en la \textbf{figura 4}.
 
     \item $c = n$, con todos los tablones rotos salvo el primero, de manera que haya que chequear todos los tablones del puente.
   \end{itemize}
@@ -358,7 +352,13 @@ Por lo tanto, la \textbf{complejidad total} del algoritmo implementado para este
   O(1) + O(1) + O(n) + O(n)*O(1) = \textit{\textbf{O(n)}}
 \end{align*}
 
-
+\begin{figure}[htb]
+  \begin{center}
+    \includegraphics[scale=0.25]{imagenes/ej1-complejidad.jpg}
+  \end{center}
+  \caption{salto máximo igual a 2.}
+\end{figure}
+    
 \newpage
 
 
@@ -368,11 +368,13 @@ Por lo tanto, la \textbf{complejidad total} del algoritmo implementado para este
 
 \subsubsection{Test 1 - benchmark caso aleatorio}
 
-En este test, fijamos el valor de $c$ (salto máximo) en 20, mientras que $n$ (cantidad de tablones) 
-se inicializa en 1000 y va incrementándose también de a 1000, hasta alcanzar 1000000. La 
-distribución de los tablones rotos/sanos se genera aleatoriamente, de forma uniforme.
- 
-Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}. 
+(ver \verb|info.1.dat|) \medskip
+
+En este test, fijamos el valor de $c$ (salto máximo) en 20, mientras que $n$ (cantidad de tablones)
+se inicializa en 1000 y va incrementándose también de a 1000, hasta alcanzar 1000000. La
+distribución de los tablones rotos/sanos se genera \textbf{aleatoriamente}, de forma uniforme.
+
+Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}.
 
 \vspace*{0.5cm}
 
@@ -384,12 +386,12 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 
 \vspace*{0.5cm}
 
-En este gráfico podemos apreciar que, a partir de cierto valor $n_0$ (aproximadamente 300000), la 
-curva se comporta como una recta, es decir, \textbf{tiene complejidad lineal}, tal como habíamos 
-advertido en el análisis teórico de complejidad realizado anteriormente. También puede observarse, en 
-el inicio, que la cantidad de ciclos requeridos para ejecutar el algoritmo crece mucho en comparación 
-a los valores posteriores. Esto puede explicarse por que el procesador debe realizar ciertos cálculos que 
-luego, al notar cierto patrón sobre las instancias y operaciones realizadas, no vuelve a computar, 
+En este gráfico podemos apreciar que, a partir de cierto valor $n_0$ (aproximadamente 300000), la
+curva se comporta como una recta, es decir, \textbf{tiene complejidad lineal}, tal como habíamos
+advertido en el análisis teórico de complejidad realizado anteriormente. También puede observarse, en
+el inicio, que la cantidad de ciclos requeridos para ejecutar el algoritmo crece mucho en comparación
+a los valores posteriores. Esto puede explicarse por que el procesador debe realizar ciertos cálculos que
+luego, al notar cierto patrón sobre las instancias y operaciones realizadas, no vuelve a computar,
 reduciendo así la cantidad de ciclos requeridos.
 
 
@@ -398,8 +400,10 @@ reduciendo así la cantidad de ciclos requeridos.
 
 \subsubsection{Test 2 - benchmark del peor caso}
 
-En este test, fijamos el valor de $c$ (salto máximo) en 1, mientras que $n$ (cantidad de tablones) 
-se inicializa en 1000 y va incrementándose también de a 1000, hasta alcanzar 1000000. Todos los 
+(ver \verb|info.1.peor.dat|) \medskip
+
+En este test, fijamos el valor de $c$ (salto máximo) en 1, mientras que $n$ (cantidad de tablones)
+se inicializa en 1000 y va incrementándose también de a 1000, hasta alcanzar 1000000. Todos los
 tablones se encuentran sanos.
 
 Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}.
@@ -415,8 +419,8 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 \vspace*{0.5cm}
 
 En este gráfico podemos apreciar que, a diferencia del caso anterior, \textbf{el algoritmo debe realizar todas
-las comparaciones (no saltea tablones)}, por lo cual el tiempo consumido por el mismo aumenta significativamente. 
-Si bien los gráficos muestran un comportamiento similar, \textbf{la diferencia clave es la cantidad de ciclos 
+las comparaciones (no saltea tablones)}, por lo cual el tiempo consumido por el mismo aumenta significativamente.
+Si bien los gráficos muestran un comportamiento similar, \textbf{la diferencia clave es la cantidad de ciclos
 necesarios para ejecutar esta instancia}.
 
 
@@ -425,9 +429,11 @@ necesarios para ejecutar esta instancia}.
 
 \subsubsection{Test 3 - benchmark del mejor caso}
 
-En este test, fijamos el valor de $c$ (salto máximo) en X, mientras que $n$ (cantidad de tablones) 
-se inicializa en 100000 y va incrementándose también de a 100000, hasta alcanzar 1000000. Todos los 
-tablones se encuentran sanos.
+(ver \verb|info.1.mejor.dat|) \medskip
+
+En este test, el valor de $n$ (cantidad de tablones) se inicializa en 1000 y va incrementándose también de 
+a 1000, hasta alcanzar 1000000, mientras que el valor de $c$ (salto máximo) se mantiene siempre superior a n, 
+siendo $c == n+1$.
 
 Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}.
 
@@ -439,18 +445,21 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 \end{figure}
 
 
-En este gráfico podemos apreciar que, a pesar de algunas \textit{perturbaciones} esporádicas, la complejidad 
-se mantiene \textbf{constante}, a diferencia del caso aleatorio y peor, donde la misma era lineal. Además, la cantidad de 
-ciclos se ve muy reducida en comparación a la cantidad requerida para valores similares de $n$ en los casos anteriores.
+En este gráfico podemos apreciar que, a pesar de algunas \textit{perturbaciones} esporádicas, la complejidad
+se mantiene \textbf{constante}, a diferencia del caso aleatorio y peor, donde la misma era lineal. Además, la cantidad de
+ciclos se ve muy reducida en comparación a la cantidad requerida para valores similares de $n$ en los casos anteriores. 
+Esto se debe a que, sin importar el valor de $n$, \textbf{el puente puede cruzarse en 1 sólo salto} debido al valor de $c$.
 
 
 \newpage
 
 
-\subsubsection{Test 4 - benchmark con saltos aleatorios}
+\subsubsection{Test 4 - benchmark con saltos crecientes}
 
-En este test, fijamos el valor de $n$ (cantidad de tablones) en 100000, mientras que el valor de $c$ se generó 
-aleatoriamente, con valores entre 100 y 100000, incrementándose de a 100.
+(ver \verb|info.1.c.dat|) \medskip
+
+En este test, fijamos el valor de $n$ (cantidad de tablones) en 100000, mientras que el valor de $c$ se 
+inicializa en 100 y va incrementándose también de a 100, hasta alcanzar 100000.
 
 Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}.
 
@@ -462,7 +471,8 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 \end{figure}
 
 
-En este gráfico podemos apreciar que, a pesar de que generamos los valores de $c$ de manera aleatoria, la complejidad 
-se mantiene \textbf{constante}. Por este motivo, concluímos que el algoritmo y la implementación excogida para resolver este 
-problema son tales que la complejidad de los mismos es \textbf{independiente} de $c$ y queda reforzado el análisis 
-teórico desarrollado anteriormente, donde veíamos que se trataba de un algoritmo \textbf{lineal}.
+En este gráfico podemos apreciar que, a pesar de que generamos los valores de $c$ de manera creciente, la complejidad
+se mantiene \textbf{constante}. Por este motivo, concluímos que el algoritmo y la implementación excogida para resolver este
+problema son tales que la complejidad de los mismos es \textbf{independiente} de $c$ y sólo depende del tamaño de $n$ y la 
+distribución de los tablones, queda reforzado el análisis teórico desarrollado anteriormente, donde veíamos que se trataba de 
+un algoritmo \textbf{lineal}.

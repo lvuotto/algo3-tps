@@ -20,8 +20,8 @@ test:
 	make -C $(TESTDIR)
 
 plot:
-	$(BENCHDIR)/run.sh $(BENCHDIR) $(IMGDIR)
 	$(BENCHDIR)/run_especial.sh $(BENCHDIR) $(IMGDIR)
+	$(BENCHDIR)/run.sh $(BENCHDIR) $(IMGDIR)
 
 
 all: tp

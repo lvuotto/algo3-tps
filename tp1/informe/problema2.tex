@@ -47,28 +47,28 @@ altura y los de pared derecha la eliminan.
 \li $\id{vertice} \gets \proc{primero}(vertices)$
 \li $\proc{agregar}(horizonte, <vertice.x, vertice.y>)$
 \li $\proc{agregar}(alturas, vertice.y)$
-\li \While $\id{vertice} no es el ultimo$
+\li \While $vertice \neq \proc{ultimo}(vertices)$
       \Do
-\li     \If $vertice.posicion_pared == izquierda$
+\li     \If $vertice.posicion_{pared} == izquierda$
           \Then
-\li         \If $vertice.y > \proc{ultimo}(horizonte).y$
+\li         \If $vertice_y > \proc{ultimo}(horizonte)_y$
               \Then
-\li             \If $vertice.x > \proc{ultimo}(horizonte).x$
+\li             \If $vertice_x > \proc{ultimo}(horizonte)_x$
                   \Then
-\li                 $\proc{agregar}(horizonte, <vertice.x, vertice.y>)$
+\li                 $\proc{agregar}(horizonte, <vertice_x, vertice_y>)$
 \li               \Else
-\li                 $\proc{ultimo}(horizonte).y \gets vertice.y$
+\li                 $\proc{ultimo}(horizonte)_y \gets vertice_y$
                  \End
               \End
-\li         $\proc{agregar}(alturas, vertice.y)$
+\li         $\proc{agregar}(alturas, vertice_y)$
 \li       \Else
-\li         $\proc{quitar}(alturas, vertice.y)$
-\li         \If $vertice.y > \proc{maximo}(alturas)$
+\li         $\proc{quitar}(alturas, vertice_y)$
+\li         \If $vertice_y > \proc{maximo}(alturas)$
               \Then
-\li             $\proc{agregar}(horizonte, <vertice.x, maximo(alturas)>)$
+\li             $\proc{agregar}(horizonte, <vertice_x, maximo(alturas)>)$
               \End
           \End
-\li     $\id{vertice} \gets \id{vertice} + 1$
+\li     $\id{vertice} \gets \proc{proximo}(vertice)$
       \End
 \li \Return $\id{horizonte}$
 \end{codebox}

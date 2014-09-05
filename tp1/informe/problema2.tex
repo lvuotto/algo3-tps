@@ -161,49 +161,50 @@ $S_E$, $s \in S$. Luego $S = S_E$.
 \subsection{Análisis de complejidad.}
 
 \vspace*{0.3cm}
-
-Respecto de las operaciones utilizadas de \verb|vector|, \verb|size| $\in O(1)$,
-\verb|back| $\in O(1)$, \verb|resize| $\in O(n)$, \verb|push_back| $\in O(1)$,
-\verb|begin| $\in O(1)$, \verb|end| $\in O(1)$ y \verb|operator[]| $\in O(1)$.
-
-\noindent
-En \verb|Vertice|, el constructor y el \verb|operator<| son $O(1)$. También
-tiene complejidad constante el constructor de \verb|Punto|.
-
-\noindent
-En las operaciones utilizadas de \verb|multiset|, \verb|insert| $\in O(\log n)$,
-\verb|erase| $\in O(1)$, \verb|find| $\in O(\log n)$, \verb|empty| $\in O(1)$ y
-\verb|rbegin| $\in O(1)$.
-
-\noindent
-Sobre los iteradores, se realizan las operaciones \verb|++| y \verb|*|, ambas
-con complejidad constante.
-
-\noindent
-Se implementó la función \verb|maximo|, que dado un \verb|multiset|, devuelve
-el mayor de sus elementos, o 0 si el \verb|multiset| está vacío. Dicha función
-tiene complejidad constante, pues \verb|empty| $\in O(1)$ y \verb|rbegin| $\in O(1)$.
-
-\noindent
-El algoritmo \verb|sort| utilizado tiene complejidad $O(n \log n)$.
-
-\noindent
-
+ 
+Para el análisis de complejidad nos basaremos en el pseudocódigo de la función
+\textsc{calcularHorizonte}, correspondiente al ítem \textbf{4.2}.
+ 
 \begin{enumerate}
-  \item Se iteran todos los edificios y se cargan sus 2 vértices, dentro
-  del ciclo la asignación es constante. Por lo tanto el ciclo $\in O(n)$
-
-  \item Se ordenan los vértices con \verb|sort|, con la función de comparación
-  constante. Este paso se realiza en $O(n)$
-
-  \item Se itera sobre cada vértice y en cada iteración se realizan una cantidad
-  constante de comparaciones, asignaciones, todas $\in O(1)$. Y hasta una operación
-  (\verb|agregar| o \verb|quitar|) $\in O(\log n)$.
-
-  \item Al tener $2n$ vértices, la complejidad total del ciclo $\in O(n \log n)$.
-
-  \item La complejidad total es la suma de estos pasos: $O(n \log n)$
-\end{enumerate}
+   \item Las siguientes operaciones realizadas sobre el \textit{contenedor} \verb|vector| de la \textit{STL} toman tiempo constante $O(1)$:
+   \verb|size|, \verb|push_back|, \verb|back|, \verb|empty|, creación y manipulación de iteradores, \verb|begin|, \verb|end| 
+   y \verb|operator[]|.
+ 
+   \item La operación \verb|resize| es lineal, $\in O(n)$.
+% 
+%   \item En el \verb|struct Vertice|, el \textit{constructor} y el \verb|operator<| son $O(1)$. También
+%   tiene complejidad constante el constructor del \verb|struct Punto|.
+% 
+%   \item En las operaciones utilizadas de \verb|multiset|, \verb|insert| y \verb|find| son logarítmicas, 
+%   $\in O(\log n)$, mientras que \verb|erase|, \verb|empty| y \verb|rbegin| son constantes, $\in O(1)$.
+% 
+%   \item Sobre los iteradores, se realizan las operaciones \verb|++| y \verb|*|, ambas
+%   con complejidad también constante.
+% 
+%   \item Se implementó la función \verb|maximo|, que dado un \verb|multiset|, devuelve
+%   el mayor de sus elementos ó 0, si el \verb|multiset| está vacío. Dicha función
+%   tiene complejidad constante, pues \verb|empty| y \verb|rbegin| son constantes, $\in O(1)$.
+% 
+%   \item El algoritmo \verb|sort| de la \textit{STL} utilizado (línea 4) para ordenar los vértices 
+%   por altura, tiene complejidad $O(n \log n)$.
+ 
+%   \item En la línea 8, se itera sobre todos los edificios y se cargan sus 2 vértices. Dentro
+%   de este ciclo, la asignación resulta constante. Por lo tanto, ejecutar este ciclo 
+%   toma tiempo lineal, $\in O(n)$. Dentro de este ciclo, todas las operaciones realizadas son
+%   constantes o logarítmicas, por lo tanto están acotadas por $O(n)$.
+ 
+   \item Las comparaciones y asignaciones realizadas sobre cada vértice, toman tiempo constante,  $\in O(1)$. 
+   Las operaciones \verb|agregar| y \verb|quitar| son logarítmicas, $\in O(\log n)$.
+ 
+   \item Retornar el resultado es lineal en función del tamaño del vector.
+ \end{enumerate}
+ 
+   
+Por lo tanto, la \textbf{complejidad total} del algoritmo implementado para este problema es
+ 
+\begin{center}
+  $O(1) + O(1) + O(n \log n) + O(1) + O(1) + O(1) + O(n) =$ \textit{\textbf{O(n log n)}}
+\end{center}
 
 
 \newpage

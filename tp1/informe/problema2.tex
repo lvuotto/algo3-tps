@@ -16,12 +16,15 @@ las líneas internas.
   izquierda sobre el eje $X$, la segunda coordenada es la altura en el eje $Y$ y la
   tercer coordenada es la ubicación de la pared derecha sobre el eje $X$, la
   solución debe ser 4 2 5 4 7 2 9 5 12 0 (es única).
+  
+  En la figura 5, que se encuentra debajo, puede visualizarse mejor este ejemplo.
 \end{itemize}
 
 \begin{figure}[h]
   \begin{center}
     \includegraphics[scale=0.25]{imagenes/ej2.jpg}
   \end{center}
+    \caption{}
 \end{figure}
 
 
@@ -212,8 +215,8 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 \vspace*{0.5cm}
 
 En este gráfico podemos apreciar que, los valores que toma la curva que representa la cantidad de ciclos 
-de clock empieza tomando valores menores a nuestra curva de referencia, para después acercarse bastante y 
-luego superarla, tal como se comportaría una curva del estilo $y = x*log x$, pero en este caso está más 
+de clock empieza tomando valores \textbf{menores} a nuestra curva de referencia, para después \textbf{acercarse} bastante \textbf{y 
+luego superarla}, tal como se comportaría una curva del estilo $y = x*log x$, pero en este caso está más 
 "linealizada" por tratarse del caso aleatorio.
 
 \newpage
@@ -241,9 +244,9 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 En este gráfico podemos apreciar que, al igual que en el experimento aleatorio, los valores que toma la curva 
 que representa la cantidad de ciclos de clock empieza tomando valores menores a nuestra curva de referencia, 
 para después acercarse bastante y luego superarla, tal como se comportaría una curva del estilo $y = x*log x$, 
-pero, a diferencia del anterior, en el punto donde la curva de referencia es superada, la curva que mide nuestro 
-algoritmo crece a mayor velocidad (para $n$ = 90000 aproximadamente, la curva de referencia ya se ve superada, 
-mientras que en el experimento aleatorio se mantenían similares).
+pero, a diferencia del anterior, en el punto donde la curva de referencia es superada, \textbf{la curva que mide nuestro 
+algoritmo crece a mayor velocidad} . Para $n$ = 90000 aproximadamente, la curva de referencia ya se ve superada, 
+mientras que en el experimento aleatorio se mantenían en valores similares.
 
 
 \newpage
@@ -252,7 +255,7 @@ mientras que en el experimento aleatorio se mantenían similares).
 \subsubsection{Test 3 - benchmark del mejor caso}
 
 En este test, $n$ (cantidad de edificios) se inicializa en 100 y va incrementándose también de a 100, 
-hasta alcanzar 100000. Tomamos como mejor caso una instancia con un gran edificio, que posee dentro 
+hasta alcanzar 100000. Tomamos como mejor caso una instancia con un \textit{gran edificio}, que posee dentro 
 edificios disjuntos (es decir, cuyas paredes no se instersectan).
 
 Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}.
@@ -266,8 +269,8 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 
 
 En este gráfico podemos apreciar que, a diferencia de los dos experimentos anteriores, el comportamiento 
-del algoritmo es prácticamente lineal, reduciendo además la cantidad de ciclos requeridos en un 75\% 
+del algoritmo es \textbf{prácticamente lineal}, reduciendo además la cantidad de ciclos requeridos hasta un 75\% 
 aproximadamente. También es importante notar que la curva que representa los valores en ciclos requeridos 
-por nuestro algoritmo se mantiene acotada superiormente por la curva tomada de referencia. Entendemos que 
-para aquellos puntos donde sí la supera, se deben más bien a errores en la medición o momentos de sobrecarga 
-del procesador. 
+por nuestro algoritmo \textbf{se mantiene acotada superiormente por la curva tomada de referencia}. Entendemos que 
+para aquellos puntos donde sí la supera, se debe más bien a errores en la medición o momentos de sobrecarga 
+del procesador, que influyen en el resultado del experimento. 

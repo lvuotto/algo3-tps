@@ -426,7 +426,7 @@ necesarios para ejecutar esta instancia}.
 \subsubsection{Test 3 - benchmark del mejor caso}
 
 En este test, fijamos el valor de $c$ (salto máximo) en X, mientras que $n$ (cantidad de tablones) 
-se inicializa en X y va incrementándose también de a X, hasta alcanzar 1000000. Todos los 
+se inicializa en 100000 y va incrementándose también de a 100000, hasta alcanzar 1000000. Todos los 
 tablones se encuentran sanos.
 
 Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}.
@@ -440,7 +440,7 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 
 
 En este gráfico podemos apreciar que, a pesar de algunas \textit{perturbaciones} esporádicas, la complejidad 
-se mantiene constante, a diferencia del caso aleatorio y peor, donde la misma era lineal. Además, la cantidad de 
+se mantiene \textbf{constante}, a diferencia del caso aleatorio y peor, donde la misma era lineal. Además, la cantidad de 
 ciclos se ve muy reducida en comparación a la cantidad requerida para valores similares de $n$ en los casos anteriores.
 
 
@@ -463,6 +463,6 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 
 
 En este gráfico podemos apreciar que, a pesar de que generamos los valores de $c$ de manera aleatoria, la complejidad 
-se mantiene constante. Por este motivo, concluímos que el algoritmo y la implementación excogida para resolver este 
+se mantiene \textbf{constante}. Por este motivo, concluímos que el algoritmo y la implementación excogida para resolver este 
 problema son tales que la complejidad de los mismos es \textbf{independiente} de $c$ y queda reforzado el análisis 
-teórico desarrollado anteriormente, donde veíamos que se trataba de un algoritmo lineal.
+teórico desarrollado anteriormente, donde veíamos que se trataba de un algoritmo \textbf{lineal}.

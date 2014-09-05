@@ -21,9 +21,9 @@ son valores naturales}.
   \item Para un puente de 10 tablones y un participante capaz de saltar de a 3
   tablones como máximo, teniendo los tablones 1, 4, 6, 8 y 9 rotos, la salida podría ser:
   primero saltar al tablón 3, luego al 5, luego al 7, luego al 10 y luego fuera del puente.
+  
   \item Si en cambio, en el ejemplo anterior, el tablón 7 también estuviese roto,
   el algoritmo debe informarnos que, bajo esas condiciones, no es posible cruzar el puente.
-  \item \textcolor{red}{\textbf{agregar un ejemplo mas con dibujitos y cosas lindas!}}
 \end{itemize}
 
 
@@ -39,7 +39,30 @@ y así sucesivamente, hasta encontrar un tablón válido.
 Si retrocediendo de este modo se llega a la posición en la que se encuentran el competidor, el problema
 \textbf{no tiene solución}.
 
-\vspace*{0.5cm}
+
+\begin{figure}[htb]
+  \begin{center}
+      \includegraphics[scale=0.25]{imagenes/ej1-puente.jpg}
+  \end{center}
+  \caption{ejemplo de puente.}
+\end{figure}
+
+
+\begin{figure}[htb]
+  \begin{center}
+      \includegraphics[scale=0.25]{imagenes/ej1-puente-saltos.jpg}
+  \end{center}
+  \caption{saltos realizados.}
+\end{figure}
+
+
+\begin{figure}[htb]
+  \begin{center}
+      \includegraphics[scale=0.25]{imagenes/ej1-puente-imposible.jpg}
+  \end{center}
+  \caption{puente sin solución.}
+\end{figure}
+
 
 
 \begin{codebox}
@@ -310,7 +333,14 @@ Para el análisis de complejidad nos basaremos en el pseudocódigo de la funció
   \begin{itemize}
     \item $c = 1$, con todos los tablones sanos, de manera que haya que chequear todos los tablones del puente.
 
-    \item $c = 2$, con un patrón de tablones sano - roto - sano, como se puede ver en la figura \textcolor{red}{\textbf{QUE DESPUES AGREGAMOS!}}
+    \item $c = 2$, con un patrón de tablones sano - roto - sano, como se puede ver en la figura 4.
+    
+    \begin{figure}[htb]
+      \begin{center}
+        \includegraphics[scale=0.25]{imagenes/ej1-complejidad.jpg}
+      \end{center}
+      \caption{}
+    \end{figure}
 
     \item $c = n$, con todos los tablones rotos salvo el primero, de manera que haya que chequear todos los tablones del puente.
   \end{itemize}
@@ -328,6 +358,8 @@ Por lo tanto, la \textbf{complejidad total} del algoritmo implementado para este
   O(1) + O(1) + O(n) + O(n)*O(1) = \textit{\textbf{O(n)}}
 \end{align*}
 
+
+\newpage
 
 
 \subsection{Experimentación y gráficos.}
@@ -394,7 +426,7 @@ necesarios para ejecutar esta instancia}.
 \subsubsection{Test 3 - benchmark del mejor caso}
 
 En este test, fijamos el valor de $c$ (salto máximo) en X, mientras que $n$ (cantidad de tablones) 
-se inicializa en X y va incrementándose también de a X, hasta alcanzar 1000000. Todos los 
+se inicializa en 100000 y va incrementándose también de a 100000, hasta alcanzar 1000000. Todos los 
 tablones se encuentran sanos.
 
 Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}.
@@ -408,7 +440,7 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 
 
 En este gráfico podemos apreciar que, a pesar de algunas \textit{perturbaciones} esporádicas, la complejidad 
-se mantiene constante, a diferencia del caso aleatorio y peor, donde la misma era lineal. Además, la cantidad de 
+se mantiene \textbf{constante}, a diferencia del caso aleatorio y peor, donde la misma era lineal. Además, la cantidad de 
 ciclos se ve muy reducida en comparación a la cantidad requerida para valores similares de $n$ en los casos anteriores.
 
 
@@ -417,8 +449,8 @@ ciclos se ve muy reducida en comparación a la cantidad requerida para valores s
 
 \subsubsection{Test 4 - benchmark con saltos aleatorios}
 
-En este test, fijamos el valor de $n$ (cantidad de tablones) en 100000, mientras que el valor 
-.
+En este test, fijamos el valor de $n$ (cantidad de tablones) en 100000, mientras que el valor de $c$ se generó 
+aleatoriamente, con valores entre 100 y 100000, incrementándose de a 100.
 
 Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}.
 
@@ -429,3 +461,8 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
   \end{center}
 \end{figure}
 
+
+En este gráfico podemos apreciar que, a pesar de que generamos los valores de $c$ de manera aleatoria, la complejidad 
+se mantiene \textbf{constante}. Por este motivo, concluímos que el algoritmo y la implementación excogida para resolver este 
+problema son tales que la complejidad de los mismos es \textbf{independiente} de $c$ y queda reforzado el análisis 
+teórico desarrollado anteriormente, donde veíamos que se trataba de un algoritmo \textbf{lineal}.

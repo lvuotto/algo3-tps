@@ -16,7 +16,7 @@ las líneas internas}.
   izquierda sobre el eje $x$, la segunda coordenada es la altura en el eje $y$ y la
   tercer coordenada es la ubicación de la pared derecha sobre el eje $x$, la
   solución debe ser 4 2 5 4 7 2 9 5 12 0 (es \textbf{única}).
-  
+
   En la \textbf{figura 5}, que se encuentra debajo, puede visualizarse mejor este ejemplo.
 \end{itemize}
 
@@ -125,7 +125,7 @@ a la solución parcial, de la siguiente manera:
     que comience antes y por lo tanto, dicho punto es agregado al conjunto
     solución $S$. En el caso de que el último punto agregado a $H$, $h$
     cumpla $h_x = p_x \wedge h_y < p_y \wedge h \in S$, se reemplaza en $S$
-    $h$ por $p$. 
+    $h$ por $p$.
 
 %    \item Si su altura es mayor a la del último punto y sus coordenadas $X$ son
 %    iguales, quiere decir que el punto cargado no estaba cubierto por uno que comience
@@ -161,47 +161,47 @@ $S_E$, $s \in S$. Luego $S = S_E$.
 \subsection{Análisis de complejidad.}
 
 \vspace*{0.3cm}
- 
+
 Para el análisis de complejidad nos basaremos en el pseudocódigo de la función
 \textsc{calcularHorizonte}, correspondiente al ítem \textbf{4.2}.
- 
+
 \begin{enumerate}
    \item Las siguientes operaciones realizadas sobre el \textit{contenedor} \verb|vector| de la \textit{STL} toman tiempo constante $O(1)$:
-   \verb|size|, \verb|push_back|, \verb|back|, \verb|empty|, creación y manipulación de iteradores, \verb|begin|, \verb|end| 
+   \verb|size|, \verb|push_back|, \verb|back|, \verb|empty|, creación y manipulación de iteradores, \verb|begin|, \verb|end|
    y \verb|operator[]|.
- 
+
    \item La operación \verb|resize| es lineal, $\in O(n)$.
-% 
-%   \item En el \verb|struct Vertice|, el \textit{constructor} y el \verb|operator<| son $O(1)$. También
-%   tiene complejidad constante el constructor del \verb|struct Punto|.
-% 
-%   \item En las operaciones utilizadas de \verb|multiset|, \verb|insert| y \verb|find| son logarítmicas, 
-%   $\in O(\log n)$, mientras que \verb|erase|, \verb|empty| y \verb|rbegin| son constantes, $\in O(1)$.
-% 
-%   \item Sobre los iteradores, se realizan las operaciones \verb|++| y \verb|*|, ambas
-%   con complejidad también constante.
-% 
-%   \item Se implementó la función \verb|maximo|, que dado un \verb|multiset|, devuelve
-%   el mayor de sus elementos ó 0, si el \verb|multiset| está vacío. Dicha función
-%   tiene complejidad constante, pues \verb|empty| y \verb|rbegin| son constantes, $\in O(1)$.
-% 
-%   \item El algoritmo \verb|sort| de la \textit{STL} utilizado (línea 4) para ordenar los vértices 
-%   por altura, tiene complejidad $O(n \log n)$.
- 
-%   \item En la línea 8, se itera sobre todos los edificios y se cargan sus 2 vértices. Dentro
-%   de este ciclo, la asignación resulta constante. Por lo tanto, ejecutar este ciclo 
-%   toma tiempo lineal, $\in O(n)$. Dentro de este ciclo, todas las operaciones realizadas son
-%   constantes o logarítmicas, por lo tanto están acotadas por $O(n)$.
- 
-   \item Las comparaciones y asignaciones realizadas sobre cada vértice, toman tiempo constante,  $\in O(1)$. 
+
+   \item En el \verb|struct Vertice|, el \textit{constructor} y el \verb|operator<| son $O(1)$. También
+   tiene complejidad constante el constructor del \verb|struct Punto|.
+
+   \item En las operaciones utilizadas de \verb|multiset|, \verb|insert| y \verb|find| son logarítmicas,
+   $\in O(\log n)$, mientras que \verb|erase|, \verb|empty| y \verb|rbegin| son constantes, $\in O(1)$.
+
+   \item Sobre los iteradores, se realizan las operaciones \verb|++| y \verb|*|, ambas
+   con complejidad también constante.
+
+   \item Se implementó la función \verb|maximo|, que dado un \verb|multiset|, devuelve
+   el mayor de sus elementos ó 0, si el \verb|multiset| está vacío. Dicha función
+   tiene complejidad constante, pues \verb|empty| y \verb|rbegin| son constantes, $\in O(1)$.
+
+   \item El algoritmo \verb|sort| de la \textit{STL} utilizado (línea 4) para ordenar los vértices
+   por altura, tiene complejidad $O(n \log n)$.
+
+   \item En la línea 8, se itera sobre todos los edificios y se cargan sus 2 vértices. Dentro
+   de este ciclo, la asignación resulta constante. Por lo tanto, ejecutar este ciclo
+   toma tiempo lineal, $\in O(n)$. Dentro de este ciclo, todas las operaciones realizadas son
+   constantes o logarítmicas, por lo tanto están acotadas por $O(n)$.
+
+   \item Las comparaciones y asignaciones realizadas sobre cada vértice, toman tiempo constante,  $\in O(1)$.
    Las operaciones \verb|agregar| y \verb|quitar| son logarítmicas, $\in O(\log n)$.
- 
+
    \item Retornar el resultado es lineal en función del tamaño del vector.
  \end{enumerate}
- 
-   
+
+
 Por lo tanto, la \textbf{complejidad total} del algoritmo implementado para este problema es
- 
+
 \begin{center}
   $O(1) + O(1) + O(n \log n) + O(1) + O(1) + O(1) + O(n) =$ \textit{\textbf{O(n log n)}}
 \end{center}
@@ -218,10 +218,10 @@ Por lo tanto, la \textbf{complejidad total} del algoritmo implementado para este
 
 (ver \verb|info.2.dat|) \medskip
 
-En este test, $n$ (cantidad de edificios) se inicializa en 100 y va incrementándose también de a 100, 
+En este test, $n$ (cantidad de edificios) se inicializa en 100 y va incrementándose también de a 100,
 hasta alcanzar 100000. Las coordenadas de los vértices se genera aleatoriamente, de forma uniforme.
- 
-Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}. 
+
+Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}.
 
 \vspace*{0.5cm}
 
@@ -233,9 +233,9 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 
 \vspace*{0.5cm}
 
-En este gráfico podemos apreciar que, los valores que toma la curva que representa la cantidad de ciclos 
-de clock empieza tomando valores \textbf{menores} a nuestra curva de referencia, para después \textbf{acercarse} bastante \textbf{y 
-luego superarla}, tal como se comportaría una curva del estilo $y = x \log x$, pero en este caso está más 
+En este gráfico podemos apreciar que, los valores que toma la curva que representa la cantidad de ciclos
+de clock empieza tomando valores \textbf{menores} a nuestra curva de referencia, para después \textbf{acercarse} bastante \textbf{y
+luego superarla}, tal como se comportaría una curva del estilo $y = x \log x$, pero en este caso está más
 "linealizada" por tratarse del caso aleatorio.
 
 \newpage
@@ -245,11 +245,11 @@ luego superarla}, tal como se comportaría una curva del estilo $y = x \log x$, 
 
 (ver \verb|info.2.peor.dat|) \medskip
 
-En este test, $n$ (cantidad de edificios) se inicializa en 100 y va incrementándose también de a 100, 
-hasta alcanzar 100000. Tomamos como peor caso, una instancia en la cual se generan alturas de 1 a $n$, 
-se mezclan y luego se generan paredes que van "achicándose", es decir, para la primer altura tenemos 
+En este test, $n$ (cantidad de edificios) se inicializa en 100 y va incrementándose también de a 100,
+hasta alcanzar 100000. Tomamos como peor caso, una instancia en la cual se generan alturas de 1 a $n$,
+se mezclan y luego se generan paredes que van "achicándose", es decir, para la primer altura tenemos
 \verb|1 2n|, para la segunda \verb|2 2n-1| y así sucesivamente.
- 
+
 Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}.
 
 \vspace*{0.5cm}
@@ -262,11 +262,11 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 
 \vspace*{0.5cm}
 
-En este gráfico podemos apreciar que, al igual que en el experimento aleatorio, los valores que toma la curva 
-que representa la cantidad de ciclos de clock empieza tomando valores menores a nuestra curva de referencia, 
-para después acercarse bastante y luego superarla, tal como se comportaría una curva del estilo $y = x*log(x)$, 
-pero, a diferencia del anterior, en el punto donde la curva de referencia es superada, \textbf{la curva que mide nuestro 
-algoritmo crece a mayor velocidad} . Para $n$ = 90000 aproximadamente, la curva de referencia ya se ve superada, 
+En este gráfico podemos apreciar que, al igual que en el experimento aleatorio, los valores que toma la curva
+que representa la cantidad de ciclos de clock empieza tomando valores menores a nuestra curva de referencia,
+para después acercarse bastante y luego superarla, tal como se comportaría una curva del estilo $y = x*log(x)$,
+pero, a diferencia del anterior, en el punto donde la curva de referencia es superada, \textbf{la curva que mide nuestro
+algoritmo crece a mayor velocidad} . Para $n$ = 90000 aproximadamente, la curva de referencia ya se ve superada,
 mientras que en el experimento aleatorio se mantenían en valores similares.
 
 
@@ -277,8 +277,8 @@ mientras que en el experimento aleatorio se mantenían en valores similares.
 
 (ver \verb|info.2.mejor.dat|) \medskip
 
-En este test, $n$ (cantidad de edificios) se inicializa en 100 y va incrementándose también de a 100, 
-hasta alcanzar 100000. Tomamos como mejor caso una instancia con un \textit{gran edificio}, que posee dentro 
+En este test, $n$ (cantidad de edificios) se inicializa en 100 y va incrementándose también de a 100,
+hasta alcanzar 100000. Tomamos como mejor caso una instancia con un \textit{gran edificio}, que posee dentro
 edificios disjuntos (es decir, cuyas paredes no se instersectan).
 
 Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}.
@@ -291,9 +291,9 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 \end{figure}
 
 
-En este gráfico podemos apreciar que, a diferencia de los dos experimentos anteriores, el comportamiento 
-del algoritmo es \textbf{prácticamente lineal}, reduciendo además la cantidad de ciclos requeridos hasta un 75\% 
-aproximadamente. También es importante notar que la curva que representa los valores en ciclos requeridos 
-por nuestro algoritmo \textbf{se mantiene acotada superiormente por la curva tomada de referencia}. Entendemos que 
-para aquellos puntos donde sí la supera, se debe más bien a errores en la medición o momentos de sobrecarga 
-del procesador, que influyen en el resultado del experimento. 
+En este gráfico podemos apreciar que, a diferencia de los dos experimentos anteriores, el comportamiento
+del algoritmo es \textbf{prácticamente lineal}, reduciendo además la cantidad de ciclos requeridos hasta un 75\%
+aproximadamente. También es importante notar que la curva que representa los valores en ciclos requeridos
+por nuestro algoritmo \textbf{se mantiene acotada superiormente por la curva tomada de referencia}. Entendemos que
+para aquellos puntos donde sí la supera, se debe más bien a errores en la medición o momentos de sobrecarga
+del procesador, que influyen en el resultado del experimento.

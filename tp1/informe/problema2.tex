@@ -94,52 +94,68 @@ $S_E = \{p \in \mathbb{Z}^2 : \exists e \in E / (p_x = e_i \land p_y = e_y) \lan
 p \notin T_E\} \cup \{p \in \mathbb{Z}^2 : \exists e \in E / (p_x = e_d \land p
 \notin T_E) \land p_y = \max({\{e_y : e \in E \land e_i \leq p_x < e_d\} \cup \{0\}})\}$,
 donde $T_E = \{p \in \mathbb{Z}^2 : \exists e \in E / (e_i \leq p_x \leq e_d \land p_y \leq e_y)\}$
-son los puntos cubiertos por todos los edificios.
+son los puntos cubiertos por todos los edificios, donde, dado un edificio
+$e$, $e_i$ es el valor en $x$ de su pared izquierda, $e_d$ el valor de su
+pared derecha y $e_y$ su altura en $y$, y dado un punto $p \in
+\mathbb{Z}^2$, $p_x$ es su coordenada $x$ y $p_y$ su coordenada $y$.
 
 Para demostrar la correctitud de este algoritmo, veremos que cumple con la
 definición dada más arriba.
 
-Primero, el algoritmo ordena y recorre en orden todos los puntos de los edificios.
+Primero, cada edificio $e_j \in E$ es descompuesto en $p_{j_i} = (e_i, e_y)$ y
+$p_{j_d} = (e_d, e_y)$ y se define $P = \bigcup_{j=1}^n \{p_{j_i}, p_{j_d}\}$.
+El algoritmo ordena $P$ primero por coordenada $x$ y en caso de empate por
+coordenada $y$.
 
-Por cada punto $p$, se revisa si corresponde agregar o modificar un punto a la
-solución parcial, de la siguiente manera:
+Por cada punto $p \in P$, se revisa si corresponde agregar o modificar un punto
+a la solución parcial, de la siguiente manera:
 
 \begin{itemize}
-  \item Si es un vértice izquierdo del edificio, $p = <e_i, e_y>$, se carga su
-  altura en el multiconjunto de alturas.
+  \item Si es un vértice izquierdo del edificio, $p = (e_i, e_y)$, se carga su
+  altura en un multiconjunto $H$ de alturas.
   \begin{itemize}
-    \item Si su altura es menor o igual a la del último punto cargado, como
-    vamos recorriendo en orden, podemos asegurar que $\exists e \in E / e_i \leq p_x \leq e_d \land p_y \leq e_y$,
-    por lo tanto está cubierto por un edificio y no corresponde cargarlo.
+    \item Si su altura es menor o igual a la del último punto agregado a $H$,
+    como vamos recorriendo en orden, podemos asegurar que $\exists e \in E /
+    e_i \leq p_x \leq e_d \land p_y \leq e_y$, es decir, $p \in T_E$, por lo
+    cual este punto no pertenece a la solución.
 
-    \item Si su altura es mayor a la del último punto y también su coordenada $X$,
-    entonces podemos asegurar que $\nexists e \in E / e_i < p_x \land p_y \leq e_y$,
-    es decir, no está cubierto por un edificio que comience antes, entonces cargamos
-    el punto. Pero:
+    \item Si su altura es mayor a la del último punto agregado a $H$ y también
+    lo es su coordenada $x$, entonces podemos asegurar que $\nexists e \in E /
+    e_i < p_x \land p_y \leq e_y$, es decir, no está cubierto por un edificio
+    que comience antes y por lo tanto, dicho punto es agregado al conjunto
+    solución $S$. En el caso de que el último punto agregado a $H$, $h$
+    cumpla $h_x = p_x \wedge h_y < p_y \wedge h \in S$, se reemplaza en $S$
+    $h$ por $p$. 
 
-    \item Si su altura es mayor a la del último punto y sus coordenadas $X$ son
-    iguales, quiere decir que el punto cargado no estaba cubierto por uno que comience
-    antes, sino por uno que comienza en el mismo punto, pero que es más alto.
-    En este caso reemplazamos la atura cargada en el último punto, por la altura
-    de este.
+%    \item Si su altura es mayor a la del último punto y sus coordenadas $X$ son
+%    iguales, quiere decir que el punto cargado no estaba cubierto por uno que comience
+%    antes, sino por uno que comienza en el mismo punto, pero que es más alto.
+%    En este caso reemplazamos la atura cargada en el último punto, por la altura
+%    de este.
   \end{itemize}
 
-  \item Si es un vértice derecho del edificio, $p = <e_d, e_y>$, se elimina su
-  altura del munticonjunto.
+  \item Si es un vértice derecho del edificio, $p = (e_d, e_y)$, se elimina su
+  altura del munticonjunto $H$.
   \begin{itemize}
     \item Si su altura sigue siendo igual a la máxima del multiconjunto, podemos
-    afirmar que $\exists e \in E / e_i \leq p_x \leq e_d \land p_y \leq e_y$ y
-    no corresponde cargar un nuevo punto.
+    afirmar que $\exists e \in E / e_i \leq p_x \leq e_d \land p_y \leq
+    e_y$. Es decir, $p \in T_E$ y por lo tanto no corresponde agregarlo a
+    $S$.
 
     \item Si su altura es mayor a la máxima del multiconjunto,
-    $\nexists e \in E / e_i < p_x \land p_y \leq e_y$, por lo tanto marca el
-    final de un edificio en el horizonte. Y se carga el punto $p' = <e_d, \max(alturas)>$,
-    ya que al recorrer en orden, en alturas quedan $\{e_y \in \mathbb{Z} : e \in E / e_i \leq p_x < e_x\}$
+    $\nexists e \in E / e_i < p_x \land p_y \leq e_y$, lo que marca el
+    final de un edificio en el horizonte. Por lo tanto se agrega punto $p' =
+    (e_d, \max\{h_y : h \in H\} \cup \{0\})$ a $S$.
+%    ya que al recorrer en orden, en alturas quedan $\{e_y \in \mathbb{Z} : e \in E / e_i \leq p_x < e_x\}$
   \end{itemize}
 \end{itemize}
 
-De esta forma, nos aseguramos de considerar todos los puntos posibles y terminando
-únicamente con los que corresponden.
+De esta modo, todos los puntos pertenecientes a $S$ cumplen las mismas
+condiciones que los puntos pertenecientes a $S_E$. Por lo tanto, $S
+\subseteq S_E$. Pero no existe $s \in S_E$ tal que $s \notin S$, pues eso
+diría que $s = (e_d, e_y) \lor s = (e_i, e_y)$ para cierto $e \in E$ y dicho
+$e$ fue procesado por nuestro algoritmo y como cumple las condiciones de
+$S_E$, $s \in S$. Luego $S = S_E$.
 
 
 \subsection{Análisis de complejidad.}

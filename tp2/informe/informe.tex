@@ -1,0 +1,192 @@
+\documentclass[a4paper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{charter}   % tipografia
+\usepackage{graphicx}
+\usepackage{makeidx}
+
+\usepackage{float}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{wrapfig}
+\usepackage{listings}
+\usepackage{caption}
+
+\usepackage{hyperref} %las entradas del índice tienen links
+\hypersetup{
+    colorlinks=true,
+    linktoc=all,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\input{codesnippet}
+\input{page.layout}
+\usepackage{underscore}
+\usepackage{caratula}
+\usepackage{url}
+
+\usepackage{color}
+\usepackage{clrscode3e} % para el pseudocodigo
+
+
+
+
+\begin{document}
+
+\lstset{
+  language=C++,
+  backgroundcolor=\color{white},   % choose the background color
+  basicstyle=\footnotesize,        % size of fonts used for the code
+  breaklines=true,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{mymauve},     % string literal style
+}
+
+\thispagestyle{empty}
+\materia{Algoritmos y Estructuras de Datos III}
+\submateria{Segundo Cuatrimestre de 2014}
+\titulo{Trabajo Práctico II}
+%\subtitulo{}
+\integrante{González Alba, Pablo}{476/10}{pablo.gonzalez.alba@gmail.com}
+\integrante{Quiroz, Nicol\'as}{450/11}{nquiroz@dc.uba.ar}
+\integrante{Vaghi, Agustín}{790/07}{vaghiagustin@gmail.com}
+\integrante{Vuotto, Lucas}{385/12}{lvuotto@dc.uba.ar}
+
+\maketitle
+\newpage
+
+\thispagestyle{empty}
+\vfill
+\begin{abstract}
+    \vspace{0.5cm}
+    \textcolor{red}{\textbf{completar!}}
+\end{abstract}
+
+\thispagestyle{empty}
+\vspace{1.5cm}
+\tableofcontents
+\newpage
+
+
+%\normalsize
+\newpage
+
+\section{Objetivos generales}
+\textcolor{red}{\textbf{completar!}}
+
+\newpage
+
+\section{Plataforma de pruebas}
+
+\textcolor{red}{\textbf{chequear!}} \medskip
+
+El testeo de los algoritmos implementados fue realizado, principalmente, en las máquinas del laboratorio 3 del DC. \newline
+\begin{itemize}
+  \item \textbf{Sistema Operativo:} Ubuntu Linux 12.04 x86_64, kernel 3.2.0-30-generic
+
+  \item \textbf{Especificaciones del Software:} el código está implementado en \textbf{C++}, compilado con \verb|-std=c++0x|.
+  Utilizamos \textbf{Bash} y \textbf{Ruby} para los scripts. Los gráficos fueron realizados con \textbf{gnuplot}.
+
+  \item \textbf{Especificaciones del Hardware:} Intel(R) Core(TM) i5-2500K CPU @ 3.30GHz, 8GB de RAM.
+\end{itemize}
+
+\newpage
+
+\section{Problema 1: Plan de vuelo}
+\input{problema1}
+
+\newpage
+
+\section{Problema 2: Caballos salvajes}
+\input{problema2}
+
+\newpage
+
+\section{Problema 3: La comunidad del anillo}
+\input{problema3}
+
+\newpage
+
+\section{Apéndice 1: acerca de los tests}
+
+\textcolor{red}{\textbf{chequear!}} \medskip
+
+Los \textbf{casos aleatorios se generan mediante los scripts} (en Ruby) \verb|ejN.random.rb|, donde
+N es el número correspondiente al problema. Estos scripts toman siempre \textbf{dos parámetros},
+siendo el primero la semilla que utilizamos para generar números pseudoaleatorios, que
+\textbf{por defecto toma el valor 0} si no es especificado y \textbf{el segundo parámetro corresponde
+al tamaño de la entrada}.
+
+Además de los tests con casos aleatorios, \textbf{tenemos en cuenta los mejores y peores
+casos de cada algoritmo}, fijando los valores adecuados de los parámetros para
+obtenerlos. \medskip
+
+En cuanto a la metodología para medir el tiempo, utilizamos el archivo \verb|tiempo.h|,
+que define macros para contar la \textbf{cantidad de ciclos de clock} producidos entre dos instantes. \medskip
+
+Cada instancia se repite varias veces para reducir el impacto de los \textit{outliers}, quedándonos
+con el \textbf{valor mínimo} en cada caso. Estos valores (de entrada y salida) se vuelcan a un archivo
+\verb|info.n.dat| dentro de la carpeta \textit{benchmark}, que es utilizado luego para generar los gráficos
+mediante \textbf{gnuplot}. \medskip
+
+Para correr los tests estáticos (sin variables aleatorias), se ejecuta \verb|make; make test| y para los
+casos aleatorios (utilizados para los gráficos), \verb|make; make plot|.
+
+Todos los archivos \verb|.cc| son compilados utilizando la optimización \verb|-O3|. \medskip
+
+Tener en cuenta que, a pesar de ejecutar los tests reiteradas veces, aún es posible que estén presentes ciertos
+valores atípicos (menores o mayores a los esperados), ya sea por optimizaciones que realice el procesador, sobrecarga
+del mismo, etc.
+\newpage
+
+\section{Apéndice 2: secciones relevantes del código}
+
+\textcolor{red}{\textbf{chequear!}} \medskip
+
+En esta sección, adjuntamos parte del código correspondiente a la resolución de cada problema
+que consideramos más \textbf{relevante}. Omitimos los encabezados, bibliotecas incluídas,
+funciones \verb|main| y de impresión de resultados. El código se encuentra comentado en los
+archivos \verb|.cc|.
+
+\subsection{Código del Problema 1}
+
+
+\begin{lstlisting}
+\end{lstlisting}
+
+\vspace*{0.5cm}
+
+
+\newpage
+
+
+\subsection{Código del Problema 2}
+
+
+\begin{lstlisting}
+\end{lstlisting}
+
+\vspace*{0.5cm}
+
+
+\newpage
+
+
+\subsection{Código del Problema 3}
+
+
+\begin{lstlisting}
+\end{lstlisting}
+
+\vspace*{0.5cm}
+
+
+\end{document}

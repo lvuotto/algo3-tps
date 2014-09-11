@@ -358,7 +358,7 @@ Por lo tanto, la \textbf{complejidad total} del algoritmo implementado para este
   \end{center}
   \caption{salto máximo igual a 2.}
 \end{figure}
-    
+
 \newpage
 
 
@@ -431,8 +431,8 @@ necesarios para ejecutar esta instancia}.
 
 (ver \verb|info.1.mejor.dat|) \medskip
 
-En este test, el valor de $n$ (cantidad de tablones) se inicializa en 1000 y va incrementándose también de 
-a 1000, hasta alcanzar 1000000, mientras que el valor de $c$ (salto máximo) se mantiene siempre superior a n, 
+En este test, el valor de $n$ (cantidad de tablones) se inicializa en 1000 y va incrementándose también de
+a 1000, hasta alcanzar 1000000, mientras que el valor de $c$ (salto máximo) se mantiene siempre superior a n,
 siendo $c == n+1$.
 
 Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}.
@@ -447,7 +447,7 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 
 En este gráfico podemos apreciar que, a pesar de algunas \textit{perturbaciones} esporádicas, la complejidad
 se mantiene \textbf{constante}, a diferencia del caso aleatorio y peor, donde la misma era lineal. Además, la cantidad de
-ciclos se ve muy reducida en comparación a la cantidad requerida para valores similares de $n$ en los casos anteriores. 
+ciclos se ve muy reducida en comparación a la cantidad requerida para valores similares de $n$ en los casos anteriores.
 Esto se debe a que, sin importar el valor de $n$, \textbf{el puente puede cruzarse en 1 sólo salto} debido al valor de $c$.
 
 
@@ -458,7 +458,7 @@ Esto se debe a que, sin importar el valor de $n$, \textbf{el puente puede cruzar
 
 (ver \verb|info.1.c.dat|) \medskip
 
-En este test, fijamos el valor de $n$ (cantidad de tablones) en 100000, mientras que el valor de $c$ se 
+En este test, fijamos el valor de $n$ (cantidad de tablones) en 100000, mientras que el valor de $c$ se
 inicializa en 100 y va incrementándose también de a 100, hasta alcanzar 100000.
 
 Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{25 corridas}.
@@ -472,7 +472,7 @@ Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos lue
 
 
 En este gráfico podemos apreciar que, a pesar de que generamos los valores de $c$ de manera creciente, la complejidad
-se mantiene \textbf{constante}. Por este motivo, concluímos que el algoritmo y la implementación excogida para resolver este
-problema son tales que la complejidad de los mismos es \textbf{independiente} de $c$ y sólo depende del tamaño de $n$ y la 
-distribución de los tablones, queda reforzado el análisis teórico desarrollado anteriormente, donde veíamos que se trataba de 
+se mantiene \textbf{constante}. Por este motivo, concluímos que el algoritmo y la implementación escogida para resolver este
+problema son tales que la complejidad de los mismos es \textbf{independiente} de $c$ y sólo depende del tamaño de $n$ y la
+distribución de los tablones, queda reforzado el análisis teórico desarrollado anteriormente, donde veíamos que se trataba de
 un algoritmo \textbf{lineal}.

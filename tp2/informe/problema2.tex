@@ -18,9 +18,61 @@
 
 \vspace*{0.3cm}
 
-\textcolor{red}{\textbf{completar!}}
+
+Para resolver el problema se creará un tablero de $n$x$n$ casilleros por cada
+caballo.
+En cada tablero se calculará cuanto le cuesta a dicho caballo llegar a cada casillero,
+aplicando BFS desde el casillero donde comienza, quedando inválidos los casilleros
+a los cuales no se pueden alcanzar.
+Luego se recorren todos los casilleros sumando el valor de todos los tableros, si
+todos son alcanzables, obteniendo así el costo de cada casillero para todos los caballos.
+De existir, el mínimo de estos valores será el casillero al cuál pueden alcanzar todos 
+los caballos en menor cantidad de saltos.
+
+\begin{codebox}
+\Procname{$\proc{puntoDeEncuentro}(caballos, n)$}
+\li $\id{tableros} \gets \emptyset$
+\li \For $caballo \in caballos$
+\li   \Do
+\li     $\proc{agregar}(\proc{crearTablero}(caballo, \id{n}), tableros)$
+      \End
+\li $\id{i} \gets 0$
+\li $\id{j} \gets 0$
+    min_i = -1
+    min_j = -1
+    min = -1
+\li \While $\id{i} < \id{n}$
+\li   \Do
+\li     \While $\id{j} < \id{n}$
+\li       \Do
+\li         $\id{sum} \gets 0$
+\li         $\id{caballo} \gets 0$
+\li         \While $\id{caballo} < \proc{tamaño}(caballos)$
+\li           \Do
+                if (tableros[caballo][i][j] == -1)
+                  sum = -1
+                else if (sum != -1)
+                  sum += tableros[caballo][i][j]
+                end
+                caballo++
+              \End
+            if (sum != -1 && (min == -1 || sum < min))
+              min = sum
+              min_i = i
+              min_j = j
+            end
+            j++
+        \End
+        i++
+      \End
+    if min == -1
+      \Return 'no'
+    else
+\li \Return min min_i min_j
+\end{codebox}
 
 
+crearTablero
 
 \newpage
 \subsection{Justificación de la resolución y demostración de correctitud.}

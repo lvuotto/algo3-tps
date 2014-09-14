@@ -20,7 +20,18 @@
 
 \textcolor{red}{\textbf{completar!}}
 
+En este problema vamos a considerar la red de computadoras como un grafo, donde
+las computadoras serán los vértices, las conexiones las aristas y el peso de cada
+arista será el costo de hacer dicha conexión.
 
+Comenzaremos por corroborar que exista una solución. Para esto el grafo deberá 
+ser conexo y tener por lo menos tantas aristas como vértices. Si no fuese conexo
+no se podrían unir todas las computadoras, y si tiene menos aristas que vértices,
+el grafo sería un arbol y nunca se podría formar un anillo.
+
+Suponiendo que tiene solución, se procederá a calcular el árbol generador mínimo
+mediante el algoritmo de Prim, y para formar el anillo se formará un ciclo agergando
+la arista de menor peso no incluida en árbol generador mínimo.
 
 \newpage
 \subsection{Justificación de la resolución y demostración de correctitud.}
@@ -29,7 +40,49 @@
 
 \textcolor{red}{\textbf{completar!}}
 
+\begin{codebox}
+\Procname{$\proc{anillar}(grafo)$}
+\li \If $\proc{noTieneSolucion}(grafo)$
+\li     \Then
+          \Return $\const{false}$
+        \End
+\li  \Return $\proc{completarAnillo}(\proc{Prim}(grafo))$   
+\end{codebox}
 
+\begin{codebox}
+\Procname{$\proc{noTieneSolucion}(grafo)$}
+\li \Return $\proc{esConexo}(grafo) \land 
+\proc{tamaño}(\proc{nodos}(grafo)) \leq \proc{tamaño}(\proc{vertices}(grafo))$
+\end{codebox}
+
+\begin{codebox}
+\Procname{$\proc{Prim}(grafo)$}
+
+AGREGAME EL PSEUDO CODIGO DE PRIM DE LA TEORICA VITEH!!!!
+
+\end{codebox}
+
+\begin{codebox}
+\Procname{$\proc{esConexo}(grafo)$}
+
+HACER BFS VITEH!
+
+\end{codebox}
+
+\begin{codebox}
+\Procname{$\proc{completarAnillo}(agm, grafo)$}
+\li $\id{X} \gets \proc{vértices}(grafo) \setminus \proc{vértices}(agm)$
+\li $\id{m} \gets \proc{dame_uno}(X)$
+\li $\id{X} \gets \id{X} \setminus \{m\}$
+\li \While $\neg \proc{vacío}(X)$ \Do
+\li   $\id{x} \gets \proc{dame_uno}(X)$
+\li   \If $\proc{peso(x)} < \proc{peso(m)}$ \Then
+\li     $\id{m} \gets \id{x}$
+      \End
+\li   $\id{X} \gets \id{X} \setminus \{x\}$
+    \End
+\li \Return $\proc{agregar}(agm, m)$
+\end{codebox}
 
 \newpage
 \subsection{Análisis de complejidad.}

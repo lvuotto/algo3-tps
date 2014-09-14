@@ -21,6 +21,61 @@
 \textcolor{red}{\textbf{completar!}}
 
 
+Para resolver el problema dado, se propone ordenar todos los vuelos disponibles
+en base al horario de llegada en forma ascendente. Una vez realizado el ordenamiento,
+se recorre cada vuelo y se pregunta si hay algún modo de
+\begin{itemize}
+  \item llegar a la ciudad de origen 2 horas antes del horario de partida
+  \item la ciudad de partida de dicho vuelo es la ciudad de origen del cliente
+\end{itemize}
+De valer alguno de los dos, si no hay otro vuelo que llegue antes a la ciudad del
+destino del vuelo, se procede a marcar dicho vuelo como el primero en llegar a su
+ciudad de destino y se marca como su predecesor al primero que llega a la ciudad
+de origen. Caso contrario, se ignora el vuelo.
+
+Una vez recorridos todos, si hay algún vuelo que llega a la ciudad de destino,
+existe solución, la cual se construye a partir de recorrer los vuelos predecesores.
+Dicha cadena tiene como primer vuelo uno que parte desde la ciudad de origen del
+cliente.
+
+
+\begin{codebox}
+\Procname{$\proc{plan_de_vuelo}(vuelos, origen, destino)$}
+\li \Comment $\id{vuelos}$ es un arreglo de tipo Vuelo, donde Vuelo es una estructura
+    conformada por una ciudad origen, una ciudad destino, un tiempo de partida y
+    un tiempo de arribo.
+\li \Comment $\id{rutas}$ es un diccionario de ciudades en vuelos, en el cual para
+    cada ciudad nos dice cual es el vuelo que llega antes a dicha ciudad.
+\li $\proc{ordenar}(vuelos)$
+\li $\id{rutas} \gets \empty$
+\li \While $\neg \proc{vacío}(vuelos)$ \Do
+\li   $\id{vuelo} \gets \proc{primero}(vuelos)$
+\li   \If $\nneg \proc{existe}(\proc{destino}(vuelo), rutas) \land
+          \proc{puede_tomar}(vuelo, rutas, origen)$ \Then
+\li     $\id{rutas[\proc{destino}(vuelo)]} \gets vuelo$
+      \End
+\li   $\id{vuelos} \gets \id{vuelos} \setminus \{vuelo\}$
+    \End
+\li \If $\proc{existe}(destino, rutas)$ \Then
+\li   \Return $\proc{armar_pila}(rutas, destino)$
+\li \Else
+\li   \Return $\emptyset$
+    \End
+\end{codebox}
+
+\begin{codebox}
+\Procname{$\proc{puede_tomar}(vuelo, rutas, origen)$}
+\li \Return $\proc{origen}(vuelo) \isequal origen \lor
+             (\proc{existe}(\proc{origen}(vuelo), rutas) \land
+              \proc{llegada}(rutas[\proc{origen}(vuelo)]) <=
+              \proc{salida}(vuelo) - 2)$
+\end{codebox}
+
+\begin{codebox}
+\Procname{$\proc{armar_pila}(rutas, destino)$}
+\li $\id{pila} \gets \emptyset$
+\li \Return COMPLETAR
+\end{codebox}
 
 \newpage
 \subsection{Justificación de la resolución y demostración de correctitud.}

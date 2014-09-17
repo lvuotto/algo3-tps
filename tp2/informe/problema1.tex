@@ -2,7 +2,17 @@
 
 \vspace*{0.3cm}
 
-\textcolor{red}{\textbf{completar!}}
+El problema consiste en encontrar una secuencia de vuelos que permita, dadas una
+ciudad de origen y otra de destino y un listado de vuelos, viajar del origen al destino
+para llegar lo más temprano posible.
+
+Esta secuencia debe empezar con un vuelo que salga de la ciudad origen, luego
+cada vuelo debe partir de la ciudad de llegada del anterior, dejando un intervalo
+de, al menos, 2 horas. Para finalmente terminar en la ciudad destino.
+Y de todas las posibles combinaciones válidas de vuelos, ser la que llegue antes
+al destino.
+
+También se deberá informar cuando el recorrido es imposible.
 
 \vspace*{0.5cm}
 
@@ -73,8 +83,17 @@ cliente.
 
 \begin{codebox}
 \Procname{$\proc{armar_pila}(rutas, destino)$}
-\li $\id{pila} \gets \emptyset$
-\li \Return COMPLETAR
+\li $\id{lista} \gets \emptyset$
+\If \proc{existe}(destino, rutas)
+vuelo = rutas[destino]
+agregarAdelante(vuelo, lista)
+while (vuelo.predecesor)
+  vuelo = vuelo.predecesor
+  agregarAdelante(vuelo, lista)
+end
+\Else
+\li \Return $\id{lista}$
+\End
 \end{codebox}
 
 \newpage

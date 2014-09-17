@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <string>
 #include <map>
+#include <deque>
 
 #include "ej1.h"
 
@@ -20,73 +21,70 @@ int main () {
     vuelos.push_back(Vuelo(i, origen, destino, salida, llegada));
   }
 
-  vector<Vuelo> viaje_llega_antes = mas_temprano(ciudad_inicial, ciudad_final, vuelos);
-  imprimir_vuelos(viaje_llega_antes);
+  deque<Vuelo> plan = plan_de_vuelo(ciudad_inicial, ciudad_final, vuelos);
+  imprimir_vuelos(plan);
 
   return 0;
 }
 
-vector<Vuelo> mas_temprano(string& ciudad_inicial, string& ciudad_final, vector<Vuelo>& vuelos) {
+deque<Vuelo> plan_de_vuelo(string& ciudad_inicial, string& ciudad_final, vector<Vuelo>& vuelos) {
   // Mantiene el horario mínimo posible de llegada a cada ciudad
-  map<string, Vuelo> min_horarios_llegada;
-  vector<Vuelo> viaje_llega_antes;
+  map<string, Vuelo> rutas;
+  deque<Vuelo> plan;
 
   sort(vuelos.begin(), vuelos.end());
 
   // Carga los horarios mínimos
   for (auto vuelo = vuelos.begin(); vuelo != vuelos.end(); vuelo++) {
-    if (es_posible_tomar(ciudad_inicial, min_horarios_llegada, *vuelo)) {
-      auto hora_llegada_ciudad = min_horarios_llegada.find(vuelo->destino);
-
-      // Si no hay un vuelo que llegue a la ciudad o si este llega antes, se agrega
-      if (hora_llegada_ciudad == min_horarios_llegada.end() || hora_llegada_ciudad->second.llegada > vuelo->llegada) {
-        min_horarios_llegada[vuelo->destino] = *vuelo;
-      }
+    if (rutas.find(vuelo->destino) == rutas.end() && puede_tomar(ciudad_inicial, rutas, *vuelo, vuelo->predecesor)) {
+      // Si no hay un vuelo que llegue a la ciudad y se puede tomar, se lo agrega
+      rutas[vuelo->destino] = *vuelo;
     }
   }
 
-  // Si se puede llegar a la ciudad final va "saltando" para atrás hasta llegar a la inicial
-  auto vuelo = min_horarios_llegada.find(ciudad_final);
-  if (vuelo != min_horarios_llegada.end()) {
-    while (vuelo->second.origen != ciudad_inicial) {
-      viaje_llega_antes.push_back(vuelo->second);
-
-      vuelo = min_horarios_llegada.find(vuelo->second.origen);
+  // Si se puede llegar a la ciudad final, itera por los predecesores para armar el plan
+  auto ruta = rutas.find(ciudad_final);
+  if (ruta != rutas.end()) {
+    Vuelo vuelo = ruta->second;
+    plan.push_front(vuelo);
+    while (vuelo.predecesor) {
+      vuelo = *(vuelo.predecesor);
+      plan.push_front(vuelo);
     }
-    viaje_llega_antes.push_back(vuelo->second);
   }
 
-  return viaje_llega_antes;
+  return plan;
 }
 
 /**
- * Es posible tomar un vuelo si la ciudad origen es la inicial, o si hay otro
+ * Se puede tomar un vuelo si la ciudad origen es la inicial, o si hay otro
  * vuelo que llega a la ciudad origen 2 horas antes de su salida.
  **/
-bool es_posible_tomar(string& ciudad_inicial, map<string, Vuelo>& min_horarios_llegada, Vuelo& vuelo) {
+bool puede_tomar(string& ciudad_inicial, map<string, Vuelo>& rutas, Vuelo& vuelo, Vuelo*& predecesor) {
   if (vuelo.origen == ciudad_inicial) {
     return true;
   }
 
-  auto hora_llegada_ciudad = min_horarios_llegada.find(vuelo.origen);
+  auto ruta_origen = rutas.find(vuelo.origen);
 
-  if (hora_llegada_ciudad == min_horarios_llegada.end()) {
-    return false;
-  } else {
-    return hora_llegada_ciudad->second.llegada <= vuelo.salida - 2;
+  if (ruta_origen != rutas.end() && ruta_origen->second.llegada <= vuelo.salida - 2) {
+    predecesor = &ruta_origen->second;
+    return true;
   }
+
+  return false;
 }
 
-void imprimir_vuelos(vector<Vuelo>& vuelos) {
-  if (vuelos.empty()) {
+void imprimir_vuelos(deque<Vuelo>& plan) {
+  if (plan.empty()) {
     cout << "no" << endl;
     return;
   }
 
-  cout << vuelos.front().llegada << " ";
-  cout << vuelos.size();
+  cout << plan.back().llegada << " ";
+  cout << plan.size();
 
-  for (auto vuelo = vuelos.rbegin(); vuelo != vuelos.rend(); vuelo++) {
+  for (auto vuelo = plan.begin(); vuelo != plan.end(); vuelo++) {
     cout << " " << vuelo->id;
   }
 

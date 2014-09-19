@@ -2,7 +2,23 @@
 
 \vspace*{0.3cm}
 
-\textcolor{red}{\textbf{completar!}}
+En este problema, un cliente busca ofrecer un servicio particular sobre una
+red existente de computadoras. Nuestra tarea consiste en elegir algunas de las
+mismas, para utilizarlas como servidores formando un \textit{backbone} que 
+siga una tipología de red de tipo \textit{anillo}. Además, se requiere que 
+las demás computadoras de la red estén conectadas a algún servidor 
+perteneciente a este anillo, para poder tener acceso al mismo.
+
+La red cuenta con conexiones entre algunos pares de equipos, pero 
+\textbf{por cada conexión utilizada se deberá pagar cierto costo 
+asociado al enlace utilizado}.
+
+\medskip
+
+El objetivo es elegir el anillo de servidores (indicando qué servidores y
+enlaces lo representarán) y todas las demás conexiones necesarias, de 
+manera tal que las demás computadoras queden conectadas al anillo y el costo
+asociado al uso de estos enlaces sea \textbf{mínimo}.
 
 \vspace*{0.5cm}
 
@@ -18,20 +34,114 @@
 
 \vspace*{0.3cm}
 
-\textcolor{red}{\textbf{completar!}}
+En este problema, \textbf{trataremos a la red de computadoras como un grafo}, 
+donde \textbf{las computadoras serán los vértices, las conexiones las aristas 
+y el peso de cada arista será el costo de hacer dicha conexión}.
 
-En este problema vamos a considerar la red de computadoras como un grafo, donde
-las computadoras serán los vértices, las conexiones las aristas y el peso de cada
-arista será el costo de hacer dicha conexión.
+Comenzaremos por corroborar que exista una solución. Para esto \textbf{el  
+grafo deberá ser conexo} y para cumplir con esto, debe tener \textbf{al 
+menos tantas aristas como vértices}. Si no fuese conexo, no se podrían 
+unir todas las computadoras. \textbf{Si tiene menos aristas que vértices}, 
+el grafo sería un árbol y \textbf{nunca podría formarse un anillo}.
 
-Comenzaremos por corroborar que exista una solución. Para esto el grafo deberá 
-ser conexo y tener por lo menos tantas aristas como vértices. Si no fuese conexo
-no se podrían unir todas las computadoras, y si tiene menos aristas que vértices,
-el grafo sería un arbol y nunca se podría formar un anillo.
+Suponiendo que tiene solución, se procederá a calcular el \textbf{árbol 
+generador mínimo} mediante el \textbf{algoritmo de Prim}. Para obtener el 
+anillo, \textbf{formaremos un ciclo agregando la arista de menor peso} no 
+incluída en el \textit{AGM}.
 
-Suponiendo que tiene solución, se procederá a calcular el árbol generador mínimo
-mediante el algoritmo de Prim, y para formar el anillo se formará un ciclo agergando
-la arista de menor peso no incluida en árbol generador mínimo.
+
+\begin{codebox}
+\Procname{$\proc{anillar}(G)$}
+\li \If $\proc{noTieneSolucion}(G)$
+\li     \Then
+            \Return $\const{false}$
+        \End
+\li  \Return $\proc{completarAnillo}(\proc{Prim}(G,w,r))$
+\end{codebox}
+
+
+\begin{codebox}
+\Procname{$\proc{noTieneSolucion}(G)$}
+\li \Return $\proc{esConexo}(G,v) \land
+    \proc{tamanio}(\proc{nodos}(G)) \leq 
+    \proc{tamanio}(\proc{vertices}(G))$
+\end{codebox}
+
+
+\begin{codebox}
+\Procname{$\proc{Prim}(G,w,r)$}
+\li \Comment u: nodo cualquiera de G
+\li \For $each \id{u} \in \id{G.V}$
+\li     \Do
+            $\id{u.clave} \gets \infty$
+            $\id{u.\pi} \gets \const{nil}$
+        \End
+\li $\id{r.clave} \gets 0$
+\li $\id{Q} \gets \id{G.V}$
+\li \While $\id{Q} \neq 0$
+\li     \Do
+            $\id{u} \gets \proc{extraerMinimo}(Q)$
+\li         \For $each \id{v} \in \id{G.Ady[u]}$
+\li             \Do
+\li                 \If $\id{v} \in \id{Q} \land \id{w(u,v)} < \id{v.clave}$
+\li                     \Then
+                            $\id{v.\pi} \gets \id{u}$
+                            $\id{v.clave} \gets \id{w(u,v)}$
+                        \End
+                \End
+        \End
+\end{codebox}
+
+
+\begin{codebox}
+\Procname{$\proc{esConexo}(G,v)$}
+\li \Comment $\id{u}$ es nodo cualquiera de G
+\li \For $each \id{u} \in \id{G.V}$
+\li     \Do
+            $\id{u.color} \gets \const{blanco}$
+            $\id{u.d} \gets \infty$
+            $\id{u.\pi} \gets \const{nil}$
+        \End
+\li $\id{s.color} \gets \const{gris}$
+\li $\id{s.d} \gets 0$
+\li $\id{s.\pi} \gets \const{nil}$
+\li $\id{Q} \gets \emptyset$
+\li \While $\id{Q} \neq 0$
+\li     \Do
+            $\id{u} \gets \proc{desencolar}(Q)$
+\li         \For $each \id{v} \in \id{G.Ady[u]}$
+\li             \Do
+\li                 \If $\id{v.color} \isequal \const{white}$
+\li                     \Then
+                            $\id{v.color} \gets \const{gray}$
+                            $\id{v.d} \gets \id{u.d + 1}$
+                            $\id{v.\pi} \gets \id{u}$
+                            $\proc{encolar}(Q,v)$
+                        \End
+                \End
+\li     $\id{u.color} \gets \const{black}$
+        \End            
+\end{codebox}
+
+
+\begin{codebox}
+\Procname{$\proc{completarAnillo}(AGM, G)$}
+\li $\id{X} \gets \proc{vertices}(grafo) \setminus \proc{vertices}(AGM)$
+\li $\id{m} \gets \proc{dameUno}(X)$
+\li $\id{X} \gets \id{X} \setminus \{m\}$
+\li \While $\neg \proc{vacio}(X)$ 
+\li     \Do
+\           $\id{x} \gets \proc{dame_uno}(X)$
+\li         \If $\proc{peso(x)} < \proc{peso(m)}$ 
+\li             \Then
+                    $\id{m} \gets \id{x}$
+                \End
+\li         $\id{X} \gets \id{X} \setminus \{x\}$
+        \End
+\li \Return $\proc{agregar}(AGM, m)$
+\end{codebox}
+
+
 
 \newpage
 \subsection{Justificación de la resolución y demostración de correctitud.}
@@ -40,49 +150,7 @@ la arista de menor peso no incluida en árbol generador mínimo.
 
 \textcolor{red}{\textbf{completar!}}
 
-\begin{codebox}
-\Procname{$\proc{anillar}(grafo)$}
-\li \If $\proc{noTieneSolucion}(grafo)$
-\li     \Then
-          \Return $\const{false}$
-        \End
-\li  \Return $\proc{completarAnillo}(\proc{Prim}(grafo))$   
-\end{codebox}
 
-\begin{codebox}
-\Procname{$\proc{noTieneSolucion}(grafo)$}
-\li \Return $\proc{esConexo}(grafo) \land 
-\proc{tamaño}(\proc{nodos}(grafo)) \leq \proc{tamaño}(\proc{vertices}(grafo))$
-\end{codebox}
-
-\begin{codebox}
-\Procname{$\proc{Prim}(grafo)$}
-
-AGREGAME EL PSEUDO CODIGO DE PRIM DE LA TEORICA VITEH!!!!
-
-\end{codebox}
-
-\begin{codebox}
-\Procname{$\proc{esConexo}(grafo)$}
-
-HACER BFS VITEH!
-
-\end{codebox}
-
-\begin{codebox}
-\Procname{$\proc{completarAnillo}(agm, grafo)$}
-\li $\id{X} \gets \proc{vértices}(grafo) \setminus \proc{vértices}(agm)$
-\li $\id{m} \gets \proc{dame_uno}(X)$
-\li $\id{X} \gets \id{X} \setminus \{m\}$
-\li \While $\neg \proc{vacío}(X)$ \Do
-\li   $\id{x} \gets \proc{dame_uno}(X)$
-\li   \If $\proc{peso(x)} < \proc{peso(m)}$ \Then
-\li     $\id{m} \gets \id{x}$
-      \End
-\li   $\id{X} \gets \id{X} \setminus \{x\}$
-    \End
-\li \Return $\proc{agregar}(agm, m)$
-\end{codebox}
 
 \newpage
 \subsection{Análisis de complejidad.}

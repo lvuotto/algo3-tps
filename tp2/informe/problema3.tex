@@ -60,47 +60,56 @@ incluída en el \textit{AGM}.
 \end{codebox}
 
 
+\vspace*{0.3cm}
+
+
 \begin{codebox}
 \Procname{$\proc{noTieneSolucion}(G)$}
 \li \Return $\proc{esConexo}(G,v) \land
-    \proc{tamanio}(\proc{nodos}(G)) \leq 
-    \proc{tamanio}(\proc{vertices}(G))$
+    \proc{\#}(\proc{nodos}(G)) \leq 
+    \proc{\#}(\proc{vertices}(G))$
 \end{codebox}
+
+
+\vspace*{0.3cm}
 
 
 \begin{codebox}
 \Procname{$\proc{Prim}(G,w,r)$}
-\li \Comment u: nodo cualquiera de G
-\li \For $each \id{u} \in \id{G.V}$
+\li \Comment $\id{u}$ es un nodo cualquiera de \id{G}.
+\li \For $each \hspace{0.07cm} \id{u} \in \id{G.V}$
 \li     \Do
             $\id{u.clave} \gets \infty$
-            $\id{u.\pi} \gets \const{nil}$
+\li         $\id{u.\pi} \gets \const{nil}$
         \End
 \li $\id{r.clave} \gets 0$
 \li $\id{Q} \gets \id{G.V}$
 \li \While $\id{Q} \neq 0$
 \li     \Do
             $\id{u} \gets \proc{extraerMinimo}(Q)$
-\li         \For $each \id{v} \in \id{G.Ady[u]}$
-\li             \Do
-\li                 \If $\id{v} \in \id{Q} \land \id{w(u,v)} < \id{v.clave}$
+\li         \For $each \hspace{0.07cm} \id{v} \in \id{G.Ady[u]}$
+                \Do
+\li                 \If $\id{v} \in \id{Q} \land (\id{w(u,v)} < \id{v.clave})$
 \li                     \Then
                             $\id{v.\pi} \gets \id{u}$
-                            $\id{v.clave} \gets \id{w(u,v)}$
+\li                         $\id{v.clave} \gets \id{w(u,v)}$
                         \End
                 \End
         \End
 \end{codebox}
 
 
+\vspace*{0.3cm}
+
+
 \begin{codebox}
 \Procname{$\proc{esConexo}(G,v)$}
-\li \Comment $\id{u}$ es nodo cualquiera de G
-\li \For $each \id{u} \in \id{G.V}$
+\li \Comment $\id{u}$ es un nodo cualquiera de \id{G}.
+\li \For $each \hspace{0.07cm} \id{u} \in \id{G.V}$
 \li     \Do
             $\id{u.color} \gets \const{blanco}$
-            $\id{u.d} \gets \infty$
-            $\id{u.\pi} \gets \const{nil}$
+\li         $\id{u.d} \gets \infty$
+\li         $\id{u.\pi} \gets \const{nil}$
         \End
 \li $\id{s.color} \gets \const{gris}$
 \li $\id{s.d} \gets 0$
@@ -109,34 +118,37 @@ incluída en el \textit{AGM}.
 \li \While $\id{Q} \neq 0$
 \li     \Do
             $\id{u} \gets \proc{desencolar}(Q)$
-\li         \For $each \id{v} \in \id{G.Ady[u]}$
-\li             \Do
-\li                 \If $\id{v.color} \isequal \const{white}$
+\li         \For $each \hspace{0.07cm} \id{v} \in \id{G.Ady[u]}$
+                \Do
+\li                 \If $\id{v.color} \isequal \const{blanco}$
 \li                     \Then
-                            $\id{v.color} \gets \const{gray}$
-                            $\id{v.d} \gets \id{u.d + 1}$
-                            $\id{v.\pi} \gets \id{u}$
-                            $\proc{encolar}(Q,v)$
+                            $\id{v.color} \gets \const{gris}$
+\li                         $\id{v.d} \gets \id{u.d + 1}$
+\li                         $\id{v.\pi} \gets \id{u}$
+\li                         $\proc{encolar}(Q,v)$
                         \End
                 \End
-\li     $\id{u.color} \gets \const{black}$
+\li     $\id{u.color} \gets \const{negro}$
         \End            
 \end{codebox}
 
 
+\vspace*{0.3cm}
+
+
 \begin{codebox}
 \Procname{$\proc{completarAnillo}(AGM, G)$}
-\li $\id{X} \gets \proc{vertices}(grafo) \setminus \proc{vertices}(AGM)$
+\li $\id{X} \gets \proc{vertices}(G) \setminus \proc{vertices}(AGM)$
 \li $\id{m} \gets \proc{dameUno}(X)$
 \li $\id{X} \gets \id{X} \setminus \{m\}$
-\li \While $\neg \proc{vacio}(X)$ 
+\li \While $\neg (\proc{vacio}(X))$ 
 \li     \Do
-\           $\id{x} \gets \proc{dame_uno}(X)$
-\li         \If $\proc{peso(x)} < \proc{peso(m)}$ 
+\           $\id{y} \gets \proc{dameUno}(X)$
+\li         \If $\proc{peso}(y) < \proc{peso}(m)$ 
 \li             \Then
-                    $\id{m} \gets \id{x}$
+                    $\id{m} \gets \id{y}$
                 \End
-\li         $\id{X} \gets \id{X} \setminus \{x\}$
+\li         $\id{X} \gets \id{X} \setminus \{y\}$
         \End
 \li \Return $\proc{agregar}(AGM, m)$
 \end{codebox}

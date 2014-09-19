@@ -53,16 +53,17 @@ de origen del cliente.}
 \begin{codebox}
 \Procname{$\proc{planDeVuelo}(vuelos,origen,destino)$}
 \li \Comment $\id{vuelos}$ es un arreglo de tipo Vuelo, donde Vuelo es una 
-    estructura conformada por una ciudad origen, una ciudad destino, un horario 
-    de partida y otro de arribo
+\li \Comment estructura conformada por una ciudad origen, una ciudad destino, 
+\li \Comment un horario de partida y otro de arribo.
+\li
 \li \Comment $\id{rutas}$ es un diccionario de ciudades en vuelos, en el cual, 
-    para cada ciudad, nos dice cual es el vuelo que llega antes
+\li \Comment para cada ciudad, nos dice cual es el vuelo que llega antes.
 \li $\proc{ordenar}(vuelos)$
-\li $\id{rutas} \gets \empty$
-\li \While $\neg \proc{vacío}(vuelos)$ 
+\li $\id{rutas} \gets \emptyset$
+\li \While $\neg (\proc{vacio}(vuelos))$ 
 \li     \Do
             $\id{vuelo} \gets \proc{primero}(vuelos)$
-\li         \If $\neg \proc{existe}(\proc{destino}(vuelo),rutas) \land
+\li         \If $\neg (\proc{existe}(\proc{destino}(vuelo),rutas)) \land
                 \proc{puedeTomar}(vuelo,rutas,origen)$ 
 \li             \Then
                     $\id{rutas[\proc{destino}(vuelo)]} \gets vuelo$
@@ -73,18 +74,24 @@ de origen del cliente.}
 \li     \Then
             \Return $\proc{armarPila}(rutas,destino)$
 \li     \Else
-            \Return $\emptyset$
+\li         \Return $\emptyset$
         \End
 \end{codebox}
+
+
+\vspace*{0.25cm}
 
 
 \begin{codebox}
 \Procname{$\proc{puedeTomar}(vuelo,rutas,origen)$}
 \li \Return $\proc{origen}(vuelo) \isequal \id{origen} \lor
             (\proc{existe}(\proc{origen}(vuelo),rutas) \land
-             \proc{llegada}(rutas[\proc{origen}(vuelo)]) <=
+             \proc{llegada}(rutas[\proc{origen}(vuelo)]) \leq
              \id{u} - 2)$
 \end{codebox}
+
+
+\vspace*{0.25cm}
 
 
 \begin{codebox}
@@ -93,13 +100,13 @@ de origen del cliente.}
 \li \If $\proc{existe}(destino,rutas)$
 \li     \Then
             $\id{vuelo} \gets \id{rutas[destino]}$
-            $\proc{agregarAdelante}(vuelo,lista)$
-\li         \While $\exists (\id{vuelo.predecesor})$ 
+\li         $\proc{agregarAdelante}(vuelo,lista)$
+\li         \While $\exists \hspace{0.07cm} \id{vuelo.predecesor}$ 
 \li             \Do
-                    $\id{vuelo} \gets \id{vuelo.predecesor}$
-                    $\proc{agregarAdelante}(vuelo,lista)$
+                   $\id{vuelo} \gets \id{vuelo.predecesor}$  
+\li                $\proc{agregarAdelante}(vuelo,lista)$  
                 \End
-        \Else
+\li     \Else
 \li         \Return $\id{lista}$
         \End
 \end{codebox}

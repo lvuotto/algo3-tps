@@ -89,8 +89,21 @@ pueden alcanzar todos los caballos en la menor cantidad de saltos.
 
 \vspace*{0.3cm}
 
-\textcolor{red}{\textbf{completar!}}
+Se dirá que el problema tiene solución cuando exista al menos un casillero del
+tablero que sea alcanzable por todos los caballos, pues, siendo finitos
+casilleros y sabiendo cuántos saltos le toma a cada caballo llegar a cada
+casillero, se toma el mínimo de la suma de los saltos entre todos los casilleros
+accesibles por todos los caballos.
 
+Es fácil ver que el problema tiene solución para todos los tableros de tamaño
+mayor a $4 \times 4$. \textcolor{red}{\textbf{Lucas, poné la demo ¿?}}.
+
+Si, dado un caballo, se sabe la cantidad mínima de saltos que le toma llegar a
+cada casillero del tablero, es sencillo obtener la solución: se recorre cada
+casillero, realizando la suma ...
+
+A continuación se probará que el algoritmo propuesto calcula, para cada caballos,
+la cantidad mínima de saltos que le toma llegar a cada casillero.
 
 
 \newpage

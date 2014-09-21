@@ -4,19 +4,19 @@
 
 En este problema, un cliente busca ofrecer un servicio particular sobre una
 red existente de computadoras. Nuestra tarea consiste en elegir algunas de las
-mismas, para utilizarlas como servidores formando un \textit{backbone} que 
-siga una tipología de red de tipo \textit{anillo}. Además, se requiere que 
-las demás computadoras de la red estén conectadas a algún servidor 
+mismas, para utilizarlas como servidores formando un \textit{backbone} que
+siga una tipología de red de tipo \textit{anillo}. Además, se requiere que
+las demás computadoras de la red estén conectadas a algún servidor
 perteneciente a este anillo, para poder tener acceso al mismo.
 
-La red cuenta con conexiones entre algunos pares de equipos, pero 
-\textbf{por cada conexión utilizada se deberá pagar cierto costo 
+La red cuenta con conexiones entre algunos pares de equipos, pero
+\textbf{por cada conexión utilizada se deberá pagar cierto costo
 asociado al enlace utilizado}.
 
 \medskip
 
 El objetivo es elegir el anillo de servidores (indicando qué servidores y
-enlaces lo representarán) y todas las demás conexiones necesarias, de 
+enlaces lo representarán) y todas las demás conexiones necesarias, de
 manera tal que las demás computadoras queden conectadas al anillo y el costo
 asociado al uso de estos enlaces sea \textbf{mínimo}.
 
@@ -34,19 +34,19 @@ asociado al uso de estos enlaces sea \textbf{mínimo}.
 
 \vspace*{0.3cm}
 
-En este problema, \textbf{trataremos a la red de computadoras como un grafo}, 
-donde \textbf{las computadoras serán los vértices, las conexiones las aristas 
+En este problema, \textbf{trataremos a la red de computadoras como un grafo},
+donde \textbf{las computadoras serán los vértices, las conexiones las aristas
 y el peso de cada arista será el costo de hacer dicha conexión}.
 
-Comenzaremos por corroborar que exista una solución. Para esto \textbf{el  
-grafo deberá ser conexo} y para cumplir con esto, debe tener \textbf{al 
-menos tantas aristas como vértices}. Si no fuese conexo, no se podrían 
-unir todas las computadoras. \textbf{Si tiene menos aristas que vértices}, 
+Comenzaremos por corroborar que exista una solución. Para esto \textbf{el
+grafo deberá ser conexo} y para cumplir con esto, debe tener \textbf{al
+menos tantas aristas como vértices}. Si no fuese conexo, no se podrían
+unir todas las computadoras. \textbf{Si tiene menos aristas que vértices},
 el grafo sería un árbol y \textbf{nunca podría formarse un anillo}.
 
-Suponiendo que tiene solución, se procederá a calcular el \textbf{árbol 
-generador mínimo} mediante el \textbf{algoritmo de Prim}. Para obtener el 
-anillo, \textbf{formaremos un ciclo agregando la arista de menor peso} no 
+Suponiendo que tiene solución, se procederá a calcular el \textbf{árbol
+generador mínimo} mediante el \textbf{algoritmo de Prim}. Para obtener el
+anillo, \textbf{formaremos un ciclo agregando la arista de menor peso} no
 incluída en el \textit{AGM}.
 
 
@@ -56,7 +56,8 @@ incluída en el \textit{AGM}.
 \li     \Then
             \Return $\const{false}$
         \End
-\li  \Return $\proc{completarAnillo}(\proc{Prim}(G,w,r),G)$
+\li $\proc{completarAnillo}(\proc{Prim}(G,w,r),G)$
+\li \Return $\const{true}$
 \end{codebox}
 
 
@@ -66,7 +67,7 @@ incluída en el \textit{AGM}.
 \begin{codebox}
 \Procname{$\proc{noTieneSolucion}(G)$}
 \li \Return $\neg (\proc{esConexo}(G,v)) \lor
-    \proc{\#}(\proc{aristas}(G)) < 
+    \proc{\#}(\proc{aristas}(G)) <
     \proc{\#}(\proc{nodos}(G))$
 \end{codebox}
 
@@ -129,7 +130,7 @@ incluída en el \textit{AGM}.
                         \End
                 \End
 \li     $\id{u.color} \gets \const{negro}$
-        \End            
+        \End
 \end{codebox}
 
 
@@ -141,10 +142,10 @@ incluída en el \textit{AGM}.
 \li $\id{X} \gets \proc{vertices}(G) \setminus \proc{vertices}(AGM)$
 \li $\id{m} \gets \proc{dameUno}(X)$
 \li $\id{X} \gets \id{X} \setminus \{m\}$
-\li \While $\neg (\proc{vacio}(X))$ 
+\li \While $\neg (\proc{vacio}(X))$
 \li     \Do
 \           $\id{y} \gets \proc{dameUno}(X)$
-\li         \If $\proc{peso}(y) < \proc{peso}(m)$ 
+\li         \If $\proc{peso}(y) < \proc{peso}(m)$
 \li             \Then
                     $\id{m} \gets \id{y}$
                 \End

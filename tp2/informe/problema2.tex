@@ -2,14 +2,14 @@
 
 \vspace*{0.3cm}
 
-Dado un \textbf{tablero de ajedrez de tamaño $n$x$n$ y $k$ caballos ocupando 
-inicialmente ciertos casilleros (aleatorios)} del mismo, el objetivo consiste 
-en \textbf{reunir a todos los caballos en un mismo casillero, minimizando la 
-cantidad total de movimientos realizados}. Esta cantidad equivale a 
-\textbf{la suma de los movimientos de todos los caballos} en el tablero. 
+Dado un \textbf{tablero de ajedrez de tamaño $n$x$n$ y $k$ caballos ocupando
+inicialmente ciertos casilleros (aleatorios)} del mismo, el objetivo consiste
+en \textbf{reunir a todos los caballos en un mismo casillero, minimizando la
+cantidad total de movimientos realizados}. Esta cantidad equivale a
+\textbf{la suma de los movimientos de todos los caballos} en el tablero.
 
-Un caballo $k$ puede moverse únicamente \textbf{respetando los movimientos 
-válidos según las reglas del ajedrez}. Además, \textbf{un casillero puede 
+Un caballo $k$ puede moverse únicamente \textbf{respetando los movimientos
+válidos según las reglas del ajedrez}. Además, \textbf{un casillero puede
 estar ocupado por más de un caballo simultáneamente}.
 
 \vspace*{0.5cm}
@@ -27,28 +27,28 @@ estar ocupado por más de un caballo simultáneamente}.
 \vspace*{0.3cm}
 
 
-Para resolver este problema, utilizaremos $k$ tableros de $n$x$n$ casilleros, 
-uno por cada caballo. En cada tablero se calculará el costo para dicho caballo 
-de llegar a cada casillero, aplicando \textit{BFS} desde el casillero inicial, 
+Para resolver este problema, utilizaremos $k$ tableros de $n$x$n$ casilleros,
+uno por cada caballo. En cada tablero se calculará el costo para dicho caballo
+de llegar a cada casillero, aplicando \textit{BFS} desde el casillero inicial,
 quedando inválidos los casilleros que no pueden alcanzarse.
 
-Luego se recorren todos los casilleros, sumando el valor de éstos en todos los 
-tableros (si son alcanzables), obteniendo así el costo de cada casillero para 
-cada caballo. De existir, el mínimo de estos valores será el casillero que 
+Luego se recorren todos los casilleros, sumando el valor de éstos en todos los
+tableros (si son alcanzables), obteniendo así el costo de cada casillero para
+cada caballo. De existir, el mínimo de estos valores será el casillero que
 pueden alcanzar todos los caballos en la menor cantidad de saltos.
 
-% \begin{codebox}
-% \Procname{$\proc{puntoDeEncuentro}(caballos, n)$}
-% \li $\id{tableros} \gets \emptyset$
-% \li \For $caballo \in caballos$
-% \li   \Do
-% \li     $\proc{agregar}(\proc{crearTablero}(caballo, \id{n}), tableros)$
-%       \End
-% \li $\id{i} \gets 0$
-% \li $\id{j} \gets 0$
-%     min_i = -1
-%     min_j = -1
-%     min = -1
+%\begin{codebox}
+%\Procname{$\proc{puntoDeEncuentro}(caballos, n)$}
+%\li $\id{tableros} \gets \emptyset$
+%\li \For $caballo \in caballos$
+%\li   \Do
+%\li       $\proc{agregar}(\proc{crearTablero}(caballo,n), tableros)$
+%      \End
+%\li $\id{i} \gets 0$
+%\li $\id{j} \gets 0$
+%    $\id{min_i} \gets -1$
+%    $\id{min_j} \gets -1$
+%    $\id{min} \gets -1$
 % \li \While $\id{i} < \id{n}$
 % \li   \Do
 % \li     \While $\id{j} < \id{n}$
@@ -78,8 +78,8 @@ pueden alcanzar todos los caballos en la menor cantidad de saltos.
 %     else
 % \li \Return min min_i min_j
 % \end{codebox}
-% 
-% 
+%
+%
 % crearTablero
 
 

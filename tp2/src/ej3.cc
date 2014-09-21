@@ -1,6 +1,5 @@
-//#include <iostream>
-//#include <vector>
-
+#include <iostream>
+#include <vector>
 
 #include "ej3.h"
 

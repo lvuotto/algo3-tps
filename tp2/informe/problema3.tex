@@ -56,7 +56,7 @@ incluída en el \textit{AGM}.
 \li     \Then
             \Return $\const{false}$
         \End
-\li  \Return $\proc{completarAnillo}(\proc{Prim}(G,w,r))$
+\li  \Return $\proc{completarAnillo}(\proc{Prim}(G,w,r),G)$
 \end{codebox}
 
 
@@ -65,9 +65,9 @@ incluída en el \textit{AGM}.
 
 \begin{codebox}
 \Procname{$\proc{noTieneSolucion}(G)$}
-\li \Return $\proc{esConexo}(G,v) \land
-    \proc{\#}(\proc{nodos}(G)) \leq 
-    \proc{\#}(\proc{vertices}(G))$
+\li \Return $\neg (\proc{esConexo}(G,v)) \lor
+    \proc{\#}(\proc{aristas}(G)) < 
+    \proc{\#}(\proc{nodos}(G))$
 \end{codebox}
 
 

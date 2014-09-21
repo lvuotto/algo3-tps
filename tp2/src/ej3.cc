@@ -11,6 +11,22 @@ using namespace std;
 int main () {
 
   // cargar matriz_conexiones con datos de entrada
+  unsigned int cant_nodos, cant_aristas;
+  cin >> cant_nodos;
+  cin >> cant_aristas;
+
+  Grafo g = Grafo(cant_nodos, cant_aristas);
+
+  unsigned int e1, e2, c = 0;
+  for(int i = 0; i < g.m; i++)
+  {
+    cin >> e1 >> e2 >> c;
+    g.matriz_conexiones[e1-1][e2-1] = c;
+    g.matriz_conexiones[e2-1][e1-1] = c;
+  }
+
+  imprimir_salida(anillar(g));
+
   return 0;
 }
 
@@ -29,32 +45,29 @@ bool anillar(Grafo g)
 
 bool no_tiene_solucion(Grafo g)
 {
-  return !(es_conexo(g)) || (g.m < g.n);
+  return !g.es_conexo() || (g.m < g.n);
 }
 
 
-bool es_conexo(Grafo g)
+bool Grafo::es_conexo(Grafo g)
 {
-  g.nodos_visitados.resize(g.n);
-  for(int h = 0; h < nodos_visitados.size(); h++)
+  while(!estan_todos(g.nodos_visitados))
   {
-    nodos_visitados[h] = false;
-  }
-  for(int i = 0; i < g.n; i++)
-  {
-    for(int j = 0; j < g.n; j++)
+    for(int i = 0; i < g.n; i++)
     {
-      if(g.matriz_conexiones[i][j] > 0)
+      for(int j = 0; j < g.n; j++)
       {
-        if(!g.nodos_visitados[j])
+        if(g.matriz_conexiones[i][j] > 0)
         {
-          g.nodos_visitados[j] = true;
+          if(!g.nodos_visitados[j])
+          {
+            g.nodos_visitados[j] = true;
+          }
         }
       }
     }
+    return estan_todos(g.nodos_visitados);
   }
-
-  return estan_todos(g.nodos_visitados);
 }
 
 
@@ -66,24 +79,17 @@ Grafo prim(Grafo g)
    *      encontrar el vértice incidente a v de menor peso
    *      agregar este vértice al agm
    **/
-  Grafo agm;
-  agm.n = g.n;
-  agm.nodos_visitados.resize(agm.n);
-  for(int h = 0; h < nodos_visitados.size(); h++)
-  {
-    agm.nodos_visitados[h] = false;
-  }
+  Grafo agm = Grafo(g.n, g.m);
+  agm.m = 0;
 
   while(!estan_todos(agm.nodos_visitados))
   {
     for(int i = 0; i < g.n; i++)
     {
-      for(int j = 0; i < g.n; j++)
-      {
-        auto t = buscar_peso_minimo(g.matriz_conexiones[i][j]);
-        agm.matriz_conexiones[i][get<0>(t)] = get<1>(t);
-        agm.m += 1;
-      }
+      auto t = buscar_peso_minimo(g.matriz_conexiones[i]);
+      agm.matriz_conexiones[i][get<0>(t)] = get<1>(t);
+      agm.matriz_conexiones[get<0>(t)][i] = get<1>(t);
+      agm.m += 1;
     }
   }
   return agm;
@@ -120,7 +126,47 @@ tuple <unsigned int, unsigned int> buscar_peso_minimo(vector<unsigned int> v)
 }
 
 
-void completar_anillo(Grafo agm, Grafo g)
+Grafo completar_anillo(Grafo agm, Grafo g)
+{
+  // X = aristas(G) \ aristas(AGM)
+  restar_aristas(agm, g);
+  // busco la arista de menor peso
+  unsigned int eje_de_menor_peso = g.matriz_conexiones[0][0];
+  unsigned int pos_i, pos_j = 0;
+  for(int i = 0; i < g.n; i++)
+  {
+    for(int j = 0; j < g.n; j++)
+    {
+      if(g.matriz_conexiones[i][j] < eje_de_menor_peso)
+      {
+        pos_i = i;
+        pos_j = j;
+        eje_de_menor_peso = g.matriz_conexiones[i][j];
+      }
+    }
+  }
+  agm.matriz_conexiones[pos_i][pos_j] = eje_de_menor_peso;
+  return agm;
+}
+
+
+void restar_aristas(Grafo agm, Grafo g)
+{
+  for(int i = 0; i < g.n; i++)
+  {
+    for(int j = 0; j < g.n; j++)
+    {
+      if(!agm.matriz_conexiones[i][j])
+      {
+        g.matriz_conexiones[i][j] = 0;
+        g.matriz_conexiones[j][i] = 0;
+      }
+    }
+  }
+}
+
+
+void imprimir_salida(Grafo agm)
 {
   ;
 }

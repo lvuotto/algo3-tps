@@ -119,20 +119,25 @@ El testeo de los algoritmos implementados fue realizado, principalmente, en las 
   \item \textbf{Especificaciones del Hardware:} Intel(R) Core(TM) i5-2500K CPU @ 3.30GHz, 8GB de RAM.
 \end{itemize}
 
-\newpage
+%\newpage
 
-\section{Problema 1: Puentes sobre lava caliente}
-\input{problema1}
+%\section{Problema 1: Puentes sobre lava caliente}
+%\input{problema1}
 
-\newpage
+%\newpage
 
-\section{Problema 2: Horizontes lejanos}
-\input{problema2}
+%\section{Problema 2: Horizontes lejanos}
+%\input{problema2}
 
 \newpage
 
 \section{Problema 3: Biohazard}
 \input{problema3}
+
+\newpage
+
+\section{Reentrega Problema 3: Biohazard}
+\input{problema3-reentrega}
 
 \newpage
 
@@ -171,163 +176,163 @@ que consideramos más \textbf{relevante}. Omitimos los encabezados, bibliotecas 
 funciones \verb|main| y de impresión de resultados. El código se encuentra comentado en los
 archivos \verb|.cc|.
 
-\subsection{Código del Problema 1}
+%\subsection{Código del Problema 1}
 
 
 
-\begin{lstlisting}
-vector<unsigned int> cruzar_puente (unsigned int salto_maximo, vector<unsigned int>& puente) {
-  vector<unsigned int> saltos;
-  if (salto_maximo > puente.size()) {
-    saltos.push_back(salto_maximo);
-    return saltos;
-  }
-  if (!posible_cruzar(salto_maximo, puente)) {
-    return saltos;
-  }
-  unsigned int salto_actual;
-  unsigned int posicion_actual = 0;
-  while (posicion_actual <= puente.size()) {
-    salto_actual = salto_maximo;
-    while (!puede_saltar(puente, posicion_actual + salto_actual - 1)) {
-      salto_actual--;
-    }
-    posicion_actual += salto_actual;
-    saltos.push_back(posicion_actual);
-  }
-  return saltos;
-}
-\end{lstlisting}
+%\begin{lstlisting}
+%vector<unsigned int> cruzar_puente (unsigned int salto_maximo, vector<unsigned int>& puente) {
+  %vector<unsigned int> saltos;
+  %if (salto_maximo > puente.size()) {
+    %saltos.push_back(salto_maximo);
+    %return saltos;
+  %}
+  %if (!posible_cruzar(salto_maximo, puente)) {
+    %return saltos;
+  %}
+  %unsigned int salto_actual;
+  %unsigned int posicion_actual = 0;
+  %while (posicion_actual <= puente.size()) {
+    %salto_actual = salto_maximo;
+    %while (!puede_saltar(puente, posicion_actual + salto_actual - 1)) {
+      %salto_actual--;
+    %}
+    %posicion_actual += salto_actual;
+    %saltos.push_back(posicion_actual);
+  %}
+  %return saltos;
+%}
+%\end{lstlisting}
 
-\vspace*{0.5cm}
+%\vspace*{0.5cm}
 
-\begin{lstlisting}
-bool posible_cruzar (unsigned int salto_maximo, vector<unsigned int>& puente) {
-  unsigned int tablones_rotos_consecutivos = 0;
-  for (unsigned int i = 0; i < puente.size(); i++) {
-    if (puede_saltar(puente, i)) {
-      tablones_rotos_consecutivos = 0;
-    } else {
-      tablones_rotos_consecutivos++;
-    }
-    if (tablones_rotos_consecutivos >= salto_maximo) {
-      return false;
-    }
-  }
-  return true;
-}
-\end{lstlisting}
+%\begin{lstlisting}
+%bool posible_cruzar (unsigned int salto_maximo, vector<unsigned int>& puente) {
+  %unsigned int tablones_rotos_consecutivos = 0;
+  %for (unsigned int i = 0; i < puente.size(); i++) {
+    %if (puede_saltar(puente, i)) {
+      %tablones_rotos_consecutivos = 0;
+    %} else {
+      %tablones_rotos_consecutivos++;
+    %}
+    %if (tablones_rotos_consecutivos >= salto_maximo) {
+      %return false;
+    %}
+  %}
+  %return true;
+%}
+%\end{lstlisting}
 
-\vspace*{0.5cm}
+%\vspace*{0.5cm}
 
-\begin{lstlisting}
-bool puede_saltar (vector<unsigned int>& puente, unsigned int tablon) {
-  return tablon >= puente.size() || puente[tablon] == 0;
-}
-\end{lstlisting}
+%\begin{lstlisting}
+%bool puede_saltar (vector<unsigned int>& puente, unsigned int tablon) {
+  %return tablon >= puente.size() || puente[tablon] == 0;
+%}
+%\end{lstlisting}
 
-\newpage
+%\newpage
 
-\subsection{Código del Problema 2}
+%\subsection{Código del Problema 2}
 
 
 
-\begin{lstlisting}
-enum posicion_t {
-  IZQUIERDA,
-  DERECHA
-};
+%\begin{lstlisting}
+%enum posicion_t {
+  %IZQUIERDA,
+  %DERECHA
+%};
 
-struct Vertice {
-  unsigned int x;
-  unsigned int y;
-  posicion_t posicion_pared;
+%struct Vertice {
+  %unsigned int x;
+  %unsigned int y;
+  %posicion_t posicion_pared;
 
-  Vertice(unsigned int _x, unsigned int _y, posicion_t _posicion_pared)
-  {
-    x = _x;
-    y = _y;
-    posicion_pared = _posicion_pared;
-  }
+  %Vertice(unsigned int _x, unsigned int _y, posicion_t _posicion_pared)
+  %{
+    %x = _x;
+    %y = _y;
+    %posicion_pared = _posicion_pared;
+  %}
 
-  Vertice() {}
+  %Vertice() {}
 
-  bool operator<(const Vertice& otro) const
-  {
-    return x < otro.x ||
-           (x == otro.x &&
-           (y < otro.y ||
-           (y == otro.y && posicion_pared < otro.posicion_pared)));
-  }
-};
+  %bool operator<(const Vertice& otro) const
+  %{
+    %return x < otro.x ||
+           %(x == otro.x &&
+           %(y < otro.y ||
+           %(y == otro.y && posicion_pared < otro.posicion_pared)));
+  %}
+%};
 
-struct Punto {
-  unsigned int x;
-  unsigned int y;
+%struct Punto {
+  %unsigned int x;
+  %unsigned int y;
 
-  Punto(unsigned int _x, unsigned int _y)
-  {
-    x = _x;
-    y = _y;
-  }
-};
+  %Punto(unsigned int _x, unsigned int _y)
+  %{
+    %x = _x;
+    %y = _y;
+  %}
+%};
 
-vector<Punto> calcular_horizonte(vector<Vertice>& vertices);
-void imprimir_horizonte(vector<Punto>& horizonte);
-unsigned int  maximo(multiset<unsigned int>& alturas);
-\end{lstlisting}
+%vector<Punto> calcular_horizonte(vector<Vertice>& vertices);
+%void imprimir_horizonte(vector<Punto>& horizonte);
+%unsigned int  maximo(multiset<unsigned int>& alturas);
+%\end{lstlisting}
 
-\newpage
+%\newpage
 
-\begin{lstlisting}
-vector<Punto> calcular_horizonte(vector<Vertice>& vertices)
-{
-  multiset<unsigned int> alturas;
-  vector<Punto> horizonte;
-  sort(vertices.begin(), vertices.end());
-  auto vertice = vertices.begin();
+%\begin{lstlisting}
+%vector<Punto> calcular_horizonte(vector<Vertice>& vertices)
+%{
+  %multiset<unsigned int> alturas;
+  %vector<Punto> horizonte;
+  %sort(vertices.begin(), vertices.end());
+  %auto vertice = vertices.begin();
 
-  horizonte.push_back(Punto(vertice->x, vertice->y));
-  alturas.insert(vertice->y);
-  vertice++;
+  %horizonte.push_back(Punto(vertice->x, vertice->y));
+  %alturas.insert(vertice->y);
+  %vertice++;
 
-  while (vertice != vertices.end()) {
-    if (vertice->posicion_pared == IZQUIERDA) {
-      if (vertice->y > horizonte.back().y) {
-        if (vertice->x > horizonte.back().x) {
-          horizonte.push_back(Punto(vertice->x, vertice->y));
-        } else {
-          horizonte[horizonte.size() - 1].y = vertice->y;
-        }
-      }
+  %while (vertice != vertices.end()) {
+    %if (vertice->posicion_pared == IZQUIERDA) {
+      %if (vertice->y > horizonte.back().y) {
+        %if (vertice->x > horizonte.back().x) {
+          %horizonte.push_back(Punto(vertice->x, vertice->y));
+        %} else {
+          %horizonte[horizonte.size() - 1].y = vertice->y;
+        %}
+      %}
 
-      alturas.insert(vertice->y);
-    } else {
-      alturas.erase(alturas.find(vertice->y));
+      %alturas.insert(vertice->y);
+    %} else {
+      %alturas.erase(alturas.find(vertice->y));
 
-      if (vertice->y > maximo(alturas)) {
-        horizonte.push_back(Punto(vertice->x, maximo(alturas)));
-      }
-    }
-    vertice++;
-  }
-  return horizonte;
-}
-\end{lstlisting}
+      %if (vertice->y > maximo(alturas)) {
+        %horizonte.push_back(Punto(vertice->x, maximo(alturas)));
+      %}
+    %}
+    %vertice++;
+  %}
+  %return horizonte;
+%}
+%\end{lstlisting}
 
-\vspace*{0.5cm}
+%\vspace*{0.5cm}
 
-\begin{lstlisting}
-unsigned int maximo(multiset<unsigned int>& alturas)
-{
-  if (alturas.empty()) {
-    return 0;
-  }
-  return *(alturas.rbegin());
-}
-\end{lstlisting}
+%\begin{lstlisting}
+%unsigned int maximo(multiset<unsigned int>& alturas)
+%{
+  %if (alturas.empty()) {
+    %return 0;
+  %}
+  %return *(alturas.rbegin());
+%}
+%\end{lstlisting}
 
-\newpage
+%\newpage
 
 \subsection{Código del Problema 3}
 

@@ -1,0 +1,26 @@
+\subsection{Informe de modificaciones}
+
+\newpage
+
+\subsection{Adicionales}
+
+Se nos pide analizar la siguiente variante del problema:
+\textit{¿Qué pasaría si el umbral de peligrosidad dejara de ser el mismo para todos los
+camiones?}
+
+Para resolver esta variante, en nuestro algoritmo debemos modificar las
+siguientes partes:
+\begin{itemize}
+  \item cada camión debe tener su propio umbral de peligrosidad, por lo tanto, 
+        utilizamos éste en lugar del anterior (global) en la función $\id{entra}$
+  
+  \item al momento de agregar un nuevo camión, deberemos seleccionar el que tenga
+        el umbral más grande de los disponibles.
+\end{itemize}
+
+Esto puede afectar a la complejidad del algoritmo porque se requieren nuevos
+parámetros de entrada: los camiones y su peligrosidad.
+Luego, para poder obtener el camión con máximo umbral en cada iteración, es
+conveniente tenerlos previamente ordenados.
+Dados $k$ camiones, la nueva complejidad total sería $O(k \log(k))$ sumado a la
+complejidad previa de nuestro algoritmo.

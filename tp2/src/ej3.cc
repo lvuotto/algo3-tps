@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <climits>
+#include <tuple>
 
 #include "ej3.h"
 
@@ -17,14 +19,14 @@ int main () {
   Grafo g = Grafo(cant_nodos, cant_aristas);
 
   unsigned int e1, e2, c = 0;
-  for(int i = 0; i < g.m; i++)
+  for(unsigned int i = 0; i < g.m; i++)
   {
     cin >> e1 >> e2 >> c;
     g.matriz_conexiones[e1-1][e2-1] = c;
     g.matriz_conexiones[e2-1][e1-1] = c;
   }
 
-  imprimir_salida(anillar(g));
+  /*imprimir_salida(anillar(g));*/
 
   return 0;
 }
@@ -50,23 +52,18 @@ bool no_tiene_solucion(Grafo g)
 
 bool Grafo::es_conexo(Grafo g)
 {
-  while(!estan_todos(g.nodos_visitados))
+  for(unsigned int i = 0; i < g.n; i++)
   {
-    for(int i = 0; i < g.n; i++)
+    for(unsigned int j = 0; j < g.n; j++)
     {
-      for(int j = 0; j < g.n; j++)
+      if(g.matriz_conexiones[i][j] > 0)
       {
-        if(g.matriz_conexiones[i][j] > 0)
-        {
-          if(!g.nodos_visitados[j])
-          {
-            g.nodos_visitados[j] = true;
-          }
-        }
+        g.nodos_visitados[j] = true;
       }
     }
-    return estan_todos(g.nodos_visitados);
   }
+  
+  return estan_todos(g.nodos_visitados);
 }
 
 
@@ -83,7 +80,7 @@ Grafo prim(Grafo g)
 
   while(!estan_todos(agm.nodos_visitados))
   {
-    for(int i = 0; i < g.n; i++)
+    for(unsigned int i = 0; i < g.n; i++)
     {
       auto t = buscar_peso_minimo(g.matriz_conexiones[i]);
       agm.matriz_conexiones[i][get<0>(t)] = get<1>(t);
@@ -97,7 +94,7 @@ Grafo prim(Grafo g)
 
 bool estan_todos(vector<bool> v)
 {
-  for(int i = 0; i < v.size(); i++)
+  for(unsigned int i = 0; i < v.size(); i++)
   {
     if(!v[i])
     {
@@ -112,7 +109,7 @@ tuple <unsigned int, unsigned int> buscar_peso_minimo(vector<unsigned int> v)
 {
   unsigned int min = INT_MAX;
   unsigned int pos = 0;
-  for(int i = 0; i < v.size(); i++)
+  for(unsigned int i = 0; i < v.size(); i++)
   {
     if(v[i] < min && v[i] != 0)
     {
@@ -132,9 +129,9 @@ Grafo completar_anillo(Grafo agm, Grafo g)
   // busco la arista de menor peso
   unsigned int eje_de_menor_peso = g.matriz_conexiones[0][0];
   unsigned int pos_i, pos_j = 0;
-  for(int i = 0; i < g.n; i++)
+  for(unsigned int i = 0; i < g.n; i++)
   {
-    for(int j = 0; j < g.n; j++)
+    for(unsigned int j = 0; j < g.n; j++)
     {
       if(g.matriz_conexiones[i][j] < eje_de_menor_peso)
       {
@@ -151,9 +148,9 @@ Grafo completar_anillo(Grafo agm, Grafo g)
 
 void restar_aristas(Grafo agm, Grafo g)
 {
-  for(int i = 0; i < g.n; i++)
+  for(unsigned int i = 0; i < g.n; i++)
   {
-    for(int j = 0; j < g.n; j++)
+    for(unsigned int j = 0; j < g.n; j++)
     {
       if(!agm.matriz_conexiones[i][j])
       {
@@ -167,5 +164,5 @@ void restar_aristas(Grafo agm, Grafo g)
 
 void imprimir_salida(Grafo agm)
 {
-  ;
+  /*;*/
 }

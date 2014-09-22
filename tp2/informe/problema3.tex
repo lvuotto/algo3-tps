@@ -51,8 +51,8 @@ incluída en el \textit{AGM}.
 
 
 \begin{codebox}
-\Procname{$\proc{anillar}(G)$}
-\li \If $\proc{noTieneSolucion}(G)$
+\Procname{$\proc{sePuedeAnillar}(G)$}
+\li \If $\neg (\proc{tieneSolucion}(G))$
 \li     \Then
             \Return $\const{false}$
         \End
@@ -65,9 +65,9 @@ incluída en el \textit{AGM}.
 
 
 \begin{codebox}
-\Procname{$\proc{noTieneSolucion}(G)$}
-\li \Return $\neg (\proc{esConexo}(G,v)) \lor
-    \proc{\#}(\proc{aristas}(G)) <
+\Procname{$\proc{tieneSolucion}(G)$}
+\li \Return $(\proc{esConexo}(G,v)) \land
+    \proc{\#}(\proc{aristas}(G)) \geq
     \proc{\#}(\proc{nodos}(G))$
 \end{codebox}
 

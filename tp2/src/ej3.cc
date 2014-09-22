@@ -1,6 +1,6 @@
 #include <iostream>
-#include <vector>
 #include <climits>
+#include <vector>
 #include <tuple>
 
 #include "ej3.h"
@@ -29,7 +29,7 @@ int main () {
   {
     cout << "no" << endl;
   }
-  // imprimir_salida(se_puede_anillar(g));
+  // falta imprimir_salida(se_puede_anillar(g));
   return 0;
 }
 
@@ -46,25 +46,25 @@ bool se_puede_anillar(Grafo g)
 }
 
 
-bool Grafo::tiene_solucion(Grafo g)
+bool Grafo::tiene_solucion()
 {
-  return g.es_conexo() && (g.m >= g.n);
+  return this->es_conexo() && (this->m >= this->n);
 }
 
 
-bool Grafo::es_conexo(Grafo g)
+bool Grafo::es_conexo()
 {
-  for(int i = 0; i < g.n; i++)
+  for(int i = 0; i < this->n; i++)
   {
-    for(int j = 0; j < g.n; j++)
+    for(int j = 0; j < this->n; j++)
     {
-      if(g.matriz_conexiones[i][j] > -1)
+      if(this->matriz_conexiones[i][j] > -1)
       {
-        g.nodos_visitados[j] = true;
+        this->nodos_visitados[j] = true;
       }
     }
   }
-  return estan_todos(g.nodos_visitados);
+  return estan_todos(this->nodos_visitados);
 }
 
 
@@ -93,9 +93,9 @@ Grafo prim(Grafo g)
 }
 
 
-bool estan_todos(vector<bool> v)
+bool estan_todos(std::vector<bool> v)
 {
-  for(int i = 0; i < v.size(); i++)
+  for(unsigned int i = 0; i < v.size(); i++)
   {
     if(!v[i])
     {
@@ -106,11 +106,11 @@ bool estan_todos(vector<bool> v)
 }
 
 
-tuple <int, int> buscar_peso_minimo(vector<int> v)
+std::tuple <int, int> buscar_peso_minimo(std::vector<int> v)
 {
   int min = INT_MAX;
   int pos = 0;
-  for(int i = 0; i < v.size(); i++)
+  for(unsigned int i = 0; i < v.size(); i++)
   {
     if(v[i] < min && v[i] > -1)
     {
@@ -129,7 +129,8 @@ Grafo completar_anillo(Grafo agm, Grafo g)
   restar_aristas(agm, g);
   // busco la arista de menor peso en g.
   int eje_de_menor_peso = g.matriz_conexiones[0][0];
-  int pos_i, pos_j = 0;
+  int pos_i = 0;
+  int pos_j = 0;
   for(int i = 0; i < g.n; i++)
   {
     for(int j = 0; j < g.n; j++)
@@ -164,5 +165,4 @@ void restar_aristas(Grafo agm, Grafo g)
 }
 
 
-void imprimir_salida(Grafo agm)
-{;}
+//void imprimir_salida(Grafo agm){;}

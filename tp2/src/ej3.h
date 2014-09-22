@@ -12,10 +12,10 @@ struct Grafo
    */
   int n;
   int m;
-  vector<bool> nodos_visitados;
-  vector< vector<int> > matriz_conexiones;
+  std::vector<bool> nodos_visitados;
+  std::vector< std::vector<int> > matriz_conexiones;
 
-  Grafo () {}
+  Grafo() {}
 
   Grafo(int cant_nodos, int cant_aristas)
   {
@@ -31,22 +31,22 @@ struct Grafo
       matriz_conexiones[h].resize(n);
     }
     // inicializo la matriz con -1.
-    for(int i = 0; i < matriz_conexiones[i].size(); i++)
+    for(unsigned int i = 0; i < matriz_conexiones[i].size(); i++)
     {
-      for(int j = 0; j < matriz_conexiones[j].size(); j++)
+      for(unsigned int j = 0; j < matriz_conexiones[j].size(); j++)
       {
         matriz_conexiones[i][j] = -1;
       }
     }
   }
 
-  bool es_conexo(Grafo g);
-  bool tiene_solucion(Grafo g);
+  bool es_conexo();
+  bool tiene_solucion();
 };
 
-bool  se_puede_anillar(Grafo g);
-Grafo prim(Grafo g);
-bool  estan_todos(vector<bool> v);
-tuple <int, int> buscar_peso_minimo(vector<int> v);
-Grafo completar_anillo(Grafo agm, Grafo g);
-void  restar_aristas(Grafo agm, Grafo g);
+bool                  se_puede_anillar(Grafo g);
+Grafo                 prim(Grafo g);
+bool                  estan_todos(std::vector<bool> v);
+std::tuple <int, int> buscar_peso_minimo(std::vector<int> v);
+Grafo                 completar_anillo(Grafo agm, Grafo g);
+void                  restar_aristas(Grafo agm, Grafo g);

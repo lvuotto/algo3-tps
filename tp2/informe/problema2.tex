@@ -120,8 +120,44 @@ Este mínimo (si existe) es una solución óptima.
 \vspace*{0.3cm}
 
 \textcolor{red}{\textbf{completar!}}
+Para el análisis de complejidad nos basaremos en el pseudocódigo de la función
+\textsc{puntoDeEncuentro}, correspondiente al ítem \textbf 4.2
 
+\begin{enumerate}
 
+ \item \textbf{Aclaraciones} : Se considerará $k$ = cantidad de caballos
+ y $n$ = cantidad de casilleros de alto o largo (es indiferente ya que los
+ tableros serán cuadrados).
+
+ \item Las operaciones sobre el contenedor \verb|vector| de la STL (push_back, 
+ begin y end) y la creación de sus iteradores toman $O(1)$.
+ 
+ \item En la función \verb|main| la estructura \verb|for| es ejecutada
+  $k$ veces, donde se realiza un \verb|make_pair| y un \verb|push_back| 
+  sobre un \verb|vector| que cuestan $O(1)$, dando una complejidad de $O(k)$.
+   
+ \item Crear la esctructura \verb|pair| $respuesta $que contrendrá el 
+ resultado del problema, si lo hay, cuesta $O(1)$.
+ 
+ \item En la función \verb|punto_de_encuentro| se crea el \verb|vector| 
+ $tableros$ ( $O(1)$ ), y con un iterador se recorre el \verb|vector| $caballos$ en 
+ $O(k)$ donde por cada iteración se crea un tablero (ver \textbf{Tablero}) 
+ ( $O(n^{2})$ ), se crea un \verb|queue| para los casilleros ( $O(1)$ ), 
+ se crea un \verb|make_pair| ( $O(1)$ ) y se los inserta en el \verb|queue| $casilleros$
+ mediante \verb|push| ($ O(1)$ ), se llena el tablero creado (ver \textbf{LLenar tablero}) 
+ en $O(n^{2})$ y se los agrega a $tableros$ con \verb|push_back| en $O(1)$
+  dando una complejidad total de $O(k.(n^{2} + n^{2}))$ = $O(k.n^{2})$.
+ 
+ \item \textbf{Tablero} - Crear un tablero implica crear un \verb|vector| 
+ que contendrá otro \verb|vector| dentro ($O(1)$) y se le dará tamaño $n$
+ al vector contenedor con \verb|resize| en $O(n)$. Luego se creará un iterador
+ ($O(1)$) para recorrer el \verb|vector| contenedor ($O(n)$) y en cada iteración
+ al \verb|vector| contenido en dicha posición se le seteará $n$ posiciones
+ en $-1$, dando una complejidad total de $O(n^{2})$.
+ 
+ \item \textbf{Llenar tablero} - Llenar un tablero...
+ 
+\end{enumerate}
 
 \newpage
 \subsection{Experimentación y gráficos.}

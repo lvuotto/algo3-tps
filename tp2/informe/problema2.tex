@@ -18,7 +18,7 @@ estar ocupado por más de un caballo simultáneamente}.
 
 En un tablero de 8x8, con 3 caballos en las posiciones [2,2], [5,5] y [2,8],
 la menor cantidad de saltos posibles es 4, haciendo que los caballos de los
-extremos cayan hacia la posición del caballo del medio, como se puede ver
+extremos cayan hacia la posición del caballo del medio[5,5], como se puede ver
 en la siguiente imagen:
 
 \begin{figure}[htb]
@@ -97,22 +97,22 @@ pueden alcanzar todos los caballos en la menor cantidad de saltos.
 
 \vspace*{0.3cm}
 
-Se dirá que el problema tiene solución cuando exista al menos un casillero del
-tablero que sea alcanzable por todos los caballos, pues, siendo finitos
-casilleros y sabiendo cuántos saltos le toma a cada caballo llegar a cada
-casillero, se toma el mínimo de la suma de los saltos entre todos los casilleros
-accesibles por todos los caballos.
+La solución es el mínimo número de movimientos entre todos los caballos que
+los deja en el mismo casillero.
 
-Es fácil ver que el problema tiene solución para todos los tableros de tamaño
-mayor a $4 \times 4$. \textcolor{red}{\textbf{Lucas, poné la demo ¿?}}.
+Primero completamos cuanto le cuesta a cada caballo llegar a cada
+casillero, para calcular esto tomamos al tablero como un grafo, cada
+casillero como un nodo y los ejes los posibles saltos de caballo. Empezando
+desde la posición del caballo, se recorre de una forma Breadth-First,
+logrando de esta manera poner la cantidad mínima de saltos para cada
+casillero alcanzable, ya que el algoritmo BFS obtiene todos los caminos
+mínimos desde un nodo inicial.
 
-Si, dado un caballo, se sabe la cantidad mínima de saltos que le toma llegar a
-cada casillero del tablero, es sencillo obtener la solución: se recorre cada
-casillero, realizando la suma ...
-
-A continuación se probará que el algoritmo propuesto calcula, para cada caballos,
-la cantidad mínima de saltos que le toma llegar a cada casillero.
-
+Luego, simplemente es cuestión de obtener el mínimo de la sumatoria para cada casillero.
+Recorremos todos los casilleros para cada tablero (de cada caballo),
+tomando el valor mínimo (únicamente si es posible llegar a ese casillero
+con todos los caballos).
+Este mínimo (si existe) es una solución óptima.
 
 \newpage
 \subsection{Análisis de complejidad.}

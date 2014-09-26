@@ -7,8 +7,8 @@ struct Grafo
   /* n == #(nodos), m == #(aristas).
    *
    * en la posición i,j de la matriz se encuentra el costo del enlace i,j
-   * que va desde el nodo i al nodo j. Un enlace no válido (inexistente entre
-   * dos nodos) tiene costo -1.
+   * que va desde el nodo i al nodo j. Si no hay enlace entre dos nodos, el
+   * costo de i,j es -1.
    */
   int n;
   int m;

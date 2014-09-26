@@ -2,22 +2,24 @@
 #include <climits>
 #include <vector>
 #include <tuple>
-
+#include <list>
 #include "ej3.h"
-
 using namespace std;
 
 
 
 int main () {
   // creo el grafo.
-  int cant_nodos, cant_aristas;
+  int cant_nodos   = 0;
+  int cant_aristas = 0;
   cin >> cant_nodos;
   cin >> cant_aristas;
   Grafo g = Grafo(cant_nodos, cant_aristas);
 
   // cargo matriz_conexiones con los datos de entrada.
-  int e1, e2, c = 0;
+  int e1 = 0;
+  int e2 = 0;
+  int c  = 0;
   for(int i = 0; i < g.m; i++)
   {
     cin >> e1 >> e2 >> c;
@@ -25,11 +27,8 @@ int main () {
     g.matriz_conexiones[e2-1][e1-1] = c;
   }
 
-  if(!se_puede_anillar(g))
-  {
-    cout << "no" << endl;
-  }
-  // falta imprimir_salida(se_puede_anillar(g));
+  // falta imprimir_salida(g);
+
   return 0;
 }
 
@@ -77,7 +76,7 @@ Grafo prim(Grafo g)
    *      agregar este vértice al agm.
    */
   Grafo agm = Grafo(g.n, g.m);
-  agm.m = 0;
+  agm.m     = 0;
 
   while(!estan_todos(agm.nodos_visitados))
   {
@@ -143,8 +142,10 @@ Grafo completar_anillo(Grafo agm, Grafo g)
       }
     }
   }
+  // agrego la arista al agm
   agm.matriz_conexiones[pos_i][pos_j] = eje_de_menor_peso;
   agm.matriz_conexiones[pos_j][pos_i] = eje_de_menor_peso;
+  agm.m += 1;
   return agm;
 }
 
@@ -165,4 +166,19 @@ void restar_aristas(Grafo agm, Grafo g)
 }
 
 
-//void imprimir_salida(Grafo agm){;}
+? obtener_anillo(Grafo g) //le paso completar anillo
+{
+  int cant_aristas_g         = agm.m;
+  int cant_aristas_anillo    = 0;
+  int cant_aristas_restantes = 0;
+
+}
+
+
+//void imprimir_salida(Grafo agm)
+/*{
+  if(!se_puede_anillar(g))
+  {
+    cout << "no" << endl;
+    ...
+}*/

@@ -1,0 +1,16 @@
+#!/usr/bin/ruby
+
+seed = ARGV[0].to_i
+ciudades = ARGV[1].to_i
+vuelos = ARGV[2].to_i
+max_horario = ARGV[3].to_i
+
+srand(seed)
+
+puts "0 1 #{vuelos}"
+
+(1..vuelos).each do |i|
+  ini = rand(max_horario)
+  fin = ini + 1 + rand(5)
+  puts "#{i * 2} {i * 2 + 1} #{ini} #{fin}"
+end

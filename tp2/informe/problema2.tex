@@ -155,7 +155,34 @@ Para el análisis de complejidad nos basaremos en el pseudocódigo de la funció
  al \verb|vector| contenido en dicha posición se le seteará $n$ posiciones
  en $-1$, dando una complejidad total de $O(n^{2})$.
  
- \item \textbf{Llenar tablero} - Llenar un tablero...
+ \item \textbf{Llenar tablero} - La función posee un \verb|while| donde se ejecutan
+ todas las instrucciones, mientras el \verb|queue| $casilleros$ sea diferente de vacío.
+ $casilleros$ comienza con 1 elemento y en cada ejecución se le realiza
+ \verb|pop| de un elemento y se le agregan todas las posiciones a las cuales se 
+ pueden saltar (siguendo el patron del caballo y sin que salga del tablero), la 
+ complejidad del \verb|while| sera de $O(n^{2})$ en el peor caso (todos los casilleros), multiplicado 
+ por la complejidad de las instrucciones que se ejecuten dentro del mismo.
+ 
+ Crear un \verb|pair| y asignarle el \verb|first| de la tupla del primer elemento 
+ de $casilleros$ cuesta $O(1)$, al igual que crear un \verb|int| y asignarle el
+ \verb|second| de la tupla del primer elemento de $casilleros$.
+ 
+ Hacer \verb|pop| de $casilleros$ cuesta $O(1)$.
+ 
+ En el primer \verb|if| acceder al elemento $[x][y]$ del \verb|vector[vector]| 
+ $t.casilleros$ del tablero y compararlo con -1 cuesta $O(1)$ (notar que $tablero$ 
+ posee un $casilleros$ \verb|vector[vector]| y que la función recibe otro $casilleros$ 
+ \verb|queue|). En caso de ser verdadero se realiza un \verb|continue| en $O(1)$.
+ 
+ Asignarle al \verb|int| $nivel$ un elemento de $t.casilleros$ en $[x][y]$ cuesta $O(1)$.
+ 
+ Para las ocho posiciones posibles a las que puede saltar un caballo desde la posición
+ actual, validar que la posición sea válida (que caiga dentro del tablero) cuesta 
+ $O(1)$, y de ser válida ver si el valor almacenado en dicho lugar es distinto de -1
+ también cuesta $O(1)$. Si se cumplen estas condiciones se ejecuta la instrucción 
+ del if donde se agrega el casillero que se acaba de evaluar al \verb|queue| $casilleros$
+ ($O(1)$) que se recorre en el \verb|while|, realizando dos \verb|make_pair| ($O(1)$) 
+ y asignandole el valor del $nivel$ + 1 ($O(1)$).
  
 \end{enumerate}
 

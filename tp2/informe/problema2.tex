@@ -114,21 +114,27 @@ que pueden alcanzar todos los caballos en la menor cantidad de saltos.
 \vspace*{0.3cm}
 
 La solución es el mínimo número de movimientos entre todos los caballos que
-los deja en el mismo casillero.
+los deja en el mismo casillero, y la posición de ese casillero. Es decir:
+{(i, j) | minimice \sum\limits{caballo c \in caballos} camino\_mínimo(c, (i, j)) }.
 
-Primero completamos cuanto le cuesta a cada caballo llegar a cada
-casillero, para calcular esto tomamos al tablero como un grafo, cada
-casillero como un nodo y los ejes los posibles saltos de caballo. Empezando
-desde la posición del caballo, se recorre de una forma Breadth-First,
-logrando de esta manera poner la cantidad mínima de saltos para cada
-casillero alcanzable, ya que el algoritmo BFS obtiene todos los caminos
-mínimos desde un nodo inicial.
+Primero completamos, en el tablero de cada caballo, los caminos mínimos desde
+dónde empieza cada caballo hasta cada casillero.
 
-Luego, simplemente es cuestión de obtener el mínimo de la sumatoria para cada casillero.
-Recorremos todos los casilleros para cada tablero (de cada caballo),
-tomando el valor mínimo (únicamente si es posible llegar a ese casillero
-con todos los caballos).
-Este mínimo (si existe) es una solución óptima.
+Para calcular esto tomamos al tablero como un grafo, cada casillero como un
+nodo y los ejes los posibles saltos de caballo. Empezando desde la posición del
+caballo, se recorre de una forma Breadth-First, logrando de esta manera poner
+la cantidad mínima de saltos para cada casillero alcanzable, ya que el algoritmo
+BFS obtiene todos los caminos mínimos desde un nodo inicial.
+
+Con esto obtenemos \forall c \in caballos \forall (i, j) \in tablero camino\_mínimo(c, (i, j)).
+
+Luego, para obtener el valor mínimo (y la coordenada donde se alcanza), se
+recorren todos los casilleros y se calcula la sumatoria (en la línea \textcolor{red}{\textbf{completar!}}).
+En cada caso se compara el valor obtenido con el mínimo actual, y se actualiza
+de ser necesario.
+
+El valor obtenido, si existe, es una solución óptima que minimiza el número de
+movimientos de todos los caballos para llegar a ese casillero.
 
 \newpage
 \subsection{Análisis de complejidad.}

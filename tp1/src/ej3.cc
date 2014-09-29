@@ -84,6 +84,7 @@ bool backtracking(vector<camion>& camiones, set<int>& elementos)
 
   int elemento = *elementos.begin();
   elementos.erase(elementos.begin());
+
   for (auto c = camiones.begin(); c != camiones.end(); c++) {
     if (c->entra(elemento)) {
       c->agregar_elemento(elemento);
@@ -91,6 +92,11 @@ bool backtracking(vector<camion>& camiones, set<int>& elementos)
         return true;
       } else {
         c->eliminar_elemento(elemento);
+        /* Si sacamos y el camión está vacío, quiere decir que ya lo
+         * habíamos puesto en un camión vacío. No tiene sentido seguir
+         * intentando en otros camiones. Lo único que ganamos son ciclos de
+         * clock. */
+        if (c->elementos.empty()) break;
       }
     }
   }

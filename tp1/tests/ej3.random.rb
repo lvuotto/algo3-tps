@@ -6,9 +6,9 @@ m = (ARGV[2] && ARGV[2].to_i) || (1 + rand(n))
 
 puts "#{n} #{m}"
 2.upto(n) do |i|
-  $stdout << "#{rand n}"
+  $stdout << "#{rand 2*n}"
   (i + 1).upto(n) do
-    $stdout << " #{rand n}"
+    $stdout << " #{rand 2*n}"
   end
   puts
 end

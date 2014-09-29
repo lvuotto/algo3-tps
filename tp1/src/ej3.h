@@ -12,8 +12,8 @@ int umbral;
 matriz peligrosidades;
 
 
-struct camion {
-  camion() : peligrosidad_(0) {}
+struct Camion {
+  Camion() : peligrosidad_(0) {}
 
   void agregar_elemento(int elemento)
   {
@@ -50,8 +50,6 @@ private:
 };
 
 
-vector<camion> biohazard(set<int>& elementos);
-bool backtracking(vector<camion>& camiones, set<int>& elementos);
-void mostrar_solucion(vector<camion>& camiones, int cantidad_elementos);
-
-
+vector<Camion> biohazard(set<int>& elementos);
+bool backtracking(vector<Camion>& camiones, set<int>& elementos);
+void mostrar_solucion(vector<Camion>& camiones, int cantidad_elementos);

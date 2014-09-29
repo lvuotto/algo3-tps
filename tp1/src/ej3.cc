@@ -1,6 +1,8 @@
 #include <iostream>
 #include <set>
 #include <vector>
+#include <utility>
+#include <algorithm>
 
 #include "ej3.h"
 #include "tiempo.h"
@@ -10,6 +12,9 @@
 
 
 using namespace std;
+
+
+void its_a_kind_of_poda(vector<Camion>& camiones);
 
 
 int main()
@@ -40,7 +45,7 @@ int main()
     }
 
     set<int> backup_elementos = elementos;
-    vector<camion> solucion;
+    vector<Camion> solucion;
     unsigned long inicio, fin, min;
     MEDIR_TIEMPO_START(inicio);
     solucion = biohazard(elementos);
@@ -66,17 +71,17 @@ int main()
 }
 
 
-vector<camion> biohazard(set<int>& elementos)
+vector<Camion> biohazard(set<int>& elementos)
 {
-  vector<camion> camiones;
-  do {
-    camiones.push_back(camion());
-  } while (!backtracking(camiones, elementos));
+  vector<Camion> camiones;
+  /*its_a_kind_of_poda(camiones);*/
+  while (!backtracking(camiones, elementos))
+    camiones.push_back(Camion());
   return camiones;
 }
 
 
-bool backtracking(vector<camion>& camiones, set<int>& elementos)
+bool backtracking(vector<Camion>& camiones, set<int>& elementos)
 {
   if (elementos.empty()) {
     return true;
@@ -106,7 +111,34 @@ bool backtracking(vector<camion>& camiones, set<int>& elementos)
 }
 
 
-void mostrar_solucion(vector<camion>& camiones, int cantidad_elementos)
+void its_a_kind_of_poda(vector<Camion>& camiones)
+{
+  vector<pair<int, int> > muy_peligrosos;
+  for (unsigned int i = 0; i < peligrosidades.size(); i++) {
+    for (unsigned int j = 0; j < peligrosidades.size(); j++) {
+      if (peligrosidades[i][j] > umbral) {
+        muy_peligrosos.push_back(make_pair(i, j));
+      }
+    }
+  }
+  
+  /* Necesito al menos 1 camión. */
+  camiones.push_back(Camion());
+
+  /* Si hay pares que se pasan del umbral, necesito al menos 2 camiones. */
+  if (!muy_peligrosos.empty())
+    camiones.push_back(Camion());
+  
+  /* Si pasa algo mágico, puedo afirmar que necesito al menos 3 camiones. */
+  /* BTW, `muy_peligrosos` está ordenado, dado el modo en el que se crea. */
+  /*for (auto p = muy_peligrosos.begin(); p != muy_peligrosos.end(); p++) {
+    if (p->first == (p + 1)->first) {
+    }
+  }*/
+}
+
+
+void mostrar_solucion(vector<Camion>& camiones, int cantidad_elementos)
 {
   vector<int> solucion;
   solucion.resize(cantidad_elementos);

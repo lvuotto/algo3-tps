@@ -2,15 +2,16 @@
 
 \vspace*{0.3cm}
 
-Dado un \textbf{tablero de ajedrez de tamaño $n$x$n$ y $k$ caballos ocupando
-inicialmente ciertos casilleros (aleatorios)} del mismo, el objetivo consiste
-en \textbf{reunir a todos los caballos en un mismo casillero, minimizando la
-cantidad total de movimientos realizados}. Esta cantidad equivale a
-\textbf{la suma de los movimientos de todos los caballos} en el tablero.
+Dado un tablero de ajedrez de tamaño $n \times n$ y $k$ caballos ocupando
+inicialmente ciertos casilleros del mismo, el objetivo del problema consiste
+en reunir a todos los caballos en un mismo casillero, minimizando la
+cantidad total de movimientos realizados. Esta cantidad equivale a la suma
+de los movimientos de todos los caballos en el tablero para llegar a dicho
+casillero.
 
-Un caballo $k$ puede moverse únicamente \textbf{respetando los movimientos
-válidos según las reglas del ajedrez}. Además, \textbf{un casillero puede
-estar ocupado por más de un caballo simultáneamente}.
+Un caballo puede moverse únicamente respetando los movimientos válidos según
+las reglas del ajedrez, pero un casillero puede estar ocupado por más de un
+caballo simultáneamente.
 
 \vspace*{0.5cm}
 
@@ -35,84 +36,79 @@ en la siguiente imagen:
 \vspace*{0.3cm}
 
 
-Para resolver este problema, utilizaremos $k$ tableros de $n$x$n$ casilleros,
-uno por cada caballo. En cada tablero se calculará el costo para dicho caballo
-de llegar a cada casillero, aplicando \textit{BFS} desde el casillero inicial,
-quedando inválidos los casilleros que no pueden alcanzarse.
+Para resolver este problema, utilizaremos $k$ tableros de $n \times n$
+casilleros, uno por cada caballo. En cada tablero se calculará el costo para
+dicho caballo de llegar a cada casillero, aplicando \textit{BFS} desde el
+casillero inicial, quedando inválidos los casilleros que no pueden
+alcanzarse.
 
-Luego se recorren todos los casilleros, sumando el valor de éstos en todos los
-tableros (si son alcanzables), obteniendo así el costo de cada casillero para
-cada caballo. De existir, el mínimo de estos valores será el casillero que
-pueden alcanzar todos los caballos en la menor cantidad de saltos.
+Luego se recorren todos los casilleros, sumando el valor de estos en todos
+los tableros (si son alcanzables), obteniendo así el costo de cada casillero
+para cada caballo. De existir, el mínimo de estos valores será el casillero
+que pueden alcanzar todos los caballos en la menor cantidad de saltos.
 
-%\begin{codebox}
-%\Procname{$\proc{puntoDeEncuentro}(caballos, n)$}
-%\li $\id{tableros} \gets \emptyset$
-%\li \For $caballo \in caballos$
-%\li   \Do
-%\li       $\id{t} \gets \proc{crearTablero}(n)
-%\li       $\proc{llenarTablero}(t)$
-%\li       $\proc{agregar}(t, tableros)$
-%      \End
-%\li $\id{i} \gets 0$
-%\li $\id{j} \gets 0$
-%    $\id{min_i} \gets -1$
-%    $\id{min_j} \gets -1$
-%    $\id{min} \gets -1$
-% \li \While $\id{i} < \id{n}$
-% \li   \Do
-% \li     \While $\id{j} < \id{n}$
-% \li       \Do
-% \li         $\id{sum} \gets 0$
-% \li         $\id{caballo} \gets 0$
-% \li         \For $tablero \in tableros$
-% \li           \Do
-%                 if (tableros[caballo][i][j] == -1)
-%                   sum = -1
-%                 else if (sum != -1)
-%                   sum += tableros[caballo][i][j]
-%                 end
-%               \End
-%             if (sum != -1 && (min == -1 || sum < min))
-%               min = sum
-%               min_i = i
-%               min_j = j
-%             end
-%             j++
-%         \End
-%         i++
-%       \End
-%     if min == -1
-%       \Return 'no'
-%     else
-% \li \Return min min_i min_j
-% \end{codebox}
-%
-% 
-% crearTablero
-% \Procname{$\proc{crearTablero}(n)$}
-% \li $\id{casilleros} \gets matriz(n x n) inicializados en -1$
-%
-% \Procname{$\proc{llenarTablero}(tablero, casilleros)$}
-% \li \While(!vacio?(casilleros))
-% \li   \Do
-%         posicion = casilleros.primero.pos
-%         nivel = casilleros.primero.nivel
-%         casilleros.sacarPrimero
-%
-%         if tablero.casilleros[posicion].pos == -1
-%            continuar
-%         end
-%
-%         tablero.casilleros[posicion].nivel = nivel
-%
-%         \For $posiblesMovimientos(posicion))$       ESTE FOR NO ESTA CLARO, LA "POSICION" NO CAMBIA
-%           if noSalioDelTablero(posicion) y posicion.nivel != -1
-%             posicion.nivel = nivel + 1
-%             casilleros.agregar(posicion)
-%           end
-%       \End
-%
+\begin{codebox}
+\Procname{$\proc{puntoDeEncuentro}(caballos, n)$}
+\li $\id{tableros} \gets \emptyset$
+\li \For $caballo \in caballos$ \Do
+\li   $\proc{agregar}(tableros,
+                      \proc{llenarTablero}(\proc{crearTablero}(n),
+                                           caballo))$
+    \End
+\li $\id{i} \gets 0$
+\li $\id{j} \gets 0$
+\li $\id{min_i} \gets \infty$
+\li $\id{min_j} \gets \infty$
+\li $\id{min} \gets \infty$
+\li \While $\id{i} < \id{n}$ \Do
+\li   \While $\id{j} < \id{n}$ \Do
+\li     $\id{sum} \gets 0$
+\li     $\id{caballo} \gets 0$
+\li     \For $tablero \in tableros$ \Do
+% \li       \If $tablero_{ij} \isequal \infty$ \Then
+% \li         $\id{sum} \gets \infty$
+% \li       \ElseIf $sum \neq \infty$ \Then
+\li         $\id{sum} \gets \id{sum} + tablero_{ij}$
+%           \End
+        \End
+\li     \If $sum < min$ \Then
+\li       $\id{min} \gets \id{sum}$
+\li       $\id{min_i} \gets i$
+\li       $\id{min_j} \gets j$
+        \End
+\li   $\id{j} \gets \id{j} + 1$
+      \End
+\li $\id{i} \gets \id{i} + 1$
+    \End
+\li \Return $(\id{min}, \id{min_i}, \id{min_j})$
+\end{codebox}
+
+
+\begin{codebox}
+\Procname{$\proc{crearTablero}(n)$}
+\li \Return matriz de $n \times n$ inicializada en $\infty$
+\end{codebox}
+
+
+\begin{codebox}
+\Procname{$\proc{llenarTablero}(tablero, inicio)$}
+\li $\id{posiciones} \gets \emptyset$
+\li $\proc{encolar}(posiciones, (inicio, 0))$
+\li \While $\lnot \proc{vacio?}(posiciones)$ \Do
+\li   $\id{pos} \gets \proc{primero}(\proc{frente}(posiciones))$
+\li   $\id{nivel} \gets \proc{segundo}(\proc{frente}(posiciones))$
+\li   $\proc{desencolar}(posiciones)$
+\li   $\id{i} \gets inicio_i$
+\li   $\id{j} \gets inicio_j$
+\li   \If $tablero_{ij} \isequal \infty$ \Then
+\li     $\id{tablero_{ij}} = nivel$
+\li     \For $\id{v} \in \proc{vecinos}(tablero, posicion)$ \Do
+\li       $\proc{encolar}(posiciones, (v, nivel + 1))$
+        \End
+      \End
+    \End
+\end{codebox}
+
 
 \newpage
 \subsection{Justificación de la resolución y demostración de correctitud.}

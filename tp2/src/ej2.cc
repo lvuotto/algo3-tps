@@ -23,7 +23,7 @@ int main() {
     caballos.push_back(c);
   }
   
-  pair<int, posicion> respuesta = punto_de_encuentro(caballos, dimension_tablero);
+  pair<int, Posicion> respuesta = punto_de_encuentro(caballos, dimension_tablero);
   
   if (respuesta.first == -1) {
     cout << "no" << endl;
@@ -36,14 +36,12 @@ int main() {
   return 0;
 }
 
-pair<int, posicion> punto_de_encuentro(vector<Caballo> caballos, int dimension_tablero) {
+pair<int, Posicion> punto_de_encuentro(vector<Caballo> caballos, int dimension_tablero) {
   vector<Tablero> tableros;
 
   for (auto c = caballos.begin(); c != caballos.end(); c++) {
     Tablero t(dimension_tablero);
-    queue<pair<posicion, int> > casilleros;
-    casilleros.push(make_pair((posicion) *c, 0));
-    llenar_tablero(t, casilleros);
+    llenar_tablero(t, *c);
     tableros.push_back(t);
   }
   
@@ -74,41 +72,41 @@ pair<int, posicion> punto_de_encuentro(vector<Caballo> caballos, int dimension_t
   return make_pair(min, make_pair(min_i, min_j));
 }
 
-void llenar_tablero(Tablero& t, queue<pair<posicion, int> >& casilleros) {
-  while (!casilleros.empty()) {
-    posicion p = casilleros.front().first;
-    int nivel = casilleros.front().second;
-    casilleros.pop();
+void llenar_tablero(Tablero& t, Posicion inicio) {
+  queue<pair<Posicion, int> > posiciones;
+  posiciones.push(make_pair(inicio, 0));
+  while (!posiciones.empty()) {
+    Posicion p = posiciones.front().first;
+    int nivel = posiciones.front().second;
+    posiciones.pop();
 
-    if (t.casilleros[p.first][p.second] != -1) {
-      continue;
-    }
+    if (t.casilleros[p.first][p.second] == -1) {
+      t.casilleros[p.first][p.second] = nivel;
 
-    t.casilleros[p.first][p.second] = nivel;
-
-    if (p.first - 2 >= 0 && p.second + 1 < t.dimension && t.casilleros[p.first - 2][p.second + 1] == -1) {
-      casilleros.push(make_pair(make_pair(p.first - 2, p.second + 1), nivel + 1));
-    }
-    if (p.first - 1 >= 0 && p.second + 2 < t.dimension && t.casilleros[p.first - 1][p.second + 2] == -1) {
-      casilleros.push(make_pair(make_pair(p.first - 1, p.second + 2), nivel + 1));
-    }
-    if (p.first + 1 < t.dimension && p.second - 2 >= 0 && t.casilleros[p.first + 1][p.second - 2] == -1) {
-      casilleros.push(make_pair(make_pair(p.first + 1, p.second - 2), nivel + 1));
-    }
-    if (p.first - 2 >= 0 && p.second - 1 >= 0 && t.casilleros[p.first - 2][p.second - 1] == -1) {
-      casilleros.push(make_pair(make_pair(p.first - 2, p.second - 1), nivel + 1));
-    }
-    if (p.first + 1 < t.dimension && p.second + 2 < t.dimension && t.casilleros[p.first + 1][p.second + 2] == -1) {
-      casilleros.push(make_pair(make_pair(p.first + 1, p.second + 2), nivel + 1));
-    }
-    if (p.first + 2 < t.dimension && p.second - 1 >= 0 && t.casilleros[p.first + 2][p.second - 1] == -1) {
-      casilleros.push(make_pair(make_pair(p.first + 2, p.second - 1), nivel + 1));
-    }
-    if (p.first + 2 < t.dimension && p.second + 1 < t.dimension && t.casilleros[p.first + 2][p.second + 1] == -1) {
-      casilleros.push(make_pair(make_pair(p.first + 2, p.second + 1), nivel + 1));
-    }
-    if (p.first - 1 >= 0 && p.second - 2 >= 0 && t.casilleros[p.first - 1][p.second - 2] == -1) {
-      casilleros.push(make_pair(make_pair(p.first - 1, p.second - 2), nivel + 1));
+      if (p.first - 2 >= 0 && p.second + 1 < t.dimension && t.casilleros[p.first - 2][p.second + 1] == -1) {
+        posiciones.push(make_pair(make_pair(p.first - 2, p.second + 1), nivel + 1));
+      }
+      if (p.first - 1 >= 0 && p.second + 2 < t.dimension && t.casilleros[p.first - 1][p.second + 2] == -1) {
+        posiciones.push(make_pair(make_pair(p.first - 1, p.second + 2), nivel + 1));
+      }
+      if (p.first + 1 < t.dimension && p.second - 2 >= 0 && t.casilleros[p.first + 1][p.second - 2] == -1) {
+        posiciones.push(make_pair(make_pair(p.first + 1, p.second - 2), nivel + 1));
+      }
+      if (p.first - 2 >= 0 && p.second - 1 >= 0 && t.casilleros[p.first - 2][p.second - 1] == -1) {
+        posiciones.push(make_pair(make_pair(p.first - 2, p.second - 1), nivel + 1));
+      }
+      if (p.first + 1 < t.dimension && p.second + 2 < t.dimension && t.casilleros[p.first + 1][p.second + 2] == -1) {
+        posiciones.push(make_pair(make_pair(p.first + 1, p.second + 2), nivel + 1));
+      }
+      if (p.first + 2 < t.dimension && p.second - 1 >= 0 && t.casilleros[p.first + 2][p.second - 1] == -1) {
+        posiciones.push(make_pair(make_pair(p.first + 2, p.second - 1), nivel + 1));
+      }
+      if (p.first + 2 < t.dimension && p.second + 1 < t.dimension && t.casilleros[p.first + 2][p.second + 1] == -1) {
+        posiciones.push(make_pair(make_pair(p.first + 2, p.second + 1), nivel + 1));
+      }
+      if (p.first - 1 >= 0 && p.second - 2 >= 0 && t.casilleros[p.first - 1][p.second - 2] == -1) {
+        posiciones.push(make_pair(make_pair(p.first - 1, p.second - 2), nivel + 1));
+      }
     }
   }
 }

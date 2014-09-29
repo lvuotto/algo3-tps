@@ -114,27 +114,33 @@ que pueden alcanzar todos los caballos en la menor cantidad de saltos.
 \vspace*{0.3cm}
 
 La solución es el mínimo número de movimientos entre todos los caballos que
-los deja en el mismo casillero, y la posición de ese casillero. Es decir:
-{(i, j) | minimice \sum\limits{caballo c \in caballos} camino\_mínimo(c, (i, j)) }.
+los deja en el mismo casillero, y la posición de ese casillero. Es decir, si
+$s \in [1, \dots, n] \times [1, \dots, n]$ es solución, $s$ pertenece a
+\begin{align*}
+\min_{(i, j) \in [1, \dots, n] \times [1, \dots, n]} \sum_{c \in caballos}
+\text{camino\_mínimo}(c, (i, j))
+\end{align*}
 
-Primero completamos, en el tablero de cada caballo, los caminos mínimos desde
-dónde empieza cada caballo hasta cada casillero.
+Primero completamos, en un tablero para cada caballo, los caminos mínimos
+desde la posición inicial de este hasta cada casillero que puede alcanzar.
+Para esto, usamos el tablero como un grafo, considerando cada casillero como
+un nodo y los posibles saltos de caballos como aristas. Empezando desde la
+posición del caballo, se recorren todos los nodos alcanzables mediante el
+algoritmo BFS, logrando de esta manera poner la cantidad mínima de saltos
+para cada casillero alcanzable, pues BFS obtiene los caminos mínimos desde
+un nodo inicial a cualquier otro nodo del grafo, siempre y cuando estos se
+encuentren en la misma componente conexa.
 
-Para calcular esto tomamos al tablero como un grafo, cada casillero como un
-nodo y los ejes los posibles saltos de caballo. Empezando desde la posición del
-caballo, se recorre de una forma Breadth-First, logrando de esta manera poner
-la cantidad mínima de saltos para cada casillero alcanzable, ya que el algoritmo
-BFS obtiene todos los caminos mínimos desde un nodo inicial.
+Luego de obtener este resultado, para obtener el valor mínimo y la
+coordenada donde se alcanza, se recorren todos los casilleros y se calcula
+la sumatoria de costos de ese casillero en el tablero correspondiente a cada
+caballo. En cada caso se compara el valor obtenido con el mínimo actual y se
+actualiza este valor y la coordenada, de ser necesario.
 
-Con esto obtenemos \forall c \in caballos \forall (i, j) \in tablero camino\_mínimo(c, (i, j)).
-
-Luego, para obtener el valor mínimo (y la coordenada donde se alcanza), se
-recorren todos los casilleros y se calcula la sumatoria (en la línea \textcolor{red}{\textbf{completar!}}).
-En cada caso se compara el valor obtenido con el mínimo actual, y se actualiza
-de ser necesario.
-
-El valor obtenido, si existe, es una solución óptima que minimiza el número de
-movimientos de todos los caballos para llegar a ese casillero.
+El valor obtenido, si existe, es una solución óptima que minimiza el número
+de movimientos de todos los caballos para llegar a ese casillero, pues el
+algoritmo es exhaustivo: recorre todos los posibles resultados y se queda
+con el menor.
 
 \newpage
 \subsection{Análisis de complejidad.}

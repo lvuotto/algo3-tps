@@ -44,9 +44,20 @@ struct Grafo
   bool tiene_solucion();
 };
 
+
+struct Coordenadas
+{
+  Grafo& g;
+  int coordenada_1;
+  int coordenada_2;
+
+  Coordenadas() {}
+};
+
+
 bool                  se_puede_anillar(Grafo g);
 Grafo                 prim(Grafo g);
 bool                  estan_todos(std::vector<bool> v);
 std::tuple <int, int> buscar_peso_minimo(std::vector<int> v);
-Grafo                 completar_anillo(Grafo agm, Grafo g);
+Coordenadas           completar_anillo(Grafo agm, Grafo g);
 void                  restar_aristas(Grafo agm, Grafo g);

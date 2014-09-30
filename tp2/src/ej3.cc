@@ -2,7 +2,9 @@
 #include <climits>
 #include <vector>
 #include <tuple>
+#include <queue>
 #include <list>
+
 #include "ej3.h"
 using namespace std;
 
@@ -72,8 +74,8 @@ Grafo prim(Grafo g)
   /*
    * 1. elijo un vértice arbitrario de la matriz.
    * 2. mientas el agm no incluya a todos los vértices v de V:
-   *      encontrar el vértice incidente a v de menor peso.
-   *      agregar este vértice al agm.
+   *      encontrar la arista incidente a v de menor peso.
+   *      agregar esta arista al agm.
    */
   Grafo agm = Grafo(g.n, g.m);
   agm.m     = 0;
@@ -122,23 +124,26 @@ std::tuple <int, int> buscar_peso_minimo(std::vector<int> v)
 }
 
 
-Grafo completar_anillo(Grafo agm, Grafo g)
+Coordenadas completar_anillo(Grafo agm, Grafo g)
 {
   // X = aristas(g) \ aristas(agm).
-  restar_aristas(agm, g);
-  // busco la arista de menor peso en g.
-  int eje_de_menor_peso = g.matriz_conexiones[0][0];
+  restar_aristas(g, agm);
+  // busco la arista de menor peso en X, para agregarla al agm y formar el anillo.
+  int eje_de_menor_peso = INT_MAX;
   int pos_i = 0;
   int pos_j = 0;
+  int c1    = 0;
+  int c2    = 0;
+
   for(int i = 0; i < g.n; i++)
   {
     for(int j = 0; j < g.n; j++)
     {
-      if(g.matriz_conexiones[i][j] < eje_de_menor_peso && g.matriz_conexiones[i][j] > -1)
+      if(g.matriz_conexiones[i][j] > -1 && g.matriz_conexiones[i][j] < eje_de_menor_peso)
       {
+        eje_de_menor_peso = g.matriz_conexiones[i][j];
         pos_i = i;
         pos_j = j;
-        eje_de_menor_peso = g.matriz_conexiones[i][j];
       }
     }
   }
@@ -146,16 +151,25 @@ Grafo completar_anillo(Grafo agm, Grafo g)
   agm.matriz_conexiones[pos_i][pos_j] = eje_de_menor_peso;
   agm.matriz_conexiones[pos_j][pos_i] = eje_de_menor_peso;
   agm.m += 1;
-  return agm;
+  c1     = pos_i;
+  c2     = pos_j;
+
+  Coordenadas crd;
+  crd.g = agm;
+  crd.coordenada_1 = c1;
+  crd.coordenada_2 = c2;
+
+  return crd;
 }
 
 
-void restar_aristas(Grafo agm, Grafo g)
+void restar_aristas(Grafo g, Grafo agm)
 {
   for(int i = 0; i < g.n; i++)
   {
     for(int j = 0; j < g.n; j++)
     {
+      // si la arista pertenece al agm, la anulo en g
       if(agm.matriz_conexiones[i][j] > -1)
       {
         g.matriz_conexiones[i][j] = -1;
@@ -166,11 +180,18 @@ void restar_aristas(Grafo agm, Grafo g)
 }
 
 
-? obtener_anillo(Grafo g) //le paso completar anillo
+list<std::tuple<int, int, int> > aristas_del_anillo(Coordenadas cs)
 {
-  int cant_aristas_g         = agm.m;
-  int cant_aristas_anillo    = 0;
-  int cant_aristas_restantes = 0;
+  /*
+  * cs contiene el grafo agm y las coordenadas de los extremos de
+  * la arista agregada. Para encontrar las aristas que forman
+  * parte del anillo, hago bfs partiendo de la coordenada_1, hasta
+  * encontrar la coordenada_2.
+  */
+  for(int h = 0; h < n; h++)
+  {
+    cs.g.nodos_visitados[h] = false;
+  }
 
 }
 

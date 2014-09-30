@@ -3,6 +3,7 @@
 #include <vector>
 #include <utility>
 #include <algorithm>
+#include <deque>
 
 #include "ej3.h"
 #include "tiempo.h"
@@ -24,27 +25,28 @@ int main()
   cin >> cantidad_elementos;
   while (cantidad_elementos != 0) {
     cin >> umbral;
-    peligrosidades.resize(cantidad_elementos - 1);
+    peligrosidades.resize(cantidad_elementos);
 
     for (auto it = peligrosidades.begin(); it != peligrosidades.end(); it++) {
-      it->resize(cantidad_elementos - 1);
+      it->resize(cantidad_elementos);
     }
 
     for (int i = 0; i < cantidad_elementos - 1; i++) {
-      for (int j = 0; j < i; j++) {
-        peligrosidades[i][j] = 0;
-      }
-      for (int j = i; j < cantidad_elementos - 1; j++) {
+      peligrosidades[i][i] = 0;
+
+      for (int j = i + 1; j < cantidad_elementos; j++) {
         cin >> peligrosidades[i][j];
+        peligrosidades[j][i] = peligrosidades[i][j];
       }
     }
 
-    set<int> elementos;
+    deque<Elemento> elementos;
     for (int i = 0; i < cantidad_elementos; i++) {
-      elementos.insert(i);
+      elementos.push_back(Elemento(i));
     }
+    sort(elementos.begin(), elementos.end());
 
-    set<int> backup_elementos = elementos;
+    deque<Elemento> backup_elementos = elementos;
     vector<Camion> solucion;
     unsigned long inicio, fin, min;
     MEDIR_TIEMPO_START(inicio);
@@ -71,7 +73,7 @@ int main()
 }
 
 
-vector<Camion> biohazard(set<int>& elementos)
+vector<Camion> biohazard(deque<Elemento>& elementos)
 {
   vector<Camion> camiones;
   /*its_a_kind_of_poda(camiones);*/
@@ -81,22 +83,23 @@ vector<Camion> biohazard(set<int>& elementos)
 }
 
 
-bool backtracking(vector<Camion>& camiones, set<int>& elementos)
+bool backtracking(vector<Camion>& camiones, deque<Elemento>& elementos)
 {
   if (elementos.empty()) {
     return true;
   }
 
-  int elemento = *elementos.begin();
-  elementos.erase(elementos.begin());
+  Elemento elemento = *elementos.begin();
+  int numero_elemento = elemento.numero;
+  elementos.pop_front();
 
   for (auto c = camiones.begin(); c != camiones.end(); c++) {
-    if (c->entra(elemento)) {
-      c->agregar_elemento(elemento);
+    if (c->entra(numero_elemento)) {
+      c->agregar_elemento(numero_elemento);
       if (backtracking(camiones, elementos)) {
         return true;
       } else {
-        c->eliminar_elemento(elemento);
+        c->eliminar_elemento(numero_elemento);
         /* Si sacamos y el camión está vacío, quiere decir que ya lo
          * habíamos puesto en un camión vacío. No tiene sentido seguir
          * intentando en otros camiones. Lo único que ganamos son ciclos de
@@ -105,7 +108,7 @@ bool backtracking(vector<Camion>& camiones, set<int>& elementos)
       }
     }
   }
-  elementos.insert(elemento);
+  elementos.push_front(elemento);
 
   return false;
 }
@@ -121,14 +124,14 @@ void its_a_kind_of_poda(vector<Camion>& camiones)
       }
     }
   }
-  
+
   /* Necesito al menos 1 camión. */
   camiones.push_back(Camion());
 
   /* Si hay pares que se pasan del umbral, necesito al menos 2 camiones. */
   if (!muy_peligrosos.empty())
     camiones.push_back(Camion());
-  
+
   /* Si pasa algo mágico, puedo afirmar que necesito al menos 3 camiones. */
   /* BTW, `muy_peligrosos` está ordenado, dado el modo en el que se crea. */
   /*for (auto p = muy_peligrosos.begin(); p != muy_peligrosos.end(); p++) {

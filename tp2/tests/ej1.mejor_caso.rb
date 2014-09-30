@@ -12,5 +12,5 @@ puts "0 1 #{vuelos}"
 (1..vuelos).each do
   ini = rand(max_horario)
   fin = ini + 1 + rand(5)
-  puts "#{rand(ciudades)} #{rand(ciudades)} #{ini} #{fin}"
+  puts "0 1 #{ini} #{fin}"
 end

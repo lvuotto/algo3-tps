@@ -4,8 +4,8 @@
 
 using namespace std;
 
-typedef pair<int, int> posicion;
-typedef posicion Caballo;
+typedef pair<int, int> Posicion;
+typedef Posicion Caballo;
 
 struct Tablero {
   Tablero() {}
@@ -20,6 +20,6 @@ struct Tablero {
   vector<vector<int> > casilleros;
 };
 
-pair<int, posicion> punto_de_encuentro(vector<Caballo> caballos, int dimension_tablero);
+pair<int, Posicion> punto_de_encuentro(vector<Caballo> caballos, int dimension_tablero);
 
-void llenar_tablero(Tablero& t, queue<pair<posicion, int> >& casilleros);
+void llenar_tablero(Tablero& t, Posicion inicio);

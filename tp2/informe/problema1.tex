@@ -3,25 +3,42 @@
 \vspace*{0.3cm}
 
 En este problema, debemos encontrar una \textbf{secuencia de vuelos que
-permita, dada una ciudad de origen, otra de destino y un listado de vuelos, 
+permita, dada una ciudad de origen, otra de destino y un listado de vuelos,
 viajar del origen al destino, llegando lo más temprano posible}.
 
-Esta secuencia \textbf{debe comenzar con un vuelo que parta de la ciudad 
-origen}. Luego, \textbf{cada vuelo debe salir de la ciudad de arribo del 
-anterior, dejando libre un lapso de, al menos, 2 horas}, para finalmente 
-llegar a la ciudad destino. 
+Esta secuencia \textbf{debe comenzar con un vuelo que parta de la ciudad
+origen}. Luego, \textbf{cada vuelo debe salir de la ciudad de arribo del
+anterior, dejando libre un lapso de, al menos, 2 horas}, para finalmente
+llegar a la ciudad destino.
 
-De todas las posibles combinaciones válidas de vuelos, \textbf{la escogida 
+De todas las posibles combinaciones válidas de vuelos, \textbf{la escogida
 debe ser la que llegue antes al destino}.
 
 También se deberá informar cuando el recorrido no puede realizarse.
 
 \vspace*{0.5cm}
 
-\textbf{Ejemplos:}
-%\begin{itemize}
-  \textcolor{red}{\textbf{completar!}}
-%\end{itemize}
+\textbf{Ejemplo:}
+Dadas 5 ciudades, A, B, C, D y E. Se quiere viajar de A a E llegando lo
+antes posible.
+Los viajes disponibles son:
+\begin{itemize}
+  \item De A a E, partiendo a las 10 y arribando a las 22.
+  \item De A a B, partiendo a las 0 y arribando a las 2.
+  \item De B a C, partiendo a las 4 y arribando a las 6.
+  \item De C a D, partiendo a las 8 y arribando a las 10.
+  \item De D a E, partiendo a las 12 y arribando a las 14.
+\end{itemize}
+
+La solución óptima consiste en tomar los vuelos 2, 3, 4 y 5 que permiten
+llegar a destino a las 14, como indica la siguiente imagen:
+
+\begin{figure}[htb]
+  \begin{center}
+      \includegraphics[scale=0.25]{imagenes/plane.jpg}
+  \end{center}
+  \caption{ejemplo de mejor vuelo.}
+\end{figure}
 
 
 
@@ -30,8 +47,8 @@ También se deberá informar cuando el recorrido no puede realizarse.
 
 \vspace*{0.3cm}
 
-Para resolverlo, se propone \textbf{ordenar todos los vuelos disponibles 
-en base al horario de llegada, en forma ascendente}. Hecho esto, se recorre 
+Para resolverlo, se propone \textbf{ordenar todos los vuelos disponibles
+en base al horario de llegada, en forma ascendente}. Hecho esto, se recorre
 cada vuelo y se pregunta si es posible
 
 \begin{enumerate}
@@ -39,38 +56,38 @@ cada vuelo y se pregunta si es posible
   \item que la ciudad de partida de dicho vuelo es la ciudad de origen del cliente.
 \end{enumerate}
 
-De valer alguno de estos ítems, \textbf{si no hay otro vuelo que llegue antes 
-a su destino}, se procede a marcar dicho vuelo como el primero en llegar y a 
-su predecesor como el primero en llegar a la ciudad de origen. Caso contrario, 
+De valer alguno de estos ítems, \textbf{si no hay otro vuelo que llegue antes
+a su destino}, se procede a marcar dicho vuelo como el primero en llegar y a
+su predecesor como el primero en llegar a la ciudad de origen. Caso contrario,
 el vuelo es ignorado.
 
-Una vez recorridos todos, si existe algún vuelo que llegue al destino, existe 
+Una vez recorridos todos, si existe algún vuelo que llegue al destino, existe
 solución, la cual se construye a partir de recorrer los vuelos predecesores.
-\textbf{Dicha cadena tiene como primer vuelo, aquel que parte desde la ciudad 
+\textbf{Dicha cadena tiene como primer vuelo, aquel que parte desde la ciudad
 de origen del cliente.}
 
 
 \begin{codebox}
 \Procname{$\proc{planDeVuelo}(vuelos,origen,destino)$}
-\li \Comment $\id{vuelos}$ es un arreglo de tipo Vuelo, donde Vuelo es una 
-\li \Comment estructura conformada por una ciudad origen, una ciudad destino, 
+\li \Comment $\id{vuelos}$ es un arreglo de tipo Vuelo, donde Vuelo es una
+\li \Comment estructura conformada por una ciudad origen, una ciudad destino,
 \li \Comment un horario de partida y otro de arribo.
 \li
-\li \Comment $\id{rutas}$ es un diccionario de ciudades en vuelos, en el cual, 
+\li \Comment $\id{rutas}$ es un diccionario de ciudades en vuelos, en el cual,
 \li \Comment para cada ciudad, nos dice cual es el vuelo que llega antes.
 \li $\proc{ordenar}(vuelos)$
 \li $\id{rutas} \gets \emptyset$
-\li \While $\neg (\proc{vacio}(vuelos))$ 
+\li \While $\neg (\proc{vacio}(vuelos))$
 \li     \Do
             $\id{vuelo} \gets \proc{primero}(vuelos)$
 \li         \If $\neg (\proc{existe}(\proc{destino}(vuelo),rutas)) \land
-                \proc{puedeTomar}(vuelo,rutas,origen)$ 
+                \proc{puedeTomar}(vuelo,rutas,origen)$
 \li             \Then
                     $\id{rutas[\proc{destino}(vuelo)]} \gets vuelo$
                 \End
 \li         $\id{vuelos} \gets \id{vuelos} \setminus \{vuelo\}$
         \End
-\li \If $\proc{existe}(destino,rutas)$ 
+\li \If $\proc{existe}(destino,rutas)$
 \li     \Then
             \Return $\proc{armarPila}(rutas,destino)$
 \li     \Else
@@ -101,10 +118,10 @@ de origen del cliente.}
 \li     \Then
             $\id{vuelo} \gets \id{rutas[destino]}$
 \li         $\proc{agregarAdelante}(vuelo,lista)$
-\li         \While $\exists \hspace{0.07cm} \id{vuelo.predecesor}$ 
+\li         \While $\exists \hspace{0.07cm} \id{vuelo.predecesor}$
 \li             \Do
-                   $\id{vuelo} \gets \id{vuelo.predecesor}$  
-\li                $\proc{agregarAdelante}(vuelo,lista)$  
+                   $\id{vuelo} \gets \id{vuelo.predecesor}$
+\li                $\proc{agregarAdelante}(vuelo,lista)$
                 \End
 \li     \Else
 \li         \Return $\id{lista}$
@@ -118,7 +135,7 @@ de origen del cliente.}
 
 \vspace*{0.3cm}
 
-\textcolor{red}{\textbf{completar!}}
+\textcolor{red}{\textbf{Opcional}}
 
 
 
@@ -126,6 +143,39 @@ de origen del cliente.}
 \subsection{Análisis de complejidad.}
 
 \vspace*{0.3cm}
+
+Para el análisis de complejidad nos basaremos en el pseudocódigo de la función
+\textsc{planDeVuelo}, correspondiente al ítem \textbf{COMPLETAR}.
+
+\begin{enumerate}
+  \item Todas las operaciones realizadas sobre el contenedor \verb|deque| de la
+    \textit{STL} (size, push_front, back y la creación de iteradores)
+    toman tiempo constante $O(1)$.
+  \item De las operaciones realizadas sobre el contenedor \verb|map| de la
+    \textit{STL} (find, []) toman tiempo logarítmico $O(\log n)$ y (end y la creación de iteradores)
+    toman tiempo constante $O(1)$.
+  \item Las operaciones realizadas sobre \verb|string| de la \textit{STL} toman
+    tiempo proporcional al tamaño del string. Pero asumimos que éstos están
+    acotados, por lo tanto las operaciones se realizan en tiempo constante
+    $O(1)$
+  \item El algoritmo \verb|sort| de la \textit{STL} utilizado (línea \textcolor{red}{\textbf{completar!}}) para ordenar los aviones
+    por horario de llegada, tiene complejidad $O(n \log n)$.
+  \item Se implementó la función \verb|puedeTomar|, que dado un \verb|map|, un \verb|Vuelo| y
+    una ciudad, hace un \verb|find| sobre el \verb|map| y luego comparaciones y asignaciones.
+    Por lo tanto queda con una complejidad $O(\log n)$
+  \item En la línea \textcolor{red}{\textbf{completar!}} se recorren todos los vuelos
+    y dentro se realizan 2 operaciones logarítmicas, quedando la complejidad del
+    ciclo como $O(n \log n)$
+  \item Luego se genera la lista recorriendo los predecesores, como máximo pueden ser
+    todos los vuelos, es decir, $O(n)$
+\end{enumerate}
+
+
+Por lo tanto, la \textbf{complejidad total} del algoritmo implementado para este problema es
+
+\begin{center}
+  $O(n \log n) + O(n \log n) + O(n) =$ \textit{\textbf{O(n log n)}}
+\end{center}
 
 \textcolor{red}{\textbf{completar!}}
 
@@ -144,10 +194,22 @@ de origen del cliente.}
 \newpage
 \subsubsection{Test 2 - benchmark del peor caso}
 
+\textcolor{red}{\textbf{Acá tanto en el peor caso como en el mejor caso, debemos ordenar todos
+los vuelos y recorrer linealmente todos los vuelos nuevamente.
+Podemos poner como teoría que no deberían cambiar casi nada los gráficos.}}
+
+
+Ya que tenemos que recorrer todos los vuelos de todas formas, el peor caso
+es cuando todas las ciudades son distintas, ya que ahí crece el diccionario
+de ciudades y, en consecuencia, la búsqueda que se hace dentro del ciclo
+debería ser más lenta. (probablemente no tanto porque sigue siendo
+logarítmica)
 \textcolor{red}{\textbf{completar!}}
 
 
 \newpage
 \subsubsection{Test 3 - benchmark del mejor caso}
 
+El mejor caso es cuando solo hay 2 ciudades, entonces la búsqueda en el
+diccionario es constante.
 \textcolor{red}{\textbf{completar!}}

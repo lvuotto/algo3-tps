@@ -67,7 +67,7 @@ bool puede_tomar(string& ciudad_inicial, map<string, Vuelo>& rutas, Vuelo& vuelo
 
   auto ruta_origen = rutas.find(vuelo.origen);
 
-  if (ruta_origen != rutas.end() && ruta_origen->second.llegada <= vuelo.salida - 2) {
+  if (ruta_origen != rutas.end() && ruta_origen->second.llegada + 2 <= vuelo.salida) {
     predecesor = &ruta_origen->second;
     return true;
   }

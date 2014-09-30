@@ -9,8 +9,8 @@ srand(seed)
 
 puts "0 1 #{vuelos}"
 
-(1..vuelos).each do
+(1..vuelos).each do |i|
   ini = rand(max_horario)
   fin = ini + 1 + rand(5)
-  puts "#{rand(ciudades)} #{rand(ciudades)} #{ini} #{fin}"
+  puts "#{i * 2} {i * 2 + 1} #{ini} #{fin}"
 end

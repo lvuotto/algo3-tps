@@ -56,7 +56,7 @@ incluída en el \textit{AGM}.
 \li     \Then
             \Return $\const{false}$
         \End
-\li $\proc{completarAnillo}(\proc{Prim}(G,w,r),G)$
+\li $\proc{completarAnillo}(\proc{Prim}(G),G)$
 \li \Return $\const{true}$
 \end{codebox}
 
@@ -76,27 +76,17 @@ incluída en el \textit{AGM}.
 
 
 \begin{codebox}
-\Procname{$\proc{Prim}(G,w,r)$}
-\li \Comment $\id{u}$ es un nodo cualquiera de \id{G}.
-\li \For $each \hspace{0.07cm} \id{u} \in \id{G.V}$
+\Procname{$\proc{esConexo}(G)$}
+\li \Comment $\id{x}$ es una arista cualquiera de \id{G}.
+\li \Comment $\id{u}$ es un vértice incidido por \id{x}.
+\li \For $each \hspace{0.07cm} \id{x} \in \id{G.X}$
 \li     \Do
-            $\id{u.clave} \gets \infty$
-\li         $\id{u.\pi} \gets \const{nil}$
-        \End
-\li $\id{r.clave} \gets 0$
-\li $\id{Q} \gets \id{G.V}$
-\li \While $\id{Q} \neq 0$
-\li     \Do
-            $\id{u} \gets \proc{extraerMinimo}(Q)$
-\li         \For $each \hspace{0.07cm} \id{v} \in \id{G.Ady[u]}$
-                \Do
-\li                 \If $\id{v} \in \id{Q} \land (\id{w(u,v)} < \id{v.clave})$
-\li                     \Then
-                            $\id{v.\pi} \gets \id{u}$
-\li                         $\id{v.clave} \gets \id{w(u,v)}$
-                        \End
+            \If $\id{x} \neq \infty$
+\li             \Then
+                    $nodosVisitados[u] \gets \const{true}$
                 \End
         \End
+\li \Return $\proc{estanTodos}(G,nodosVisitados[G])$
 \end{codebox}
 
 
@@ -104,32 +94,15 @@ incluída en el \textit{AGM}.
 
 
 \begin{codebox}
-\Procname{$\proc{esConexo}(G,v)$}
+\Procname{$\proc{prim}(G)$}
 \li \Comment $\id{u}$ es un nodo cualquiera de \id{G}.
-\li \For $each \hspace{0.07cm} \id{u} \in \id{G.V}$
+\li \While $\proc{vertices}(AGM) \neq \proc{vertices}(G)$
 \li     \Do
-            $\id{u.color} \gets \const{blanco}$
-\li         $\id{u.d} \gets \infty$
-\li         $\id{u.\pi} \gets \const{nil}$
-        \End
-\li $\id{s.color} \gets \const{gris}$
-\li $\id{s.d} \gets 0$
-\li $\id{s.\pi} \gets \const{nil}$
-\li $\id{Q} \gets \emptyset$
-\li \While $\id{Q} \neq 0$
-\li     \Do
-            $\id{u} \gets \proc{desencolar}(Q)$
-\li         \For $each \hspace{0.07cm} \id{v} \in \id{G.Ady[u]}$
-                \Do
-\li                 \If $\id{v.color} \isequal \const{blanco}$
-\li                     \Then
-                            $\id{v.color} \gets \const{gris}$
-\li                         $\id{v.d} \gets \id{u.d + 1}$
-\li                         $\id{v.\pi} \gets \id{u}$
-\li                         $\proc{encolar}(Q,v)$
-                        \End
+            \For $each \hspace{0.07cm} \id{u} \in \id{G.V}$
+\li             \Do
+                    $\id{x} \gets \proc{buscarPesoMinimo}(\proc{vecinos}(u))$
+\li                 $\proc{agregar}(AGM,x,u)$
                 \End
-\li     $\id{u.color} \gets \const{negro}$
         \End
 \end{codebox}
 
@@ -139,12 +112,12 @@ incluída en el \textit{AGM}.
 
 \begin{codebox}
 \Procname{$\proc{completarAnillo}(AGM, G)$}
-\li $\id{X} \gets \proc{aristas}(G) \setminus \proc{aristas}(AGM)$
+\li $\id{X} \gets \proc{restarAristas}(G,AGM)$
 \li $\id{m} \gets \proc{dameUno}(X)$
 \li $\id{X} \gets \id{X} \setminus \{m\}$
 \li \While $\neg (\proc{vacio}(X))$
 \li     \Do
-\           $\id{y} \gets \proc{dameUno}(X)$
+            $\id{y} \gets \proc{dameUno}(X)$
 \li         \If $\proc{peso}(y) < \proc{peso}(m)$
 \li             \Then
                     $\id{m} \gets \id{y}$
@@ -152,6 +125,47 @@ incluída en el \textit{AGM}.
 \li         $\id{X} \gets \id{X} \setminus \{y\}$
         \End
 \li \Return $\proc{agregar}(AGM, m)$
+\end{codebox}
+
+
+\vspace*{0.3cm}
+
+
+\begin{codebox}
+\Procname{$\proc{buscarPesoMinimo}(C)$}
+\li $\id{min} \gets \infty$
+\li \For $each \hspace{0.07cm} \id{x} \in \id{C}$
+\li     \Do
+            \If $(\proc{peso}(x) < {peso}(min)) \land (\proc{peso}(x) \neq \infty)$
+\li             \Then
+                    $\id{min} \gets \proc{peso}(x)$
+                \End
+        \End
+\li \Return $\id{min}$
+\end{codebox}
+
+
+\vspace*{0.3cm}
+
+
+\begin{codebox}
+\Procname{$\proc{estanTodos}(G,C)$}
+\li \Comment $\id{u}$ es un nodo cualquiera de \id{G}.
+\li \If $(\exists \hspace{0.07cm} \id{u} \in \id{G}) \land (\id{u} \notin \id{C})$
+\li     \Then
+            \Return $\const{false}$
+        \End
+\li \Return $\const{true}$
+\end{codebox}
+
+
+\vspace*{0.3cm}
+
+
+\begin{codebox}
+\Procname{$\proc{restarAristas}(G,H)$}
+\li $\id{X} \gets \proc{aristas}(G) \setminus \proc{aristas}(H)$
+\li \Return $\id{X}$
 \end{codebox}
 
 

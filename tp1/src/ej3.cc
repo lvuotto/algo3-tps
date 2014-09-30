@@ -9,13 +9,10 @@
 #include "tiempo.h"
 
 
-#define CANTIDAD 5
+#define CANTIDAD 10
 
 
 using namespace std;
-
-
-void its_a_kind_of_poda(vector<Camion>& camiones);
 
 
 int main()
@@ -44,7 +41,9 @@ int main()
     for (int i = 0; i < cantidad_elementos; i++) {
       elementos.push_back(Elemento(i));
     }
+#ifdef BT_ORDENAR
     sort(elementos.begin(), elementos.end());
+#endif
 
     deque<Elemento> backup_elementos = elementos;
     vector<Camion> solucion;
@@ -76,9 +75,10 @@ int main()
 vector<Camion> biohazard(deque<Elemento>& elementos)
 {
   vector<Camion> camiones;
-  /*its_a_kind_of_poda(camiones);*/
-  while (!backtracking(camiones, elementos))
+  do {
     camiones.push_back(Camion());
+  } while (!backtracking(camiones, elementos));
+  
   return camiones;
 }
 
@@ -111,33 +111,6 @@ bool backtracking(vector<Camion>& camiones, deque<Elemento>& elementos)
   elementos.push_front(elemento);
 
   return false;
-}
-
-
-void its_a_kind_of_poda(vector<Camion>& camiones)
-{
-  vector<pair<int, int> > muy_peligrosos;
-  for (unsigned int i = 0; i < peligrosidades.size(); i++) {
-    for (unsigned int j = 0; j < peligrosidades.size(); j++) {
-      if (peligrosidades[i][j] > umbral) {
-        muy_peligrosos.push_back(make_pair(i, j));
-      }
-    }
-  }
-
-  /* Necesito al menos 1 camión. */
-  camiones.push_back(Camion());
-
-  /* Si hay pares que se pasan del umbral, necesito al menos 2 camiones. */
-  if (!muy_peligrosos.empty())
-    camiones.push_back(Camion());
-
-  /* Si pasa algo mágico, puedo afirmar que necesito al menos 3 camiones. */
-  /* BTW, `muy_peligrosos` está ordenado, dado el modo en el que se crea. */
-  /*for (auto p = muy_peligrosos.begin(); p != muy_peligrosos.end(); p++) {
-    if (p->first == (p + 1)->first) {
-    }
-  }*/
 }
 
 

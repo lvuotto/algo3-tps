@@ -17,22 +17,18 @@ struct Camion {
 
   void agregar_elemento(int elemento)
   {
-    //cout << "Agrego elemento " << elemento << " peligrosidad anterior: " << peligrosidad_;
     peligrosidad_ += calcular_peligrosidad(elemento);
-    //cout << " nueva peligrosidad: " << peligrosidad_ << " umbral: " << umbral << endl;
     elementos.insert(elemento);
   }
 
   void eliminar_elemento(int elemento)
   {
-    //cout << "Saco el " << elemento << endl;
     elementos.erase(elemento);
     peligrosidad_ -= calcular_peligrosidad(elemento);
   }
 
   bool entra(int elemento) const
   {
-    //cout << "Trato de ver si entra el " << elemento << endl;
     return elementos.empty() ||
            (peligrosidad_ + calcular_peligrosidad(elemento) <= umbral);
   }
@@ -56,21 +52,30 @@ private:
 
 struct Elemento {
   int numero;
-  float comparador;
+  double comparador;
 
-  Elemento(int num) {
+  Elemento(int num)
+  {
     numero = num;
-    comparador = 0.0;
+    int suma = 0.0;
     for (unsigned int i = 0; i < peligrosidades.size(); i++) {
-      comparador += (float) peligrosidades[i][numero];
+      suma += peligrosidades[i][numero];
     }
 
-    // comparador /= peligrosidades.size(); // Descomentar para usar el promedio en vez de la suma!
+#ifndef BT_PROMEDIO
+    comparador = (double) suma;
+#else
+    comparador = suma / (double) peligrosidades.size();
+#endif
   }
 
-  bool operator<(const Elemento& otro) const {
-    return comparador > otro.comparador; // Descomentar para que ordene de mayor a menor!
-    // return comparador < otro.comparador; // Descomentar para que ordene de menor a mayor!
+  bool operator<(const Elemento& otro) const
+  {
+#ifndef BT_ASCENDENTE
+    return comparador > otro.comparador;
+#else
+    return comparador < otro.comparador;
+#endif
   }
 };
 

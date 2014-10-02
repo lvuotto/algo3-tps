@@ -2,7 +2,7 @@
 
 \vspace*{0.3cm}
 
-Este problema trata sobre distribuir $N$ productos en $C$ camiones, minimizando
+Este problema trata sobre distribuir $N$ productos en $C$ camiones, \textbf{buscando minimizar}
 el valor de $C$. Al combinarse los elementos, se obtienen distintos niveles de peligrosidad.
 Para minimizar $C$, se debe tener en cuenta que contamos con un umbral de peligrosidad
 $M$, \textbf{el cual no debe ser superado por la suma de los niveles de peligrosidad de los
@@ -14,20 +14,20 @@ elementos que contiene}.
 \begin{itemize}
   \item Dado $M = 7$ y 4 productos $p_1, p_2, p_3$ y $p_4$, con una relación
   de peligrosidad $h_{1,2} = 5, h_{1,3} = 3, h_{1,4} = 4, h_{2,3} = 6, h_{2,4} =
-  3$ y $h_{3,4} = 5$, la solución óptima es utilizar 2 camiones, el primero
-  transportando $p_1$ y $p_3$, y el segundo transportando $p_2$ y $p_4$.
+  3$ y $h_{3,4} = 5$, la solución óptima consiste en utilizar 2 camiones: el primero
+  transportando $p_1$ y $p_3$ y el segundo transportando $p_2$ y $p_4$.
 \end{itemize}
 
 
-
+\newpage
 \subsection{Desarrollo de la idea y pseudocódigo.}
 
-Para resovler el problema, empezamos utilizando un solo camión e intentamos ubicar
-todos los elementos en el mismo. De no ser posible, se agrega otro camión y se vuelven
-a intentar todas las combinaciones de elementos en los mismos. Si siguen sin caber los
-elementos, se agrega un camión más y se vuelve a empezar.
+Para resolver el problema, empezamos utilizando un solo camión e intentamos ubicar
+todos los elementos en el mismo. De no ser esto posible, se agrega otro camión y se vuelven
+a intentar todas las combinaciones de elementos en los mismos. Si aún asi continuaran sin
+caber los $N$ elementos, se agrega un camión más y se vuelve a empezar.
 
-Este proceso continúa hasta encontrar una cierta cantidad de camiones, capaz de
+Este proceso continúa, hasta encontrar una cierta cantidad de camiones qie sea capaz de
 transportar todos los elementos. Por la estrategia planteada para el problema,
 \textbf{la solución encontrada será una solución óptima}.
 
@@ -82,25 +82,32 @@ transportar todos los elementos. Por la estrategia planteada para el problema,
 \vspace*{0.3cm}
 
 
+Para realizar el análisis de complejidad, nos basaremos en el pseudocódigo
+correspondiente al ítem \textbf{3.3}.
+
 La función \verb|backtracking| es llamada desde la función \verb|biohazard|, en
 el peor de los casos, tantas veces como elementos haya para insertar en los camiones.
-Una vez que se comienza a hacer la recursión, por cada camión que podemos utilizar,
-se vuelve a hacer con un elemento menos. La recursión finaliza en el momento en
+Una vez que comienza la recursión, por cada camión que podemos utilizar,
+el próximo llamado se hace con un elemento menos. La recursión finaliza en el momento en
 el que se la invoca con un conjunto vacío de elementos. Como la cantidad de
 elementos siempre disminuye en 1 con cada llamado recursivo, en $n$ llamados se
 corta la recurrencia.
 
-En el peor de los casos, cuando nos veamos obligados a recorrer
-todos los árboles de decisiones, al intentar poner los productos en un
+En el peor de los casos, \textbf{cuando nos veamos obligados a recorrer
+todos los árboles de decisión}, al intentar poner los productos en un
 camión, tendremos un árbol $1$-ario de altura $n$. Al hacerlo con 2
 camiones, tendremos un árbol $2$-ario de altura $n$, pero sabemos que los
 productos no entran en un camión y el algoritmo nunca intentará poner los
-$n$ elementos en un solo camión. Por lo tanto, la altura de este árbol será
-de $n - 1$. Generalizano, al intentar distribuir los $n$ productos en $k$
+$n$ elementos en un solo vehículo. Por lo tanto, la altura de este árbol será
+de $n - 1$.
+
+Generalizando, al intentar distribuir los $n$ productos en $k$
 camiones, tendremos un árbol $k$-ario de altura $n - k + 1$.
 
-La complejidad del algoritmo va a ser la suma de todos los nodos sobre
-los árboles de decisiones. Dicho de otro modo, la complejidad será
+Por lo tanto, \textbf{la complejidad total del algoritmo va a ser equivalente a la
+suma de todos los nodos sobre los árboles de decisión}.
+
+Dicho de otro modo, la complejidad será
 
 \begin{align*}
   O(\sum_{k=1}^n k^{n - k + 1})

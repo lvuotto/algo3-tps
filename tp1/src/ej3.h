@@ -12,8 +12,8 @@ int umbral;
 matriz peligrosidades;
 
 
-struct camion {
-  camion() : peligrosidad_(0) {}
+struct Camion {
+  Camion() : peligrosidad_(0) {}
 
   void agregar_elemento(int elemento)
   {
@@ -37,7 +37,7 @@ struct camion {
   {
     int suma = 0;
     for (auto el = elementos.begin(); el != elementos.end(); el++) {
-      suma += peligrosidades[*el][elemento - 1];
+      suma += peligrosidades[*el][elemento];
     }
 
     return suma;
@@ -50,8 +50,36 @@ private:
 };
 
 
-vector<camion> biohazard(set<int>& elementos);
-bool backtracking(vector<camion>& camiones, set<int>& elementos);
-void mostrar_solucion(vector<camion>& camiones, int cantidad_elementos);
+struct Elemento {
+  int numero;
+  double comparador;
+
+  Elemento(int num)
+  {
+    numero = num;
+    int suma = 0.0;
+    for (unsigned int i = 0; i < peligrosidades.size(); i++) {
+      suma += peligrosidades[i][numero];
+    }
+
+#ifndef BT_PROMEDIO
+    comparador = (double) suma;
+#else
+    comparador = suma / (double) peligrosidades.size();
+#endif
+  }
+
+  bool operator<(const Elemento& otro) const
+  {
+#ifndef BT_ASCENDENTE
+    return comparador > otro.comparador;
+#else
+    return comparador < otro.comparador;
+#endif
+  }
+};
 
 
+vector<Camion> biohazard(deque<Elemento>& elementos);
+bool backtracking(vector<Camion>& camiones, deque<Elemento>& elementos);
+void mostrar_solucion(vector<Camion>& camiones, int cantidad_elementos);

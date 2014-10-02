@@ -3,7 +3,7 @@
 BENCHDIR=$1
 IMGDIR=$2
 
-for i in 2 3; do
+for i in 1 2 3; do
   echo $i
   $BENCHDIR/benchmark.$i.sh 2> $BENCHDIR/info.$i.dat
   gnuplot -e "datafile='$BENCHDIR/info.$i.dat'" \

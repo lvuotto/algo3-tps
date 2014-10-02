@@ -1,31 +1,32 @@
+BINDIR=bin
+SRCDIR=src
+INFORMEDIR=informe
+TESTDIR=tests
+BENCHDIR=benchmark
+IMGDIR=$(INFORMEDIR)/imagenes
 
-BINDIR = bin
-SRCDIR = src
-INFORMEDIR = informe
-TESTDIR = tests
-BENCHDIR = benchmark
-IMGDIR = $(INFORMEDIR)/imagenes
 
-
-.PHONY: all informe test clean
+.PHONY: all tp informe test plot clean
 
 
 tp:
-	make -C $(SRCDIR)
+	$(MAKE) -C $(SRCDIR)
 
 informe:
-	make -C $(INFORMEDIR)
+	$(MAKE) -C $(INFORMEDIR)
 	xdg-open $(BINDIR)/informe.pdf
 
 test:
-	make -C $(TESTDIR)
+	$(MAKE) -C $(TESTDIR)
 
 plot:
+	$(MAKE) -C $(SRCDIR)
+	$(MAKE) -C $(SRCDIR) podas
 	$(BENCHDIR)/run_especial.sh $(BENCHDIR) $(IMGDIR)
 	$(BENCHDIR)/run.sh $(BENCHDIR) $(IMGDIR)
 
 
-all: tp
+all: tp test plot
 
 clean:
-	rm -f $(BINDIR)/*
+	$(RM) $(BINDIR)/*

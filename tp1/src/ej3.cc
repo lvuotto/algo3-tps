@@ -1,12 +1,15 @@
 #include <iostream>
 #include <set>
 #include <vector>
+#include <utility>
+#include <algorithm>
+#include <deque>
 
 #include "ej3.h"
 #include "tiempo.h"
 
 
-#define CANTIDAD 5
+#define CANTIDAD 10
 
 
 using namespace std;
@@ -19,28 +22,31 @@ int main()
   cin >> cantidad_elementos;
   while (cantidad_elementos != 0) {
     cin >> umbral;
-    peligrosidades.resize(cantidad_elementos - 1);
+    peligrosidades.resize(cantidad_elementos);
 
     for (auto it = peligrosidades.begin(); it != peligrosidades.end(); it++) {
-      it->resize(cantidad_elementos - 1);
+      it->resize(cantidad_elementos);
     }
 
     for (int i = 0; i < cantidad_elementos - 1; i++) {
-      for (int j = 0; j < i; j++) {
-        peligrosidades[i][j] = 0;
-      }
-      for (int j = i; j < cantidad_elementos - 1; j++) {
+      peligrosidades[i][i] = 0;
+
+      for (int j = i + 1; j < cantidad_elementos; j++) {
         cin >> peligrosidades[i][j];
+        peligrosidades[j][i] = peligrosidades[i][j];
       }
     }
 
-    set<int> elementos;
+    deque<Elemento> elementos;
     for (int i = 0; i < cantidad_elementos; i++) {
-      elementos.insert(i);
+      elementos.push_back(Elemento(i));
     }
+#ifdef BT_ORDENAR
+    sort(elementos.begin(), elementos.end());
+#endif
 
-    set<int> backup_elementos = elementos;
-    vector<camion> solucion;
+    deque<Elemento> backup_elementos = elementos;
+    vector<Camion> solucion;
     unsigned long inicio, fin, min;
     MEDIR_TIEMPO_START(inicio);
     solucion = biohazard(elementos);
@@ -66,41 +72,49 @@ int main()
 }
 
 
-vector<camion> biohazard(set<int>& elementos)
+vector<Camion> biohazard(deque<Elemento>& elementos)
 {
-  vector<camion> camiones;
+  vector<Camion> camiones;
   do {
-    camiones.push_back(camion());
+    camiones.push_back(Camion());
   } while (!backtracking(camiones, elementos));
+  
   return camiones;
 }
 
 
-bool backtracking(vector<camion>& camiones, set<int>& elementos)
+bool backtracking(vector<Camion>& camiones, deque<Elemento>& elementos)
 {
   if (elementos.empty()) {
     return true;
   }
 
-  int elemento = *elementos.begin();
-  elementos.erase(elementos.begin());
+  Elemento elemento = *elementos.begin();
+  int numero_elemento = elemento.numero;
+  elementos.pop_front();
+
   for (auto c = camiones.begin(); c != camiones.end(); c++) {
-    if (c->entra(elemento)) {
-      c->agregar_elemento(elemento);
+    if (c->entra(numero_elemento)) {
+      c->agregar_elemento(numero_elemento);
       if (backtracking(camiones, elementos)) {
         return true;
       } else {
-        c->eliminar_elemento(elemento);
+        c->eliminar_elemento(numero_elemento);
+        /* Si sacamos y el camión está vacío, quiere decir que ya lo
+         * habíamos puesto en un camión vacío. No tiene sentido seguir
+         * intentando en otros camiones. Lo único que ganamos son ciclos de
+         * clock. */
+        if (c->elementos.empty()) break;
       }
     }
   }
-  elementos.insert(elemento);
+  elementos.push_front(elemento);
 
   return false;
 }
 
 
-void mostrar_solucion(vector<camion>& camiones, int cantidad_elementos)
+void mostrar_solucion(vector<Camion>& camiones, int cantidad_elementos)
 {
   vector<int> solucion;
   solucion.resize(cantidad_elementos);

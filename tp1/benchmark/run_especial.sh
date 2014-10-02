@@ -28,7 +28,7 @@ gnuplot -e "datafile='$BENCHDIR/info.3.poda.p.dat'" \
         $BENCHDIR/plotter.3.gnu
 
 $BENCHDIR/benchmark.3.poda.p.a.sh 2> $BENCHDIR/info.3.poda.p.a.dat
-gnuplot -e "datafile='$BENCHDIR/info.3.poda.p.a.dat'" \
-        -e "outfile='$IMGDIR/grafico-3-poda-p-a.png'" \
+gnuplot -e "datafile='$BENCHDIR/info.3.poda.a.p.dat'" \
+        -e "outfile='$IMGDIR/grafico-3-poda-a-p.png'" \
         -e "titulo='Problema 3 - poda (promedio, orden ascendente)'" \
         $BENCHDIR/plotter.3.gnu

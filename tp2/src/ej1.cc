@@ -6,6 +6,9 @@
 #include <deque>
 
 #include "ej1.h"
+#include "tiempo.h"
+
+#define CANTIDAD 100
 
 using namespace std;
 
@@ -20,8 +23,22 @@ int main () {
     cin >> origen >> destino >> salida >> llegada;
     vuelos.push_back(Vuelo(i, origen, destino, salida, llegada));
   }
-
+  
+  auto backup = vuelos;
+  unsigned long inicio, fin, min;
+  MEDIR_TIEMPO_START(inicio);
   deque<Vuelo> plan = plan_de_vuelo(ciudad_inicial, ciudad_final, vuelos);
+  MEDIR_TIEMPO_STOP(fin);
+  min = fin - inicio;
+  for (int i = 0; i < CANTIDAD; i++) {
+    vuelos = backup;
+    MEDIR_TIEMPO_START(inicio);
+    plan = plan_de_vuelo(ciudad_inicial, ciudad_final, vuelos);
+    MEDIR_TIEMPO_STOP(fin);
+    min = fin - inicio < min ? fin - inicio : fin;
+  }
+  cerr << backup.size() << " " << min << endl;
+
   imprimir_vuelos(plan);
 
   return 0;

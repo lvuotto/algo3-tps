@@ -44,14 +44,18 @@ struct Grafo
 };
 
 
-// struct Coordenadas
-// {
-//   Grafo& g;
-//   int coordenada_1;
-//   int coordenada_2;
+struct Coordenadas
+{
+  Grafo& g;
+  int coordenada_1;
+  int coordenada_2;
 
-//   Coordenadas(Grafo& grafo) : g(grafo) { }
-// };
+  Coordenadas(Grafo& grafo, int c1, int c2) :
+    g(grafo),
+    coordenada_1(c1),
+    coordenada_2(c2)
+  {}
+};
 
 
 Grafo                 prim(Grafo& g);

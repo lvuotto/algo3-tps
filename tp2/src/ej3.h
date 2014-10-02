@@ -1,4 +1,3 @@
-#include <vector>
 #include <tuple>
 
 
@@ -31,9 +30,9 @@ struct Grafo
       matriz_conexiones[h].resize(n);
     }
     // inicializo la matriz con -1.
-    for(unsigned int i = 0; i < matriz_conexiones[i].size(); i++)
+    for(int i = 0; i < n; i++)
     {
-      for(unsigned int j = 0; j < matriz_conexiones[j].size(); j++)
+      for(int j = 0; j < n; j++)
       {
         matriz_conexiones[i][j] = -1;
       }
@@ -45,19 +44,19 @@ struct Grafo
 };
 
 
-struct Coordenadas
-{
-  Grafo& g;
-  int coordenada_1;
-  int coordenada_2;
+// struct Coordenadas
+// {
+//   Grafo& g;
+//   int coordenada_1;
+//   int coordenada_2;
 
-  Coordenadas() {}
-};
+//   Coordenadas(Grafo& grafo) : g(grafo) { }
+// };
 
 
-bool                  se_puede_anillar(Grafo g);
-Grafo                 prim(Grafo g);
+Grafo                 prim(Grafo& g);
 bool                  estan_todos(std::vector<bool> v);
 std::tuple <int, int> buscar_peso_minimo(std::vector<int> v);
-Coordenadas           completar_anillo(Grafo agm, Grafo g);
+//Coordenadas           completar_anillo(Grafo agm, Grafo g);
 void                  restar_aristas(Grafo agm, Grafo g);
+void                  imprimir_grafo(Grafo& g);

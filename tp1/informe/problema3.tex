@@ -81,39 +81,7 @@ transportar todos los elementos. Por la estrategia planteada para el problema,
 
 \vspace*{0.3cm}
 
-
-Para realizar el análisis de complejidad, nos basaremos en el pseudocódigo
-correspondiente al ítem \textbf{3.3}.
-
-La función \verb|backtracking| es llamada desde la función \verb|biohazard|, en
-el peor de los casos, tantas veces como elementos haya para insertar en los camiones.
-Una vez que comienza la recursión, por cada camión que podemos utilizar,
-el próximo llamado se hace con un elemento menos. La recursión finaliza en el momento en
-el que se la invoca con un conjunto vacío de elementos. Como la cantidad de
-elementos siempre disminuye en 1 con cada llamado recursivo, en $n$ llamados se
-corta la recurrencia.
-
-En el peor de los casos, \textbf{cuando nos veamos obligados a recorrer
-todos los árboles de decisión}, al intentar poner los productos en un
-camión, tendremos un árbol $1$-ario de altura $n$. Al hacerlo con 2
-camiones, tendremos un árbol $2$-ario de altura $n$, pero sabemos que los
-productos no entran en un camión y el algoritmo nunca intentará poner los
-$n$ elementos en un solo vehículo. Por lo tanto, la altura de este árbol será
-de $n - 1$.
-
-Generalizando, al intentar distribuir los $n$ productos en $k$
-camiones, tendremos un árbol $k$-ario de altura $n - k + 1$.
-
-Por lo tanto, \textbf{la complejidad total del algoritmo va a ser equivalente a la
-suma de todos los nodos sobre los árboles de decisión}.
-
-Dicho de otro modo, la complejidad será
-
-\begin{align*}
-  O(\sum_{k=1}^n k^{n - k + 1})
-\end{align*}
-
-\vspace*{0.75cm} \noindent
+\textbf{completar!}
 
 
 \newpage

@@ -31,8 +31,10 @@ muestra la siguiente imagen:
   \begin{center}
       \includegraphics[scale=0.25]{imagenes/anillo-sin-hacer.jpg}
   \end{center}
-  \caption{ejemplo de configuración de PCs y enlaces (con sus correspondientes costos).}
+  \caption{ejemplo de configuración de PC's y enlaces, con sus correspondientes costos.}
 \end{figure}
+
+\vspace*{0.5cm}
 
 La solución óptima consiste en crear un anillo utilizando únicamente los
 enlaces de costo 1 y dejar el resto de la red conectada de la siguiente
@@ -188,7 +190,9 @@ problema, se tiene que
 
 \begin{itemize}
   \item $A$ es conexo.
+
   \item $A$ tiene un circuito simple.
+
   \item $\sum\limits_{e \in E_A} l(e)$ es mínima.
 \end{itemize}
 
@@ -243,11 +247,11 @@ tuple
   \textsc{\#(aristas)} y \textsc{\#(nodos)} se calculan en tiempo constante $O(1)$
   (son datos que se cargan con los valores de entrada, $n$ y $m$) y compararlos es
   también $O(1)$ (estamos comparando enteros de tamaño acotado).
-  Por lo tanto, el costo de preguntar si $G$ tiene ó no solución es $O(n²)$.
+  Por lo tanto, el costo de preguntar si $G$ tiene ó no solución es $O(n^2)$.
 
   Retornar un valor booleano ($true, false$) toma tiempo constante, $O(1)$. Por lo tanto,
   la complejidad total de \textsc{sePuedeAnillar} surge de la suma entre la complejidad de
-  \textsc{tieneSolucion} (vimos que es $O(n²)$) y la complejidad de \textsc{completarAnillo}.
+  \textsc{tieneSolucion} (vimos que es $O(n^2)$) y la complejidad de \textsc{completarAnillo}.
 
   \item La complejidad de \textsc{tieneSolucion}, como dijimos anteriormente, depende
   únicamente del costo de la función \textsc{esConexo}, ya que el resto de la conjunción
@@ -255,13 +259,13 @@ tuple
   complejidad de \textsc{esConexo}. Esta función itera sobre los vértices de $G$.
   Dado un vértice, podemos saber cuáles son las aristas que inciden sobre el (es decir,
   quiénes son sus vértices vecinos). En nuestra implementación utilizamos una \textit{matriz de
-  pesos} de tamaño $n²$ (se trata de un vector con una posición por cada nodo, donde a su vez,
+  pesos} de tamaño $n^2$ (se trata de un vector con una posición por cada nodo, donde a su vez,
   tenemos otro vector por cada posición). De esta manera, en la posición $i,j$ de la matriz,
   tenemos un entero que representa el peso de la conexión entre el nodo $i$ y el nodo $j$ (y viceversa).
   En el caso donde no haya un peso definido (por no encontrarse entre los datos de entrada) el valor
-  de dicha posición es -1 (en el pseudocódigo, este valor se representa como \infty).
+  de dicha posición es -1 (en el pseudocódigo, este valor se representa como $\infty$).
   Por lo tanto, iterar sobre todas las aristas de $G$ toma tiempo
-  cuadrático, $O(n²)$ (debemos iterar siempre sobre la matriz entera).
+  cuadrático, $O(n^2)$ (debemos iterar siempre sobre la matriz entera).
 
   A medida que vamos encontrando valores de pesos de conexiones válidos, marcamos la posición
   correspondiente al nodo visitado en el vector de nodos de $G$.
@@ -270,8 +274,9 @@ tuple
   fueron visitados, lo cual implica que para cualquier par de nodos de $G$ hay camino y por lo
   tanto, es conexo. Esto es lineal en la cantidad de nodos de $G$, $O(n)$.
 
-  Luego, la complejidad de \textsc{esConexo} es $O(n²) + O(n) = O(n²)$.
+  Luego, la complejidad de \textsc{esConexo} es $O(n^2) + O(n) = O(n^2)$.
 
+\end{enumerate}
 
 \newpage
 \subsection{Experimentación y gráficos.}

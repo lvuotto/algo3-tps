@@ -56,10 +56,11 @@ donde \textbf{las computadoras serán los vértices, las conexiones las aristas
 y el peso de cada arista será el costo de hacer dicha conexión}.
 
 Comenzaremos por corroborar que exista una solución. Para esto \textbf{el
-grafo deberá ser conexo} y para cumplir con esto, debe tener \textbf{al
-menos tantas aristas como vértices}. Si no fuese conexo, no se podrían
+grafo deberá ser conexo}, debe tener \textbf{al menos tantas aristas como
+vértices} y \textbf{3 ó más vértices}. Si no fuese conexo, no se podrían
 unir todas las computadoras. \textbf{Si tiene menos aristas que vértices},
-el grafo sería un árbol y \textbf{nunca podría formarse un anillo}.
+el grafo sería un árbol, y con menos de 3 vértices \textbf{nunca podría formarse
+un anillo}.
 
 Suponiendo que tiene solución, se procederá a calcular el \textbf{árbol
 generador mínimo} mediante el \textbf{algoritmo de Prim}. Para obtener el
@@ -68,24 +69,11 @@ incluída en el \textit{AGM}.
 
 
 \begin{codebox}
-\Procname{$\proc{sePuedeAnillar}(G)$}
-\li \If $\neg (\proc{tieneSolucion}(G))$
-\li     \Then
-            \Return $\const{false}$
-        \End
-\li $\proc{completarAnillo}(\proc{Prim}(G),G)$
-\li \Return $\const{true}$
-\end{codebox}
-
-
-\vspace*{0.3cm}
-
-
-\begin{codebox}
 \Procname{$\proc{tieneSolucion}(G)$}
-\li \Return $(\proc{esConexo}(G,v)) \land
+\li \Return $(\proc{esConexo}(G)) \land
     \proc{\#}(\proc{aristas}(G)) \geq
-    \proc{\#}(\proc{nodos}(G))$
+    \proc{\#}(\proc{nodos}(G)) \land
+    \proc{\#}(\proc{nodos}(G)) \geq 3$
 \end{codebox}
 
 
@@ -94,16 +82,19 @@ incluída en el \textit{AGM}.
 
 \begin{codebox}
 \Procname{$\proc{esConexo}(G)$}
-\li \Comment $\id{x}$ es una arista cualquiera de \id{G}.
-\li \Comment $\id{u}$ es un vértice incidido por \id{x}.
-\li \For $each \hspace{0.07cm} \id{x} \in \id{G.X}$
+\li \Comment $\id{nodosPendientes}$ es una cola de nodos.
+\li $\id{nodosPendientes} \gets \emptyset$
+\li $\proc{agregarAtras}(nodosPendientes, primerNodo(G))$
+\li \While $\id{nodosPendientes} \neq \emptyset$
 \li     \Do
-            \If $\id{x} \neq \infty$
-\li             \Then
-                    $nodosVisitados[u] \gets \const{true}$
+\li         $\id{nodo} \gets proc{pop}(nodosPendientes)$
+\li         $\id{nodosVisitados[nodo]} \gets \const{true}$
+            \For $\id{vecino} \in \proc{vecinos}(nodo)$
+\li             \Do
+                    $\proc{agregarAtras}(nodosPendientes, vecino)$
                 \End
         \End
-\li \Return $\proc{estanTodos}(G,nodosVisitados[G])$
+\li \Return $\proc{estanTodos}(nodosVisitados)$
 \end{codebox}
 
 
@@ -112,15 +103,15 @@ incluída en el \textit{AGM}.
 
 \begin{codebox}
 \Procname{$\proc{prim}(G)$}
-\li \Comment $\id{u}$ es un nodo cualquiera de \id{G}.
-\li \While $\proc{vertices}(AGM) \neq \proc{vertices}(G)$
-\li     \Do
-            \For $each \hspace{0.07cm} \id{u} \in \id{G.V}$
-\li             \Do
-                    $\id{x} \gets \proc{buscarPesoMinimo}(\proc{vecinos}(u))$
-\li                 $\proc{agregar}(AGM,x,u)$
-                \End
-        \End
+\li $\id{AGM} \gets \proc{nuevoGrafo}()$
+\li $\proc{agregarNodo}(AGM, primerNodo(G))$
+
+\li \While $\proc{cantidad}(nodos(AGM)) < \proc{cantidad}(nodos(G))$
+      \Do
+\li     $minima = \proc{min}(aristas con un nodo en AGM y el otro no)$
+\li     $\proc{agregarAristaConSuNodo}(AGM, minima)$
+      \End
+\li \Return $\id{AGM}$
 \end{codebox}
 
 
@@ -128,63 +119,31 @@ incluída en el \textit{AGM}.
 
 
 \begin{codebox}
-\Procname{$\proc{completarAnillo}(AGM, G)$}
-\li $\id{X} \gets \proc{restarAristas}(G,AGM)$
-\li $\id{m} \gets \proc{dameUno}(X)$
-\li $\id{X} \gets \id{X} \setminus \{m\}$
-\li \While $\neg (\proc{vacio}(X))$
-\li     \Do
-            $\id{y} \gets \proc{dameUno}(X)$
-\li         \If $\proc{peso}(y) < \proc{peso}(m)$
-\li             \Then
-                    $\id{m} \gets \id{y}$
-                \End
-\li         $\id{X} \gets \id{X} \setminus \{y\}$
-        \End
-\li \Return $\proc{agregar}(AGM, m)$
+\Procname{$\proc{anillar}(G, peso : out)$}
+\li $\id{AGM} \gets \proc{prim}(G)$
+\li $\id{minima} \gets \proc{minimaNoIncluida}(AGM, G)$
+\li $\id{peso} \gets \proc{peso}(AGM) + \proc{peso}(minima)$
+
+\li $\id{enElAnillo} \gets \{minima\} \bigcup \proc{caminoMinimo}(nodo1(minima), nodo2(minima), AGM)$
+
+\li $\id{fueraDelAnillo} \gets \proc{aristas}(AGM) \setminus \id{enElAnillo}$
+
+\li \Return $< enElAnillo, fueraDelAnillo >$
 \end{codebox}
-
-
-\vspace*{0.3cm}
-
 
 \begin{codebox}
-\Procname{$\proc{buscarPesoMinimo}(C)$}
-\li $\id{min} \gets \infty$
-\li \For $each \hspace{0.07cm} \id{x} \in \id{C}$
-\li     \Do
-            \If $(\proc{peso}(x) < {peso}(min)) \land (\proc{peso}(x) \neq \infty)$
-\li             \Then
-                    $\id{min} \gets \proc{peso}(x)$
-                \End
-        \End
-\li \Return $\id{min}$
+\Procname{$\proc{minimaNoIncluida}(AGM, G)$}
+\li $\id{minima} \gets \proc{primerArista}(G)$
+\li \For $\id{arista} \in \proc{aristas}(G)$
+      \Do
+\li     \If $\id{arista} \notin \proc{aristas}(AGM) \land
+            \proc{peso}(arista) \leq \proc{peso}(minima)$
+            \Do
+\li            $\id{minima} \gets \id{arista}$
+            \End
+      \End
+\li \Return $\id{minima}$
 \end{codebox}
-
-
-\vspace*{0.3cm}
-
-
-\begin{codebox}
-\Procname{$\proc{estanTodos}(G,C)$}
-\li \Comment $\id{u}$ es un nodo cualquiera de \id{G}.
-\li \If $(\exists \hspace{0.07cm} \id{u} \in \id{G}) \land (\id{u} \notin \id{C})$
-\li     \Then
-            \Return $\const{false}$
-        \End
-\li \Return $\const{true}$
-\end{codebox}
-
-
-\vspace*{0.3cm}
-
-
-\begin{codebox}
-\Procname{$\proc{restarAristas}(G,H)$}
-\li $\id{X} \gets \proc{aristas}(G) \setminus \proc{aristas}(H)$
-\li \Return $\id{X}$
-\end{codebox}
-
 
 
 \newpage

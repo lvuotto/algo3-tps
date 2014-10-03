@@ -19,7 +19,7 @@ elementos que contiene}.
 \end{itemize}
 
 
-\newpage
+
 \subsection{Desarrollo de la idea y pseudocódigo.}
 
 Para resolver el problema, empezamos utilizando un solo camión e intentamos ubicar
@@ -36,7 +36,7 @@ transportar todos los elementos. Por la estrategia planteada para el problema,
 
 \begin{codebox}
 \Procname{$\proc{biohazard}(elementos, maximaPeligrosidad)$}
-\li $\id{camiones} \gets []$
+\li $\id{camiones} \gets \emptyset$
 \li $\proc{agregar}(camiones, camion)$
 \li \While $(\neg\proc{backtracking}(camiones, elementos))$
 \li     \Do
@@ -81,7 +81,7 @@ transportar todos los elementos. Por la estrategia planteada para el problema,
 \vspace*{0.3cm}
 
 Para realizar el análisis de complejidad, nos basaremos en el pseudocódigo
-correspondiente al ítem \textbf{3.3}.
+correspondiente al ítem \textbf{3.2}.
 
 La función \verb|backtracking| es llamada desde la función \verb|biohazard|,
 en el peor de los casos, tantas veces como elementos haya para insertar en
@@ -123,15 +123,15 @@ casos, será
 % productos no entran en un camión y el algoritmo nunca intentará poner los
 % $n$ elementos en un solo vehículo. Por lo tanto, la altura de este árbol será
 % de $n - 1$.
-% 
+%
 % Generalizando, al intentar distribuir los $n$ productos en $k$
 % camiones, tendremos un árbol $k$-ario de altura $n - k + 1$.
-% 
+%
 % Por lo tanto, \textbf{la complejidad total del algoritmo va a ser equivalente a la
 % suma de todos los nodos sobre los árboles de decisión}.
-% 
+%
 % Dicho de otro modo, la complejidad será
-% 
+%
 % \begin{align*}
 %   O(\sum_{k=1}^n k^{n - k + 1})
 % \end{align*}
@@ -142,14 +142,19 @@ casos, será
 \newpage
 \subsection{Experimentación y gráficos.}
 
+\textbf{NOTA:} para los tests, las peligrosidades resultantes de las combinaciones de
+elementos se estableció de manera \textbf{aleatoria}. Utilizar las estrategias 1 y 2
+agrega un costo de $n \log n$ (el costo de ordenar), pero no altera la complejidad del
+algoritmo dado que la misma sigue resultando una cota superior.
+
 \vspace*{0.3cm}
 
-\subsubsection{Test 1 - benchmark aleatorio, sin podas (estrategias)}
+\subsubsection{Test 1 - benchmark aleatorio, (algoritmo base)}
 
 (ver \verb|info.3.pelado.dat|) \medskip
 
 En este test, tenemos $n$ elementos en cada instancia, con $n$ inicializado en 1 e incrementándose
-también en 1 hasta alcanzar 25 y un umbral $m$ de peligrosidad, que se inicializa en 2 y se incrementa
+también en 1 hasta alcanzar el valor 25 y un umbral $m$ de peligrosidad, que se inicializa en 2 y se incrementa
 en 2 en cada instancia, hasta alcanzar el valor 50.
 
 Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{10 corridas}.
@@ -169,55 +174,73 @@ sumamente aleatorio. Esto se debe a la naturaleza poco predecible del mismo.
 
 
 \newpage
-\subsubsection{Test 2 - benchmark }
+\subsubsection{Test 2 - benchmark aleatorio, orden ascendente (estrategia 1)}
 
-(ver \verb|info.3.peor.dat|) \medskip
-
-\underline{\textbf{NOTA:}} para el peor caso redujimos la cantidad de instancias a 16 por fines prácticos, dada la complejidad
-del algoritmo y el tiempo de ejecución requerido para finalizar más instancias. \medskip
+(ver \verb|info.3.poda.a.dat|) \medskip
 
 En este test, tenemos $n$ elementos en cada instancia, con $n$ inicializado en 1 e incrementándose
-también en 1 hasta alcanzar 16 y un umbral $m$ de peligrosidad, que se mantiene constante en 0 para todas las
-instancias.
+también en 1 hasta alcanzar el valor 25 y un umbral $m$ de peligrosidad, que se inicializa en 2 y se incrementa
+en 2 en cada instancia, hasta alcanzar el valor 50. A diferencia del test anterior, utilizamos una
+estrategia para evaluar su impacto sobre la cantidad de ciclos necesarios para la ejecución de
+nuestro algoritmo (la complejidad no varía). Esta estrategia consiste en ordenar previamente los
+elementos antes de distribuirlos entre los camiones. De esta forma, podemos detectar previamente
+si vamos a necesitar o no más camiones para los $n$ elementos. Para ordenar (de manera ascendente),
+utilizamos la suma de las peligrosidades de cada elemento contra el resto.
 
-Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{16 corridas}.
-
-\vspace*{0.5cm}
-
-% \begin{figure}[h]
-%   \begin{center}
-%     \includegraphics[scale=0.35]{imagenes/grafico-3-peor.png}
-%   \end{center}
-% \end{figure}
+Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{10 corridas}.
 
 \vspace*{0.5cm}
 
-En este gráfico podemos apreciar que a partir de los 10 elementos, el
-crecimiento de la cantidad de ciclos de clocks necesarios para completar las
-instancias crece exponencialmente, llegando a un pico de casi 6 billones de
-ciclos de clock.
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grafico-3-poda-a.png}
+  \end{center}
+\end{figure}
+
+\vspace*{0.5cm}
+
+En el gráfico puede apreciarse que utilizar una estrategia ordenando previamente los elementos de
+manera ascendente resulta \textbf{muy perjudicial} para nuestro algoritmo, multiplicando la cantidad de ciclos
+de clock requeridos para la ejecución por más de 50 veces. Esto se debe a que nuestro algoritmo
+no puede descartar soluciones de manera temprana, ya que empieza distribuyendo las combinaciones de menor
+peligrosidad en los camiones, por lo que es posible que se utilicen mucho más camiones de los necesarios
+antes de notar que la solución es incorrecta.
 
 
 \newpage
-\subsubsection{Test 3 - benchmark del mejor caso}
+\subsubsection{Test 3 - benchmark aleatorio, orden descendente (estrategia 2)}
 
-(ver \verb|info.3.mejor.dat|) \medskip
+(ver \verb|info.3.poda.dat|) \medskip
 
 En este test, tenemos $n$ elementos en cada instancia, con $n$ inicializado en 1 e incrementándose
-también en 1 hasta alcanzar 20 y un umbral $m$ de peligrosidad, que se inicializa en 1000000 y se incrementa
-también de a 1000000 en cada instancia, hasta alcanzar el valor 20000000.
+también en 1 hasta alcanzar el valor 25 y un umbral $m$ de peligrosidad, que se inicializa en 2 y se incrementa
+en 2 en cada instancia, hasta alcanzar el valor 50. En este caso, utilizamos una estrategia análoga a la
+tomada en el test anterior, pero esta vez ordenando de manera descendente.
 
-Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{20 corridas}.
+Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{10 corridas}.
 
+\vspace*{0.5cm}
 
-% \begin{figure}[h]
-%   \begin{center}
-%     \includegraphics[scale=0.35]{imagenes/grafico-3-mejor.png}
-%   \end{center}
-% \end{figure}
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grafico-3-poda.png}
+  \end{center}
+\end{figure}
 
+\vspace*{0.5cm}
 
-En este gráfico podemos apreciar que el algoritmo, tiene un comportamieno
-muy veloz en comparación contra instancias aleatorias o de peor caso. Esto
-se debe a que el mismo se reduce a realizar una pequeña serie de sumas en el
-caso de que todos los elementos entren en un solo camión.
+En el gráfico puede apreciarse que utilizar una estrategia ordenando previamente los elementos de
+manera descendente resulta \textbf{beneficioso} para nuestro algoritmo, reduciendo la cantidad de ciclos
+de clock requeridos para la ejecución aproximadamente a $\frac{1}{5}$. Esto se debe a que despachando primero las
+combinaciones de mayor peligrosidad, las restante podrán acomodarse sin tener que descartar tantas soluciones.
+
+Por lo tanto, \textbf{la mejor estrategia resulta ser ordenar los elementos previamente de manera descendente}.
+
+\vspace*{0.5cm}
+
+\textbf{NOTA:} también realizamos tests utilizando el promedio de las peligrosidades en lugar de la suma,
+de manera ascendente y descendente (los resultados se encuentran en la carpeta \textit{benchmark}, como
+\verb|info.3.poda.dat| por ejemplo) pero no nos resultaron relevantes incluirlos ya que resultaba equivalente
+a dividir las sumas anteriores por la cantidad de elementos $n$ (positivo), de manera que el orden de
+los elementos no se altera, resultando esta estrategia análoga a la utilizada en los tests 2 y 3, es decir,
+no aportaban información nueva.

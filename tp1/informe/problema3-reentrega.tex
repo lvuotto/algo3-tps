@@ -1,7 +1,19 @@
 \subsection{Informe de modificaciones}
 
-\newpage
+\begin{itemize}
+  \item se eliminaron los casos mejor y peor del algoritmo original. Ahora
+  realizamos comparaciones del algoritmo base contra otras dos versiones
+  que utilizan diferentes estrategias (detalladas en la sección de experimentos).
 
+  \item se corrigió el pseudocódigo y partes del código, reflejando los
+  cambios mencionados anteriormente.
+
+  \item se realizó nuevamente el análisis de complejidad, corrigiendo
+  el original que presentaba una cota errónea.
+\end{itemize}
+
+
+\newpage
 \subsection{Adicionales}
 
 \textit{¿Qué pasaría si el umbral de peligrosidad dejara de ser el mismo para todos los
@@ -19,19 +31,21 @@ siguiente:
         el umbral más grande de los disponibles.
 \end{itemize}
 
-Esto puede afectar a la complejidad del algoritmo porque se requieren nuevos
+Esto \textbf{puede afectar a la complejidad del algoritmo} porque se requieren nuevos
 parámetros de entrada: los camiones y su peligrosidad.
+
 Luego, para poder obtener el camión con máximo umbral en cada iteración, es
 conveniente tenerlos previamente ordenados.
+
 Dados $k$ camiones, la nueva complejidad total sería $O(k \log(k))$ sumado a la
 complejidad previa de nuestro algoritmo.
 
-\vspace*{0.5cm}
+\vspace*{0.75cm}
 
 \textit{¿Qué cosas se podían hacer con el problema anterior para acelerar los tiempos de
 ejecución que ahora ya no se pueden?}
 
 \vspace*{0.25cm}
 
-Dada la forma en que funciona nuestro algoritmo, no se pueden tomar estrategias adicionales
+Dada la forma en que funciona nuestro algoritmo, \textbf{no se pueden tomar estrategias adicionales}
 para acelerar los tiempos de ejecución, ni en la versión original ni en esta variante.

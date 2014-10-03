@@ -346,30 +346,34 @@ typedef vector<vector<int> > matriz;
 int umbral;
 matriz peligrosidades;
 
-struct camion {
-  camion() : peligrosidad_(0) {}
+struct Camion {
+  Camion() : peligrosidad_(0) {}
 
   void agregar_elemento(int elemento)
   {
     peligrosidad_ += calcular_peligrosidad(elemento);
     elementos.insert(elemento);
   }
+
   void eliminar_elemento(int elemento)
   {
     elementos.erase(elemento);
     peligrosidad_ -= calcular_peligrosidad(elemento);
   }
+
   bool entra(int elemento) const
   {
     return elementos.empty() ||
            (peligrosidad_ + calcular_peligrosidad(elemento) <= umbral);
   }
+
   int calcular_peligrosidad(int elemento) const
   {
     int suma = 0;
     for (auto el = elementos.begin(); el != elementos.end(); el++) {
-      suma += peligrosidades[*el][elemento - 1];
+      suma += peligrosidades[*el][elemento];
     }
+
     return suma;
   }
 
@@ -379,20 +383,52 @@ private:
   int peligrosidad_;
 };
 
-vector<camion> biohazard(set<int>& elementos);
-bool backtracking(vector<camion>& camiones, set<int>& elementos);
-void mostrar_solucion(vector<camion>& camiones, int cantidad_elementos);
+
+struct Elemento {
+  int numero;
+  double comparador;
+
+  Elemento(int num)
+  {
+    numero = num;
+    int suma = 0.0;
+    for (unsigned int i = 0; i < peligrosidades.size(); i++) {
+      suma += peligrosidades[i][numero];
+    }
+
+#ifndef BT_PROMEDIO
+    comparador = (double) suma;
+#else
+    comparador = suma / (double) peligrosidades.size();
+#endif
+  }
+
+  bool operator<(const Elemento& otro) const
+  {
+#ifndef BT_ASCENDENTE
+    return comparador > otro.comparador;
+#else
+    return comparador < otro.comparador;
+#endif
+  }
+};
+
+
+vector<Camion> biohazard(deque<Elemento>& elementos);
+bool backtracking(vector<Camion>& camiones, deque<Elemento>& elementos);
+void mostrar_solucion(vector<Camion>& camiones, int cantidad_elementos);
 \end{lstlisting}
 
 \vspace*{0.5cm}
 
 \begin{lstlisting}
-vector<camion> biohazard(set<int>& elementos)
+vector<Camion> biohazard(deque<Elemento>& elementos)
 {
-  vector<camion> camiones;
+  vector<Camion> camiones;
   do {
-    camiones.push_back(camion());
+    camiones.push_back(Camion());
   } while (!backtracking(camiones, elementos));
+
   return camiones;
 }
 \end{lstlisting}
@@ -400,24 +436,29 @@ vector<camion> biohazard(set<int>& elementos)
 \newpage
 
 \begin{lstlisting}
-bool backtracking(vector<camion>& camiones, set<int>& elementos)
+bool backtracking(vector<Camion>& camiones, deque<Elemento>& elementos)
 {
   if (elementos.empty()) {
     return true;
   }
-  int elemento = *elementos.begin();
-  elementos.erase(elementos.begin());
+
+  Elemento elemento = *elementos.begin();
+  int numero_elemento = elemento.numero;
+  elementos.pop_front();
+
   for (auto c = camiones.begin(); c != camiones.end(); c++) {
-    if (c->entra(elemento)) {
-      c->agregar_elemento(elemento);
+    if (c->entra(numero_elemento)) {
+      c->agregar_elemento(numero_elemento);
       if (backtracking(camiones, elementos)) {
         return true;
       } else {
-        c->eliminar_elemento(elemento);
+        c->eliminar_elemento(numero_elemento);
+        if (c->elementos.empty()) break;
       }
     }
   }
-  elementos.insert(elemento);
+  elementos.push_front(elemento);
+
   return false;
 }
 \end{lstlisting}

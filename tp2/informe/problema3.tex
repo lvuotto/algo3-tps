@@ -194,6 +194,65 @@ incluída en el \textit{AGM}.
 
 \textcolor{red}{\textbf{completar!}}
 
+El problema requiere, dado una configuración de equipos en una red y sus
+posibles conexiones con sus respectivos costos, armar una red con el menor
+costo posible y la condición de que haya un anillo.
+
+Este problema se reduce a, dado un grafo $G = (V, E)$ y $l: V \to
+\mathbb{R}_{\geq 0}$ la función de peso de sus aristas, encontrar un
+subgrafo $S = (V, E')$ con $E' \subseteq E$ de modo que la sumatoria del
+peso sea mínima, el subgrafo sea conexo y tenga un solo circuito simple.
+
+Primero que nada, notemos que el problema no siempre tiene solución si el
+grafo no es conexo, pero también pueden no tener solución si es conexo: si
+el grafo tiene el mínimo de aristas de modo que sea conexo (es decir, $m = n
+- 1$), el grafo en cuestión es un árbol y por ende no tiene ciclos.
+Excluidos estos casos, el problema tiene solución, pues es conexo y tiene al
+menos un circuito simple (de no tenerlos, sería un árbol y ya vimos que esto
+no puede suceder).
+
+Conociendo el grafo es posible determinar si la instancia particular tiene
+solución: solo basta ver que es conexo y tiene al menos tantas aristas como
+vértices. Para determinar la conexión del grafo se lo recorre mediante
+\textit{BFS} a partir de algún nodo. \textit{BFS} permite calcular los
+caminos mínimos entre el nodo de inicio y todos los nodos en su misma
+componente conexa. Luego, sabiendo la cantidad de nodos visitados al
+finalizar \textit{BFS}, el grafo es conexo sí y solo sí la cantidad de nodos
+visitados es igual a la cantidad de nodos del grafo. Si es conexo, como se
+conoce la estructura del grafo, se sabe la cantidad de aristas y vértices de
+este. Si $|E| \geq |V|$, se afirma que el problema tiene solución.
+
+Partiendo ahora de la base de que la instancia tiene solución, veremos
+que el algoritmo propuesto encuentra alguna de las posibles soluciones. En
+efecto, si $A = (V_A, E_A)$ es el grafo solución de la instancia del
+problema, se tiene que
+
+\begin{itemize}
+  \item $A$ es conexo.
+  \item $A$ tiene un circuito simple.
+  \item $\sum\limits_{e \in E_A} l(e)$ es mínima.
+\end{itemize}
+
+Consideremos $P = (V_P, E_P)$ el árbol generador mínimo obtenido al aplicar
+el algoritmo de Prim a $G$ y sea $m \in E \setminus E_P$ tal que $l(m) \leq
+l(e) \; \forall e \in E \setminus E_P$. Llamemos $S = (V_S, E_S)$, con $V_S
+= V_P$ y $E_S = E_P \cup \{m\}$, es decir, $S$ es el grafo obtenido al
+agregar la arista $m$ a $P$. $S$ es subgrafo de $G$ pues $P$ lo era y $w \in
+E \setminus E_P$, y por ende $V_S = V_P = V$ y $E_S \subseteq E$. Veamos
+ahora que $S$ es en efecto una solución al problema:
+
+\begin{itemize}
+  \item $S$ es conexo: $P$ es conexo y $E_S = E_P$, $S$ es el resultado de
+  agregarle una arista a $P$, por lo tanto, para cualquier par de vértices
+  $v, w \in V_S$, si $C$ es el camino en $P$ entre $v$ y $w$, $C \in E_S$
+  pues $C \in E_P$.
+  \item $S$ tiene un circuito simple: como $P$ es un árbol, por definición,
+  como $w \in E \setminus E_P$, al agregar $m$ a $E_P$ se obtiene un
+  circuito simple.
+  \item $\sum\limits_{e \in E_S} l(e)$ es mínima: supongo que no, es decir,
+  dado $A = (V_A, E_A)$ un grafo solución de la instancia del problema,
+  $\sum\limits_{e \in E_S} l(e) > \sum\limits_{e \in E_A} l(e)$.
+\end{itemize}
 
 
 \newpage

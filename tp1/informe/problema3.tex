@@ -51,25 +51,24 @@ transportar todos los elementos. Por la estrategia planteada para el problema,
 
 \begin{codebox}
 \Procname{$\proc{backtracking}(camiones, elementos)$}
-\li \If $\proc{vacio?}(elementos)$
-\li     \Then
-            \Return $\const{true}$
-        \End
+\li \If $\proc{vacio?}(elementos)$ \Then
+\li   \Return $\const{true}$
+    \End
 \li $\id{elemento} \gets \proc{dameUno}(elementos)$
 \li $\id{elementos} \gets elementos \setminus \{elemento\}$
-\li \For $camion \in camiones$
-\li     \Do
-            \If $\proc{entra?}(elemento, camion)$
-\li             \Then
-                    $\proc{agregar}(camion, elemento)$
-\li                 \If $\proc{backtracking}(camiones, elementos)$
-                        \Then
-\li                         \Return $\const{true}$
-\li                 \Else
-\li                     $\proc{borrar}(camion, elemento)$
-                    \End
-            \End
+\li \For $camion \in camiones$ \Do
+\li   \If $\proc{entra?}(elemento, camion)$ \Then
+\li     $\proc{agregar}(camion, elemento)$
+\li     \If $\proc{backtracking}(camiones, elementos)$ \Then
+\li       \Return $\const{true}$
+\li     \Else
+\li       $\proc{borrar}(camion, elemento)$
+\li       \If $\proc{vacio?}(camion)$ \Then
+\li         \textbf{break}
+          \End
         \End
+      \End
+    \End
 \li $\id{elementos} \gets elementos \cup \{elemento\}$
 \li \Return $\const{false}$
 \end{codebox}
@@ -81,7 +80,63 @@ transportar todos los elementos. Por la estrategia planteada para el problema,
 
 \vspace*{0.3cm}
 
-\textbf{completar!}
+Para realizar el análisis de complejidad, nos basaremos en el pseudocódigo
+correspondiente al ítem \textbf{3.3}.
+
+La función \verb|backtracking| es llamada desde la función \verb|biohazard|,
+en el peor de los casos, tantas veces como elementos haya para insertar en
+los camiones. Una vez que comienza la recursión, por cada camión que podemos
+utilizar, el próximo llamado se hace con un elemento menos. La recursión
+finaliza en el momento en el que se la invoca con un conjunto vacío de
+elementos. Como la cantidad de elementos siempre disminuye en 1 con cada
+llamado recursivo, en $n$ llamados se corta la recurrencia.
+
+Si se trabaja con $k$ camiones, lo que se busca es repartir los $n$
+elementos (distinguibles) en los $k$ camiones (indistinguibles). Esto se
+conoce en combinatoria como \textbf{el número de Stirling ${n \brace k}$}
+\footnote{\url{https://en.wikipedia.org/wiki/Stirling_numbers_of_the_second_kind}}.
+Este número representa la cantidad de
+particiones en $k$ subconjuntos de un conjunto de $n$ elementos.
+
+Sin embargo, estas particiones no consideran conjuntos vacíos, generados por
+el algoritmo. Por ende, al tratar de insertar los elementos en $k$ camiones,
+existe la posibilidad de que se vuelvan a realizar todas posibles
+distribuciones en $k - 1$ camiones.
+
+Por todo esto, sumado al hecho de que calcular si un elemento cabe en un
+camión es $O(n^2)$, al querer distribuir los $n$ elementos en $k$ camiones,
+la cantidad de operaciones realizadas es
+\begin{align*}
+  O(n^2 \sum_{i=1}^k {n \brace i})
+\end{align*}
+
+Por lo tanto, la complejidad del total del algoritmo, en el peor de los
+casos, será
+\begin{align*}
+  O(n^2 \sum_{k=1}^n \sum_{i=1}^k {n \brace i})
+\end{align*}
+
+% En el peor de los casos, \textbf{cuando nos veamos obligados a recorrer
+% todos los árboles de decisión}, al intentar poner los productos en un
+% camión, tendremos un árbol $1$-ario de altura $n$. Al hacerlo con 2
+% camiones, tendremos un árbol $2$-ario de altura $n$, pero sabemos que los
+% productos no entran en un camión y el algoritmo nunca intentará poner los
+% $n$ elementos en un solo vehículo. Por lo tanto, la altura de este árbol será
+% de $n - 1$.
+% 
+% Generalizando, al intentar distribuir los $n$ productos en $k$
+% camiones, tendremos un árbol $k$-ario de altura $n - k + 1$.
+% 
+% Por lo tanto, \textbf{la complejidad total del algoritmo va a ser equivalente a la
+% suma de todos los nodos sobre los árboles de decisión}.
+% 
+% Dicho de otro modo, la complejidad será
+% 
+% \begin{align*}
+%   O(\sum_{k=1}^n k^{n - k + 1})
+% \end{align*}
+
+\vspace*{0.75cm} \noindent
 
 
 \newpage

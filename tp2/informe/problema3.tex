@@ -219,8 +219,58 @@ ahora que $S$ es en efecto una solución al problema:
 
 \vspace*{0.3cm}
 
-\textcolor{red}{\textbf{completar!}}
+Para el análisis de complejidad nos basaremos en el pseudocódigo de la función
+\textsc{sePuedeAnillar}, correspondiente al ítem \textbf{5.2}.
 
+vector
+list
+queue
+tuple
+
+\begin{enumerate}
+  \item La operación \verb|size|, realizada sobre el contenedor \verb|vector| de la
+  \textit{STL}, toma tiempo constante $O(1)$. Por lo tanto, cada vez que sea utilizada
+  como parte de la implementación de algún algoritmo, asumiremos que no agrega complejidad
+  adicional a la ya existente.
+
+  \item La operación \verb|resize|, realizada sobre el contenedor \verb|vector| de la
+  \textit{STL}, toma tiempo lineal $O(n)$. Por lo tanto, cada vez que sea utilizada
+  como parte de la implementación de algún algoritmo, agregaremos (ó multiplicaremos por)
+  $n$ a la complejidad ya existente.
+
+  \item En la línea 1, la complejidad de \textsc{tieneSolucion} depende sólamente de
+  la complejidad de \textsc{esConexo} (que evaluaremos a continuación), ya que
+  \textsc{\#(aristas)} y \textsc{\#(nodos)} se calculan en tiempo constante $O(1)$
+  (son datos que se cargan con los valores de entrada, $n$ y $m$) y compararlos es
+  también $O(1)$ (estamos comparando enteros de tamaño acotado).
+  Por lo tanto, el costo de preguntar si $G$ tiene ó no solución es $O(n²)$.
+
+  Retornar un valor booleano ($true, false$) toma tiempo constante, $O(1)$. Por lo tanto,
+  la complejidad total de \textsc{sePuedeAnillar} surge de la suma entre la complejidad de
+  \textsc{tieneSolucion} (vimos que es $O(n²)$) y la complejidad de \textsc{completarAnillo}.
+
+  \item La complejidad de \textsc{tieneSolucion}, como dijimos anteriormente, depende
+  únicamente del costo de la función \textsc{esConexo}, ya que el resto de la conjunción
+  toma tiempo constante y no agrega complejidad extra. Por lo tanto, estudiaremos la
+  complejidad de \textsc{esConexo}. Esta función itera sobre los vértices de $G$.
+  Dado un vértice, podemos saber cuáles son las aristas que inciden sobre el (es decir,
+  quiénes son sus vértices vecinos). En nuestra implementación utilizamos una \textit{matriz de
+  pesos} de tamaño $n²$ (se trata de un vector con una posición por cada nodo, donde a su vez,
+  tenemos otro vector por cada posición). De esta manera, en la posición $i,j$ de la matriz,
+  tenemos un entero que representa el peso de la conexión entre el nodo $i$ y el nodo $j$ (y viceversa).
+  En el caso donde no haya un peso definido (por no encontrarse entre los datos de entrada) el valor
+  de dicha posición es -1 (en el pseudocódigo, este valor se representa como \infty).
+  Por lo tanto, iterar sobre todas las aristas de $G$ toma tiempo
+  cuadrático, $O(n²)$ (debemos iterar siempre sobre la matriz entera).
+
+  A medida que vamos encontrando valores de pesos de conexiones válidos, marcamos la posición
+  correspondiente al nodo visitado en el vector de nodos de $G$.
+
+  Luego de terminar de iterar sobre la matriz, chequeamos si efectivamente todos los nodos de $G$
+  fueron visitados, lo cual implica que para cualquier par de nodos de $G$ hay camino y por lo
+  tanto, es conexo. Esto es lineal en la cantidad de nodos de $G$, $O(n)$.
+
+  Luego, la complejidad de \textsc{esConexo} es $O(n²) + O(n) = O(n²)$.
 
 
 \newpage

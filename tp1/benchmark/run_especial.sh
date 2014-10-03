@@ -9,6 +9,12 @@ gnuplot -e "datafile='$BENCHDIR/info.1.c.dat'" \
         -e "titulo='Problema 1 - benchmark aleatorio'" \
         $BENCHDIR/plotter.1.c.gnu
 
+$BENCHDIR/benchmark.3.pelado.sh 2> $BENCHDIR/info.3.pelado.dat
+gnuplot -e "datafile='$BENCHDIR/info.3.pelado.dat'" \
+        -e "outfile='$IMGDIR/grafico-3-pelado.png'" \
+        -e "titulo='Problema 3 - sin poda'" \
+        $BENCHDIR/plotter.3.gnu
+
 $BENCHDIR/benchmark.3.poda.sh 2> $BENCHDIR/info.3.poda.dat
 gnuplot -e "datafile='$BENCHDIR/info.3.poda.dat'" \
         -e "outfile='$IMGDIR/grafico-3-poda.png'" \

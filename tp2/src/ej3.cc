@@ -1,9 +1,9 @@
 #include <iostream>
 #include <climits>
 #include <vector>
-#include <tuple>
 #include <queue>
 #include <list>
+#include <utility>
 
 #include "ej3.h"
 using namespace std;
@@ -11,17 +11,14 @@ using namespace std;
 
 
 int main () {
-  // creo el grafo.
-  int cant_nodos   = 0;
-  int cant_aristas = 0;
+  // Creo el grafo.
+  int cant_nodos, cant_aristas;
   cin >> cant_nodos;
   cin >> cant_aristas;
   Grafo g = Grafo(cant_nodos, cant_aristas);
 
-  // cargo matriz_conexiones con los datos de entrada.
-  int e1 = 0;
-  int e2 = 0;
-  int c  = 0;
+  // Cargo matriz_conexiones con los datos de entrada.
+  int e1, e2, c;
   for(int i = 0; i < g.m; i++)
   {
     cin >> e1 >> e2 >> c;
@@ -29,17 +26,22 @@ int main () {
     g.matriz_conexiones[e2-1][e1-1] = c;
   }
 
-  if (g.es_conexo()) {
-    cout << "si" << endl;
-    //completar_anillo(prim(g), g);
+  if (g.tiene_solucion()) {
+    int peso;
+    pair< vector<Arista>, vector<Arista> > resultado = anillar(g, peso);
+
+    cout << peso << " " << resultado.first.size() << " " << resultado.second.size() << endl;
+
+    for (auto it = resultado.first.begin(); it != resultado.first.end(); it++) {
+      cout << (it->nodo1 + 1) << " " << (it->nodo2 + 1) << endl;
+    }
+
+    for (auto it = resultado.second.begin(); it != resultado.second.end(); it++) {
+      cout << (it->nodo1 + 1) << " " << (it->nodo2 + 1) << endl;
+    }
   } else {
     cout << "no" << endl;
   }
-  // falta imprimir_salida(g);
-  Grafo agm = prim(g);
-  imprimir_grafo(g);
-  cout << endl << "------" << endl;
-  imprimir_grafo(agm);
 
   return 0;
 }
@@ -48,6 +50,9 @@ int main () {
 void imprimir_grafo(Grafo& g) {
   for (int i = 0; i < g.n; i++) {
     for (int j = 0; j < g.n; j++) {
+      if (g.matriz_conexiones[i][j] < 10 && g.matriz_conexiones[i][j] != -1) {
+        cout << 0;
+      }
       cout << g.matriz_conexiones[i][j] << " ";
     }
     cout << endl;
@@ -57,12 +62,13 @@ void imprimir_grafo(Grafo& g) {
 
 bool Grafo::tiene_solucion()
 {
-  return this->m >= this->n && this->es_conexo();
+  return this->n >= 3 && this->m >= this->n && this->es_conexo();
 }
 
 
 bool Grafo::es_conexo()
 {
+  vector<bool> nodos_visitados(n, -1);
   queue<unsigned int> nodos_pendientes;
   nodos_pendientes.push(0);
 
@@ -79,7 +85,23 @@ bool Grafo::es_conexo()
     }
   }
 
-  return estan_todos(this->nodos_visitados);
+  return estan_todos(nodos_visitados);
+}
+
+
+int Grafo::peso_total()
+{
+  int sum = 0;
+
+  for (int i = 0; i < this->n; i++) {
+    for (int j = i + 1; j < this->n; j++) {
+      if (this->matriz_conexiones[i][j] != -1) {
+        sum += this->matriz_conexiones[i][j];
+      }
+    }
+  }
+
+  return sum;
 }
 
 
@@ -92,7 +114,6 @@ Grafo prim(Grafo& g)
   vector<int> predecesores(g.n, -1);
   vector<int> pesos(g.n, -1);
   pesos[0] = 0;
-
 
   for (int i = 0; i < g.n; i++) {
     // Obtengo el mínimo
@@ -124,137 +145,94 @@ Grafo prim(Grafo& g)
   return agm;
 }
 
-//Grafo prim(Grafo& g)
-// {
-//   /*
-//    * 1. elijo un vértice arbitrario de la matriz.
-//    * 2. mientas el agm no incluya a todos los vértices v de V:
-//    *      encontrar la arista incidente a v de menor peso.
-//    *      agregar esta arista al agm.
-//    */
-//   Grafo agm = Grafo(g.n, 0);
-
-//   while(!estan_todos(agm.nodos_visitados))
-//   {
-//     for(int i = 0; i < g.n; i++)
-//     {
-//       auto t = buscar_peso_minimo(g.matriz_conexiones[i]);
-//       agm.matriz_conexiones[i][get<0>(t)] = get<1>(t);
-//       agm.matriz_conexiones[get<0>(t)][i] = get<1>(t);
-//       agm.m += 1;
-//       agm.nodos_visitados[get<0>(t)] = true;
-//     }
-//   }
-//   return agm;
-// }
-
 
 bool estan_todos(std::vector<bool> v)
 {
-  for(unsigned int i = 0; i < v.size(); i++)
-  {
-    if(!v[i])
-    {
+  for (unsigned int i = 0; i < v.size(); i++) {
+    if (!v[i]) {
       return false;
     }
   }
+
   return true;
 }
 
 
-// std::tuple <int, int> buscar_peso_minimo(std::vector<int> v)
-// {
-//   int min = INT_MAX;
-//   int pos = 0;
-//   for(unsigned int i = 0; i < v.size(); i++)
-//   {
-//     if(v[i] < min && v[i] > -1)
-//     {
-//       min = v[i];
-//       pos = i;
-//     }
-//   }
-//   auto t = make_tuple(pos, min);
-//   return t;
-// }
-
-
-Coordenadas completar_anillo(Grafo agm, Grafo g)
+Arista minima_no_incluida(Grafo& g, Grafo& agm)
 {
-  // X = aristas(g) \ aristas(agm).
-  restar_aristas(g, agm);
-  // busco la arista de menor peso en X, para agregarla al agm y formar el anillo.
-  int eje_de_menor_peso = INT_MAX;
-  int pos_i = 0;
-  int pos_j = 0;
-  int c1    = 0;
-  int c2    = 0;
+  Arista minima(-1, -1, -1);
 
-  for(int i = 0; i < g.n; i++)
-  {
-    for(int j = 0; j < g.n; j++)
-    {
-      if(g.matriz_conexiones[i][j] > -1 && g.matriz_conexiones[i][j] < eje_de_menor_peso)
-      {
-        eje_de_menor_peso = g.matriz_conexiones[i][j];
-        pos_i = i;
-        pos_j = j;
+  for (int i = 0; i < g.n; i++) {
+    for (int j = i + 1; j < g.n; j++) {
+      if (g.matriz_conexiones[i][j] != -1 // Está en g
+          && agm.matriz_conexiones[i][j] == -1 // No está en agm
+          && (minima.peso == -1 || g.matriz_conexiones[i][j] < minima.peso) // Es menor que la que tengo
+      ) {
+        minima.nodo1 = i;
+        minima.nodo2 = j;
+        minima.peso = g.matriz_conexiones[i][j];
       }
     }
   }
-  // agrego la arista al agm
-  agm.matriz_conexiones[pos_i][pos_j] = eje_de_menor_peso;
-  agm.matriz_conexiones[pos_j][pos_i] = eje_de_menor_peso;
-  agm.m += 1;
-  c1     = pos_i;
-  c2     = pos_j;
 
-  /*Coordenadas crd;
-  crd.g = agm;
-  crd.coordenada_1 = c1;
-  crd.coordenada_2 = c2;*/
-
-  return Coordenadas(agm, c1, c2);
+  return minima;
 }
 
 
-void restar_aristas(Grafo g, Grafo agm)
-{
-  for(int i = 0; i < g.n; i++)
-  {
-    for(int j = 0; j < g.n; j++)
-    {
-      // si la arista pertenece al agm, la anulo en g
-      if(agm.matriz_conexiones[i][j] > -1)
-      {
-        g.matriz_conexiones[i][j] = -1;
-        g.matriz_conexiones[j][i] = -1;
+pair< vector<Arista>, vector<Arista> > anillar(Grafo& g, int& peso_anillo) {
+  Grafo agm = prim(g);
+  Arista cierra_anillo = minima_no_incluida(g, agm);
+
+  peso_anillo = agm.peso_total() + cierra_anillo.peso;
+
+  // first: visitado?
+  // second: predecesor
+  vector< pair<bool, int> > nodos_visitados(agm.n, make_pair(false, -1));
+
+  queue<int> nodos_pendientes;
+  nodos_pendientes.push(cierra_anillo.nodo1);
+
+  // Hago BFS para encontrar el camino de nodo1 a nodo2
+  while (!nodos_pendientes.empty() && !nodos_visitados[cierra_anillo.nodo2].first) {
+    int nodo = nodos_pendientes.front();
+    nodos_pendientes.pop();
+
+    nodos_visitados[nodo].first = true;
+
+    for (int i = 0; i < (int) agm.matriz_conexiones.size(); i++) {
+      if (agm.matriz_conexiones[nodo][i] != -1 && !nodos_visitados[i].first) {
+        nodos_visitados[i].second = nodo;
+        nodos_pendientes.push(i);
       }
     }
   }
+
+  vector<Arista> en_el_anillo, fuera_del_anillo;
+  en_el_anillo.push_back(cierra_anillo);
+
+  int nodo = cierra_anillo.nodo2;
+
+  // Cargo todas las aristas que forman parte del anillo
+  while (nodo != cierra_anillo.nodo1) {
+    Arista arista(nodo, nodos_visitados[nodo].second, -1);
+    en_el_anillo.push_back(arista);
+
+    // Saco la arista de la matriz del AGM
+    agm.matriz_conexiones[nodo][nodos_visitados[nodo].second] = -1;
+    agm.matriz_conexiones[nodos_visitados[nodo].second][nodo] = -1;
+
+    nodo = nodos_visitados[nodo].second;
+  }
+
+  // Cargo las aristas que quedan
+  for (int i = 0; i < agm.n; i++) {
+    for (int j = i + 1; j < agm.n; j++) {
+      if (agm.matriz_conexiones[i][j] != -1) {
+        Arista arista(i, j, -1);
+        fuera_del_anillo.push_back(arista);
+      }
+    }
+  }
+
+  return make_pair(en_el_anillo, fuera_del_anillo);
 }
-
-
-// list<std::tuple<int, int, int> > aristas_del_anillo(Coordenadas cs)
-// {
-
-//   * cs contiene el grafo agm y las coordenadas de los extremos de
-//   * la arista agregada. Para encontrar las aristas que forman
-//   * parte del anillo, hago bfs partiendo de la coordenada_1, hasta
-//   * encontrar la coordenada_2.
-
-//   for(int h = 0; h < n; h++)
-//   {
-//     cs.g.nodos_visitados[h] = false;
-//   }
-
-// }
-
-
-//void imprimir_salida(Grafo agm)
-/*{
-  if(!se_puede_anillar(g))
-  {
-    cout << "no" << endl;
-    ...
-}*/

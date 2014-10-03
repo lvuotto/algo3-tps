@@ -1,5 +1,6 @@
-#include <tuple>
+#include <utility>
 
+using namespace std;
 
 struct Grafo
 {
@@ -11,8 +12,7 @@ struct Grafo
    */
   int n;
   int m;
-  std::vector<bool> nodos_visitados;
-  std::vector< std::vector<int> > matriz_conexiones;
+  vector< vector<int> > matriz_conexiones;
 
   Grafo() {}
 
@@ -21,19 +21,11 @@ struct Grafo
     n = cant_nodos;
     m = cant_aristas;
 
-    nodos_visitados.resize(n);
-    // inicializo el vector nodos_visitados en false.
     matriz_conexiones.resize(n);
-    for(int h = 0; h < n; h++)
-    {
-      nodos_visitados[h] = false;
-      matriz_conexiones[h].resize(n);
-    }
-    // inicializo la matriz con -1.
-    for(int i = 0; i < n; i++)
-    {
-      for(int j = 0; j < n; j++)
-      {
+    for (int i = 0; i < n; i++) {
+      matriz_conexiones[i].resize(n);
+
+      for (int j = 0; j < n; j++) {
         matriz_conexiones[i][j] = -1;
       }
     }
@@ -41,26 +33,24 @@ struct Grafo
 
   bool es_conexo();
   bool tiene_solucion();
+  int  peso_total();
 };
 
-
-struct Coordenadas
+struct Arista
 {
-  Grafo& g;
-  int coordenada_1;
-  int coordenada_2;
+  int nodo1;
+  int nodo2;
+  int peso;
 
-  Coordenadas(Grafo& grafo, int c1, int c2) :
-    g(grafo),
-    coordenada_1(c1),
-    coordenada_2(c2)
+  Arista(int n1, int n2, int p) :
+    nodo1(n1),
+    nodo2(n2),
+    peso(p)
   {}
 };
 
-
-Grafo                 prim(Grafo& g);
-bool                  estan_todos(std::vector<bool> v);
-std::tuple <int, int> buscar_peso_minimo(std::vector<int> v);
-//Coordenadas           completar_anillo(Grafo agm, Grafo g);
-void                  restar_aristas(Grafo agm, Grafo g);
-void                  imprimir_grafo(Grafo& g);
+Grafo                                  prim(Grafo& g);
+bool                                   estan_todos(std::vector<bool> v);
+void                                   imprimir_grafo(Grafo& g);
+Arista                                 minima_no_incluida(Grafo& g, Grafo& agm);
+pair< vector<Arista>, vector<Arista> > anillar(Grafo& g, int& peso_anillo);

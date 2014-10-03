@@ -263,20 +263,19 @@ tuple
   tenemos otro vector por cada posición). De esta manera, en la posición $i,j$ de la matriz,
   tenemos un entero que representa el peso de la conexión entre el nodo $i$ y el nodo $j$ (y viceversa).
   En el caso donde no haya un peso definido (por no encontrarse entre los datos de entrada) el valor
-  de dicha posición es -1 (en el pseudocódigo, este valor se representa como $\infty$).
+ de dicha posición es $-1$ (en el pseudocódigo, este valor se representa como $\infty$).
   Por lo tanto, iterar sobre todas las aristas de $G$ toma tiempo
   cuadrático, $O(n^2)$ (debemos iterar siempre sobre la matriz entera).
-
-  A medida que vamos encontrando valores de pesos de conexiones válidos, marcamos la posición
-  correspondiente al nodo visitado en el vector de nodos de $G$.
-
-  Luego de terminar de iterar sobre la matriz, chequeamos si efectivamente todos los nodos de $G$
-  fueron visitados, lo cual implica que para cualquier par de nodos de $G$ hay camino y por lo
-  tanto, es conexo. Esto es lineal en la cantidad de nodos de $G$, $O(n)$.
-
-  Luego, la complejidad de \textsc{esConexo} es $O(n^2) + O(n) = O(n^2)$.
-
 \end{enumerate}
+
+A medida que vamos encontrando valores de pesos de conexiones válidos, marcamos la posición
+correspondiente al nodo visitado en el vector de nodos de $G$.
+
+uego de terminar de iterar sobre la matriz, chequeamos si efectivamente todos los nodos de $G$
+fueron visitados, lo cual implica que para cualquier par de nodos de $G$ hay camino y por lo
+tanto, es conexo. Esto es lineal en la cantidad de nodos de $G$, $O(n)$.
+
+Luego, la complejidad de \textsc{esConexo} es $O(n^2) + O(n) = O(n^2)$.
 
 \newpage
 \subsection{Experimentación y gráficos.}

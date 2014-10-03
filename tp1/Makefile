@@ -11,6 +11,7 @@ IMGDIR=$(INFORMEDIR)/imagenes
 
 tp:
 	$(MAKE) -C $(SRCDIR)
+	$(MAKE) -C $(SRCDIR) podas
 
 informe:
 	$(MAKE) -C $(INFORMEDIR)
@@ -20,8 +21,6 @@ test:
 	$(MAKE) -C $(TESTDIR)
 
 plot:
-	$(MAKE) -C $(SRCDIR)
-	$(MAKE) -C $(SRCDIR) podas
 	$(BENCHDIR)/run_especial.sh $(BENCHDIR) $(IMGDIR)
 	$(BENCHDIR)/run.sh $(BENCHDIR) $(IMGDIR)
 

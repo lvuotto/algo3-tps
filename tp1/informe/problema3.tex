@@ -89,34 +89,32 @@ transportar todos los elementos. Por la estrategia planteada para el problema,
 
 \vspace*{0.3cm}
 
-\subsubsection{Test 1 - benchmark caso aleatorio}
+\subsubsection{Test 1 - benchmark aleatorio, sin podas (estrategias)}
 
-(ver \verb|info.3.dat|) \medskip
+(ver \verb|info.3.pelado.dat|) \medskip
 
 En este test, tenemos $n$ elementos en cada instancia, con $n$ inicializado en 1 e incrementándose
-también en 1 hasta alcanzar 20 y un umbral $m$ de peligrosidad, que se inicializa en 2 y se incrementa
-en 2 en cada instancia, hasta alcanzar el valor 40.
+también en 1 hasta alcanzar 25 y un umbral $m$ de peligrosidad, que se inicializa en 2 y se incrementa
+en 2 en cada instancia, hasta alcanzar el valor 50.
 
-Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{20 corridas}.
+Para cada instancia, se toma el \textbf{valor mínimo} de cantidad de ciclos luego de \textbf{10 corridas}.
 
 \vspace*{0.5cm}
 
-% \begin{figure}[h]
-%   \begin{center}
-%     \includegraphics[scale=0.35]{imagenes/grafico-3.png}
-%   \end{center}
-% \end{figure}
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grafico-3-pelado.png}
+  \end{center}
+\end{figure}
 
 \vspace*{0.5cm}
 
 En este gráfico podemos apreciar que el comportamiento del algoritmo es
-sumamente aleatorio en el caso promedio. Esto se debe a la naturaleza poco
-predecible del mismo, ya que en base a cómo sean los valores de entrada, las
-podas se realizan en momentos diferentes.
+sumamente aleatorio. Esto se debe a la naturaleza poco predecible del mismo.
 
 
 \newpage
-\subsubsection{Test 2 - benchmark del peor caso}
+\subsubsection{Test 2 - benchmark }
 
 (ver \verb|info.3.peor.dat|) \medskip
 

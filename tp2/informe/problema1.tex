@@ -3,12 +3,12 @@
 \vspace*{0.3cm}
 
 En este problema, debemos encontrar una \textbf{secuencia de vuelos que
-permita, dada una ciudad de origen, otra de destino y un listado de vuelos,
-viajar del origen al destino, llegando lo más temprano posible}.
+permita}, dada una ciudad de origen, otra de destino y un listado de vuelos,
+\textbf{viajar del origen al destino, llegando lo más temprano posible}.
 
 Esta secuencia \textbf{debe comenzar con un vuelo que parta de la ciudad
 origen}. Luego, \textbf{cada vuelo debe salir de la ciudad de arribo del
-anterior, dejando libre un lapso de, al menos, 2 horas}, para finalmente
+anterior}, dejando libre un lapso de, al menos, 2 horas, para finalmente
 llegar a la ciudad destino.
 
 De todas las posibles combinaciones válidas de vuelos, \textbf{la escogida
@@ -19,16 +19,21 @@ También se deberá informar cuando el recorrido no puede realizarse.
 \vspace*{0.5cm}
 
 \textbf{Ejemplo:}
-Dadas 5 ciudades, A, B, C, D y E. Se quiere viajar de A a E llegando lo
+Dadas 5 ciudades, A, B, C, D y E. Se quiere viajar de A a E, llegando lo
 antes posible.
 Los viajes disponibles son:
-\begin{itemize}
+
+\begin{enumerate}
   \item De A a E, partiendo a las 10 y arribando a las 22.
+
   \item De A a B, partiendo a las 0 y arribando a las 2.
+
   \item De B a C, partiendo a las 4 y arribando a las 6.
+
   \item De C a D, partiendo a las 8 y arribando a las 10.
+
   \item De D a E, partiendo a las 12 y arribando a las 14.
-\end{itemize}
+\end{enumerate}
 
 La solución óptima consiste en tomar los vuelos 2, 3, 4 y 5 que permiten
 llegar a destino a las 14, como indica la siguiente imagen:
@@ -47,17 +52,18 @@ llegar a destino a las 14, como indica la siguiente imagen:
 
 \vspace*{0.3cm}
 
-Para resolverlo, se propone \textbf{ordenar todos los vuelos disponibles
-en base al horario de llegada, en forma ascendente}. Hecho esto, se recorre
+Para resolverlo, se propone \textbf{ordenar} todos los \textbf{vuelos} disponibles
+\textbf{en base al horario de llegada, en forma ascendente}. Hecho esto, se recorre
 cada vuelo y se pregunta si es posible
 
 \begin{enumerate}
   \item llegar a la ciudad de origen \textbf{2 horas antes del horario de partida}.
+
   \item que la ciudad de partida de dicho vuelo es la ciudad de origen del cliente.
 \end{enumerate}
 
-De valer alguno de estos ítems, \textbf{si no hay otro vuelo que llegue antes
-a su destino}, se procede a marcar dicho vuelo como el primero en llegar y a
+De valer alguno de estos ítems (\textbf{y si no hay otro vuelo que llegue antes
+a su destino}), se procede a marcar dicho vuelo como el primero en llegar y a
 su predecesor como el primero en llegar a la ciudad de origen. Caso contrario,
 el vuelo es ignorado.
 

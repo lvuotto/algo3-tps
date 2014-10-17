@@ -75,7 +75,7 @@ de origen del cliente.}
 
 \begin{codebox}
 \Procname{$\proc{planDeVuelo}(vuelos,origen,destino)$}
-\li \Comment $\id{vuelos}$ es un arreglo de tipo Vuelo, donde Vuelo es una
+\li \Comment $\id{vuelos}$ es un arreglo de tipo Vuelo, siendo Vuelo una
 \li \Comment estructura conformada por una ciudad origen, una ciudad destino,
 \li \Comment un horario de partida y otro de arribo.
 \li
@@ -142,27 +142,33 @@ de origen del cliente.}
 \vspace*{0.3cm}
 
 Para el análisis de complejidad nos basaremos en el pseudocódigo de la función
-\textsc{planDeVuelo}, correspondiente al ítem \textbf{COMPLETAR}.
+\textsc{planDeVuelo}, correspondiente al ítem \textbf{3.2}.
 
 \begin{enumerate}
   \item Todas las operaciones realizadas sobre el contenedor \verb|deque| de la
-    \textit{STL} (size, push_front, back y la creación de iteradores)
-    toman tiempo constante $O(1)$.
+  \textit{STL} (size, push_front, back y la creación de iteradores)
+  toman tiempo constante $O(1)$.
+
   \item De las operaciones realizadas sobre el contenedor \verb|map| de la
-    \textit{STL} (find, []) toman tiempo logarítmico $O(\log n)$ y (end y la creación de iteradores)
-    toman tiempo constante $O(1)$.
+  \textit{STL} (find, []) toman tiempo logarítmico $O(\log n)$ mientras que end y
+  la creación de iteradores, toman tiempo constante $O(1)$.
+
   \item Las operaciones realizadas sobre \verb|string| de la \textit{STL} toman
-    tiempo proporcional al tamaño del string. Pero asumimos que éstos están
-    acotados, por lo tanto las operaciones se realizan en tiempo constante
-    $O(1)$
-  \item El algoritmo \verb|sort| de la \textit{STL} utilizado (línea \textcolor{red}{\textbf{completar!}}) para ordenar los aviones
-    por horario de llegada, tiene complejidad $O(n \log n)$.
+  tiempo proporcional al tamaño del string. Pero asumimos que éstos están
+  acotados, por lo tanto las operaciones se realizan en tiempo constante
+  $O(1)$
+
+  \item El algoritmo \verb|sort| de la \textit{STL} utilizado (línea \textcolor{red}{\textbf{completar!}})
+  para ordenar los aviones por horario de llegada, tiene complejidad $O(n \log n)$.
+
   \item Se implementó la función \verb|puedeTomar|, que dado un \verb|map|, un \verb|Vuelo| y
     una ciudad, hace un \verb|find| sobre el \verb|map| y luego comparaciones y asignaciones.
     Por lo tanto queda con una complejidad $O(\log n)$
+
   \item En la línea \textcolor{red}{\textbf{completar!}} se recorren todos los vuelos
     y dentro se realizan 2 operaciones logarítmicas, quedando la complejidad del
     ciclo como $O(n \log n)$
+
   \item Luego se genera la lista recorriendo los predecesores, como máximo pueden ser
     todos los vuelos, es decir, $O(n)$
 \end{enumerate}

@@ -1,0 +1,138 @@
+\documentclass[a4paper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{charter}   % tipografia
+\usepackage{graphicx}
+\usepackage{makeidx}
+
+\usepackage{float}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{wrapfig}
+\usepackage{listings}
+\usepackage{caption}
+
+\usepackage{hyperref} %las entradas del índice tienen links
+\hypersetup{
+    colorlinks=true,
+    linktoc=all,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\input{codesnippet}
+\input{page.layout}
+\usepackage{underscore}
+\usepackage{caratula}
+\usepackage{url}
+
+\usepackage{color}
+\usepackage{clrscode3e} % para el pseudocodigo
+
+
+
+
+\begin{document}
+
+\lstset{
+  language=C++,
+  backgroundcolor=\color{white},   % choose the background color
+  basicstyle=\footnotesize,        % size of fonts used for the code
+  breaklines=true,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{mymauve},     % string literal style
+}
+
+\thispagestyle{empty}
+\materia{Algoritmos y Estructuras de Datos III}
+\submateria{Segundo Cuatrimestre de 2014}
+\titulo{Trabajo Práctico III}
+%\subtitulo{}
+\integrante{González Alba, Pablo}{476/10}{pablo.gonzalez.alba@gmail.com}
+\integrante{Quiroz, Nicol\'as}{450/11}{nquiroz@dc.uba.ar}
+\integrante{Vuotto, Lucas}{385/12}{lvuotto@dc.uba.ar}
+
+\maketitle
+\newpage
+
+\thispagestyle{empty}
+\vfill
+\begin{abstract}
+    \vspace{0.5cm}
+    \textcolor{red}{\textbf{completar!}}
+\end{abstract}
+
+\thispagestyle{empty}
+\vspace{1.5cm}
+\tableofcontents
+\newpage
+
+
+
+%\normalsize
+\newpage
+\section{Objetivos generales}
+\textcolor{red}{\textbf{completar!}}
+
+
+
+\newpage
+\section{Plataforma de pruebas}
+El testeo de los algoritmos implementados fue realizado, principalmente, en las máquinas del laboratorio 3 del DC. \newline
+\begin{itemize}
+  \item \textbf{Sistema Operativo:} Ubuntu Linux 12.04 x86_64, kernel 3.2.0-30-generic
+
+  \item \textbf{Especificaciones del Software:} el código está implementado en \textbf{C++}, compilado con \verb|-std=c++0x|.
+  Utilizamos \textbf{Bash} y \textbf{Ruby} para los scripts. Los gráficos fueron realizados con \textbf{gnuplot}.
+
+  \item \textbf{Especificaciones del Hardware:} Intel(R) Core(TM) i5-2500K CPU @ 3.30GHz, 8GB de RAM.
+\end{itemize}
+
+
+
+\newpage
+\section{Ejercicio 1: Sobre k-PMP}
+\input{ejercicio1}
+
+\newpage
+\section{Ejercicio 2: Algoritmo exacto para k-PMP}
+\input{ejercicio2}
+
+\newpage
+\section{Ejercicio 3: Heurística constructiva golosa para k-PMP}
+\input{ejercicio3}
+
+\newpage
+\section{Ejercicio 4: Heurística de búsqueda local para k-PMP}
+\input{ejercicio4}
+
+\newpage
+\section{Ejercicio 5: GRASP}
+\input{ejercicio5}
+
+\newpage
+\section{Ejercicio 6: Experimentación general y comparativa de todos los
+         métodos implementados}
+\input{ejercicio6}
+
+
+
+\newpage
+\section{Apéndice 1: acerca de los tests}
+\textcolor{red}{\textbf{completar!}}
+
+
+
+\newpage
+\section{Apéndice 2: secciones relevantes del código}
+\textcolor{red}{\textbf{completar!}}
+
+
+\end{document}

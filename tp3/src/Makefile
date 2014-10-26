@@ -1,4 +1,4 @@
-CXXFLAGS=-Wall -Wextra -Werror -pedantic -O3 -ggdb -stc=c++0x
+CXXFLAGS=-Wall -Wextra -Werror -pedantic -O3 -ggdb -std=c++0x
 BINS=kpmp-exacto kpmp-hg kpmp-hl kpmp-grasp
 
 

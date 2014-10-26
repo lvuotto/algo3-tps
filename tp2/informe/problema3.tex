@@ -170,7 +170,10 @@ el grafo tiene el mínimo de aristas de modo que sea conexo (es decir, $m = n
 - 1$), el grafo en cuestión es un árbol y por ende no tiene ciclos.
 Excluidos estos casos, el problema tiene solución, pues es conexo y tiene al
 menos un circuito simple (de no tenerlos, sería un árbol y ya vimos que esto
-no puede suceder).
+no puede suceder). Observemos que se puede considerar siempre que la
+solución tiene un solo ciclo, pues si la solución tiene varios ciclos, si
+solo nos quedamos con el ciclo de menor peso, obtenemos una solución de peso
+menor o igual a la solución con múltiples ciclos.
 
 Conociendo el grafo es posible determinar si la instancia particular tiene
 solución: solo basta ver que es conexo y tiene al menos tantas aristas como
@@ -191,7 +194,7 @@ problema, se tiene que
 \begin{itemize}
   \item $A$ es conexo.
 
-  \item $A$ tiene un circuito simple.
+  \item $A$ tiene un solo circuito simple.
 
   \item $\sum\limits_{e \in E_A} l(e)$ es mínima.
 \end{itemize}
@@ -209,13 +212,30 @@ ahora que $S$ es en efecto una solución al problema:
   agregarle una arista a $P$, por lo tanto, para cualquier par de vértices
   $v, w \in V_S$, si $C$ es el camino en $P$ entre $v$ y $w$, $C \in E_S$
   pues $C \in E_P$.
-  \item $S$ tiene un circuito simple: como $P$ es un árbol, por definición,
-  como $w \in E \setminus E_P$, al agregar $m$ a $E_P$ se obtiene un
-  circuito simple.
-  \item $\sum\limits_{e \in E_S} l(e)$ es mínima: supongo que no, es decir,
-  dado $A = (V_A, E_A)$ un grafo solución de la instancia del problema,
-  $\sum\limits_{e \in E_S} l(e) > \sum\limits_{e \in E_A} l(e)$.
+  \item $S$ tiene un solo circuito simple: como $P$ es un árbol, por
+  definición, como $w \in E \setminus E_P$, al agregar $m$ a $E_P$ se
+  obtiene un solo circuito simple.
+%  \item $\sum\limits_{e \in E_S} l(e)$ es mínima: supongo que no, es decir,
+%  dado $A = (V_A, E_A)$ un grafo solución de la instancia del problema,
+%  $\sum\limits_{e \in E_S} l(e) > \sum\limits_{e \in E_A} l(e)$.
+  \item $\sum\limits_{e \in E_S} l(e)$ es mínima: sea $e \in E_A$ talque $e$
+  pertenece al ciclo de $A$ y $e \notin P$. Dicha arista existe pues, como
+  $P$ es árbol, no hay ciclos en $P$. Como $A \setminus \{e\}$ es un árbol
+  generador de $G$,
+  \begin{align*}
+    l(P) &\leq l(A \setminus \{e\}) \Rightarrow \\
+    l(P) + l(e) &\leq l(A)
+  \end{align*}
+  Pero, como $m$ es arista de peso mínimo talque $m \notin P$, $l(m) \leq
+  l(e)$. Por lo tanto,
+  \begin{align*}
+    l(S) = l(P) + l(m) \leq l(P) + l(e) \leq l(A)
+  \end{align*}
+  y la solución propuesta es mejor o igual que la solución óptima.
+
 \end{itemize}
+
+Luego, el algoritmo propuesto encuentra una solución óptima.
 
 
 \newpage

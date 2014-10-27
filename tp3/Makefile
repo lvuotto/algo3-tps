@@ -21,6 +21,6 @@ plot:
 all: tp informe test plot
 
 clean:
-	$(RM) -f $(BINDIR)/*
+	$(RM) $(BINDIR)/*
 
 .PHONY: all tp informe test plot clean

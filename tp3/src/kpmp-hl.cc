@@ -7,7 +7,6 @@ using namespace std;
 
 
 vector<unsigned int> kpmp(Grafo& G, unsigned int k);
-double backtracking(Particiones& ps, unsigned int v);
 
 int main()
 {
@@ -33,28 +32,5 @@ int main()
 vector<unsigned int> kpmp(Grafo& G, unsigned int k)
 {
   Particiones p(k, G);
-  backtracking(p, 1);
   return p.solucion();
-}
-
-
-double backtracking(Particiones& ps, unsigned int v)
-{
-  if (v > ps.cantidad_nodos())
-    return ps.peso();
-
-  for (unsigned int i = 1; i <= ps.cantidad(); i++) {
-    ps.agregar(i, v);
-    if (backtracking(ps, v + 1) < ps.peso_min()) {
-      ps.actualizar();
-      return ps.peso();
-    } else {
-      ps.sacar(i, v);
-      /*if (ps.vacia(i)) {
-        break;
-      }*/
-    }
-  }
-
-  return ps.peso();
 }

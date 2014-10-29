@@ -24,4 +24,4 @@
 *.aux
 *.log
 *.pdf
-*.toc
+*~

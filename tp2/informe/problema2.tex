@@ -2,7 +2,7 @@
 
 \vspace*{0.3cm}
 
-Dado un tablero de ajedrez de tamaño $n \times n$ y $k$ caballos ocupando
+Dado un tablero de ajedrez de tamaño $n \times n$ y $k$ caballos, ocupando
 inicialmente ciertos casilleros del mismo, el objetivo del problema consiste
 en reunir a todos los caballos en un mismo casillero, minimizando la
 cantidad total de movimientos realizados. Esta cantidad equivale a la suma
@@ -19,7 +19,7 @@ caballo simultáneamente.
 
 En un tablero de 8x8, con 3 caballos en las posiciones [2,2], [5,5] y [2,8],
 la menor cantidad de saltos posibles es 4, haciendo que los caballos de los
-extremos cayan hacia la posición del caballo del medio[5,5], como se puede ver
+extremos vayan hacia la posición del caballo del medio[5,5], como se puede ver
 en la siguiente imagen:
 
 \begin{figure}[htb]
@@ -37,9 +37,13 @@ en la siguiente imagen:
 
 Para resolver este problema, utilizaremos $k$ tableros de $n \times n$
 casilleros, uno por cada caballo. En cada tablero se calculará el costo para
-dicho caballo de llegar a cada casillero, aplicando \textit{BFS} desde el
-casillero inicial, quedando inválidos los casilleros que no pueden
-alcanzarse.
+dicho caballo de llegar a cada casillero, aplicando 
+\textit{BFS}\footnote{En el problema 3 se detalla el funcionamiento de este algoritmo.} 
+desde el casillero inicial, quedando inválidos los casilleros que no pueden
+alcanzarse. Para poder lograr esto, trataremos al tablero como un grafo, donde 
+los casilleros son los nodos y sus (nodos) vecinos son aquellos casilleros 
+alcanzables desde el nodo de partida, según el movimiento del caballo. Estos 
+movimientos son las aristas de nuestro grafo.
 
 Luego se recorren todos los casilleros, sumando el valor de estos en todos
 los tableros (si son alcanzables), obteniendo así el costo de cada casillero
@@ -62,13 +66,8 @@ que pueden alcanzar todos los caballos en la menor cantidad de saltos.
 \li \While $\id{i} < \id{n}$ \Do
 \li   \While $\id{j} < \id{n}$ \Do
 \li     $\id{sum} \gets 0$
-\li     $\id{caballo} \gets 0$
 \li     \For $tablero \in tableros$ \Do
-% \li       \If $tablero_{ij} \isequal \infty$ \Then
-% \li         $\id{sum} \gets \infty$
-% \li       \ElseIf $sum \neq \infty$ \Then
 \li         $\id{sum} \gets \id{sum} + tablero_{ij}$
-%           \End
         \End
 \li     \If $sum < min$ \Then
 \li       $\id{min} \gets \id{sum}$
@@ -91,21 +90,22 @@ que pueden alcanzar todos los caballos en la menor cantidad de saltos.
 
 \begin{codebox}
 \Procname{$\proc{llenarTablero}(tablero, inicio)$}
+\li \Comment $\id{posiciones}$ es una cola de pares $<casillero, costo>$.
 \li $\id{posiciones} \gets \emptyset$
 \li $\proc{encolar}(posiciones, (inicio, 0))$
 \li \While $\lnot \proc{vacio?}(posiciones)$ \Do
 \li   $\id{pos} \gets \proc{primero}(\proc{frente}(posiciones))$
 \li   $\id{nivel} \gets \proc{segundo}(\proc{frente}(posiciones))$
 \li   $\proc{desencolar}(posiciones)$
-\li   $\id{i} \gets inicio_i$
-\li   $\id{j} \gets inicio_j$
+\li   $\id{i} \gets pos_i$
+\li   $\id{j} \gets pos_j$
 \li   \If $tablero_{ij} \isequal \infty$ \Then
 \li     $\id{tablero_{ij}} = nivel$
-\li     \For $\id{v} \in \proc{vecinos}(tablero, posicion)$ \Do
+\li     \For $\id{v} \in \proc{vecinos}(tablero, pos)$ \Do
 \li       $\proc{encolar}(posiciones, (v, nivel + 1))$
         \End
       \End
-    \End
+    \End	
 \end{codebox}
 
 \newpage

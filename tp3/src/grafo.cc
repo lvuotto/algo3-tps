@@ -39,7 +39,7 @@ double Grafo::peso_arista(unsigned int vertice1, unsigned int vertice2)
   return adyacencias_[vertice1 - 1][vertice2 - 1];
 }
 
-unsigned int Grafo::cantidad_nodos()
+unsigned int Grafo::cantidad_de_vertices()
 {
   return adyacencias_.size();
 }

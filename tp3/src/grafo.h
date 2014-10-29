@@ -24,7 +24,7 @@ struct Grafo {
   Grafo(unsigned int n);
   void agregar_arista(unsigned int vertice1, unsigned int vertice2, double peso);
   double peso_arista(unsigned int vertice1, unsigned int vertice2);
-  unsigned int cantidad_nodos();
+  unsigned int cantidad_de_vertices();
   vector<Arista> aristas();
 
 private:

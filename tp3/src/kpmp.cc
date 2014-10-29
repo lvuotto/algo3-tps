@@ -1,118 +1,64 @@
+#include <iostream>
+#include <vector>
 #include "kpmp.h"
-#include <limits>
-
 
 using namespace std;
 
+Entrada::Entrada(Grafo grafo_, unsigned int cantidad_de_conjuntos_) :
+  grafo(grafo_), cantidad_de_conjuntos(cantidad_de_conjuntos_)
+  {}
 
-Grafo::Grafo(unsigned int n) : ady_(n, vector<double>(n, 0.0)) {}
 
-void Grafo::agregar(unsigned int u, unsigned int v, double w)
-{
-  ady_[u - 1][v - 1] = w;
-  ady_[v - 1][u - 1] = w;
+Entrada leer_entrada() {
+  unsigned int n, m, k;
+  cin >> n >> m >> k;
+  Grafo grafo(n);
+
+  for (unsigned int i = 0; i < m; i++) {
+    unsigned int vertice1, vertice2;
+    double peso;
+    cin >> vertice1 >> vertice2 >> peso;
+
+    grafo.agregar_arista(vertice1, vertice2, peso);
+  }
+
+  return Entrada(grafo, k);
 }
 
-double Grafo::peso(unsigned int u, unsigned int v)
-{
-  return ady_[u - 1][v - 1];
+
+Particion leer_solucion(Grafo& grafo, unsigned int cantidad_de_conjuntos) {
+  Particion particion(grafo, cantidad_de_conjuntos);
+  unsigned int conjunto;
+
+  for (unsigned int vertice = 1; vertice <= grafo.cantidad_de_vertices(); vertice++) {
+    cin >> conjunto;
+
+    particion.agregar_vertice(conjunto - 1, vertice);
+  }
+
+  return particion;
 }
 
-unsigned int Grafo::cantidad_nodos()
-{
-  return ady_.size();
+
+void imprimir_particion(Particion& particion) {
+  vector<unsigned int> solucion = particion_a_solucion(particion);
+
+  for (auto it = solucion.begin(); it != solucion.end(); it++) {
+    cout << *it << " ";
+  }
+
+  cout << endl;
 }
 
 
-Particion::Particion(Grafo& G) : G_(G), peso_(0.0) {}
+vector<unsigned int> particion_a_solucion(Particion& particion) {
+  vector<unsigned int> solucion(particion.cantidad_de_vertices(), 0);
 
-void Particion::agregar(unsigned int v)
-{
-  peso_ += costo(v);
-  vertices_.insert(v);
-}
+  for (unsigned int conjunto = 0; conjunto < particion.cantidad_de_conjuntos(); conjunto++) {
+    for (auto vertice = particion.begin(conjunto); vertice != particion.end(conjunto); vertice++) {
+      solucion[*vertice - 1] = conjunto + 1;
+    }
+  }
 
-void Particion::sacar(unsigned int v)
-{
-  vertices_.erase(v);
-  peso_ -= costo(v);
-}
-
-bool Particion::vacia() const
-{
-  return vertices_.empty();
-}
-
-double Particion::peso() const
-{
-  return peso_;
-}
-
-double Particion::costo(unsigned int v) const
-{
-  double p = 0.0;
-  for (auto it = vertices_.begin(); it != vertices_.end(); it++)
-    p += G_.peso(v, *it);
-  return p;
-}
- 
-
-Particiones::Particiones(unsigned int k, Grafo& G) :
-  ps_(k, Particion(G)),
-  cant_(G.cantidad_nodos()),
-  sol_(G.cantidad_nodos(), 0),
-  peso_(0.0),
-  sol_opt_(G.cantidad_nodos(), 0),
-  peso_min_(numeric_limits<double>::infinity())
-{}
-
-void Particiones::agregar(unsigned int i, unsigned int v)
-{
-  peso_ -= ps_[i - 1].peso();
-  ps_[i - 1].agregar(v);
-  peso_ += ps_[i - 1].peso();
-  sol_[v - 1] = i;
-}
-
-void Particiones::sacar(unsigned int i, unsigned int v)
-{
-  peso_ -= ps_[i - 1].peso();
-  ps_[i - 1].sacar(v);
-  peso_ += ps_[i - 1].peso();
-}
-
-bool Particiones::vacia(unsigned int i) const
-{
-  return ps_[i].vacia();
-}
-
-unsigned int Particiones::cantidad() const
-{
-  return ps_.size();
-}
-
-unsigned int Particiones::cantidad_nodos() const
-{
-  return cant_;
-}
-
-vector<unsigned int> Particiones::solucion() const
-{
-  return sol_opt_;
-}
-
-void Particiones::actualizar()
-{
-  sol_opt_ = sol_;
-  peso_min_ = peso_;
-}
-
-double Particiones::peso() const
-{
-  return peso_;
-}
-
-double Particiones::peso_min() const
-{
-  return peso_min_;
+  return solucion;
 }

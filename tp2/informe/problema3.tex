@@ -5,7 +5,7 @@
 En este problema, un cliente busca ofrecer un servicio particular sobre una
 red existente de computadoras. Nuestra tarea consiste en elegir algunas de las
 mismas, para utilizarlas como servidores formando un \textit{backbone} que
-siga una tipología de red de tipo \textit{anillo}. Además, se requiere que
+siga una topología de red de tipo \textit{anillo}. Además, se requiere que
 las demás computadoras de la red estén conectadas a algún servidor
 perteneciente a este anillo, para poder tener acceso al mismo.
 
@@ -65,9 +65,16 @@ el grafo sería un árbol, y con menos de 3 vértices \textbf{nunca podría form
 un anillo}.
 
 Suponiendo que tiene solución, se procederá a calcular el \textbf{árbol
-generador mínimo} mediante el \textbf{algoritmo de Prim}. Para obtener el
-anillo, \textbf{formaremos un ciclo agregando la arista de menor peso} no
-incluída en el \textit{AGM}.
+generador mínimo} mediante el \textbf{algoritmo de Prim}. Un \textit{AGM} es
+un árbol (es decir, un grafo conexo y sin ciclos) que posee los mismos nodos 
+que el grafo original (por esto es un árbol \textit{generador}), pero sólo las aristas 
+necesarias para conectar a éstos, con peso mínimo. Para obtener el anillo buscado, 
+\textbf{formaremos un ciclo agregando la arista de menor peso} no incluída en el 
+\textit{AGM}. Por definición, al agregar una nueva arista a un árbol, obtendremos 
+un circuito simple o ciclo.	
+
+Por lo tanto, tendremos un grafo conexo (el AGM) que conecta a todas las computadoras 
+(nodos del grafo), minimizando el costo de las conexiones.
 
 
 \begin{codebox}
@@ -85,11 +92,14 @@ incluída en el \textit{AGM}.
 \begin{codebox}
 \Procname{$\proc{esConexo}(G)$}
 \li \Comment $\id{nodosPendientes}$ es una cola de nodos.
+\li \Comment $\id{nodosVisitados}$ es un arreglo de nodos que
+\li \Comment utilizamos para chequear si ya fueron todos visitados.
+\li \Comment Cada posición del mismo representa un nodo, marcado según corresponda.
 \li $\id{nodosPendientes} \gets \emptyset$
 \li $\proc{agregarAtras}(nodosPendientes, primerNodo(G))$
 \li \While $\id{nodosPendientes} \neq \emptyset$
-\li     \Do
-\li         $\id{nodo} \gets proc{pop}(nodosPendientes)$
+        \Do
+\li         $\id{nodo} \gets \proc{pop}(nodosPendientes)$
 \li         $\id{nodosVisitados[nodo]} \gets \const{true}$
             \For $\id{vecino} \in \proc{vecinos}(nodo)$
 \li             \Do
@@ -105,12 +115,14 @@ incluída en el \textit{AGM}.
 
 \begin{codebox}
 \Procname{$\proc{prim}(G)$}
+\li \Comment $\id{aristas}$ es un conjunto de vértices que 
+\li \Comment poseen un nodo en el AGM y otro no.
 \li $\id{AGM} \gets \proc{nuevoGrafo}()$
 \li $\proc{agregarNodo}(AGM, primerNodo(G))$
 
 \li \While $\proc{cantidad}(nodos(AGM)) < \proc{cantidad}(nodos(G))$
       \Do
-\li     $minima = \proc{min}(aristas con un nodo en AGM y el otro no)$
+\li     $minima = \proc{sacarMinima}(aristas)$
 \li     $\proc{agregarAristaConSuNodo}(AGM, minima)$
       \End
 \li \Return $\id{AGM}$
@@ -125,13 +137,14 @@ incluída en el \textit{AGM}.
 \li $\id{AGM} \gets \proc{prim}(G)$
 \li $\id{minima} \gets \proc{minimaNoIncluida}(AGM, G)$
 \li $\id{peso} \gets \proc{peso}(AGM) + \proc{peso}(minima)$
-
 \li $\id{enElAnillo} \gets \{minima\} \bigcup \proc{caminoMinimo}(nodo1(minima), nodo2(minima), AGM)$
-
 \li $\id{fueraDelAnillo} \gets \proc{aristas}(AGM) \setminus \id{enElAnillo}$
-
 \li \Return $< enElAnillo, fueraDelAnillo >$
 \end{codebox}
+
+
+\vspace*{0.3cm}
+
 
 \begin{codebox}
 \Procname{$\proc{minimaNoIncluida}(AGM, G)$}
@@ -148,12 +161,12 @@ incluída en el \textit{AGM}.
 \end{codebox}
 
 
+
 \newpage
 \subsection{Justificación de la resolución y demostración de correctitud.}
 
 \vspace*{0.3cm}
 
-\textcolor{red}{\textbf{completar!}}
 
 El problema requiere, dado una configuración de equipos en una red y sus
 posibles conexiones con sus respectivos costos, armar una red con el menor
@@ -162,12 +175,13 @@ costo posible y la condición de que haya un anillo.
 Este problema se reduce a, dado un grafo $G = (V, E)$ y $l: V \to
 \mathbb{R}_{\geq 0}$ la función de peso de sus aristas, encontrar un
 subgrafo $S = (V, E')$ con $E' \subseteq E$ de modo que la sumatoria del
-peso sea mínima, el subgrafo sea conexo y tenga un solo circuito simple.
+peso sea mínima, el subgrafo sea conexo y tenga \textbf{al menos} un circuito simple.
 
-Primero que nada, notemos que el problema no siempre tiene solución si el
-grafo no es conexo, pero también pueden no tener solución si es conexo: si
-el grafo tiene el mínimo de aristas de modo que sea conexo (es decir, $m = n
-- 1$), el grafo en cuestión es un árbol y por ende no tiene ciclos.
+Primero, notemos que el problema no siempre tiene solución si el grafo no es 
+conexo, pero también pueden no tener solución si es conexo: si el grafo tiene el 
+mínimo de aristas de modo que sea conexo (es decir, $m = n - 1$), el grafo en 
+cuestión es un árbol y por ende no tiene ciclos. 
+
 Excluidos estos casos, el problema tiene solución, pues es conexo y tiene al
 menos un circuito simple (de no tenerlos, sería un árbol y ya vimos que esto
 no puede suceder). Observemos que se puede considerar siempre que la
@@ -177,14 +191,16 @@ menor o igual a la solución con múltiples ciclos.
 
 Conociendo el grafo es posible determinar si la instancia particular tiene
 solución: solo basta ver que es conexo y tiene al menos tantas aristas como
-vértices. Para determinar la conexión del grafo se lo recorre mediante
-\textit{BFS} a partir de algún nodo. \textit{BFS} permite calcular los
-caminos mínimos entre el nodo de inicio y todos los nodos en su misma
-componente conexa. Luego, sabiendo la cantidad de nodos visitados al
-finalizar \textit{BFS}, el grafo es conexo sí y solo sí la cantidad de nodos
-visitados es igual a la cantidad de nodos del grafo. Si es conexo, como se
-conoce la estructura del grafo, se sabe la cantidad de aristas y vértices de
-este. Si $|E| \geq |V|$, se afirma que el problema tiene solución.
+vértices. Para determinar la conexión del grafo se lo recorre mediante el 
+algoritmo \textit{BFS} a partir de algún nodo. \textit{BFS} permite calcular los
+caminos desde el nodo de inicio hacia todos los nodos que se encuentre en su 
+misma componente conexa. %agregar descripcion de algoritmo
+
+Luego, sabiendo la cantidad de nodos visitados al finalizar \textit{BFS}, 
+el grafo es conexo sí y solo sí la cantidad de nodos visitados es igual a la 
+cantidad de nodos del grafo. Si es conexo, como se conoce la estructura del grafo, 
+se sabe la cantidad de aristas y vértices de este, por lo tanto si $|E| \geq |V|$, 
+se afirma que el problema tiene solución.
 
 Partiendo ahora de la base de que la instancia tiene solución, veremos
 que el algoritmo propuesto encuentra alguna de las posibles soluciones. En
@@ -212,25 +228,30 @@ ahora que $S$ es en efecto una solución al problema:
   agregarle una arista a $P$, por lo tanto, para cualquier par de vértices
   $v, w \in V_S$, si $C$ es el camino en $P$ entre $v$ y $w$, $C \in E_S$
   pues $C \in E_P$.
+
   \item $S$ tiene un solo circuito simple: como $P$ es un árbol, por
-  definición, como $w \in E \setminus E_P$, al agregar $m$ a $E_P$ se
+  definición, al agregar una arista cuyos extremos sean vértices de $P$, 
+  se obtiene un circuito simple. Además, como $P$ es también generador, 
+  siendo $w \in E \setminus E_P$, al agregar $m$ a $E_P$ se
   obtiene un solo circuito simple.
-%  \item $\sum\limits_{e \in E_S} l(e)$ es mínima: supongo que no, es decir,
-%  dado $A = (V_A, E_A)$ un grafo solución de la instancia del problema,
-%  $\sum\limits_{e \in E_S} l(e) > \sum\limits_{e \in E_A} l(e)$.
+
   \item $\sum\limits_{e \in E_S} l(e)$ es mínima: sea $e \in E_A$ talque $e$
   pertenece al ciclo de $A$ y $e \notin P$. Dicha arista existe pues, como
   $P$ es árbol, no hay ciclos en $P$. Como $A \setminus \{e\}$ es un árbol
   generador de $G$,
+
   \begin{align*}
     l(P) &\leq l(A \setminus \{e\}) \Rightarrow \\
     l(P) + l(e) &\leq l(A)
   \end{align*}
+
   Pero, como $m$ es arista de peso mínimo talque $m \notin P$, $l(m) \leq
   l(e)$. Por lo tanto,
+
   \begin{align*}
     l(S) = l(P) + l(m) \leq l(P) + l(e) \leq l(A)
   \end{align*}
+
   y la solución propuesta es mejor o igual que la solución óptima.
 
 \end{itemize}

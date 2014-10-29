@@ -1,0 +1,14 @@
+Utilizando alfiles en lugar de caballos, sucede lo siguiente: 
+
+\begin{itemize}
+        \item Cambia los "vecinos" de un casillero. Ahora serán como máximo 4, 
+        los que limiten con éste en sus diagonales.
+
+        \item Podemos saber más rápidamente si el problema tiene solución o no (en $O(n^{2})$).
+        Si los alfiles se encuentran en casilleros de colores distintos, el problema no tiene 
+        solución, pues dado los movimientos que realiza un alfil, no puede pasar de un casillero 
+        negro a uno blanco o viceversa. En nuestro caso, para chequear el "color" de un casillero, 
+        basta con ver si las coordenadas $i, j$ de los alfiles coinciden en paridad.
+\end{itemize}
+
+Por lo tanto, esta modificación no afecta a nuestro algoritmo.

@@ -37,19 +37,19 @@ Particion kpmp_hg(Grafo& grafo, unsigned int cantidad_de_conjuntos)
 
 
 void agregar_al_de_menos_peso(Particion& particion, unsigned int vertice) {
-  unsigned int min_index = 0;
-  double min_costo = particion.costo(0, vertice);
+  unsigned int min_conjunto = 1;
+  double min_costo = particion.costo(min_conjunto, vertice);
 
-  for (unsigned int i = 1; i < particion.cantidad_de_conjuntos(); i++) {
+  for (unsigned int i = 2; i <= particion.cantidad_de_conjuntos(); i++) {
     double costo = particion.costo(i, vertice);
 
     if (costo < min_costo) {
-      min_index = i;
+      min_conjunto = i;
       min_costo = costo;
     }
   }
 
-  particion.agregar_vertice(min_index, vertice);
+  particion.agregar_vertice(min_conjunto, vertice);
 }
 
 

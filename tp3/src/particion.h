@@ -14,12 +14,13 @@ struct Particion {
   unsigned int cantidad_de_conjuntos();
   double costo(unsigned int conjunto, unsigned int vertice);
   void agregar_vertice(unsigned int conjunto, unsigned int vertice);
+  void sacar_vertice(unsigned int conjunto, unsigned int vertice);
   set<unsigned int>::iterator begin(unsigned int conjunto);
   set<unsigned int>::iterator end(unsigned int conjunto);
-
-  vector<ConjuntoDeVertices> conjuntos;
+  unsigned int conjunto_del_vertice(unsigned int vertice);
 
 private:
+  vector<ConjuntoDeVertices> conjuntos_;
   Grafo& grafo_;
   double peso_;
   unsigned int cantidad_de_conjuntos_;

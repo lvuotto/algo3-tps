@@ -4,11 +4,13 @@ using namespace std;
 
 ConjuntoDeVertices::ConjuntoDeVertices(Grafo& grafo) : grafo_(grafo), vertices_(), peso_(0.0) {}
 
+
 void ConjuntoDeVertices::agregar_vertice(unsigned int vertice)
 {
   peso_ += costo(vertice);
   vertices_.insert(vertice);
 }
+
 
 void ConjuntoDeVertices::sacar_vertice(unsigned int vertice)
 {
@@ -16,15 +18,18 @@ void ConjuntoDeVertices::sacar_vertice(unsigned int vertice)
   peso_ -= costo(vertice);
 }
 
+
 bool ConjuntoDeVertices::vacio() const
 {
   return vertices_.empty();
 }
 
+
 double ConjuntoDeVertices::peso() const
 {
   return peso_;
 }
+
 
 double ConjuntoDeVertices::costo(unsigned int vertice) const
 {
@@ -34,10 +39,20 @@ double ConjuntoDeVertices::costo(unsigned int vertice) const
   return costo;
 }
 
-set<unsigned int>::iterator ConjuntoDeVertices::begin() {
+
+set<unsigned int>::iterator ConjuntoDeVertices::begin() 
+{
   return vertices_.begin();
 }
 
-set<unsigned int>::iterator ConjuntoDeVertices::end() {
+
+set<unsigned int>::iterator ConjuntoDeVertices::end() 
+{
   return vertices_.end();
+}
+
+
+set<unsigned int>::iterator ConjuntoDeVertices::find(unsigned int vertice) 
+{
+  return vertices_.find(vertice);
 }

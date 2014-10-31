@@ -33,7 +33,7 @@ Particion leer_solucion(Grafo& grafo, unsigned int cantidad_de_conjuntos) {
   for (unsigned int vertice = 1; vertice <= grafo.cantidad_de_vertices(); vertice++) {
     cin >> conjunto;
 
-    particion.agregar_vertice(conjunto - 1, vertice);
+    particion.agregar_vertice(conjunto, vertice);
   }
 
   return particion;
@@ -54,9 +54,9 @@ void imprimir_particion(Particion& particion) {
 vector<unsigned int> particion_a_solucion(Particion& particion) {
   vector<unsigned int> solucion(particion.cantidad_de_vertices(), 0);
 
-  for (unsigned int conjunto = 0; conjunto < particion.cantidad_de_conjuntos(); conjunto++) {
+  for (unsigned int conjunto = 1; conjunto <= particion.cantidad_de_conjuntos(); conjunto++) {
     for (auto vertice = particion.begin(conjunto); vertice != particion.end(conjunto); vertice++) {
-      solucion[*vertice - 1] = conjunto + 1;
+      solucion[*vertice - 1] = conjunto;
     }
   }
 

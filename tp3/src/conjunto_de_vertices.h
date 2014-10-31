@@ -15,6 +15,7 @@ struct ConjuntoDeVertices {
   double costo(unsigned int vertice) const;
   set<unsigned int>::iterator begin();
   set<unsigned int>::iterator end();
+  set<unsigned int>::iterator find(unsigned int vertice);
 
 private:
   Grafo& grafo_;

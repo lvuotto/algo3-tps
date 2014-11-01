@@ -4,9 +4,14 @@
 #include <sstream>
 #include <vector>
 #include <queue>
+
 #include "ej2.h"
+#include <chrono>
+
+#define CANTIDAD 25
 
 using namespace std;
+using namespace std::chrono;
 
 int main() {
   vector<Caballo> caballos;
@@ -23,7 +28,19 @@ int main() {
     caballos.push_back(c);
   }
   
+  auto inicio = high_resolution_clock::now();
   pair<int, Posicion> respuesta = punto_de_encuentro(caballos, dimension_tablero);
+  auto fin = high_resolution_clock::now();
+  auto mejor = fin - inicio;
+  for (int i = 0; i < CANTIDAD; i++) {
+    inicio = high_resolution_clock::now();
+    respuesta = punto_de_encuentro(caballos, dimension_tablero);
+    fin = high_resolution_clock::now();
+    if (fin - inicio < mejor) mejor = fin - inicio;
+  }
+  cerr << caballos.size() << " "
+       << dimension_tablero << " "
+       << duration_cast<milliseconds>(mejor).count() << endl;
   
   if (respuesta.first == -1) {
     cout << "no" << endl;

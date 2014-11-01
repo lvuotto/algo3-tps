@@ -6,8 +6,12 @@
 #include <utility>
 
 #include "ej3.h"
-using namespace std;
+#include <chrono>
 
+#define CANTIDAD 25
+
+using namespace std;
+using namespace std::chrono;
 
 
 int main () {
@@ -26,6 +30,25 @@ int main () {
     g.matriz_conexiones[e2-1][e1-1] = c;
   }
 
+  int peso_;
+  Grafo backup = g;
+  pair<vector<Arista>, vector<Arista>> resultado_;
+  auto inicio = high_resolution_clock::now();
+  if (g.tiene_solucion()) resultado_ = anillar(g, peso_);
+  auto fin = high_resolution_clock::now();
+  auto mejor = fin - inicio;
+  for (int i = 0; i < CANTIDAD; i++) {
+    g = backup;
+    inicio = high_resolution_clock::now();
+    if (g.tiene_solucion()) resultado_ = anillar(g, peso_);
+    fin = high_resolution_clock::now();
+    if (fin - inicio < mejor) mejor = fin - inicio;
+  }
+  cerr << cant_nodos << " "
+       << cant_aristas << " "
+       << duration_cast<milliseconds>(mejor).count() << endl;
+
+  g = backup;
   if (g.tiene_solucion()) {
     int peso;
     pair< vector<Arista>, vector<Arista> > resultado = anillar(g, peso);

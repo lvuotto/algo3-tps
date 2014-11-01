@@ -6,11 +6,12 @@
 #include <deque>
 
 #include "ej1.h"
-#include "tiempo.h"
+#include <chrono>
 
 #define CANTIDAD 100
 
 using namespace std;
+using namespace std::chrono;
 
 int main () {
   string ciudad_inicial, ciudad_final, origen, destino;
@@ -25,19 +26,20 @@ int main () {
   }
   
   auto backup = vuelos;
-  unsigned long inicio, fin, min;
-  MEDIR_TIEMPO_START(inicio);
+  auto inicio = high_resolution_clock::now();
   deque<Vuelo> plan = plan_de_vuelo(ciudad_inicial, ciudad_final, vuelos);
-  MEDIR_TIEMPO_STOP(fin);
-  min = fin - inicio;
+  auto fin = high_resolution_clock::now();
+  auto mejor = fin - inicio;
   for (int i = 0; i < CANTIDAD; i++) {
     vuelos = backup;
-    MEDIR_TIEMPO_START(inicio);
+    inicio = high_resolution_clock::now();
     plan = plan_de_vuelo(ciudad_inicial, ciudad_final, vuelos);
-    MEDIR_TIEMPO_STOP(fin);
-    min = fin - inicio < min ? fin - inicio : fin;
+    fin = high_resolution_clock::now();
+    /*min = fin - inicio < min ? fin - inicio : fin;*/
+    if (fin - inicio < mejor) mejor = fin - inicio;
   }
-  cerr << backup.size() << " " << min << endl;
+  cerr << backup.size() << " "
+       << duration_cast<milliseconds>(mejor).count() << endl;
 
   imprimir_vuelos(plan);
 

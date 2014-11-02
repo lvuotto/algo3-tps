@@ -1,3 +1,6 @@
+#ifndef KPMP_H
+#define KPMP_H
+
 #include <vector>
 #include "grafo.cc"
 #include "conjunto_de_vertices.cc"
@@ -19,3 +22,7 @@ Particion leer_solucion(Grafo& grafo, unsigned int cantidad_de_conjuntos);
 void imprimir_particion(Particion& particion);
 
 vector<unsigned int> particion_a_solucion(Particion& particion);
+
+void imprimir_uso();
+
+#endif

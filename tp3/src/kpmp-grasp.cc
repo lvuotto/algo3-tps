@@ -1,36 +1,41 @@
-#include <iostream>
-#include <vector>
-#include "kpmp.h"
-
+#include "kpmp-grasp.h"
 
 using namespace std;
 
-
-vector<unsigned int> kpmp(Grafo& G, unsigned int k);
-
-int main()
+Particion kpmp_grasp(Particion (*greedy)(Grafo& grafo, unsigned int cantidad_de_conjuntos),
+  void (*local)(Particion& particion), Grafo& grafo, unsigned int cantidad_de_conjuntos,
+  CriterioDeTerminacion criterio, unsigned int repeticiones)
 {
-  unsigned int n, m, k;
-  cin >> n >> m >> k;
-  Grafo G(n);
-  for (unsigned int i = 0; i < m; i++) {
-    unsigned int u, v;
-    double w;
-    cin >> u >> v >> w;
-    G.agregar(u, v, w);
+  Particion particion = greedy(grafo, cantidad_de_conjuntos);
+  local(particion);
+  double peso_min = particion.peso();
+
+  if (criterio == MEJOR_LUEGO_DE_X_VECES) {
+    for (unsigned int i = 1; i < repeticiones; i++) {
+      Particion nueva_particion = greedy(grafo, cantidad_de_conjuntos);
+      local(nueva_particion);
+
+      if (nueva_particion.peso() < peso_min) {
+        peso_min = nueva_particion.peso();
+        particion = nueva_particion;
+      }
+    }
+  } else if (criterio == CUANDO_EL_MEJOR_SE_REPITA_X_VECES) {
+    unsigned int contador_repeticiones = 1;
+
+    while (contador_repeticiones < repeticiones) {
+      Particion nueva_particion = greedy(grafo, cantidad_de_conjuntos);
+      local(nueva_particion);
+
+      if (nueva_particion.peso() < peso_min) {
+        peso_min = nueva_particion.peso();
+        particion = nueva_particion;
+        contador_repeticiones = 1;
+      } else if (nueva_particion.peso() == peso_min) {
+        contador_repeticiones++;
+      }
+    }
   }
 
-  vector<unsigned int> solucion = kpmp(G, k);
-  for (auto it = solucion.begin(); it != solucion.end(); it++)
-    cout << *it << " ";
-  cout << endl;
-
-  return 0;
-}
-
-
-vector<unsigned int> kpmp(Grafo& G, unsigned int k)
-{
-  Particiones p(k, G);
-  return p.solucion();
+  return particion;
 }

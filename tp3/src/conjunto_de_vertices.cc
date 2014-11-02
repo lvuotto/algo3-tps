@@ -56,3 +56,10 @@ set<unsigned int>::iterator ConjuntoDeVertices::find(unsigned int vertice)
 {
   return vertices_.find(vertice);
 }
+
+
+void ConjuntoDeVertices::operator=(ConjuntoDeVertices& conjunto)
+{
+  peso_ = conjunto.peso_;
+  vertices_ = conjunto.vertices_;
+}

@@ -8,14 +8,15 @@ using namespace std;
 
 struct ConjuntoDeVertices {
   ConjuntoDeVertices(Grafo& grafo);
-  void agregar_vertice(unsigned int vertice);
-  void sacar_vertice(unsigned int vertice);
-  bool vacio() const;
-  double peso() const;
-  double costo(unsigned int vertice) const;
+  void                        agregar_vertice(unsigned int vertice);
+  void                        sacar_vertice(unsigned int vertice);
+  bool                        vacio() const;
+  double                      peso() const;
+  double                      costo(unsigned int vertice) const;
   set<unsigned int>::iterator begin();
   set<unsigned int>::iterator end();
   set<unsigned int>::iterator find(unsigned int vertice);
+  void                        operator=(ConjuntoDeVertices& conjunto);
 
 private:
   Grafo& grafo_;

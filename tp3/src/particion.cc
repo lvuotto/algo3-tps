@@ -3,7 +3,8 @@
 
 
 Particion::Particion(Grafo& grafo, unsigned int cantidad_de_conjuntos) :
-  conjuntos_(cantidad_de_conjuntos, ConjuntoDeVertices(grafo)), grafo_(grafo), peso_(0.0), cantidad_de_conjuntos_(cantidad_de_conjuntos)
+  conjuntos_(cantidad_de_conjuntos, ConjuntoDeVertices(grafo)), grafo_(grafo), peso_(0.0),
+  cantidad_de_conjuntos_(cantidad_de_conjuntos), vertices_(grafo.cantidad_de_vertices(), false)
   {}
 
 
@@ -36,6 +37,7 @@ void Particion::agregar_vertice(unsigned int conjunto, unsigned int vertice)
   peso_ -= conjuntos_[conjunto - 1].peso();
 
   conjuntos_[conjunto - 1].agregar_vertice(vertice);
+  vertices_[vertice] = true;
 
   peso_ += conjuntos_[conjunto - 1].peso();
 }
@@ -46,6 +48,7 @@ void Particion::sacar_vertice(unsigned int conjunto, unsigned int vertice)
   peso_ -= conjuntos_[conjunto - 1].peso();
 
   conjuntos_[conjunto - 1].sacar_vertice(vertice);
+  vertices_[vertice] = false;
 
   peso_ += conjuntos_[conjunto - 1].peso();
 }
@@ -63,7 +66,8 @@ set<unsigned int>::iterator Particion::end(unsigned int conjunto)
 }
 
 
-unsigned int Particion::conjunto_del_vertice(unsigned int vertice) {
+unsigned int Particion::conjunto_del_vertice(unsigned int vertice)
+{
   unsigned int conjunto;
 
   for (conjunto = 0; conjunto < cantidad_de_conjuntos(); conjunto++) {
@@ -73,4 +77,20 @@ unsigned int Particion::conjunto_del_vertice(unsigned int vertice) {
   }
 
   return conjunto + 1;
+}
+
+
+bool Particion::contiene_a(unsigned int vertice)
+{
+  return vertices_[vertice];
+}
+
+
+void Particion::operator=(Particion& particion)
+{
+  peso_ = particion.peso_;
+  
+  for (unsigned int i = 0; i < conjuntos_.size(); i++) {
+    conjuntos_[i] = particion.conjuntos_[i];
+  }
 }

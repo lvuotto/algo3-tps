@@ -88,7 +88,9 @@ bool Particion::contiene_a(unsigned int vertice)
 
 void Particion::operator=(Particion& particion)
 {
+  grafo_ = particion.grafo_;
   peso_ = particion.peso_;
+  cantidad_de_conjuntos_ = particion.cantidad_de_conjuntos_;
   
   for (unsigned int i = 0; i < conjuntos_.size(); i++) {
     conjuntos_[i] = particion.conjuntos_[i];

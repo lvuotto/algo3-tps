@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "kpmp.h"
+#include "kpmp-exacto.cc"
 #include "kpmp-hg.cc"
 #include "kpmp-hl.cc"
 #include "kpmp-grasp.cc"
@@ -23,7 +24,8 @@ int main(int argc, char *argv[])
 
   switch (atoi(argv[1])) {
     case 0: {
-      cout << "FALTA IMPLEMENTAR";
+      Particion particion = kpmp_exacto(entrada.grafo, entrada.cantidad_de_conjuntos);
+      imprimir_particion(particion);
       break;
     }
     case 1: {
@@ -142,7 +144,8 @@ void imprimir_particion(Particion& particion)
     cout << *it << " ";
   }
 
-  cout << endl << particion.peso() << endl;
+  cout << endl;
+  cerr << "Peso: " << particion.peso() << endl;
 }
 
 

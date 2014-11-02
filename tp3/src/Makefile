@@ -4,8 +4,9 @@ OBJS=kpmp.o
 BINDIR=../bin
 
 
-all: $(BINS)
-	mv $(BINS) $(BINDIR)
+all:
+	g++ -Wall -Wextra -Werror -pedantic -O3 -ggdb -std=c++0x kpmp.cc -o kpmp
+	mv kpmp $(BINDIR)
 
 kpmp.o: kpmp.h
 

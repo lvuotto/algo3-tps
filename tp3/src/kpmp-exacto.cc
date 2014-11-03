@@ -1,60 +1,54 @@
-#include <iostream>
-#include <vector>
-#include "kpmp.h"
-
+#include <stack>
+#include <limits>
+#include "kpmp-exacto.h"
 
 using namespace std;
 
-
-vector<unsigned int> kpmp(Grafo& G, unsigned int k);
-double backtracking(Particiones& ps, unsigned int v);
-
-int main()
+Particion kpmp_exacto(Grafo& grafo, unsigned int cantidad_de_conjuntos)
 {
-  unsigned int n, m, k;
-  cin >> n >> m >> k;
-  Grafo G(n);
-  for (unsigned int i = 0; i < m; i++) {
-    unsigned int u, v;
-    double w;
-    cin >> u >> v >> w;
-    G.agregar(u, v, w);
+  Particion particion(grafo, cantidad_de_conjuntos);
+
+  stack<unsigned int> vertices_pendientes;
+
+  for (unsigned int i = 1; i <= grafo.cantidad_de_vertices(); i++) {
+    vertices_pendientes.push(i);
   }
 
-  vector<unsigned int> solucion = kpmp(G, k);
-  for (auto it = solucion.begin(); it != solucion.end(); it++)
-    cout << *it << " ";
-  cout << endl;
+  double infinity = numeric_limits<double>::infinity();
 
-  return 0;
+  Particion particion_min = particion;
+
+  backtracking(particion, particion_min, vertices_pendientes, infinity);
+
+  return particion_min;
 }
 
 
-vector<unsigned int> kpmp(Grafo& G, unsigned int k)
+void backtracking(Particion& particion, Particion& particion_min, stack<unsigned int>& vertices_pendientes, double& peso_min)
 {
-  Particiones p(k, G);
-  backtracking(p, 1);
-  return p.solucion();
-}
-
-
-double backtracking(Particiones& ps, unsigned int v)
-{
-  if (v > ps.cantidad_nodos())
-    return ps.peso();
-
-  for (unsigned int i = 1; i <= ps.cantidad(); i++) {
-    ps.agregar(i, v);
-    if (backtracking(ps, v + 1) < ps.peso_min()) {
-      ps.actualizar();
-      return ps.peso();
-    } else {
-      ps.sacar(i, v);
-      /*if (ps.vacia(i)) {
-        break;
-      }*/
+  if (vertices_pendientes.empty()) {
+    if (particion.peso() < peso_min) {
+      peso_min = particion.peso();
+      particion_min = particion;  
     }
+
+    return;
   }
 
-  return ps.peso();
+  if (particion.peso() >= peso_min) {
+    return;
+  }
+
+  unsigned int vertice = vertices_pendientes.top();
+  vertices_pendientes.pop();
+
+  for (unsigned int conjunto = 1; conjunto <= particion.cantidad_de_conjuntos(); conjunto++) {
+    particion.agregar_vertice(conjunto, vertice);
+
+    backtracking(particion, particion_min, vertices_pendientes, peso_min);
+
+    particion.sacar_vertice(conjunto, vertice);
+  }
+
+  vertices_pendientes.push(vertice);
 }

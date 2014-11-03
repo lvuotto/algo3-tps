@@ -40,7 +40,7 @@ int main() {
   }
   cerr << caballos.size() << " "
        << dimension_tablero << " "
-       << duration_cast<milliseconds>(mejor).count() << endl;
+       << duration_cast<microseconds>(mejor).count() << endl;
   
   if (respuesta.first == -1) {
     cout << "no" << endl;

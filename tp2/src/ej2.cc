@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cstdio>
-#include <map>
 #include <sstream>
 #include <vector>
 #include <queue>
@@ -15,7 +14,7 @@ using namespace std::chrono;
 
 int main() {
   vector<Caballo> caballos;
-  
+
   int cantidad_caballos, dimension_tablero;
 
   cin >> dimension_tablero >> cantidad_caballos;
@@ -27,7 +26,7 @@ int main() {
     Caballo c = make_pair(x - 1, y - 1);
     caballos.push_back(c);
   }
-  
+
   auto inicio = high_resolution_clock::now();
   pair<int, Posicion> respuesta = punto_de_encuentro(caballos, dimension_tablero);
   auto fin = high_resolution_clock::now();
@@ -41,7 +40,7 @@ int main() {
   cerr << caballos.size() << " "
        << dimension_tablero << " "
        << duration_cast<microseconds>(mejor).count() << endl;
-  
+
   if (respuesta.first == -1) {
     cout << "no" << endl;
   } else {
@@ -61,7 +60,7 @@ pair<int, Posicion> punto_de_encuentro(vector<Caballo> caballos, int dimension_t
     llenar_tablero(t, *c);
     tableros.push_back(t);
   }
-  
+
   int min_i = -1;
   int min_j = -1;
   int min = -1;
@@ -85,7 +84,7 @@ pair<int, Posicion> punto_de_encuentro(vector<Caballo> caballos, int dimension_t
       }
     }
   }
-  
+
   return make_pair(min, make_pair(min_i, min_j));
 }
 

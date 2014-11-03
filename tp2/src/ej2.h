@@ -1,4 +1,3 @@
-#include <map>
 #include <vector>
 #include <queue>
 
@@ -15,7 +14,7 @@ struct Tablero {
     for (auto it = casilleros.begin(); it != casilleros.end(); it++)
       *it = vector<int>(n, -1);
   }
-  
+
   int dimension;
   vector<vector<int> > casilleros;
 };

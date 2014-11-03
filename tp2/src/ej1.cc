@@ -39,7 +39,7 @@ int main () {
     if (fin - inicio < mejor) mejor = fin - inicio;
   }
   cerr << backup.size() << " "
-       << duration_cast<milliseconds>(mejor).count() << endl;
+       << duration_cast<microseconds>(mejor).count() << endl;
 
   imprimir_vuelos(plan);
 

@@ -46,7 +46,7 @@ int main () {
   }
   cerr << cant_nodos << " "
        << cant_aristas << " "
-       << duration_cast<milliseconds>(mejor).count() << endl;
+       << duration_cast<microseconds>(mejor).count() << endl;
 
   g = backup;
   if (g.tiene_solucion()) {

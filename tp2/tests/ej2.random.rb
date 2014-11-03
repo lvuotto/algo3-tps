@@ -9,5 +9,9 @@ srand(seed)
 puts "#{n} #{k}"
 
 1.upto(k) do |i|
-  puts "#{rand(n) + 1} #{rand(n)+1}"
+  begin
+    puts "#{rand(n) + 1} #{rand(n)+1}"
+  rescue Errno::EPIPE
+    exit(74)
+  end
 end

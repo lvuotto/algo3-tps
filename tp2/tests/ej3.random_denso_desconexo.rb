@@ -26,5 +26,9 @@ puts "#{pcs} #{enlaces.count}"
 
 enlaces.each do |enlace|
   pc1, pc2 = enlace
-  puts "#{pc1} #{pc2} #{rand(costo_maximo)}"
+  begin
+    puts "#{pc1} #{pc2} #{rand(costo_maximo)}"
+  rescue Errno::EPIPE
+    exit(74)
+  end
 end

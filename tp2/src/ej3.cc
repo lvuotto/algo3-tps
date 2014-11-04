@@ -91,7 +91,7 @@ bool Grafo::tiene_solucion()
 
 bool Grafo::es_conexo()
 {
-  vector<bool> nodos_visitados(n, -1);
+  vector<bool> nodos_visitados(n, false);
   queue<unsigned int> nodos_pendientes;
   nodos_pendientes.push(0);
 

@@ -152,7 +152,7 @@ El testeo de los algoritmos implementados fue realizado, principalmente, en las 
 
 
 
-
+\newpage
 \section{Apéndice 1: acerca de los tests}
 
 Los \textbf{casos aleatorios se generan mediante los scripts} (en Ruby) \verb|ejN.random.rb|, donde
@@ -185,42 +185,137 @@ del mismo, etc.
 
 \section{Apéndice 2: secciones relevantes del código}
 
-En esta sección, adjuntamos parte del código correspondiente a la resolución de cada problema
-que consideramos más \textbf{relevante}. Omitimos los encabezados, bibliotecas incluídas,
-funciones \verb|main| y de impresión de resultados. El código se encuentra comentado en los
-archivos \verb|.cc|.
+En esta sección, adjuntamos parte del código correspondiente a la resolución de cada problema que consideramos más \textbf{relevante}. Omitimos los encabezados, bibliotecas incluídas, funciones \verb|main| y de impresión de resultados. El código se encuentra comentado en los archivos \verb|.cc|.
 
-\subsection{Código del Problema 1}
+% \subsection{Código del Problema 1}
 
 
-\begin{lstlisting}
-\end{lstlisting}
+% \begin{lstlisting}
+% \end{lstlisting}
 
-\vspace*{0.5cm}
+% \vspace*{0.5cm}
 
 
-\newpage
+%\newpage
 
 
 \subsection{Código del Problema 2}
 
 
 \begin{lstlisting}
+typedef pair<int, int> Posicion;
+typedef Posicion Caballo;
+
+struct Tablero {
+  Tablero() {}
+  Tablero(int n) : dimension(n)
+  {
+    casilleros.resize(n);
+    for (auto it = casilleros.begin(); it != casilleros.end(); it++)
+      *it = vector<int>(n, -1);
+  }
+
+  int dimension;
+  vector<vector<int> > casilleros;
+};
+
+pair<int, Posicion> punto_de_encuentro(vector<Caballo> caballos, int dimension_tablero);
+
+void llenar_tablero(Tablero& t, Posicion inicio);
 \end{lstlisting}
 
+
 \vspace*{0.5cm}
-
-
-\newpage
-
-
-\subsection{Código del Problema 3}
 
 
 \begin{lstlisting}
+pair<int, Posicion> punto_de_encuentro(vector<Caballo> caballos, int dimension_tablero) {
+  vector<Tablero> tableros;
+
+  for (auto c = caballos.begin(); c != caballos.end(); c++) {
+    Tablero t(dimension_tablero);
+    llenar_tablero(t, *c);
+    tableros.push_back(t);
+  }
+
+  int min_i = -1;
+  int min_j = -1;
+  int min = -1;
+
+  for (int i = 0; i < dimension_tablero; i++) {
+    for (int j = 0; j < dimension_tablero; j++) {
+      int sum = 0;
+
+      for (auto tablero = tableros.begin(); tablero != tableros.end(); tablero++) {
+        if (tablero->casilleros[i][j] == -1) {
+          sum = -1;
+        } else if (sum != -1) {
+          sum += tablero->casilleros[i][j];
+        }
+      }
+
+      if (sum != -1 && (min == -1 || sum < min)) {
+        min = sum;
+        min_i = i;
+        min_j = j;
+      }
+    }
+  }
+
+  return make_pair(min, make_pair(min_i, min_j));
+}
 \end{lstlisting}
+
 
 \vspace*{0.5cm}
 
+
+\begin{lstlisting}
+void llenar_tablero(Tablero& t, Posicion inicio) {
+  queue<pair<Posicion, int> > posiciones;
+  posiciones.push(make_pair(inicio, 0));
+  while (!posiciones.empty()) {
+    Posicion p = posiciones.front().first;
+    int nivel = posiciones.front().second;
+    posiciones.pop();
+
+    if (t.casilleros[p.first][p.second] == -1) {
+      t.casilleros[p.first][p.second] = nivel;
+
+      if (p.first - 2 >= 0 && p.second + 1 < t.dimension && t.casilleros[p.first - 2][p.second + 1] == -1) {
+        posiciones.push(make_pair(make_pair(p.first - 2, p.second + 1), nivel + 1));
+      }
+      if (p.first - 1 >= 0 && p.second + 2 < t.dimension && t.casilleros[p.first - 1][p.second + 2] == -1) {
+        posiciones.push(make_pair(make_pair(p.first - 1, p.second + 2), nivel + 1));
+      }
+      if (p.first + 1 < t.dimension && p.second - 2 >= 0 && t.casilleros[p.first + 1][p.second - 2] == -1) {
+        posiciones.push(make_pair(make_pair(p.first + 1, p.second - 2), nivel + 1));
+      }
+      if (p.first - 2 >= 0 && p.second - 1 >= 0 && t.casilleros[p.first - 2][p.second - 1] == -1) {
+        posiciones.push(make_pair(make_pair(p.first - 2, p.second - 1), nivel + 1));
+      }
+      if (p.first + 1 < t.dimension && p.second + 2 < t.dimension && t.casilleros[p.first + 1][p.second + 2] == -1) {
+        posiciones.push(make_pair(make_pair(p.first + 1, p.second + 2), nivel + 1));
+      }
+      if (p.first + 2 < t.dimension && p.second - 1 >= 0 && t.casilleros[p.first + 2][p.second - 1] == -1) {
+        posiciones.push(make_pair(make_pair(p.first + 2, p.second - 1), nivel + 1));
+      }
+      if (p.first + 2 < t.dimension && p.second + 1 < t.dimension && t.casilleros[p.first + 2][p.second + 1] == -1) {
+        posiciones.push(make_pair(make_pair(p.first + 2, p.second + 1), nivel + 1));
+      }
+      if (p.first - 1 >= 0 && p.second - 2 >= 0 && t.casilleros[p.first - 1][p.second - 2] == -1) {
+        posiciones.push(make_pair(make_pair(p.first - 1, p.second - 2), nivel + 1));
+      }
+    }
+  }
+}
+\end{lstlisting}
+
+
+%\newpage
+% \subsection{Código del Problema 3}
+% \begin{lstlisting}
+% \end{lstlisting}
+% \vspace*{0.5cm}
 
 \end{document}

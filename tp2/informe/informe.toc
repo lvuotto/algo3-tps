@@ -12,8 +12,6 @@
 \contentsline {subsubsection}{\numberline {3.5.3}Test 3 - benchmark del mejor caso}{13}{subsubsection.3.5.3}
 \contentsline {section}{\numberline {4}Problema 2: Ejercicios adicionales}{14}{section.4}
 \contentsline {section}{\numberline {5}Informe de modificaciones}{15}{section.5}
-\contentsline {section}{\numberline {6}Ap\IeC {\'e}ndice 1: acerca de los tests}{15}{section.6}
-\contentsline {section}{\numberline {7}Ap\IeC {\'e}ndice 2: secciones relevantes del c\IeC {\'o}digo}{16}{section.7}
-\contentsline {subsection}{\numberline {7.1}C\IeC {\'o}digo del Problema 1}{16}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}C\IeC {\'o}digo del Problema 2}{17}{subsection.7.2}
-\contentsline {subsection}{\numberline {7.3}C\IeC {\'o}digo del Problema 3}{18}{subsection.7.3}
+\contentsline {section}{\numberline {6}Ap\IeC {\'e}ndice 1: acerca de los tests}{16}{section.6}
+\contentsline {section}{\numberline {7}Ap\IeC {\'e}ndice 2: secciones relevantes del c\IeC {\'o}digo}{17}{section.7}
+\contentsline {subsection}{\numberline {7.1}C\IeC {\'o}digo del Problema 2}{17}{subsection.7.1}

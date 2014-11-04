@@ -1,36 +1,19 @@
 \select@language {spanish}
-\contentsline {section}{\numberline {1}Objetivos generales}{4}{section.1}
-\contentsline {section}{\numberline {2}Plataforma de pruebas}{5}{section.2}
-\contentsline {section}{\numberline {3}Problema 1: Plan de vuelo}{6}{section.3}
-\contentsline {subsection}{\numberline {3.1}Descripci\IeC {\'o}n del problema.}{6}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Desarrollo de la idea y pseudoc\IeC {\'o}digo.}{7}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}An\IeC {\'a}lisis de complejidad.}{8}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Experimentaci\IeC {\'o}n y gr\IeC {\'a}ficos.}{9}{subsection.3.4}
-\contentsline {subsubsection}{\numberline {3.4.1}Test 1 - benchmark caso aleatorio}{9}{subsubsection.3.4.1}
-\contentsline {subsubsection}{\numberline {3.4.2}Test 2 - benchmark del peor caso}{10}{subsubsection.3.4.2}
-\contentsline {subsubsection}{\numberline {3.4.3}Test 3 - benchmark del mejor caso}{11}{subsubsection.3.4.3}
-\contentsline {section}{\numberline {4}Problema 2: Caballos salvajes}{12}{section.4}
-\contentsline {subsection}{\numberline {4.1}Descripci\IeC {\'o}n del problema.}{12}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Desarrollo de la idea y pseudoc\IeC {\'o}digo.}{13}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Justificaci\IeC {\'o}n de la resoluci\IeC {\'o}n y demostraci\IeC {\'o}n de correctitud.}{15}{subsection.4.3}
-\contentsline {subsection}{\numberline {4.4}An\IeC {\'a}lisis de complejidad.}{16}{subsection.4.4}
-\contentsline {subsection}{\numberline {4.5}Experimentaci\IeC {\'o}n y gr\IeC {\'a}ficos.}{17}{subsection.4.5}
-\contentsline {subsubsection}{\numberline {4.5.1}Test 1 - benchmark caso aleatorio}{17}{subsubsection.4.5.1}
-\contentsline {subsubsection}{\numberline {4.5.2}Test 2 - benchmark del peor caso}{18}{subsubsection.4.5.2}
-\contentsline {subsubsection}{\numberline {4.5.3}Test 3 - benchmark del mejor caso}{19}{subsubsection.4.5.3}
-\contentsline {section}{\numberline {5}Problema 2: Ejercicios adicionales}{20}{section.5}
-\contentsline {section}{\numberline {6}Problema 3: La comunidad del anillo}{21}{section.6}
-\contentsline {subsection}{\numberline {6.1}Descripci\IeC {\'o}n del problema.}{21}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}Desarrollo de la idea y pseudoc\IeC {\'o}digo.}{22}{subsection.6.2}
-\contentsline {subsection}{\numberline {6.3}Justificaci\IeC {\'o}n de la resoluci\IeC {\'o}n y demostraci\IeC {\'o}n de correctitud.}{24}{subsection.6.3}
-\contentsline {subsection}{\numberline {6.4}An\IeC {\'a}lisis de complejidad.}{26}{subsection.6.4}
-\contentsline {subsection}{\numberline {6.5}Experimentaci\IeC {\'o}n y gr\IeC {\'a}ficos.}{27}{subsection.6.5}
-\contentsline {subsubsection}{\numberline {6.5.1}Test 1 - benchmark caso aleatorio}{27}{subsubsection.6.5.1}
-\contentsline {subsubsection}{\numberline {6.5.2}Test 2 - benchmark del peor caso}{28}{subsubsection.6.5.2}
-\contentsline {subsubsection}{\numberline {6.5.3}Test 3 - benchmark del mejor caso}{29}{subsubsection.6.5.3}
-\contentsline {section}{\numberline {7}Informe de modificaciones}{30}{section.7}
-\contentsline {section}{\numberline {8}Ap\IeC {\'e}ndice 1: acerca de los tests}{30}{section.8}
-\contentsline {section}{\numberline {9}Ap\IeC {\'e}ndice 2: secciones relevantes del c\IeC {\'o}digo}{31}{section.9}
-\contentsline {subsection}{\numberline {9.1}C\IeC {\'o}digo del Problema 1}{31}{subsection.9.1}
-\contentsline {subsection}{\numberline {9.2}C\IeC {\'o}digo del Problema 2}{32}{subsection.9.2}
-\contentsline {subsection}{\numberline {9.3}C\IeC {\'o}digo del Problema 3}{33}{subsection.9.3}
+\contentsline {section}{\numberline {1}Objetivos generales}{3}{section.1}
+\contentsline {section}{\numberline {2}Plataforma de pruebas}{4}{section.2}
+\contentsline {section}{\numberline {3}Problema 2: Caballos salvajes}{5}{section.3}
+\contentsline {subsection}{\numberline {3.1}Descripci\IeC {\'o}n del problema.}{5}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Desarrollo de la idea y pseudoc\IeC {\'o}digo.}{6}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Justificaci\IeC {\'o}n de la resoluci\IeC {\'o}n y demostraci\IeC {\'o}n de correctitud.}{8}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}An\IeC {\'a}lisis de complejidad.}{9}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Experimentaci\IeC {\'o}n y gr\IeC {\'a}ficos.}{10}{subsection.3.5}
+\contentsline {subsubsection}{\numberline {3.5.1}Test 1 - benchmark caso aleatorio}{10}{subsubsection.3.5.1}
+\contentsline {subsubsection}{\numberline {3.5.2}Test 2 - benchmark del peor caso}{11}{subsubsection.3.5.2}
+\contentsline {subsubsection}{\numberline {3.5.3}Test 3 - benchmark del mejor caso}{12}{subsubsection.3.5.3}
+\contentsline {section}{\numberline {4}Problema 2: Ejercicios adicionales}{13}{section.4}
+\contentsline {section}{\numberline {5}Informe de modificaciones}{14}{section.5}
+\contentsline {section}{\numberline {6}Ap\IeC {\'e}ndice 1: acerca de los tests}{14}{section.6}
+\contentsline {section}{\numberline {7}Ap\IeC {\'e}ndice 2: secciones relevantes del c\IeC {\'o}digo}{15}{section.7}
+\contentsline {subsection}{\numberline {7.1}C\IeC {\'o}digo del Problema 1}{15}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}C\IeC {\'o}digo del Problema 2}{16}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}C\IeC {\'o}digo del Problema 3}{17}{subsection.7.3}

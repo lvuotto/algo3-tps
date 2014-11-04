@@ -12,5 +12,9 @@ puts "0 1 #{vuelos}"
 (1..vuelos).each do
   ini = rand(max_horario)
   fin = ini + 1 + rand(5)
-  puts "#{rand(ciudades)} #{rand(ciudades)} #{ini} #{fin}"
+  begin
+    puts "#{rand(ciudades)} #{rand(ciudades)} #{ini} #{fin}"
+  rescue Errno::EPIPE
+    exit(74)
+  end
 end

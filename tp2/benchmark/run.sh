@@ -41,3 +41,21 @@ gnuplot -e "datafile='$BENCHDIR/info.2.n.dat'" \
         -e "outfile='$IMGDIR/grafico-2-n.png'" \
         -e "titulo='Problema 2 - benchmark aleatorio en tamaño'" \
 $BENCHDIR/plotter.2.n.gnu 2>&1 > /dev/null
+
+$BENCHDIR/benchmark.3.sh 2> $BENCHDIR/info.3.dat
+gnuplot -e "datafile='$BENCHDIR/info.3.dat'" \
+        -e "outfile='$IMGDIR/grafico-3.png'" \
+        -e "titulo='Problema 3 - benchmark aleatorio'" \
+$BENCHDIR/plotter.3.gnu 2>&1 > /dev/null
+
+$BENCHDIR/benchmark.3.m.sh 2> $BENCHDIR/info.3.m.dat
+gnuplot -e "datafile='$BENCHDIR/info.3.m.dat'" \
+        -e "outfile='$IMGDIR/grafico-3-m.png'" \
+        -e "titulo='Problema 3 - benchmark aleatorio'" \
+$BENCHDIR/plotter.3.gnu 2>&1 > /dev/null
+
+$BENCHDIR/benchmark.3.dnc.sh 2> $BENCHDIR/info.3.dnc.dat
+gnuplot -e "datafile='$BENCHDIR/info.3.dnc.dat'" \
+        -e "outfile='$IMGDIR/grafico-3-dnc.png'" \
+        -e "titulo='Problema 3 - Denso no conexo'" \
+$BENCHDIR/plotter.3.gnu 2>&1 > /dev/null

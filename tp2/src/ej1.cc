@@ -8,7 +8,7 @@
 #include "ej1.h"
 #include <chrono>
 
-#define CANTIDAD 100
+#define CANTIDAD 25
 
 using namespace std;
 using namespace std::chrono;

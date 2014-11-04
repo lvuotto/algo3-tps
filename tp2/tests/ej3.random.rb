@@ -22,5 +22,9 @@ puts "#{pcs} #{enlaces_maximos}"
 
 (1..enlaces_maximos).each do
   pc1, pc2 = enlaces.pop
-  puts "#{pc1} #{pc2} #{rand(costo_maximo)}"
+  begin
+    puts "#{pc1} #{pc2} #{rand(costo_maximo)}"
+  rescue Errno::EPIPE
+    exit(74)
+  end
 end

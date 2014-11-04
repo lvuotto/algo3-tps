@@ -6,14 +6,14 @@
 \contentsline {subsection}{\numberline {3.2}Desarrollo de la idea y pseudoc\IeC {\'o}digo.}{6}{subsection.3.2}
 \contentsline {subsection}{\numberline {3.3}Justificaci\IeC {\'o}n de la resoluci\IeC {\'o}n y demostraci\IeC {\'o}n de correctitud.}{8}{subsection.3.3}
 \contentsline {subsection}{\numberline {3.4}An\IeC {\'a}lisis de complejidad.}{9}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Experimentaci\IeC {\'o}n y gr\IeC {\'a}ficos.}{10}{subsection.3.5}
-\contentsline {subsubsection}{\numberline {3.5.1}Test 1 - benchmark caso aleatorio}{10}{subsubsection.3.5.1}
-\contentsline {subsubsection}{\numberline {3.5.2}Test 2 - benchmark del peor caso}{11}{subsubsection.3.5.2}
-\contentsline {subsubsection}{\numberline {3.5.3}Test 3 - benchmark del mejor caso}{12}{subsubsection.3.5.3}
-\contentsline {section}{\numberline {4}Problema 2: Ejercicios adicionales}{13}{section.4}
-\contentsline {section}{\numberline {5}Informe de modificaciones}{14}{section.5}
-\contentsline {section}{\numberline {6}Ap\IeC {\'e}ndice 1: acerca de los tests}{14}{section.6}
-\contentsline {section}{\numberline {7}Ap\IeC {\'e}ndice 2: secciones relevantes del c\IeC {\'o}digo}{15}{section.7}
-\contentsline {subsection}{\numberline {7.1}C\IeC {\'o}digo del Problema 1}{15}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}C\IeC {\'o}digo del Problema 2}{16}{subsection.7.2}
-\contentsline {subsection}{\numberline {7.3}C\IeC {\'o}digo del Problema 3}{17}{subsection.7.3}
+\contentsline {subsection}{\numberline {3.5}Experimentaci\IeC {\'o}n y gr\IeC {\'a}ficos.}{11}{subsection.3.5}
+\contentsline {subsubsection}{\numberline {3.5.1}Test 1 - benchmark caso aleatorio}{11}{subsubsection.3.5.1}
+\contentsline {subsubsection}{\numberline {3.5.2}Test 2 - benchmark del peor caso}{12}{subsubsection.3.5.2}
+\contentsline {subsubsection}{\numberline {3.5.3}Test 3 - benchmark del mejor caso}{13}{subsubsection.3.5.3}
+\contentsline {section}{\numberline {4}Problema 2: Ejercicios adicionales}{14}{section.4}
+\contentsline {section}{\numberline {5}Informe de modificaciones}{15}{section.5}
+\contentsline {section}{\numberline {6}Ap\IeC {\'e}ndice 1: acerca de los tests}{15}{section.6}
+\contentsline {section}{\numberline {7}Ap\IeC {\'e}ndice 2: secciones relevantes del c\IeC {\'o}digo}{16}{section.7}
+\contentsline {subsection}{\numberline {7.1}C\IeC {\'o}digo del Problema 1}{16}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}C\IeC {\'o}digo del Problema 2}{17}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}C\IeC {\'o}digo del Problema 3}{18}{subsection.7.3}

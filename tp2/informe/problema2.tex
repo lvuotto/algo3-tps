@@ -158,66 +158,80 @@ con el menor.
 
 \vspace*{0.3cm}
 
-\textbf{Aclaraciones} : Se considerará $k$ = cantidad de caballos
- y $n$ = cantidad de casilleros de alto o largo (es indiferente ya que los
- tableros serán cuadrados).
+Para el análisis de complejidad nos basaremos en el pseudocódigo de la función
+\textsc{puntoDeEncuentro}, correspondiente al ítem \textbf{4.2}.
+
+Se considerará $k$ = cantidad de caballos y $n$ = cantidad de casilleros (los tableros tienen tamaño $n \times n$) y se tendrá en cuenta lo siguiente sobre las estructuras utilizadas en el código y las correspondientes complejidades de sus operaciones:
+
+\begin{itemize}
+  \item Todas las operaciones realizadas sobre el contenedor \verb|vector| de la \textit{STL} (size, la creación y manipulación de iteradores) toman tiempo constante $O(1)$. La operación \textit{push_back}, utilizada para agregar elementos al vector, tiene complejidad constante amortizada. La
+  operación \verb|resize|, utilizada para definir el tamaño de los vectores, es lineal en el tamaño del contenedor.
+
+  \item Sobre las operaciones realizadas sobre el contenedor \verb|queue| de la \textit{STL}: la cola \textit{posiciones} se crea en tiempo constante. Encolar elementos en \textit{posiciones}, mediante la operación \textit{push}
+  toma tiempo constante $O(1)$. Preguntar si una cola es vacía, mediante la operación \textit{empty}, también se realiza en tiempo constante. Acceder al primer elemento de la cola, mediante \textit{front} toma tiempo constante. Desencolar un elemento de \textit{posiciones}, mediante \textit{pop}, también toma tiempo constante $O(1)$.
+
+  \item Los elementos de la cola \textit{posiciones} son \textit{pares} del
+  tipo $<Posicion, int>$, donde a su vez, \textit{Posicion}
+  es la tupla $<int, int>$. Crear la tupla toma tiempo constante $O(1)$.
+  Acceder a la primer ó segunda componente de un par o tupla, mediante
+  \textit{first} ó \textit{second}, toma tiempo constante $O(1)$.
+
+\end{itemize}
+
+
+\textbf{Análisis de complejidad sobre el pseudocódigo de la función principal (puntoDeEncuentro):}
 
 \begin{enumerate}
+  \item En la línea 1, creamos el vector vacío \textit{tableros}. Esto se realiza en tiempo constante $O(1)$.
 
- \item Las operaciones sobre el contenedor \verb|vector| de la STL (push_back,
- begin y end) y la creación de sus iteradores toman $O(1)$.
+  \item En la línea 2, se realizan $k$ iteraciones (una por cada caballo), por lo que el costo de esta operación es $O(k)$, multiplicado por el costo de
+  \verb|agregar| (línea 3). Para determinar el costo de este ciclo for, debemos saber el costo de la operación \verb|agregar| y las funciones que recibe como parámetros (\verb|crearTablero| y \verb|llenarTablero|).
 
- \item En la función \verb|main| la estructura \verb|for| es ejecutada
-  $k$ veces, donde se realiza un \verb|make_pair| y un \verb|push_back|
-  sobre un \verb|vector| que cuestan $O(1)$, dando una complejidad de $O(k)$.
+  \item La complejidad de \verb|crearTablero| depende del tamaño del tablero
+  (vector de vector). En este caso, creamos un tablero de dimensión
+  $n \times n$, por lo cual la complejidad de crearlo es $O(n^2)$. Asignarle valores a cada posición del tablero toma tiempo constante $O(1)$. Luego, la
+  complejidad total de la función \verb|crearTablero| es $O(n^2)$.
 
- \item Crear la esctructura \verb|pair| $respuesta$ que contrendrá el
- resultado del problema, si lo hay, cuesta $O(1)$.
+  \item Analicemos la complejidad de \verb|llenarTablero| (en este ítem, las líneas hacen referencia a esta función y no a la principal). Crear una cola vacía (línea 2) cuesta $O(1)$. Encolar un elemento (línea 3) cuesta $O(1)$. En la línea 4
+  tenemos un ciclo que se ejecuta tantas veces como elementos tenga la cola
+  \textit{posiciones}. Esta cola contiene como elementos las tuplas
+  $<casillero, costo>$, que indican, para cada caballo, el costo (en cantidad de movimientos) que tienen para dirigirse a determinado casillero del
+  tablero. En el peor de los casos, en un tablero de dimensión $n \times n$, un caballo puede recorrer todos los casilleros del mismo, por lo tanto su
+  cola \textit{posiciones} correspondiente tendría tantos elementos como casilleros a los cuáles moverse, es decir, $n^2$. Por lo tanto, este ciclo
+  (línea 4) itera, a lo sumo, $n^2$ veces, teniendo un costo de $O(n^2)$. Veamos el costo de las operaciones que componen este ciclo.
+  En las líneas 5 y 6 se realizan 2 asignaciones en $O(1)$, pues se trata de valores enteros. Además, obtener cada componente de la tupla cuesta $O(1)$ y
+  acceder al primer elemento de la cola (\verb|frente|) cuesta también $O(1)$.
+  \verb|desencolar|, es decir, quitar el primer elemento de \textit{posiciones}, cuesta $O(1)$. Las asignaciones de las líneas 8 y 9 también se realizan en
+  tiempo constante por tratarse de valores enteros. En la línea 10, preguntamos si un determinado casillero tiene un cierto valor ($O(1)$) y si
+  esto se verifica, realizamos una asignación simple en la línea 11 ($O(1)$) y
+  luego, por cada vecino de un determinado casillero (que siempre son 8, por los movimientos permitidos para un caballo), encolamos un elemento en
+  $O(1)$. Por lo tanto, la complejidad del ciclo de la línea 12 es $O(1)$, pues la cantidad de operaciones está acotada por una constante
+  (cantidad de vecinos) y dentro del ciclo realizamos también operaciones de tiempo constante. Luego, la complejidad de la función \verb|llenarTablero| está acotada superiormente por la complejidad del ciclo de la línea 4, que como vimos anteriormente, es de orden cuadrático. Luego, la complejidad de
+  \verb|llenarTablero| es $O(n^2)$.
 
- \item En la función \verb|punto_de_encuentro| se crea el \verb|vector|
- $tableros$ ( $O(1)$ ), y con un iterador se recorre el \verb|vector| $caballos$ en
- $O(k)$ donde por cada iteración se crea un tablero (ver \textbf{Tablero})
- en $O(n^{2})$, se crea un \verb|queue| para los casilleros ( $O(1)$ ),
- se crea un \verb|make_pair| ( $O(1)$ ) y se los inserta en el \verb|queue| $casilleros$
- mediante \verb|push| ($ O(1)$ ), se llena el tablero creado (ver \textbf{LLenar tablero})
- en $O(n^{2})$ y se los agrega a $tableros$ con \verb|push_back| en $O(1)$
-  dando una complejidad total de $O(k.(n^{2} + n^{2}))$ = $O(k.n^{2})$.
+  \item Por los dos ítems anteriores,
+  \verb|llenarTablero(crearTablero(n), caballo)| tiene un costo total de
+  $O(n^2) + O(n^2) = 2*O(n^2) = O(n^2)$. Luego, el costo de \verb|agregar| (línea 3 de la función principal) es el costo de agregar (copiar) el tablero de un caballo a \text{tableros}, $O(n^2)$, por lo tanto, el ciclo
+  \textit{for} de la línea 2, tiene un costo total de $O(k*n^2)$.
 
- \item \textbf{Tablero} - Crear un tablero implica crear un \verb|vector|
- que contendrá otro \verb|vector| dentro ($O(1)$) y se le dará tamaño $n$
- al vector contenedor con \verb|resize| en $O(n)$. Luego se creará un iterador
- ($O(1)$) para recorrer el \verb|vector| contenedor ($O(n)$) y en cada iteración
- al \verb|vector| contenido en dicha posición se le seteará $n$ posiciones
- en $-1$ ($O(n)$), dando una complejidad total de $O(n^{2})$.
+  \item Las asignaciones realizadas (líneas 4-8, 11, 13, 15-19) también se realizan en tiempo constante $O(1)$.
 
- \item \textbf{Llenar tablero} - La función posee un \verb|while| donde se ejecutan
- todas las instrucciones, mientras el \verb|queue| $casilleros$ sea diferente de vacío.
- $casilleros$ comienza con 1 elemento y en cada ejecución se le realiza
- \verb|pop| de un elemento y se le agregan todas las posiciones a las cuales se
- pueden saltar (siguendo el patron del caballo y sin que salga del tablero), la
- complejidad del \verb|while| sera de $O(n^{2})$ en el peor caso (todos los casilleros), multiplicado
- por la complejidad de las instrucciones que se ejecuten dentro del mismo.
+  \item En la línea 12 tenemos un ciclo acotado por la cantidad de elementos de \textit{tableros}, que se corresponde con la cantidad $k$ de caballos, por lo que tiene una complejidad del orden de $O(k)$. La operación realizada dentro es una suma simple que se realiza en tiempo constante.
 
- Crear un \verb|pair| y asignarle el \verb|first| de la tupla del primer elemento
- de $casilleros$ cuesta $O(1)$, al igual que crear un \verb|int| y asignarle el
- \verb|second| de la tupla del primer elemento de $casilleros$.
+  \item En las líneas 9 y 10, tenemos un ciclo de, a lo sumo, $n$ iteraciones dentro de otro, también de $n$ iteraciones. Como vimos anteriormente, el ciclo \textit{for} de la línea 12 cuesta $O(k)$, por lo que el ciclo
+  \textit{while} de la línea 10 cuesta $O(n*k)$. Po lo tanto, el ciclo más externo, de la línea 9, que contiene a ambos, cuesta $n*O(n*k) = O(n^2*k) = O(k*n^2)$.
 
- Hacer \verb|pop| de $casilleros$ cuesta $O(1)$.
+  \item Retornar el mínimo entre 3 valores enteros (línea 20) se realiza en tiempo constante $O(1)$.
 
- En el primer \verb|if| acceder al elemento $[x][y]$ del \verb|vector[vector]|
- $t.casilleros$ del tablero y compararlo con -1 cuesta $O(1)$ (notar que $tablero$
- posee un $casilleros$ \verb|vector[vector]| y que la función $llenar\_tablero$ recibe otro $casilleros$
- \verb|queue|). En caso de ser verdadero se realiza un \verb|continue| en $O(1)$.
+  \item Por todo lo visto en los ítems anteriores, la complejidad de \verb|puntoDeEncuentro| está determinada por los ciclos de las líneas 2 y 9, ambos del orden de $O(k*n^2)$, pues todas las demás operaciones son del orden      $O(n^2)$, $O(k)$ ó $O(1)$, todas acotadas superiormente por la complejidad
+  antes mencionada.
 
- Asignarle al \verb|int| $nivel$ un elemento de $t.casilleros$ en $[x][y]$ cuesta $O(1)$.
+Por lo tanto, la \textbf{complejidad total} del algoritmo implementado para este problema es
 
- Para las ocho posiciones posibles a las que puede saltar un caballo desde la posición
- actual, validar que la posición sea válida (que caiga dentro del tablero) cuesta
- $O(1)$, y de ser válida ver si el valor almacenado en dicho lugar es distinto de -1
- también cuesta $O(1)$. Si se cumplen estas condiciones se ejecuta la instrucción
- del if donde se agrega el casillero que se acaba de evaluar al \verb|queue| $casilleros$
- ($O(1)$) que se recorre en el \verb|while|, realizando dos \verb|make_pair| ($O(1)$)
- y asignandole el valor del $nivel$ + 1 ($O(1)$).
+\begin{center}
+  $O(k*n^2) + O(k*n^2) = 2*O(k*n^2) =$ \textit{\textbf{$O(k*n^2)$}}
+\end{center}
+
 \end{enumerate}
 
 

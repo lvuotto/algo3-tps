@@ -239,17 +239,40 @@ Por lo tanto, la \textbf{complejidad total} del algoritmo implementado para este
 
 \vspace*{0.3cm}
 
-\subsubsection{Test 1 - benchmark caso aleatorio}
+\subsubsection{Test 1 - benchmark aleatorio}
 
-\textcolor{red}{\textbf{completar!}}
+(ver \verb|info.2.n.dat|) \medskip
+
+En este test, tenemos $n \times n$ casilleros en cada instancia, con $n$
+inicializado en 10 e incrementándose también en 10 hasta alcanzar 1000,
+utilizando solamente un caballo.
+
+Para cada instancia se toma el \textbf{valor mínimo} de microsegundos luego de
+\textbf{25 corridas}.
+
+\vspace*{0.5cm}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grafico-2-n.png}
+  \end{center}
+\end{figure}
+
+\vspace*{0.5cm}
+
+En este gráfico podemos apreciar que el comportamiento del algoritmo es
+claramente cuadrático en la cantidad de casilleros del tablero, tal como se
+había estipulado en el análisis teórico de su complejidad. Esto se debe a que,
+en este caso, $k$ toma un valor constante (en particular, vale 1), dejando que
+la complejidad del algoritmo pase a depender exclusivamente del valor de $n$.
 
 
 \newpage
 \subsubsection{Test 2 - benchmark del peor caso}
 
-Este ejercicio no tiene mejor y peor caso, todos tardan lo mismo.
-Porque en todos los casos se generan los tableros para todos los caballos
-y también se busca el mínimo en todos los casilleros.-
+Este ejercicio no tiene mejor y peor caso, todos tardan lo mismo,
+porque en todos los casos se generan los tableros para todos los caballos
+y también se busca el mínimo en todos los casilleros.
 \textcolor{red}{\textbf{completar!}}
 
 

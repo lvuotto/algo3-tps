@@ -1,14 +1,22 @@
 Utilizando alfiles en lugar de caballos, sucede lo siguiente: 
 
 \begin{itemize}
-        \item Cambia los "vecinos" de un casillero. Ahora serán como máximo 4, 
-        los que limiten con éste en sus diagonales.
+        \item Cambian los "vecinos" de un casillero. Ahora, dos casilleros (o nodos) del tablero
+        serán vecinos si forman parte de la misma diagonal, pues en 1 sólo movimiento, un alfil
+        puede acceder a cualquier casillero de la misma, volviéndolos adyacentes.
 
-        \item Podemos saber más rápidamente si el problema tiene solución o no (en $O(n^{2})$).
-        Si los alfiles se encuentran en casilleros de colores distintos, el problema no tiene 
-        solución, pues dado los movimientos que realiza un alfil, no puede pasar de un casillero 
-        negro a uno blanco o viceversa. En nuestro caso, para chequear el "color" de un casillero, 
-        basta con ver si las coordenadas $i, j$ de los alfiles coinciden en paridad.
+        \item Podemos saber más rápidamente si el problema tiene solución o no (en $O(k)$, 
+        con $k$ = cantidad de alfiles). Si existe al menos un alfil ubicado en un casillero de color   
+        distinto al resto, el problema no tiene solución, pues, dado los movimientos que realiza un 
+        alfil, no puede pasar de un casillero negro a uno blanco o viceversa. En nuestro caso, para 
+        chequear el "color" de un casillero, basta con ver si las coordenadas $i, j$ de los alfiles 
+        coinciden en paridad.
+
+        \item Un alfil necesita tan sólo 2 movimientos para acceder a cualquier casillero del 
+        tablero (siempre y cuando sea un casillero válido, es decir, que coincida en color con 
+        el casillero inicial), por lo tanto, en $O(1)$ podemos saber cuánto le cuesta a un
+        caballo moverse a determinado casillero, siendo $O(k)$ el costo de averiguarlo para todos los    
+        caballos. Sin embargo, la complejidad total del algoritmo va a seguir dependiendo del tamaño del 
+        tablero ($n^2$), pues debemos chequear todos para saber en cúal minimizamos la cantidad de       
+        movimientos totales. Luego, la complejidad seguirá siendo $O(k*n^2)$.
 \end{itemize}
-
-Por lo tanto, esta modificación no afecta a nuestro algoritmo.

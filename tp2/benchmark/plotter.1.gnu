@@ -6,5 +6,5 @@ set ylabel 'microsegundos'
 f(x) = a*x*log(x)
 FIT_LIMIT = 1e-6
 fit f(x) datafile u 1:2 via a
-plot datafile u 1:2 w dots t 'clock', \
-     f(x) w lines t sprintf('%f*x', a)
+plot datafile u 1:2 w points pt 7 ps 0.5 t 'clock', \
+     f(x) w lines t sprintf('%f*x*log(x)', a)

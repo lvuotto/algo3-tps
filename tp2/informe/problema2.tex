@@ -97,6 +97,7 @@ que pueden alcanzar todos los caballos en la menor cantidad de saltos.
 
 \begin{codebox}
 \Procname{$\proc{llenarTablero}(tablero,inicio)$}
+\li \Comment Implementación del BFS. 
 \li \Comment $\id{posiciones}$ es una cola de tuplas $<casillero,costo>$.
 \li $\id{posiciones} \gets \emptyset$
 \li $\proc{encolar}(posiciones, (inicio,0))$
@@ -126,31 +127,28 @@ La solución es el mínimo número de movimientos entre todos los caballos que
 los deja en el mismo casillero, y la posición de ese casillero. Es decir, si
 $s \in [1, \dots, n] \times [1, \dots, n]$ es solución, $s$ pertenece a
 \begin{align*}
-\min_{(i, j) \in [1, \dots, n] \times [1, \dots, n]} \sum_{c \in caballos}
-\text{camino\_mínimo}(c, (i, j))
+\{p \in [1, \dots, n] \times [1, \dots, n] : \sum_{i = 1}^k
+\text{camino\_minimo}(c_i, p) \text{ es mínimo}\}
 \end{align*}
 
-Primero completamos, en un tablero para cada caballo, los caminos mínimos
-desde la posición inicial de este hasta cada casillero que puede alcanzar.
-Para esto, usamos el tablero como un grafo, considerando cada casillero como
-un nodo y los posibles saltos de caballos como aristas. Empezando desde la
-posición del caballo, se recorren todos los nodos alcanzables mediante el
-algoritmo BFS, logrando de esta manera poner la cantidad mínima de saltos
-para cada casillero alcanzable, pues BFS obtiene los caminos mínimos desde
-un nodo inicial a cualquier otro nodo del grafo, siempre y cuando estos se
-encuentren en la misma componente conexa.
+Sea $d$ la función de distancia en el tablero, interpretado como grafo del
+mismo modo que se menciona en la explicación (ítem 4.2).
+Sean $c_1, \dots, c_k \in [1, \dots, n] \times [1, \dots, n]$ las posiciones
+iniciales de los $k$ caballos. Definimos $A \in M_{n \times n}(\mathbb{N} \cup
+\{+\infty\})$ como $A_{ij} = \sum_{h=1}^k d(c_h, (i, j))$. Si $(p_1, p_2) \in
+[1, \dots, n] \times [1, \dots, n]$ es solución, $\sum_{h=1}^k d(c_h, (p_1,
+p_2)) = A_{p_1 p_2}$.
 
-Luego de obtener este resultado, para obtener el valor mínimo y la
-coordenada donde se alcanza, se recorren todos los casilleros y se calcula
-la sumatoria de costos de ese casillero en el tablero correspondiente a cada
-caballo. En cada caso se compara el valor obtenido con el mínimo actual y se
-actualiza este valor y la coordenada, de ser necesario.
+Sea $B^h$ la matriz obtenida por el algoritmo al realizar BFS partiendo del
+caballo $h$, es decir, $B^h_{ij} = BFS(c_h, (i, j))$. Como BFS calcula el
+camino mínimo de un grafo sin peso, se obtiene que $B^h_{ij} = d(c_h, (i, j))$.
+Si definimos B como $B_{ij} = \sum_{h=1}^k B^h_{ij}$, entonces, $B = A$, y como
+el algoritmo propuesto elige el mínimo $(s_1, s_2)$ en B,
+\begin{align*}
+  \sum_{h=1}^k d(c_h, (s_1, s_2)) \le \sum_{h=1}^k d(c_h, (p_1, p_2)),
+\end{align*}
 
-El valor obtenido, si existe, es una solución óptima que minimiza el número
-de movimientos de todos los caballos para llegar a ese casillero, pues el
-algoritmo es exhaustivo: recorre todos los posibles resultados y se queda
-con el menor.
-
+es decir, $(s_1, s_2)$ es solución.
 
 
 \newpage

@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <string>
 #include <map>
+#include <set>
 #include <deque>
 
 #include "ej1.h"
@@ -24,7 +25,7 @@ int main () {
     cin >> origen >> destino >> salida >> llegada;
     vuelos.push_back(Vuelo(i, origen, destino, salida, llegada));
   }
-  
+
   auto backup = vuelos;
   auto inicio = high_resolution_clock::now();
   deque<Vuelo> plan = plan_de_vuelo(ciudad_inicial, ciudad_final, vuelos);
@@ -38,7 +39,16 @@ int main () {
     /*min = fin - inicio < min ? fin - inicio : fin;*/
     if (fin - inicio < mejor) mejor = fin - inicio;
   }
+
+  set<string> ciudades;
+
+  for (auto it = backup.begin(); it != backup.end(); it++) {
+    ciudades.insert(it->origen);
+    ciudades.insert(it->destino);
+  }
+
   cerr << backup.size() << " "
+       << ciudades.size() << " "
        << duration_cast<microseconds>(mejor).count() << endl;
 
   imprimir_vuelos(plan);

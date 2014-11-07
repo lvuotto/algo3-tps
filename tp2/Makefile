@@ -23,6 +23,11 @@ test:
 plot:
 	$(BENCHDIR)/run.sh $(BENCHDIR) $(TESTDIR) $(BINDIR) $(IMGDIR)
 
+plot2:
+	$(BENCHDIR)/run2.sh $(BENCHDIR) $(TESTDIR) $(BINDIR) $(IMGDIR)
+
+graficos:
+	$(BENCHDIR)/grafico.sh $(BENCHDIR) $(TESTDIR) $(BINDIR) $(IMGDIR)
 
 all: tp
 

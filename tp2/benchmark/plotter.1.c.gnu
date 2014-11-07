@@ -5,6 +5,6 @@ set xlabel 'Cantidad de vuelos'
 set ylabel 'microsegundos'
 f(x) = a*x*log(x)
 FIT_LIMIT = 1e-6
-fit f(x) datafile u 1:3 via a
-plot datafile u 1:3 w points pt 7 ps 0.5 t 'clock', \
+fit f(x) datafile u 2:3 via a
+plot datafile u 2:3 w points pt 7 ps 0.5 t 'clock', \
      f(x) w lines t sprintf('%f*x*log(x)', a)

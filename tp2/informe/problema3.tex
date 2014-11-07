@@ -323,6 +323,45 @@
 
 \vspace*{0.3cm}
 
+Para realizar este test, se generaron aleatoriamente grafos de $n$ nodos.
+
+Para cada instancia se toma el \textbf{valor mínimo} de microsegundos luego de
+\textbf{25 corridas}.
+
+%grafico1
+
+En este gráfico se aumentan la cantidad de nodos y aristas (para que sea
+posible una solución). Podemos apreciar que evidentemente es $n2$, con $n$ la cantidad
+de nodos, tal como habíamos predicho en el análisis de complejidad.
+
+%Grafico n3
+En este gráfico estábamos probando el caso de grafos densos pero no conexos,
+para calcular la complejidad en peor caso cuando \textbf{no} tienen solución.
+Debería ser algo $n2$, pero el gráfico muestra que tiene un comportamiento
+cúbico.
+
+Gracias a esto revisamos el código y pudimos darnos cuenta que al calcular si $es
+complejo$ nos faltaba una guarda que hacía que se revisaran nodos de más.
+
+Al solucionarlo nos dio el siguiente gráfico:
+
+%grafico densos no conexos n2
+
+Que es claramente cuadrático.
+
+%grafico loco
+
+Este gráfico muestra a un mismo grafo de 500 nodos (con solución) a medida que
+se le agregan aristas hasta que se vuelve completo.
+En este caso el comportamiento esperado era algo constante, pero el gráfico
+muestra que primero crece y luego decrece.
+Analizando el código nuevamente, esto puede llegar a ser por el comportamiento
+del BFS que utilizamos para saber si $es conexo$, ya que cuanto más conexo es
+el grafo, menos iteraciones require para encontrar todos los nodos,
+especìficamente en un grafo completo, en una sola iteración de $n$ se visitan
+todos los nodos y se termina.
+
+
 \subsubsection{Test 1 - benchmark caso aleatorio}
 
 \textcolor{red}{\textbf{completar!}}

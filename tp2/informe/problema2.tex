@@ -268,15 +268,34 @@ la complejidad del algoritmo pase a depender exclusivamente del valor de $n$.
 
 
 \newpage
-\subsubsection{Test 2 - benchmark del peor caso}
+\subsubsection{Test 2 - benchmark aleatorio}
 
-Este ejercicio no tiene mejor y peor caso, todos tardan lo mismo,
-porque en todos los casos se generan los tableros para todos los caballos
-y también se busca el mínimo en todos los casilleros.
-\textcolor{red}{\textbf{completar!}}
+(ver \verb|info.2.k.dat| y \verb|info.2.k.volatile.dat|) \medskip
 
+En este test, tenemos un tablero de $500 \times 500$ casilleros en cada
+instancia y se varía la cantidad de caballos, comenzando en 10 y aumento este
+valor de a 10, hasta alcanzar una cantidad de 1000 caballos.
 
-\newpage
-\subsubsection{Test 3 - benchmark del mejor caso}
+Para cada instancia se toma el \textbf{valor mínimo} de microsegundos luego de
+\textbf{25 corridas}.
 
-\textcolor{red}{\textbf{completar!}}
+\vspace*{0.5cm}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grafico-2-k.png}
+  \end{center}
+\end{figure}
+
+\vspace{0.5cm}
+
+En este gráfico se puede apreciar que el comportamiento del algoritmo tiende a
+ser lineal. Creemos que estas pequeñas variaciones pueden deberse a las
+optimizaciones realizadas por el compilador y la capacidad del \textit{caché}
+de la computadora utilizada para realizar los experimentos. Al empezar con una
+pequeña cantidad de caballos, como nuestro algoritmo utiliza una matriz por
+caballo, es más sencillo para el procesador distribuir las matrices en las
+memorias \textit{caché}, obteniendo así una ganancia en performance al no
+tener que ir a buscar a la memoria RAM todas las matrices. Sin embargo, al
+aumentar la cantidad de caballos, esto se dificulta cada vez más, dando origen
+a las fluctuaciones presentes en el gráfico.

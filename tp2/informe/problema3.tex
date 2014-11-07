@@ -371,6 +371,7 @@ En este gráfico se estudia el caso de grafos densos pero no conexos,
 para calcular la complejidad en peor caso, cuando \textbf{no} tienen solución.
 Teóricamente debería comportarse de manera cuadrática, pero el gráfico contradice esta suposición, quedando una curva de orden cúbico.
 
+\newpage
 Debido a esto, se revisó minuciosamente el código y se descubrió que la implementación de la función \verb|es_conexo| variaba en su tiempo de ejecución según se agregara o no una condición extra de corte, para evitar volver a recorrer nodos ya visitados. Luego de corregir esto, se obtuvo el siguiente gráfico:
 
 \vspace*{0.5cm}

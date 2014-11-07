@@ -1,82 +1,82 @@
 %~ \subsection{Descripción del problema.}
-%~ 
+%~
 %~ \vspace*{0.3cm}
-%~ 
+%~
 %~ En este problema, un cliente busca ofrecer un servicio particular sobre una
 %~ red existente de computadoras. Nuestra tarea consiste en elegir algunas de las
 %~ mismas, para utilizarlas como servidores formando un \textit{backbone} que
 %~ siga una topología de red de tipo \textit{anillo}. Además, se requiere que
 %~ las demás computadoras de la red estén conectadas a algún servidor
 %~ perteneciente a este anillo, para poder tener acceso al mismo.
-%~ 
+%~
 %~ La red cuenta con conexiones entre algunos pares de equipos, pero
 %~ \textbf{por cada conexión utilizada se deberá pagar cierto costo
 %~ asociado al enlace utilizado}.
-%~ 
+%~
 %~ \medskip
-%~ 
+%~
 %~ El objetivo es elegir el anillo de servidores (indicando qué servidores y
 %~ enlaces lo representarán) y todas las demás conexiones necesarias, de
 %~ manera tal que las demás computadoras queden conectadas al anillo y el costo
 %~ asociado al uso de estos enlaces sea \textbf{mínimo}.
-%~ 
+%~
 %~ \vspace*{0.5cm}
-%~ 
+%~
 %~ \textbf{Ejemplo:}
-%~ 
+%~
 %~ En un sistema con 11 computadoras unidas con 13 enlaces distribuidas como
 %~ muestra la siguiente imagen:
-%~ 
+%~
 %~ \begin{figure}[htb]
   %~ \begin{center}
       %~ \includegraphics[scale=0.25]{imagenes/anillo-sin-hacer.jpg}
   %~ \end{center}
   %~ \caption{ejemplo de configuración de PC's y enlaces, con sus correspondientes costos.}
 %~ \end{figure}
-%~ 
+%~
 %~ \vspace*{0.5cm}
-%~ 
+%~
 %~ La solución óptima consiste en crear un anillo utilizando únicamente los
 %~ enlaces de costo 1 y dejar el resto de la red conectada de la siguiente
 %~ forma:
-%~ 
+%~
 %~ \begin{figure}[htb]
   %~ \begin{center}
       %~ \includegraphics[scale=0.25]{imagenes/anillo-hecho.jpg}
   %~ \end{center}
   %~ \caption{ejemplo de anillo realizado.}
 %~ \end{figure}
-%~ 
-%~ 
+%~
+%~
 %~ \newpage
 %~ \subsection{Desarrollo de la idea y pseudocódigo.}
-%~ 
+%~
 %~ \vspace*{0.3cm}
-%~ 
+%~
 %~ En este problema, \textbf{trataremos a la red de computadoras como un grafo},
 %~ donde \textbf{las computadoras serán los vértices, las conexiones las aristas
 %~ y el peso de cada arista será el costo de hacer dicha conexión}.
-%~ 
+%~
 %~ Comenzaremos por corroborar que exista una solución. Para esto \textbf{el
 %~ grafo deberá ser conexo}, debe tener \textbf{al menos tantas aristas como
 %~ vértices} y \textbf{3 ó más vértices}. Si no fuese conexo, no se podrían
 %~ unir todas las computadoras. \textbf{Si tiene menos aristas que vértices},
 %~ el grafo sería un árbol, y con menos de 3 vértices \textbf{nunca podría formarse
 %~ un anillo}.
-%~ 
+%~
 %~ Suponiendo que tiene solución, se procederá a calcular el \textbf{árbol
 %~ generador mínimo} mediante el \textbf{algoritmo de Prim}. Un \textit{AGM} es
-%~ un árbol (es decir, un grafo conexo y sin ciclos) que posee los mismos nodos 
-%~ que el grafo original (por esto es un árbol \textit{generador}), pero sólo las aristas 
-%~ necesarias para conectar a éstos, con peso mínimo. Para obtener el anillo buscado, 
-%~ \textbf{formaremos un ciclo agregando la arista de menor peso} no incluída en el 
-%~ \textit{AGM}. Por definición, al agregar una nueva arista a un árbol, obtendremos 
-%~ un circuito simple o ciclo.	
-%~ 
-%~ Por lo tanto, tendremos un grafo conexo (el AGM) que conecta a todas las computadoras 
+%~ un árbol (es decir, un grafo conexo y sin ciclos) que posee los mismos nodos
+%~ que el grafo original (por esto es un árbol \textit{generador}), pero sólo las aristas
+%~ necesarias para conectar a éstos, con peso mínimo. Para obtener el anillo buscado,
+%~ \textbf{formaremos un ciclo agregando la arista de menor peso} no incluída en el
+%~ \textit{AGM}. Por definición, al agregar una nueva arista a un árbol, obtendremos
+%~ un circuito simple o ciclo.
+%~
+%~ Por lo tanto, tendremos un grafo conexo (el AGM) que conecta a todas las computadoras
 %~ (nodos del grafo), minimizando el costo de las conexiones.
-%~ 
-%~ 
+%~
+%~
 %~ \begin{codebox}
 %~ \Procname{$\proc{tieneSolucion}(G)$}
 %~ \li \Return $(\proc{esConexo}(G)) \land
@@ -84,11 +84,11 @@
     %~ \proc{\#}(\proc{nodos}(G)) \land
     %~ \proc{\#}(\proc{nodos}(G)) \geq 3$
 %~ \end{codebox}
-%~ 
-%~ 
+%~
+%~
 %~ \vspace*{0.3cm}
-%~ 
-%~ 
+%~
+%~
 %~ \begin{codebox}
 %~ \Procname{$\proc{esConexo}(G)$}
 %~ \li \Comment $\id{nodosPendientes}$ es una cola de nodos.
@@ -108,18 +108,18 @@
         %~ \End
 %~ \li \Return $\proc{estanTodos}(nodosVisitados)$
 %~ \end{codebox}
-%~ 
-%~ 
+%~
+%~
 %~ \vspace*{0.3cm}
-%~ 
-%~ 
+%~
+%~
 %~ \begin{codebox}
 %~ \Procname{$\proc{prim}(G)$}
-%~ \li \Comment $\id{aristas}$ es un conjunto de vértices que 
+%~ \li \Comment $\id{aristas}$ es un conjunto de vértices que
 %~ \li \Comment poseen un nodo en el AGM y otro no.
 %~ \li $\id{AGM} \gets \proc{nuevoGrafo}()$
 %~ \li $\proc{agregarNodo}(AGM, primerNodo(G))$
-%~ 
+%~
 %~ \li \While $\proc{cantidad}(nodos(AGM)) < \proc{cantidad}(nodos(G))$
       %~ \Do
 %~ \li     $minima = \proc{sacarMinima}(aristas)$
@@ -127,11 +127,11 @@
       %~ \End
 %~ \li \Return $\id{AGM}$
 %~ \end{codebox}
-%~ 
-%~ 
+%~
+%~
 %~ \vspace*{0.3cm}
-%~ 
-%~ 
+%~
+%~
 %~ \begin{codebox}
 %~ \Procname{$\proc{anillar}(G, peso : out)$}
 %~ \li $\id{AGM} \gets \proc{prim}(G)$
@@ -141,11 +141,11 @@
 %~ \li $\id{fueraDelAnillo} \gets \proc{aristas}(AGM) \setminus \id{enElAnillo}$
 %~ \li \Return $< enElAnillo, fueraDelAnillo >$
 %~ \end{codebox}
-%~ 
-%~ 
+%~
+%~
 %~ \vspace*{0.3cm}
-%~ 
-%~ 
+%~
+%~
 %~ \begin{codebox}
 %~ \Procname{$\proc{minimaNoIncluida}(AGM, G)$}
 %~ \li $\id{minima} \gets \proc{primerArista}(G)$
@@ -159,62 +159,62 @@
       %~ \End
 %~ \li \Return $\id{minima}$
 %~ \end{codebox}
-%~ 
-%~ 
-%~ 
+%~
+%~
+%~
 %~ \newpage
 %~ \subsection{Justificación de la resolución y demostración de correctitud.}
-%~ 
+%~
 %~ \vspace*{0.3cm}
-%~ 
-%~ 
+%~
+%~
 %~ El problema requiere, dado una configuración de equipos en una red y sus
 %~ posibles conexiones con sus respectivos costos, armar una red con el menor
 %~ costo posible y la condición de que haya un anillo.
-%~ 
+%~
 %~ Este problema se reduce a, dado un grafo $G = (V, E)$ y $l: V \to
 %~ \mathbb{R}_{\geq 0}$ la función de peso de sus aristas, encontrar un
 %~ subgrafo $S = (V, E')$ con $E' \subseteq E$ de modo que la sumatoria del
 %~ peso sea mínima, el subgrafo sea conexo y tenga \textbf{al menos} un circuito simple.
-%~ 
-%~ Primero, notemos que el problema no siempre tiene solución si el grafo no es 
-%~ conexo, pero también pueden no tener solución si es conexo: si el grafo tiene el 
-%~ mínimo de aristas de modo que sea conexo (es decir, $m = n - 1$), el grafo en 
-%~ cuestión es un árbol y por ende no tiene ciclos. 
-%~ 
+%~
+%~ Primero, notemos que el problema no siempre tiene solución si el grafo no es
+%~ conexo, pero también pueden no tener solución si es conexo: si el grafo tiene el
+%~ mínimo de aristas de modo que sea conexo (es decir, $m = n - 1$), el grafo en
+%~ cuestión es un árbol y por ende no tiene ciclos.
+%~
 %~ Excluidos estos casos, el problema tiene solución, pues es conexo y tiene al
 %~ menos un circuito simple (de no tenerlos, sería un árbol y ya vimos que esto
 %~ no puede suceder). Observemos que se puede considerar siempre que la
 %~ solución tiene un solo ciclo, pues si la solución tiene varios ciclos, si
 %~ solo nos quedamos con el ciclo de menor peso, obtenemos una solución de peso
 %~ menor o igual a la solución con múltiples ciclos.
-%~ 
+%~
 %~ Conociendo el grafo es posible determinar si la instancia particular tiene
 %~ solución: solo basta ver que es conexo y tiene al menos tantas aristas como
-%~ vértices. Para determinar la conexión del grafo se lo recorre mediante el 
+%~ vértices. Para determinar la conexión del grafo se lo recorre mediante el
 %~ algoritmo \textit{BFS} a partir de algún nodo. \textit{BFS} permite calcular los
-%~ caminos desde el nodo de inicio hacia todos los nodos que se encuentre en su 
+%~ caminos desde el nodo de inicio hacia todos los nodos que se encuentre en su
 %~ misma componente conexa. %agregar descripcion de algoritmo
-%~ 
-%~ Luego, sabiendo la cantidad de nodos visitados al finalizar \textit{BFS}, 
-%~ el grafo es conexo sí y solo sí la cantidad de nodos visitados es igual a la 
-%~ cantidad de nodos del grafo. Si es conexo, como se conoce la estructura del grafo, 
-%~ se sabe la cantidad de aristas y vértices de este, por lo tanto si $|E| \geq |V|$, 
+%~
+%~ Luego, sabiendo la cantidad de nodos visitados al finalizar \textit{BFS},
+%~ el grafo es conexo sí y solo sí la cantidad de nodos visitados es igual a la
+%~ cantidad de nodos del grafo. Si es conexo, como se conoce la estructura del grafo,
+%~ se sabe la cantidad de aristas y vértices de este, por lo tanto si $|E| \geq |V|$,
 %~ se afirma que el problema tiene solución.
-%~ 
+%~
 %~ Partiendo ahora de la base de que la instancia tiene solución, veremos
 %~ que el algoritmo propuesto encuentra alguna de las posibles soluciones. En
 %~ efecto, si $A = (V_A, E_A)$ es el grafo solución de la instancia del
 %~ problema, se tiene que
-%~ 
+%~
 %~ \begin{itemize}
   %~ \item $A$ es conexo.
-%~ 
+%~
   %~ \item $A$ tiene un solo circuito simple.
-%~ 
+%~
   %~ \item $\sum\limits_{e \in E_A} l(e)$ es mínima.
 %~ \end{itemize}
-%~ 
+%~
 %~ Consideremos $P = (V_P, E_P)$ el árbol generador mínimo obtenido al aplicar
 %~ el algoritmo de Prim a $G$ y sea $m \in E \setminus E_P$ tal que $l(m) \leq
 %~ l(e) \; \forall e \in E \setminus E_P$. Llamemos $S = (V_S, E_S)$, con $V_S
@@ -222,78 +222,78 @@
 %~ agregar la arista $m$ a $P$. $S$ es subgrafo de $G$ pues $P$ lo era y $w \in
 %~ E \setminus E_P$, y por ende $V_S = V_P = V$ y $E_S \subseteq E$. Veamos
 %~ ahora que $S$ es en efecto una solución al problema:
-%~ 
+%~
 %~ \begin{itemize}
   %~ \item $S$ es conexo: $P$ es conexo y $E_S = E_P$, $S$ es el resultado de
   %~ agregarle una arista a $P$, por lo tanto, para cualquier par de vértices
   %~ $v, w \in V_S$, si $C$ es el camino en $P$ entre $v$ y $w$, $C \in E_S$
   %~ pues $C \in E_P$.
-%~ 
+%~
   %~ \item $S$ tiene un solo circuito simple: como $P$ es un árbol, por
-  %~ definición, al agregar una arista cuyos extremos sean vértices de $P$, 
-  %~ se obtiene un circuito simple. Además, como $P$ es también generador, 
+  %~ definición, al agregar una arista cuyos extremos sean vértices de $P$,
+  %~ se obtiene un circuito simple. Además, como $P$ es también generador,
   %~ siendo $w \in E \setminus E_P$, al agregar $m$ a $E_P$ se
   %~ obtiene un solo circuito simple.
-%~ 
+%~
   %~ \item $\sum\limits_{e \in E_S} l(e)$ es mínima: sea $e \in E_A$ talque $e$
   %~ pertenece al ciclo de $A$ y $e \notin P$. Dicha arista existe pues, como
   %~ $P$ es árbol, no hay ciclos en $P$. Como $A \setminus \{e\}$ es un árbol
   %~ generador de $G$,
-%~ 
+%~
   %~ \begin{align*}
     %~ l(P) &\leq l(A \setminus \{e\}) \Rightarrow \\
     %~ l(P) + l(e) &\leq l(A)
   %~ \end{align*}
-%~ 
+%~
   %~ Pero, como $m$ es arista de peso mínimo talque $m \notin P$, $l(m) \leq
   %~ l(e)$. Por lo tanto,
-%~ 
+%~
   %~ \begin{align*}
     %~ l(S) = l(P) + l(m) \leq l(P) + l(e) \leq l(A)
   %~ \end{align*}
-%~ 
+%~
   %~ y la solución propuesta es mejor o igual que la solución óptima.
-%~ 
+%~
 %~ \end{itemize}
-%~ 
+%~
 %~ Luego, el algoritmo propuesto encuentra una solución óptima.
-%~ 
-%~ 
+%~
+%~
 %~ \newpage
 %~ \subsection{Análisis de complejidad.}
-%~ 
+%~
 %~ \vspace*{0.3cm}
-%~ 
+%~
 %~ Para el análisis de complejidad nos basaremos en el pseudocódigo de la función
 %~ \textsc{sePuedeAnillar}, correspondiente al ítem \textbf{5.2}.
-%~ 
+%~
 %~ vector
 %~ list
 %~ queue
 %~ tuple
-%~ 
+%~
 %~ \begin{enumerate}
   %~ \item La operación \verb|size|, realizada sobre el contenedor \verb|vector| de la
   %~ \textit{STL}, toma tiempo constante $O(1)$. Por lo tanto, cada vez que sea utilizada
   %~ como parte de la implementación de algún algoritmo, asumiremos que no agrega complejidad
   %~ adicional a la ya existente.
-%~ 
+%~
   %~ \item La operación \verb|resize|, realizada sobre el contenedor \verb|vector| de la
   %~ \textit{STL}, toma tiempo lineal $O(n)$. Por lo tanto, cada vez que sea utilizada
   %~ como parte de la implementación de algún algoritmo, agregaremos (ó multiplicaremos por)
   %~ $n$ a la complejidad ya existente.
-%~ 
+%~
   %~ \item En la línea 1, la complejidad de \textsc{tieneSolucion} depende sólamente de
   %~ la complejidad de \textsc{esConexo} (que evaluaremos a continuación), ya que
   %~ \textsc{\#(aristas)} y \textsc{\#(nodos)} se calculan en tiempo constante $O(1)$
   %~ (son datos que se cargan con los valores de entrada, $n$ y $m$) y compararlos es
   %~ también $O(1)$ (estamos comparando enteros de tamaño acotado).
   %~ Por lo tanto, el costo de preguntar si $G$ tiene ó no solución es $O(n^2)$.
-%~ 
+%~
   %~ Retornar un valor booleano ($true, false$) toma tiempo constante, $O(1)$. Por lo tanto,
   %~ la complejidad total de \textsc{sePuedeAnillar} surge de la suma entre la complejidad de
   %~ \textsc{tieneSolucion} (vimos que es $O(n^2)$) y la complejidad de \textsc{completarAnillo}.
-%~ 
+%~
   %~ \item La complejidad de \textsc{tieneSolucion}, como dijimos anteriormente, depende
   %~ únicamente del costo de la función \textsc{esConexo}, ya que el resto de la conjunción
   %~ toma tiempo constante y no agrega complejidad extra. Por lo tanto, estudiaremos la
@@ -308,72 +308,109 @@
   %~ Por lo tanto, iterar sobre todas las aristas de $G$ toma tiempo
   %~ cuadrático, $O(n^2)$ (debemos iterar siempre sobre la matriz entera).
 %~ \end{enumerate}
-%~ 
+%~
 %~ A medida que vamos encontrando valores de pesos de conexiones válidos, marcamos la posición
 %~ correspondiente al nodo visitado en el vector de nodos de $G$.
-%~ 
+%~
 %~ uego de terminar de iterar sobre la matriz, chequeamos si efectivamente todos los nodos de $G$
 %~ fueron visitados, lo cual implica que para cualquier par de nodos de $G$ hay camino y por lo
 %~ tanto, es conexo. Esto es lineal en la cantidad de nodos de $G$, $O(n)$.
-%~ 
+%~
 %~ Luego, la complejidad de \textsc{esConexo} es $O(n^2) + O(n) = O(n^2)$.
-%~ 
+%~
 %~ \newpage
 \subsection{Experimentación y gráficos.}
 
 \vspace*{0.3cm}
 
-Para realizar este test, se generaron aleatoriamente grafos de $n$ nodos.
+\subsubsection{Test 1 - benchmark aleatorio}
+
+(ver \verb|info.3.dat|) \medskip
+
+Para realizar este test, se generaron aleatoriamente grafos de $n$ nodos, con  $n$ inicializado en 100 e incrementándose también de a 100, hasta alcanzar 10000 y $m$ (cantidad de aristas) inicializado en 200, aumentando de a 200, hasta alcanzar 20000.
 
 Para cada instancia se toma el \textbf{valor mínimo} de microsegundos luego de
 \textbf{25 corridas}.
 
-%grafico1
+\vspace*{0.5cm}
 
-En este gráfico se aumentan la cantidad de nodos y aristas (para que sea
-posible una solución). Podemos apreciar que evidentemente es $n2$, con $n$ la cantidad
-de nodos, tal como habíamos predicho en el análisis de complejidad.
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grafico-3.png}
+  \end{center}
+\end{figure}
 
-%Grafico n3
-En este gráfico estábamos probando el caso de grafos densos pero no conexos,
-para calcular la complejidad en peor caso cuando \textbf{no} tienen solución.
-Debería ser algo $n2$, pero el gráfico muestra que tiene un comportamiento
-cúbico.
+\vspace*{0.5cm}
 
-Gracias a esto revisamos el código y pudimos darnos cuenta que al calcular si $es
-complejo$ nos faltaba una guarda que hacía que se revisaran nodos de más.
+En este gráfico aumenta la cantidad de nodos y aristas (para que sea
+posible una solución). Se puede apreciar que evidentemente es $n^2$, con $n$ la cantidad de nodos, tal como se había analizado teóricamente.
 
-Al solucionarlo nos dio el siguiente gráfico:
-
-%grafico densos no conexos n2
-
-Que es claramente cuadrático.
-
-%grafico loco
-
-Este gráfico muestra a un mismo grafo de 500 nodos (con solución) a medida que
-se le agregan aristas hasta que se vuelve completo.
-En este caso el comportamiento esperado era algo constante, pero el gráfico
-muestra que primero crece y luego decrece.
-Analizando el código nuevamente, esto puede llegar a ser por el comportamiento
-del BFS que utilizamos para saber si $es conexo$, ya que cuanto más conexo es
-el grafo, menos iteraciones require para encontrar todos los nodos,
-especìficamente en un grafo completo, en una sola iteración de $n$ se visitan
-todos los nodos y se termina.
-
-
-\subsubsection{Test 1 - benchmark caso aleatorio}
-
-\textcolor{red}{\textbf{completar!}}
 
 
 \newpage
-\subsubsection{Test 2 - benchmark del peor caso}
+\subsubsection{Test 2 - benchmark aleatorio, grafo denso y no conexo}
 
-\textcolor{red}{\textbf{completar!}}
+(ver \verb|info.3.dnc.dat| y \verb|info.3.dnc.cubico.dat|) \medskip
+
+Para realizar este test, se generaron aleatoriamente grafos no conexos, separados en 2 componentes conexas y completas, cada una con $n/2$ nodos, con  $n$ inicializado en 100 e incrementándose también de a 100, hasta alcanzar 10000.
+
+Para cada instancia se toma el \textbf{valor mínimo} de microsegundos luego de
+\textbf{25 corridas}.
+
+\vspace*{0.5cm}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grafico-3-dnc-cubico.png}
+  \end{center}
+\end{figure}
+
+\vspace*{0.5cm}
+
+En este gráfico se estudia el caso de grafos densos pero no conexos,
+para calcular la complejidad en peor caso, cuando \textbf{no} tienen solución.
+Teóricamente debería comportarse de manera cuadrática, pero el gráfico contradice esta suposición, quedando una curva de orden cúbico.
+
+Debido a esto, se revisó minuciosamente el código y se descubrió que la implementación de la función \verb|es_conexo| variaba en su tiempo de ejecución según se agregara o no una condición extra de corte, para evitar volver a recorrer nodos ya visitados. Luego de corregir esto, se obtuvo el siguiente gráfico:
+
+\vspace*{0.5cm}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grafico-3-dnc.png}
+  \end{center}
+\end{figure}
+
+\vspace*{0.5cm}
+
+Aquí se puede apreciar una drástica reducción en los tiempos, dado que ahora se trata de una complejidad cuadrática. Luego de esto concluímos que \textbf{no hay un peor caso}, ya que, de todos modos, pues el \textit{BFS} depende sólo de la cantidad de nodos que tenga la componente conexa en la que se inicia su ejecución y esto sigue estando acotado por $n^2$.
+
 
 
 \newpage
-\subsubsection{Test 3 - benchmark del mejor caso}
+\subsubsection{Test 3 - benchmark aleatorio, grafo completo}
 
-\textcolor{red}{\textbf{completar!}}
+(ver \verb|info.3.m.dat|) \medskip
+
+Para realizar este test, se generan muchos grafos con igual cantidad de nodos (500), y $m$ inicializado en 750 e incrementándose también de a 250, hasta alcanzar un grafo completo ($K_{500}$). \textbf{Importante:} los grafos generados siempre tienen solución.
+
+Para cada instancia se toma el \textbf{valor mínimo} de microsegundos luego de
+\textbf{25 corridas}.
+
+\vspace*{0.5cm}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grafico-3-m.png}
+  \end{center}
+\end{figure}
+
+\vspace*{0.5cm}
+
+En este test, analizamos distintos grafos donde sólo incrementamos la cantidad de aristas y mantenemos fija la cantidad de nodos (en particular, se fija en 500). La cantidad de aristas se incrementa hasta que el grafo generado se vuelve completo.
+
+En este caso, el comportamiento esperado era algo constante, ya que se supuso que la complejidad de los algoritmos implementados dependía únicamente de la cantidad de nodos, pero el gráfico obtenido refleja este comportamiento.
+
+Analizando el código, esto puede deberse a la implementación escogida para el
+\textit{BFS} (correspondiente a la función \verb|es_conexo|), ya que, a mayor densidad del grafo, menos iteraciones requiere para encontrar todos los nodos.
+Más específicamente, en un grafo completo basta una sola iteración ($O(n)$) para saber si todos los nodos fueron ó no ya visitados.

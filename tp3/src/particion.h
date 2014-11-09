@@ -19,7 +19,7 @@ struct Particion {
   set<unsigned int>::iterator end(unsigned int conjunto);
   unsigned int                conjunto_del_vertice(unsigned int vertice);
   bool                        contiene_a(unsigned int vertice);
-  void                        operator=(Particion& particion);
+  void                        operator=(Particion particion);
 
 private:
   vector<ConjuntoDeVertices> conjuntos_;

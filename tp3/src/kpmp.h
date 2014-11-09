@@ -8,6 +8,10 @@
 
 using namespace std;
 
+enum Algortimo {EXACTO, GOLOSO, LOCAL, GRASP};
+enum EstrategiaVertices {MOVER, INTERCAMBIAR};
+enum EstrategiaRandomizar {NADA, ARISTAS, CONJUNTOS, AMBOS};
+
 struct Entrada {
   Grafo grafo;
   unsigned int cantidad_de_conjuntos;

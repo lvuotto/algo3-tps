@@ -86,7 +86,7 @@ bool Particion::contiene_a(unsigned int vertice)
 }
 
 
-void Particion::operator=(Particion& particion)
+void Particion::operator=(Particion particion)
 {
   grafo_ = particion.grafo_;
   peso_ = particion.peso_;

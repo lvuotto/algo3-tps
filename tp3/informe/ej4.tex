@@ -2,7 +2,82 @@
 \vspace*{0.3cm}
 \textcolor{red}{\textbf{completar!}}
 
+Planteamos las siguientes vecindades:
+- "mover": Una partición es vecina de otra si consiste en mover un único vértice de un conjunto a otro.
+- "intercambiar": Una partición es vecina de otra si consiste en intercamiar 2 vértices de distintos conjuntos.
 
+Los algoritmos consisten en empezar con una solución y probar cuál de todas las vecinas tiene un peso menor, y continuar desde esa solución. Cuando no se pueda mejorar más, se termina.
+
+Pseudo mover:
+kpmp_mover(particion) {
+	pesoMin = peso(particion)
+	sePuedeMejorar = true
+
+	mientras sePuedeMejorar {
+		por cada vértice en vértices(particion) {
+			conjuntoDelVertice = buscarConjunto(particion, vertice)
+			pesoSinVertice = peso(particion) - costo(conjuntoDelVertice, vertice)
+
+			por cada conjunto en conjuntos(particion) excepto conjuntoDelVertice {
+				peso = pesoSinVertice + costo(conjunto, vertice)
+
+				si peso < pesoMin {
+					pesoMin = peso
+					verticeMin = vertice
+					conjuntoViejo = conjuntoDelVertice
+					conjuntoNuevo = conjunto
+				}
+			}
+		}
+
+		si pesoMin < peso(particion) {
+			sacarVertice(conjuntoViejo, verticeMin)
+			agregarVertice(conjuntoNuevo, verticeMin)
+		} sino {
+			sePuedeMejorar = false
+		}
+	}
+}
+
+Pesudo intercambiar:
+kpmp_switch(particion) {
+	pesoMin = peso(particion)
+	sePuedeMejorar = true
+
+	mientras sePuedeMejorar {
+		por cada vértice1 en vértices(particion) {
+			conjuntoDelVertice1 = buscarConjunto(particion, vertice)
+
+			por cada vértice2 en vértices(partición) excepto que compartan conjunto {
+				conjuntoDelVertice2 = buscarConjunto(particion, vertice)
+
+				peso = peso(particion)
+					- costo(conjuntoDelVertice1, vertice1)
+					- costo(conjuntoDelVertice2, vertice2)
+					+ costo(conjuntoDelVertice1, vertice2)
+					+ costo(conjuntoDelVertice2, vertice1)
+
+
+				si peso < pesoMin {
+					pesoMin = peso
+					verticeMin1 = vertice1
+					verticeMin2 = vertice2
+					conjuntoMin1 = conjuntoDelVertice1
+					conjuntoMin2 = conjuntoDelVertice2
+				}
+			}
+		}
+
+		si pesoMin < peso(particion) {
+			sacarVertice(conjuntoDelVertice1, verticeMin1)
+			agregarVertice(conjuntoDelVertice1, verticeMin2)
+			sacarVertice(conjuntoDelVertice2, verticeMin2)
+			agregarVertice(conjuntoDelVertice2, verticeMin1)
+		} sino {
+			sePuedeMejorar = false
+		}
+	}
+}
 
 \newpage
 \subsection{Análisis de complejidad del peor caso de una iteración del
@@ -10,7 +85,17 @@
 \vspace*{0.3cm}
 \textcolor{red}{\textbf{completar!}}
 
+n = |vertices|
+m = |aristas|
+k = |conjuntos|
 
+El algoritmo mover en cada iteración recorre todos los vértices, por cada uno recorre todos los conjuntos, y por cada uno calcula un costo, que es recorrer los vértices. Igualmente como en el goloso, se terminan haciendo n comparaciones en total ya que los conjuntos son disjuntos.
+Al final, si hay uno mejor, se mueve el vértice generando 2 cálculos de costos.
+En total: O((n * (k + n)) + n) = O(n^2 + kn)
+
+EL algoritmo intercambiar, recorre todos los vértices y, por cada uno, nuevamente los otros vértices, dentro de estos, calcula los costos.
+Al final, si hay uno mejor, se intercambian los vértices generando 4 cálculos de costos.
+Total: O(n * n * n + n) = O(n^3)
 
 \newpage
 \subsection{Experimentación y gráficos.}

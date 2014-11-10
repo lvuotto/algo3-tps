@@ -2,7 +2,50 @@
 \vspace*{0.3cm}
 \textcolor{red}{\textbf{completar!}}
 
+El algoritmo GRASP que diseñamos tiene 2 criterios de terminación:
+- Elegir el mejor luego de X iteraciones.
+- Elegir el mejor luego de que éste se encuentre como solución X veces, si se encuentra una solución mejor, se resetea el contador.
 
+Para la selección de candidatos, el algoritmo goloso se plantean 2 formas de aleatorizar:
+- En lugar de elegir la arista más pesada, se elige una al azar de las X más pesadas.
+- En lugar de poner el vértice en el conjunto que genere el menor peso, se elige un conjunto al azar de los X que generan menor peso.
+
+Se probó con cada una por separado y con las dos juntas.
+
+También se probaron con ambos algoritmos de localidas.
+
+Pseudo:
+kpmp_grasp(funcionGoloso, funcionLocal, grafo, cantidadDeConjuntos, criterioDeTerminacion, X) {
+	particion = funcionGoloso(grafo, cantidadDeConjuntos)
+	funcionLocal(particion)
+	pesoMin = peso(particion)
+
+	si criterioDeTerminacion = MEJOR_LUEGO_DE_X_VECES {
+		repetir X veces {
+			nuevaParticion = funcionGoloso(grafo, cantidadDeConjuntos)
+			funcionLocal(particion)
+
+			si peso(nuevaParticion) < pesoMin {
+				pesoMin = peso(nuevaParticion)
+				particion = nuevaParticion
+			}
+		}
+	} sino criterioDeTerminacion = CUANDO_EL_MEJOR_SE_REPITA_X_VECES {
+		nuevaParticion = funcionGoloso(grafo, cantidadDeConjuntos)
+		funcionLocal(nuevaParticion)
+		contadorRepeticiones = 1
+
+		si peso(nuevaParticion) < pesoMin {
+			pesoMin = peso(nuevaParticion)
+			particion = nuevaParticion
+			contadorRepeticiones = 1
+		} sino peso(nuevaParticion = pesoMin) {
+			contadorRepeticiones += 1
+		}
+	}
+
+	return particion
+}
 
 \newpage
 \subsection{Experimentación y gráficos.}

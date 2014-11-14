@@ -1,8 +1,12 @@
 \subsection{Descripción del algoritmo implementado.}
 \vspace*{0.3cm}
+
 \textcolor{red}{\textbf{completar!}}
-Con la idea de que evitando las aristas más pesadas se puede reducir el peso total, el algoritmo consiste en ordenar las aristas por peso en orden descendente.
-Luego, por cada arista, se agregan sus 2 nodos a los conjuntos que resulten en el menor peso total.
+
+Con la idea de que evitando las aristas más pesadas se puede reducir el peso
+total, el algoritmo consiste en ordenar las aristas por peso en orden
+descendente. Luego, por cada arista, se agregan sus 2 nodos a los conjuntos que
+resulten en el menor peso total.
 
 Pseudo:
 goloso(grafo, cantidadDeConjuntos) {
@@ -46,14 +50,18 @@ costo(conjunto, nuevoVertice) {
 \newpage
 \subsection{Análisis de complejidad en el peor caso.}
 \vspace*{0.3cm}
+
 \textcolor{red}{\textbf{completar!}}
 
 n = |vertices|
 m = |aristas|
 k = |conjuntos|
 Se ordenan las aristas. O(m * log(m)).
-Se recorren todas y por cada una se calcula el costo de agregarla a cada conjunto.
-Calcular el costo en un conjunto es O(n), porque se comparan todos los vértices lo que llevaría a pensar que es O(k * n), pero como cada conjunto tiene vértices distintos que los otros, en total nunca se hacen más de n comparaciones de vértices. Es decir, O(k + n).
+Se recorren todas y por cada una se calcula el costo de agregarla a cada
+conjunto. Calcular el costo en un conjunto es O(n), porque se comparan todos
+los vértices, lo que llevaría a pensar que es O(k * n), pero como cada
+conjunto tiene vértices distintos que los otros, en total nunca se hacen más
+de n comparaciones de vértices. Es decir, O(k + n).
 
 Total: O(m * log(m) + m * (k + n))
 
@@ -67,17 +75,24 @@ Total: O(m * log(m) + m * (k + n))
 \vspace*{0.3cm}
 \textcolor{red}{\textbf{completar!}}
 
-Como el algoritmo intenta deshacerse primero de las aristas más pesadas, el peor caso es cuando el problema lo dan muchas aristas de poco peso.
+Como el algoritmo intenta deshacerse primero de las aristas más pesadas, el
+peor caso es cuando el problema lo dan muchas aristas de poco peso.
 
-Esta situación se puede generar de la siguiente forma:
-Dados k conjuntos, el grafo debe tener 2 tipos de vértices: k vértices, todos ellos adyacentes entre sí con un peso C > 1, y luego n vértices, cada uno adyacente únicamente a los primeros k vértices con un peso C', 0 < C' < C.
-Por como se comporta el algoritmo, las aristas que unen a los primeros k vértices se ubicarán primero, dando que queden los k vértices en conjuntos distintos.
-Luego, de cualquier forma que se agreguen los siguientes vértices, cada uno generará un costo  C', siendo el peso total n*C'.
-Sin embargo, poniendo 2 de los primeros k vértices juntos en un mismo conjunto, se genera un costo C, pero todos los n vértices pueden entrar en un mismo conjunto sin aumentar el costo.
-De esta forma, con C y C' fijos, n*C' > C a partir de algún n, por lo que se puede generar un grafo tan malo como se quiera.
+Esta situación se puede generar de la siguiente forma: Dados k conjuntos, el
+grafo debe tener 2 tipos de vértices: k vértices, todos ellos adyacentes entre
+sí con un peso C > 1, y luego n vértices, cada uno adyacente únicamente a los
+primeros k vértices con un peso C', 0 < C' < C.  Por como se comporta el
+algoritmo, las aristas que unen a los primeros k vértices se ubicarán primero,
+dando que queden los k vértices en conjuntos distintos.  Luego, de cualquier
+forma que se agreguen los siguientes vértices, cada uno generará un costo  C',
+siendo el peso total n*C'.  Sin embargo, poniendo 2 de los primeros k vértices
+juntos en un mismo conjunto, se genera un costo C, pero todos los n vértices
+pueden entrar en un mismo conjunto sin aumentar el costo.  De esta forma, con C
+y C' fijos, n*C' > C a partir de algún n, por lo que se puede generar un grafo
+tan malo como se quiera.
 
 
-\newpage
-\subsection{Experimentación y gráficos.}
+\newpage \subsection{Experimentación y gráficos.}
 \vspace*{0.3cm}
+
 \textcolor{red}{\textbf{completar!}}

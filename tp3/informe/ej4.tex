@@ -4,12 +4,21 @@
 
 Planteamos las siguientes vecindades:
 - "mover": Una partición es vecina de otra si consiste en mover un único vértice de un conjunto a otro.
+\begin{align*}
+  v \in V, u \in U, v \ne u \\
+  V \setminus \{v\} = U \setminus \{u\}
+\end{align*}
 - "intercambiar": Una partición es vecina de otra si consiste en intercamiar 2 vértices de distintos conjuntos.
+\begin{align*}
+  v \in V, u \in U \\
+  V' = V \setminus \{v\} \cup \{u\} \\
+  U' = U \setminus \{u\} \cup \{v\}
+\end{align*}
 
 Los algoritmos consisten en empezar con una solución y probar cuál de todas las vecinas tiene un peso menor, y continuar desde esa solución. Cuando no se pueda mejorar más, se termina.
 
 Pseudo mover:
-kpmp_mover(particion) {
+kpmp\_mover(particion) {
 	pesoMin = peso(particion)
 	sePuedeMejorar = true
 
@@ -89,15 +98,19 @@ n = |vertices|
 m = |aristas|
 k = |conjuntos|
 
-El algoritmo mover en cada iteración recorre todos los vértices, por cada uno recorre todos los conjuntos, y por cada uno calcula un costo, que es recorrer los vértices. Igualmente como en el goloso, se terminan haciendo n comparaciones en total ya que los conjuntos son disjuntos.
-Al final, si hay uno mejor, se mueve el vértice generando 2 cálculos de costos.
-En total: O((n * (k + n)) + n) = O(n^2 + kn)
+El algoritmo mover en cada iteración recorre todos los vértices, por cada uno
+recorre todos los conjuntos, y por cada uno calcula un costo, que es recorrer
+los vértices. Igualmente como en el goloso, se terminan haciendo n
+comparaciones en total ya que los conjuntos son disjuntos.  Al final, si hay
+uno mejor, se mueve el vértice generando 2 cálculos de costos.  En total: O((n
+* (k + n)) + n) = O(n^2 + kn)
 
-EL algoritmo intercambiar, recorre todos los vértices y, por cada uno, nuevamente los otros vértices, dentro de estos, calcula los costos.
-Al final, si hay uno mejor, se intercambian los vértices generando 4 cálculos de costos.
+EL algoritmo intercambiar, recorre todos los vértices y, por cada uno,
+nuevamente los otros vértices, dentro de estos, calcula los costos.  Al final,
+si hay uno mejor, se intercambian los vértices generando 4 cálculos de costos.
 Total: O(n * n * n + n) = O(n^3)
 
-\newpage
-\subsection{Experimentación y gráficos.}
+\newpage \subsection{Experimentación y gráficos.}
 \vspace*{0.3cm}
+
 \textcolor{red}{\textbf{completar!}}

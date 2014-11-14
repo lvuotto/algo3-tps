@@ -1,17 +1,24 @@
 \select@language {spanish}
 \contentsline {section}{\numberline {1}Objetivos generales}{3}{section.1}
 \contentsline {section}{\numberline {2}Plataforma de pruebas}{4}{section.2}
-\contentsline {section}{\numberline {3}Problema 2: Caballos salvajes}{5}{section.3}
-\contentsline {subsection}{\numberline {3.1}Descripci\IeC {\'o}n del problema.}{5}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Desarrollo de la idea y pseudoc\IeC {\'o}digo.}{6}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Justificaci\IeC {\'o}n de la resoluci\IeC {\'o}n y demostraci\IeC {\'o}n de correctitud.}{8}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}An\IeC {\'a}lisis de complejidad.}{9}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Experimentaci\IeC {\'o}n y gr\IeC {\'a}ficos.}{11}{subsection.3.5}
-\contentsline {subsubsection}{\numberline {3.5.1}Test 1 - benchmark caso aleatorio}{11}{subsubsection.3.5.1}
-\contentsline {subsubsection}{\numberline {3.5.2}Test 2 - benchmark del peor caso}{12}{subsubsection.3.5.2}
-\contentsline {subsubsection}{\numberline {3.5.3}Test 3 - benchmark del mejor caso}{13}{subsubsection.3.5.3}
-\contentsline {section}{\numberline {4}Problema 2: Ejercicios adicionales}{14}{section.4}
-\contentsline {section}{\numberline {5}Informe de modificaciones}{15}{section.5}
-\contentsline {section}{\numberline {6}Ap\IeC {\'e}ndice 1: acerca de los tests}{16}{section.6}
-\contentsline {section}{\numberline {7}Ap\IeC {\'e}ndice 2: secciones relevantes del c\IeC {\'o}digo}{17}{section.7}
-\contentsline {subsection}{\numberline {7.1}C\IeC {\'o}digo del Problema 2}{17}{subsection.7.1}
+\contentsline {section}{\numberline {3}Problema 1: Plan de vuelo}{5}{section.3}
+\contentsline {subsection}{\numberline {3.1}Experimentaci\IeC {\'o}n y gr\IeC {\'a}ficos.}{5}{subsection.3.1}
+\contentsline {subsubsection}{\numberline {3.1.1}Test 1 - benchmark aleatorio}{5}{subsubsection.3.1.1}
+\contentsline {section}{\numberline {4}Problema 2: Caballos salvajes}{7}{section.4}
+\contentsline {subsection}{\numberline {4.1}Descripci\IeC {\'o}n del problema.}{7}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Desarrollo de la idea y pseudoc\IeC {\'o}digo.}{8}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Justificaci\IeC {\'o}n de la resoluci\IeC {\'o}n y demostraci\IeC {\'o}n de correctitud.}{10}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}An\IeC {\'a}lisis de complejidad.}{11}{subsection.4.4}
+\contentsline {subsection}{\numberline {4.5}Experimentaci\IeC {\'o}n y gr\IeC {\'a}ficos.}{13}{subsection.4.5}
+\contentsline {subsubsection}{\numberline {4.5.1}Test 1 - benchmark aleatorio}{13}{subsubsection.4.5.1}
+\contentsline {subsubsection}{\numberline {4.5.2}Test 2 - benchmark aleatorio}{14}{subsubsection.4.5.2}
+\contentsline {section}{\numberline {5}Problema 2: Ejercicios adicionales}{15}{section.5}
+\contentsline {section}{\numberline {6}Informe de modificaciones}{16}{section.6}
+\contentsline {section}{\numberline {7}Problema 3: La comunidad del anillo}{17}{section.7}
+\contentsline {subsection}{\numberline {7.1}Experimentaci\IeC {\'o}n y gr\IeC {\'a}ficos.}{17}{subsection.7.1}
+\contentsline {subsubsection}{\numberline {7.1.1}Test 1 - benchmark aleatorio}{17}{subsubsection.7.1.1}
+\contentsline {subsubsection}{\numberline {7.1.2}Test 2 - benchmark aleatorio, grafo denso y no conexo}{18}{subsubsection.7.1.2}
+\contentsline {subsubsection}{\numberline {7.1.3}Test 3 - benchmark aleatorio, grafo completo}{20}{subsubsection.7.1.3}
+\contentsline {section}{\numberline {8}Ap\IeC {\'e}ndice 1: acerca de los tests}{21}{section.8}
+\contentsline {section}{\numberline {9}Ap\IeC {\'e}ndice 2: secciones relevantes del c\IeC {\'o}digo}{22}{section.9}
+\contentsline {subsection}{\numberline {9.1}C\IeC {\'o}digo del Problema 2}{22}{subsection.9.1}

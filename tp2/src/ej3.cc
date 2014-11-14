@@ -98,7 +98,7 @@ bool Grafo::es_conexo()
   while (!nodos_pendientes.empty()) {
     unsigned int nodo = nodos_pendientes.front();
     nodos_pendientes.pop();
-
+    if (nodos_visitados[nodo]) continue;
     nodos_visitados[nodo] = true;
 
     for (unsigned int i = 0; i < this->matriz_conexiones.size(); i++) {

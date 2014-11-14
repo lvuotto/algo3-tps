@@ -16,14 +16,14 @@ gnuplot -e "datafile='$BENCHDIR/info.1.c.dat'" \
         -e "titulo='Problema 1 - benchmark aleatorio'" \
 $BENCHDIR/plotter.1.c.gnu 2>&1 > /dev/null
 
-gnuplot -e "datafile='$BENCHDIR/info.1.mejor.dat'" \
-        -e "outfile='$IMGDIR/grafico-1-mejor.png'" \
-        -e "titulo='Problema 1 - benchmark mejor caso'" \
-$BENCHDIR/plotter.1.gnu 2>&1 > /dev/null
+#~ gnuplot -e "datafile='$BENCHDIR/info.1.mejor.dat'" \
+#~         -e "outfile='$IMGDIR/grafico-1-mejor.png'" \
+#~         -e "titulo='Problema 1 - benchmark mejor caso'" \
+#~ $BENCHDIR/plotter.1.gnu 2>&1 > /dev/null
 
 gnuplot -e "datafile='$BENCHDIR/info.1.peor.dat'" \
-        -e "outfile='$IMGDIR/grafico-1-peor.png'" \
-        -e "titulo='Problema 1 - benchmark peor caso'" \
+        -e "outfile='$IMGDIR/grafico-1.png'" \
+        -e "titulo='Problema 1 - benchmark aleatorio'" \
 $BENCHDIR/plotter.1.gnu 2>&1 > /dev/null
 
 gnuplot -e "datafile='$BENCHDIR/info.2.k.dat'" \

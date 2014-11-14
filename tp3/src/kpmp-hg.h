@@ -3,7 +3,7 @@
 
 #include <algorithm>
 #include "kpmp.h"
-#include "shuffle_vector.cc"
+#include "shuffle_vector.h"
 
 #ifndef RANDOM_ARISTAS
 #define RANDOM_ARISTAS 10

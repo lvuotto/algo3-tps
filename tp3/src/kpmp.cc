@@ -3,10 +3,10 @@
 #include <vector>
 #include <string.h>
 #include "kpmp.h"
-#include "kpmp-exacto.cc"
-#include "kpmp-hg.cc"
-#include "kpmp-hl.cc"
-#include "kpmp-grasp.cc"
+#include "kpmp-exacto.h"
+#include "kpmp-hg.h"
+#include "kpmp-hl.h"
+#include "kpmp-grasp.h"
 
 using namespace std;
 

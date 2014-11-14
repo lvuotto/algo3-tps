@@ -2,9 +2,9 @@
 #define KPMP_H
 
 #include <vector>
-#include "grafo.cc"
-#include "conjunto_de_vertices.cc"
-#include "particion.cc"
+#include "grafo.h"
+#include "conjunto_de_vertices.h"
+#include "particion.h"
 
 using namespace std;
 

@@ -1,19 +1,24 @@
 CXXFLAGS=-Wall -Wextra -Werror -pedantic -O3 -ggdb -std=c++0x
-BINS=kpmp-exacto kpmp-hg kpmp-hl kpmp-grasp
-OBJS=kpmp.o
+BINS=kpmp
+DEPS=particion.o conjunto_de_vertices.o grafo.o \
+     kpmp-exacto.o kpmp-grasp.o kpmp-hg.o kpmp-hl.o
 BINDIR=../bin
 
 
-all:
-	g++ -Wall -Wextra -Werror -pedantic -O3 -ggdb -std=c++0x kpmp.cc -o kpmp
-	mv kpmp $(BINDIR)
+all: $(BINS)
 
-kpmp.o: kpmp.h
+kpmp: $(DEPS) shuffle_vector.h
 
-%: %.cc kpmp.o
-	$(CXX) $(CXXFLAGS) $^ -o $@
+particion.o: conjunto_de_vertices.o
+
+conjunto_de_vertices.o: grafo.o
+
+kpmp-hg.o: kpmp-hg.h shuffle_vector.h
+
+%.o: %.h
 
 clean:
-	$(RM) $(BINS) $(OBJS)
+	$(RM) $(DEPS)
+	$(RM) $(BINS)
 
 .PHONY: all clean

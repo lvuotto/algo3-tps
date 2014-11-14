@@ -34,26 +34,21 @@ Particion kpmp_exacto(Grafo& grafo, unsigned int cantidad_de_conjuntos)
 
 void backtracking(Particion& particion, Particion& particion_min, stack<unsigned int>& vertices_pendientes, double& peso_min)
 {
-  if (vertices_pendientes.empty()) {
-    if (particion.peso() < peso_min) {
-      peso_min = particion.peso();
-      particion_min = particion;  
-    }
-
-    return;
-  }
-
-  if (particion.peso() >= peso_min) {
-    return;
-  }
-
   unsigned int vertice = vertices_pendientes.top();
   vertices_pendientes.pop();
 
   for (unsigned int conjunto = 1; conjunto <= particion.cantidad_de_conjuntos(); conjunto++) {
     particion.agregar_vertice(conjunto, vertice);
 
-    backtracking(particion, particion_min, vertices_pendientes, peso_min);
+    if (vertices_pendientes.empty()) {
+      if (particion.peso() < peso_min) {
+        peso_min = particion.peso();
+        particion_min = particion;  
+      }
+    } else if (particion.peso() < peso_min) {
+      backtracking(particion, particion_min, vertices_pendientes, peso_min);      
+    }
+
 
     particion.sacar_vertice(conjunto, vertice);
   }

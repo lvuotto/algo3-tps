@@ -8,6 +8,14 @@ Particion kpmp_exacto(Grafo& grafo, unsigned int cantidad_de_conjuntos)
 {
   Particion particion(grafo, cantidad_de_conjuntos);
 
+  if (cantidad_de_conjuntos >= grafo.cantidad_de_vertices()) {
+    for (unsigned int i = 1; i <= grafo.cantidad_de_vertices(); i++) {
+      particion.agregar_vertice(i, i);
+    }
+
+    return particion;
+  }
+
   stack<unsigned int> vertices_pendientes;
 
   for (unsigned int i = 1; i <= grafo.cantidad_de_vertices(); i++) {

@@ -6,6 +6,7 @@ BINDIR=../bin
 
 
 all: $(BINS)
+	mv $(BINS) $(BINDIR)
 
 kpmp: $(DEPS) shuffle_vector.h
 

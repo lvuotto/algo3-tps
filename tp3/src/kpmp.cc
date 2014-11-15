@@ -28,6 +28,7 @@ int main(int argc, char **argv)
   unsigned int random_aristas = 10;
   unsigned int random_conjuntos = 10;
   unsigned int seed = 0;
+  unsigned int benchmark_repeticiones = 25;
 
 
   int c;
@@ -51,13 +52,14 @@ int main(int argc, char **argv)
         {"random_aristas",   required_argument, 0, 'A'},
         {"random_conjuntos", required_argument, 0, 'C'},
         {"seed",             required_argument, 0, 'S'},
+        {"benchmark",        required_argument, 0, 'B'},
         {"help",             no_argument,       0, 'h'},
         {0, 0, 0, 0}
       };
     /* getopt_long stores the option index here. */
     int option_index = 0;
 
-    c = getopt_long(argc, argv, "a:eglGv:r:c:R:A:C:S:h", long_options, &option_index);
+    c = getopt_long(argc, argv, "a:eglGv:r:c:R:A:C:S:B:h", long_options, &option_index);
 
     /* Detect the end of the options. */
     if (c == -1) {
@@ -163,6 +165,10 @@ int main(int argc, char **argv)
         seed = atoi(optarg);
         break;
 
+      case 'B':
+        benchmark_repeticiones = atoi(optarg);
+        break;
+
       default:
         abort();
     }
@@ -172,111 +178,126 @@ int main(int argc, char **argv)
 
   Particion particion(entrada.grafo, entrada.cantidad_de_conjuntos);
 
+  bool primer_corrida = true;
   auto inicio = high_resolution_clock::now();
+  auto fin = high_resolution_clock::now();
+  auto mejor_tiempo = fin - inicio;
 
-  switch (algoritmo) {
-    case EXACTO: {
-      particion = kpmp_exacto(entrada.grafo, entrada.cantidad_de_conjuntos);
-      break;
-    }
-    case GOLOSO: {
-      switch (estategia_randomizar) {
-        case NADA: {
-          particion = kpmp_hg(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, seed);
-          break;
-        }
-        case ARISTAS: {
-          particion = kpmp_hg_random_aristas(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, seed);
-          break;
-        }
-        case CONJUNTOS: {
-          particion = kpmp_hg_random_conjuntos(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, seed);
-          break;
-        }
-        case AMBOS: {
-          particion = kpmp_hg_random_aristas_conjuntos(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, seed);
-          break;
-        }
-      }
-      break;
-    }
-    case LOCAL: {
-      particion = leer_solucion(entrada.grafo, entrada.cantidad_de_conjuntos);
-      inicio = high_resolution_clock::now();
+  for (unsigned int i = 0; i < benchmark_repeticiones; i++) {
+    inicio = high_resolution_clock::now();
 
-      switch (estrategia_vertices) {
-        case MOVER: {
-          kpmp_hl_mover_vertice(particion);
-          break;
-        }
-        case INTERCAMBIAR: {
-          kpmp_hl_switch_vertices(particion);
-          break;
-        }
+    switch (algoritmo) {
+      case EXACTO: {
+        particion = kpmp_exacto(entrada.grafo, entrada.cantidad_de_conjuntos);
+        break;
       }
-      break;
+      case GOLOSO: {
+        switch (estategia_randomizar) {
+          case NADA: {
+            particion = kpmp_hg(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, seed);
+            break;
+          }
+          case ARISTAS: {
+            particion = kpmp_hg_random_aristas(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, seed);
+            break;
+          }
+          case CONJUNTOS: {
+            particion = kpmp_hg_random_conjuntos(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, seed);
+            break;
+          }
+          case AMBOS: {
+            particion = kpmp_hg_random_aristas_conjuntos(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, seed);
+            break;
+          }
+        }
+        break;
+      }
+      case LOCAL: {
+        particion = leer_solucion(entrada.grafo, entrada.cantidad_de_conjuntos);
+        inicio = high_resolution_clock::now();
+
+        switch (estrategia_vertices) {
+          case MOVER: {
+            kpmp_hl_mover_vertice(particion);
+            break;
+          }
+          case INTERCAMBIAR: {
+            kpmp_hl_switch_vertices(particion);
+            break;
+          }
+        }
+        break;
+      }
+      case GRASP: {
+        switch (estategia_randomizar) {
+          case NADA: {
+            switch (estrategia_vertices) {
+              case MOVER: {
+                particion = kpmp_grasp(kpmp_hg, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
+                break;
+              }
+              case INTERCAMBIAR: {
+                particion = kpmp_grasp(kpmp_hg, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
+                break;
+              }
+            }
+            break;
+          }
+          case ARISTAS: {
+            switch (estrategia_vertices) {
+              case MOVER: {
+                particion = kpmp_grasp(kpmp_hg_random_aristas, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
+                break;
+              }
+              case INTERCAMBIAR: {
+                particion = kpmp_grasp(kpmp_hg_random_aristas, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
+                break;
+              }
+            }
+            break;
+          }
+          case CONJUNTOS: {
+            switch (estrategia_vertices) {
+              case MOVER: {
+                particion = kpmp_grasp(kpmp_hg_random_conjuntos, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
+                break;
+              }
+              case INTERCAMBIAR: {
+                particion = kpmp_grasp(kpmp_hg_random_conjuntos, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
+                break;
+              }
+            }
+            break;
+          }
+          case AMBOS: {
+            switch (estrategia_vertices) {
+              case MOVER: {
+                particion = kpmp_grasp(kpmp_hg_random_aristas_conjuntos, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
+                break;
+              }
+              case INTERCAMBIAR: {
+                particion = kpmp_grasp(kpmp_hg_random_aristas_conjuntos, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
+                break;
+              }
+            }
+            break;
+          }
+        }
+        break;
+      }
     }
-    case GRASP: {
-      switch (estategia_randomizar) {
-        case NADA: {
-          switch (estrategia_vertices) {
-            case MOVER: {
-              particion = kpmp_grasp(kpmp_hg, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
-              break;
-            }
-            case INTERCAMBIAR: {
-              particion = kpmp_grasp(kpmp_hg, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
-              break;
-            }
-          }
-          break;
-        }
-        case ARISTAS: {
-          switch (estrategia_vertices) {
-            case MOVER: {
-              particion = kpmp_grasp(kpmp_hg_random_aristas, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
-              break;
-            }
-            case INTERCAMBIAR: {
-              particion = kpmp_grasp(kpmp_hg_random_aristas, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
-              break;
-            }
-          }
-          break;
-        }
-        case CONJUNTOS: {
-          switch (estrategia_vertices) {
-            case MOVER: {
-              particion = kpmp_grasp(kpmp_hg_random_conjuntos, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
-              break;
-            }
-            case INTERCAMBIAR: {
-              particion = kpmp_grasp(kpmp_hg_random_conjuntos, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
-              break;
-            }
-          }
-          break;
-        }
-        case AMBOS: {
-          switch (estrategia_vertices) {
-            case MOVER: {
-              particion = kpmp_grasp(kpmp_hg_random_aristas_conjuntos, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
-              break;
-            }
-            case INTERCAMBIAR: {
-              particion = kpmp_grasp(kpmp_hg_random_aristas_conjuntos, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
-              break;
-            }
-          }
-          break;
-        }
-      }
-      break;
+
+    fin = high_resolution_clock::now();
+
+    if (primer_corrida) {
+      primer_corrida = false;
+      mejor_tiempo = fin - inicio;
+    } else if (fin - inicio < mejor_tiempo) {
+      mejor_tiempo = fin - inicio;
     }
   }
 
-  auto fin = high_resolution_clock::now();
-  cerr << duration_cast<microseconds>(fin - inicio).count() << " ";
+  cerr << duration_cast<microseconds>(mejor_tiempo).count() << " ";
 
   imprimir_particion(particion);
 
@@ -365,6 +386,7 @@ void imprimir_uso()
   cout << "  A, --random_aristas=CANTIDAD\t\tPara GRASP, el tamaño del subconjunto de aristas para elegir al azar (por defecto 10)" << endl;
   cout << "  C, --random_conjuntos=CANTIDAD\tPara GRASP, el tamaño del subconjunto de conjuntos para elegir al azar (por defecto 10)" << endl;
   cout << "  S, --seed=SEMILLA\t\t\tLa semilla para las funciones que utilizar azar (por defecto utiliza chrono)" << endl;
+  cout << "  B, --benchmark=REPETICIONES\t\tLa cantidad de veces que se ejecutará el algoritmo para medir el tiempo (por defecto 25)" << endl;
 
   cout << endl;
   cout << "Ejemplo: kpmp -a grasp --vertices=intercambiar --randomizar=conjuntos --criterio=cuando_el_mejor_se_repita_x_veces --repeticiones=100 < grafo.txt" << endl;

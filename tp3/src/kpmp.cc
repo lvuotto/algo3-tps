@@ -28,7 +28,7 @@ int main(int argc, char **argv)
   unsigned int random_aristas = 10;
   unsigned int random_conjuntos = 10;
   unsigned int seed = 0;
-  unsigned int benchmark_repeticiones = 25;
+  unsigned int benchmark_repeticiones = 1;
 
 
   int c;
@@ -386,7 +386,7 @@ void imprimir_uso()
   cout << "  A, --random_aristas=CANTIDAD\t\tPara GRASP, el tamaño del subconjunto de aristas para elegir al azar (por defecto 10)" << endl;
   cout << "  C, --random_conjuntos=CANTIDAD\tPara GRASP, el tamaño del subconjunto de conjuntos para elegir al azar (por defecto 10)" << endl;
   cout << "  S, --seed=SEMILLA\t\t\tLa semilla para las funciones que utilizar azar (por defecto utiliza chrono)" << endl;
-  cout << "  B, --benchmark=REPETICIONES\t\tLa cantidad de veces que se ejecutará el algoritmo para medir el tiempo (por defecto 25)" << endl;
+  cout << "  B, --benchmark=REPETICIONES\t\tLa cantidad de veces que se ejecutará el algoritmo para medir el tiempo (por defecto 1)" << endl;
 
   cout << endl;
   cout << "Ejemplo: kpmp -a grasp --vertices=intercambiar --randomizar=conjuntos --criterio=cuando_el_mejor_se_repita_x_veces --repeticiones=100 < grafo.txt" << endl;

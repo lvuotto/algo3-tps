@@ -19,7 +19,7 @@ aristas_max = [aristas.count, m].min
 
 peso_maximo = 15_000
 
-puts "#{n} #{m} #{k}"
+puts "#{n} #{aristas_max} #{k}"
 
 (1..aristas_max).each do
   vertice1, vertice2 = aristas.pop

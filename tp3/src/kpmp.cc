@@ -1,6 +1,7 @@
 #include <iostream>
 #include <getopt.h>
 #include <vector>
+#include <chrono>
 #include <string.h>
 #include "kpmp.h"
 #include "kpmp-exacto.h"
@@ -9,6 +10,7 @@
 #include "kpmp-grasp.h"
 
 using namespace std;
+using namespace std::chrono;
 
 
 int main(int argc, char **argv)
@@ -23,6 +25,10 @@ int main(int argc, char **argv)
   EstrategiaRandomizar estategia_randomizar = NADA;
   CriterioDeTerminacion criterio_de_terminacion = MEJOR_LUEGO_DE_X_VECES;
   unsigned int repeticiones = 10;
+  unsigned int random_aristas = 10;
+  unsigned int random_conjuntos = 10;
+  unsigned int seed = 0;
+
 
   int c;
   while (true) {
@@ -33,22 +39,25 @@ int main(int argc, char **argv)
         //{"brief",   no_argument,       &verbose_flag, 0},
         /* These options don’t set a flag.
            We distinguish them by their indices. */
-        {"algoritmo",    required_argument, 0, 'a'},
-        {"exacto",       no_argument,       0, 'e'},
-        {"goloso",       no_argument,       0, 'g'},
-        {"local",        no_argument,       0, 'l'},
-        {"grasp",        no_argument,       0, 'G'},
-        {"vertices",     required_argument, 0, 'v'},
-        {"randomizar",   required_argument, 0, 'r'},
-        {"criterio",     required_argument, 0, 'c'},
-        {"repeticiones", required_argument, 0, 'R'},
-        {"help",         no_argument,       0, 'h'},
+        {"algoritmo",        required_argument, 0, 'a'},
+        {"exacto",           no_argument,       0, 'e'},
+        {"goloso",           no_argument,       0, 'g'},
+        {"local",            no_argument,       0, 'l'},
+        {"grasp",            no_argument,       0, 'G'},
+        {"vertices",         required_argument, 0, 'v'},
+        {"randomizar",       required_argument, 0, 'r'},
+        {"criterio",         required_argument, 0, 'c'},
+        {"repeticiones",     required_argument, 0, 'R'},
+        {"random_aristas",   required_argument, 0, 'A'},
+        {"random_conjuntos", required_argument, 0, 'C'},
+        {"seed",             required_argument, 0, 'S'},
+        {"help",             no_argument,       0, 'h'},
         {0, 0, 0, 0}
       };
     /* getopt_long stores the option index here. */
     int option_index = 0;
 
-    c = getopt_long(argc, argv, "a:eglGv:r:c:R:h", long_options, &option_index);
+    c = getopt_long(argc, argv, "a:eglGv:r:c:R:A:C:S:h", long_options, &option_index);
 
     /* Detect the end of the options. */
     if (c == -1) {
@@ -142,6 +151,18 @@ int main(int argc, char **argv)
         repeticiones = atoi(optarg);
         break;
 
+      case 'A':
+        random_aristas = atoi(optarg);
+        break;
+
+      case 'C':
+        random_conjuntos = atoi(optarg);
+        break;
+
+      case 'S':
+        seed = atoi(optarg);
+        break;
+
       default:
         abort();
     }
@@ -151,6 +172,8 @@ int main(int argc, char **argv)
 
   Particion particion(entrada.grafo, entrada.cantidad_de_conjuntos);
 
+  auto inicio = high_resolution_clock::now();
+
   switch (algoritmo) {
     case EXACTO: {
       particion = kpmp_exacto(entrada.grafo, entrada.cantidad_de_conjuntos);
@@ -159,19 +182,19 @@ int main(int argc, char **argv)
     case GOLOSO: {
       switch (estategia_randomizar) {
         case NADA: {
-          particion = kpmp_hg(entrada.grafo, entrada.cantidad_de_conjuntos);
+          particion = kpmp_hg(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, seed);
           break;
         }
         case ARISTAS: {
-          particion = kpmp_hg_random_aristas(entrada.grafo, entrada.cantidad_de_conjuntos);
+          particion = kpmp_hg_random_aristas(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, seed);
           break;
         }
         case CONJUNTOS: {
-          particion = kpmp_hg_random_conjuntos(entrada.grafo, entrada.cantidad_de_conjuntos);
+          particion = kpmp_hg_random_conjuntos(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, seed);
           break;
         }
         case AMBOS: {
-          particion = kpmp_hg_random_aristas_conjuntos(entrada.grafo, entrada.cantidad_de_conjuntos);
+          particion = kpmp_hg_random_aristas_conjuntos(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, seed);
           break;
         }
       }
@@ -179,6 +202,7 @@ int main(int argc, char **argv)
     }
     case LOCAL: {
       particion = leer_solucion(entrada.grafo, entrada.cantidad_de_conjuntos);
+      inicio = high_resolution_clock::now();
 
       switch (estrategia_vertices) {
         case MOVER: {
@@ -197,11 +221,11 @@ int main(int argc, char **argv)
         case NADA: {
           switch (estrategia_vertices) {
             case MOVER: {
-              particion = kpmp_grasp(kpmp_hg, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones);
+              particion = kpmp_grasp(kpmp_hg, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
               break;
             }
             case INTERCAMBIAR: {
-              particion = kpmp_grasp(kpmp_hg, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones);
+              particion = kpmp_grasp(kpmp_hg, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
               break;
             }
           }
@@ -210,11 +234,11 @@ int main(int argc, char **argv)
         case ARISTAS: {
           switch (estrategia_vertices) {
             case MOVER: {
-              particion = kpmp_grasp(kpmp_hg_random_aristas, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones);
+              particion = kpmp_grasp(kpmp_hg_random_aristas, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
               break;
             }
             case INTERCAMBIAR: {
-              particion = kpmp_grasp(kpmp_hg_random_aristas, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones);
+              particion = kpmp_grasp(kpmp_hg_random_aristas, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
               break;
             }
           }
@@ -223,11 +247,11 @@ int main(int argc, char **argv)
         case CONJUNTOS: {
           switch (estrategia_vertices) {
             case MOVER: {
-              particion = kpmp_grasp(kpmp_hg_random_conjuntos, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones);
+              particion = kpmp_grasp(kpmp_hg_random_conjuntos, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
               break;
             }
             case INTERCAMBIAR: {
-              particion = kpmp_grasp(kpmp_hg_random_conjuntos, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones);
+              particion = kpmp_grasp(kpmp_hg_random_conjuntos, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
               break;
             }
           }
@@ -236,11 +260,11 @@ int main(int argc, char **argv)
         case AMBOS: {
           switch (estrategia_vertices) {
             case MOVER: {
-              particion = kpmp_grasp(kpmp_hg_random_aristas_conjuntos, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones);
+              particion = kpmp_grasp(kpmp_hg_random_aristas_conjuntos, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
               break;
             }
             case INTERCAMBIAR: {
-              particion = kpmp_grasp(kpmp_hg_random_aristas_conjuntos, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones);
+              particion = kpmp_grasp(kpmp_hg_random_aristas_conjuntos, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
               break;
             }
           }
@@ -250,6 +274,9 @@ int main(int argc, char **argv)
       break;
     }
   }
+
+  auto fin = high_resolution_clock::now();
+  cerr << duration_cast<microseconds>(fin - inicio).count() << " ";
 
   imprimir_particion(particion);
 
@@ -303,7 +330,7 @@ void imprimir_particion(Particion& particion)
   }
 
   cout << endl;
-  cerr << "Peso: " << particion.peso() << endl;
+  cerr << particion.peso() << endl;
 }
 
 
@@ -335,6 +362,9 @@ void imprimir_uso()
   cout << "  r, --randomizar=ESTRATEGIA\t\tPara goloso o GRASP, una de estas estrategias para randomizar: nada (por defecto), aristas, conjuntos, ambos" << endl;
   cout << "  c, --criterio=CRITERIO\t\tPara GRASP, uno de estos criterios de terminacion: mejor_luego_de_x_veces (por defecto), cuando_el_mejor_se_repita_x_veces" << endl;
   cout << "  R, --repeticiones=REPETICIONES\tPara GRASP, la cantidad de repeticiones segun el criterio (por defecto 10)" << endl;
+  cout << "  A, --random_aristas=CANTIDAD\t\tPara GRASP, el tamaño del subconjunto de aristas para elegir al azar (por defecto 10)" << endl;
+  cout << "  C, --random_conjuntos=CANTIDAD\tPara GRASP, el tamaño del subconjunto de conjuntos para elegir al azar (por defecto 10)" << endl;
+  cout << "  S, --seed=SEMILLA\t\t\tLa semilla para las funciones que utilizar azar (por defecto utiliza chrono)" << endl;
 
   cout << endl;
   cout << "Ejemplo: kpmp -a grasp --vertices=intercambiar --randomizar=conjuntos --criterio=cuando_el_mejor_se_repita_x_veces --repeticiones=100 < grafo.txt" << endl;

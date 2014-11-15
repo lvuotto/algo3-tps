@@ -20,7 +20,7 @@ void kpmp_hl_mover_vertice(Particion& particion)
         if (conjunto == conjunto_del_vertice) {
           continue;
         }
-        
+
         double peso = peso_sin_vertice + particion.costo(conjunto, vertice);
 
         if (peso < peso_min) {
@@ -37,7 +37,7 @@ void kpmp_hl_mover_vertice(Particion& particion)
       particion.agregar_vertice(conjunto_nuevo, vertice_min);
       peso_min = particion.peso();
     } else {
-      se_puede_mejorar = false;      
+      se_puede_mejorar = false;
     }
   }
 }
@@ -81,12 +81,12 @@ void kpmp_hl_switch_vertices(Particion& particion)
 
     if (peso_min < particion.peso()) {
       particion.sacar_vertice(conjunto_min1, vertice_min1);
-      particion.agregar_vertice(conjunto_min1, vertice_min2);
       particion.sacar_vertice(conjunto_min2, vertice_min2);
+      particion.agregar_vertice(conjunto_min1, vertice_min2);
       particion.agregar_vertice(conjunto_min2, vertice_min1);
       peso_min = particion.peso();
     } else {
-      se_puede_mejorar = false;      
+      se_puede_mejorar = false;
     }
   }
 }

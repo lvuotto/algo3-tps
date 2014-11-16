@@ -297,7 +297,10 @@ int main(int argc, char **argv)
     }
   }
 
-  cerr << duration_cast<microseconds>(mejor_tiempo).count() << " ";
+  cerr << entrada.grafo.cantidad_de_vertices() << " "
+       << entrada.grafo.aristas().size() << " "
+       << entrada.cantidad_de_conjuntos << " "
+       << duration_cast<microseconds>(mejor_tiempo).count() << " ";
 
   imprimir_particion(particion);
 
@@ -344,6 +347,7 @@ Particion leer_solucion(Grafo& grafo, unsigned int cantidad_de_conjuntos)
 
 void imprimir_particion(Particion& particion)
 {
+  cerr << particion.peso() << endl;
   vector<unsigned int> solucion = particion_a_solucion(particion);
 
   for (auto it = solucion.begin(); it != solucion.end(); it++) {
@@ -351,7 +355,6 @@ void imprimir_particion(Particion& particion)
   }
 
   cout << endl;
-  cerr << particion.peso() << endl;
 }
 
 

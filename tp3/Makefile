@@ -15,6 +15,9 @@ informe:
 test:
 	$(MAKE) -C $(TESTDIR)
 
+benchmark:
+	$(BENCHDIR)/run.sh $(BINDIR)/kpmp $(TESTDIR)/random-test.rb $(BENCHDIR)
+
 plot:
 	TESTDIR=$(TESTDIR) BINDIR=$(BINDIR) IMGDIR=$(IMGDIR) $(BENCHDIR)/run.sh
 
@@ -23,4 +26,4 @@ all: tp informe test plot
 clean:
 	$(RM) $(BINDIR)/*
 
-.PHONY: all tp informe test plot clean
+.PHONY: all tp informe test benchmark plot clean

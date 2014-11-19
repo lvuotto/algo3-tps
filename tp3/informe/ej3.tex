@@ -78,18 +78,21 @@ Total: O(m * log(m) + m * (k + n))
 Como el algoritmo intenta deshacerse primero de las aristas más pesadas, el
 peor caso es cuando el problema lo dan muchas aristas de poco peso.
 
-Esta situación se puede generar de la siguiente forma: Dados k conjuntos, el
-grafo debe tener 2 tipos de vértices: k vértices, todos ellos adyacentes entre
-sí con un peso C > 1, y luego n vértices, cada uno adyacente únicamente a los
-primeros k vértices con un peso C', 0 < C' < C.  Por como se comporta el
-algoritmo, las aristas que unen a los primeros k vértices se ubicarán primero,
-dando que queden los k vértices en conjuntos distintos.  Luego, de cualquier
-forma que se agreguen los siguientes vértices, cada uno generará un costo  C',
-siendo el peso total n*C'.  Sin embargo, poniendo 2 de los primeros k vértices
-juntos en un mismo conjunto, se genera un costo C, pero todos los n vértices
-pueden entrar en un mismo conjunto sin aumentar el costo.  De esta forma, con C
-y C' fijos, n*C' > C a partir de algún n, por lo que se puede generar un grafo
-tan malo como se quiera.
+Esta situación se puede generar de la siguiente forma: si se quiere resolver el
+problema para $k$ conjuntos, el grafo debe tener 2 tipos de vértices: $k$
+vértices, todos ellos adyacentes entre sí, con peso $\omega > 0$, y luego $h$
+vértices, cada uno adyacente únicamente a los primeros $k$ vértices, con un
+peso $\sigma$, $0 < \sigma < \omega$.  Por como se comporta el algoritmo, las
+aristas que unen a los primeros $k$ vértices se ubicarán primero, repartiendo
+así los $k$ vértices en conjuntos distintos. Luego, de cualquier forma que se
+agreguen los siguientes vértices, cada uno generará un costo $\sigma$, siendo
+el peso total $h \sigma$. Sin embargo, poniendo 2 de los primeros $k$ vértices
+en un mismo conjunto y los otros $h$ vértices en el conjunto vacío restante,
+se obtendrá un peso $\omega$, pues los $h$ vértices con aristas de peso
+$\sigma$ no son adyacentes y suman peso $0$. De esta forma, con $\omega$ y
+$\sigma$ fijos, a partir de un $h_0$, $h \sigma > \omega$. Luego, aumentando
+$h$, se obtiene una familia de grafos para la cual la heurística falla en dar
+una buena aproximación de la solución.
 
 
 \newpage \subsection{Experimentación y gráficos.}

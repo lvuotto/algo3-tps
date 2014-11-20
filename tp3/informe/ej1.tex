@@ -1,7 +1,10 @@
 \subsection{Relación entre k-PMP y el problema 3 del TP 1.}
 \vspace*{0.3cm}
-\textcolor{red}{\textbf{completar!}}
 
+Una relación posible entre k-PMP y el problema 3 del TP1 podría ser que, si
+k-PMP tiene una solución, de manera tal que el peso total de la $k$-partición sea menor o igual al umbral M de peligrosidad del P3 del TP1, esto significa que el P3 del TP1 tiene solución con k camiones, aunque no necesariamente sea la solución óptima a este problema.
+
+Es decir, quizás el P3 del TP1 pueda resolverse utilizando menos de $k$ camiones, pero no podemos inferir esta información a partir del resultado del k-PMP, sólo saber si funciona para k.
 
 
 \newpage
@@ -9,42 +12,42 @@
             un grafo.}
 \vspace*{0.3cm}
 
-Sea $G = (V, E)$ un grafo simple. Dado un entero $k$ y una función de peso $w$ 
+Sea $G = (V, E)$ un grafo simple. Dado un entero $k$ y una función de peso $w$
 que, dado un eje $e \in E$ le asigna a $e$ un peso \textbf{estrictamente positivo},
-la relación entre el problema de $k-PMP$ y el problema de coloreo de los vértices 
+la relación entre el problema de $k-PMP$ y el problema de coloreo de los vértices
 de un grafo puede resumirse en la ecuación siguiente:
 
 \begin{center}
   k-PMP($G$) = $0 \iff G$ es $k$-coloreable
 \end{center}
 
-Esto vale pues, si la $k$-partición de $G$ de \textbf{peso mínimo} hallada 
-tiene peso $0$, significa que cada conjunto de la partición (subconjuntos de $V$) 
-no posee aristas \textit{intrapartición}, es decir, sus extremos no se encuentran en 
-un mismo conjunto, por lo tanto el peso de cada uno de estos conjuntos será 
-\textbf{nulo} y en consecuencia también lo será la suma total de los pesos de 
-las aristas \textit{intrapartición}. Si esto sucede, entonces el grafo $G$ es 
-$k$-coloreable, pues esto significa que $V$ puede dividirse en, a lo sumo, $k$ 
-conjuntos, siendo $k$ la cantidad máxima de colores a utilizar, de manera que no 
-haya vértices adyacentes en estos conjuntos, pues el \textit{coloreo} no nos permite 
+Esto vale pues, si la $k$-partición de $G$ de \textbf{peso mínimo} hallada
+tiene peso $0$, significa que cada conjunto de la partición (subconjuntos de $V$)
+no posee aristas \textit{intrapartición}, es decir, sus extremos no se encuentran en
+un mismo conjunto, por lo tanto el peso de cada uno de estos conjuntos será
+\textbf{nulo} y en consecuencia también lo será la suma total de los pesos de
+las aristas \textit{intrapartición}. Si esto sucede, entonces el grafo $G$ es
+$k$-coloreable, pues esto significa que $V$ puede dividirse en, a lo sumo, $k$
+conjuntos, siendo $k$ la cantidad máxima de colores a utilizar, de manera que no
+haya vértices adyacentes en estos conjuntos, pues el \textit{coloreo} no nos permite
 utilizar colores iguales para vértices adyacentes.
 
-De la misma forma, si el grafo $G$ es $k$-coloreable, significa que utilizando 
-como máximo $k$ colores podemos $colorear$ los vértices del mismo, esto implica 
-que $V \in G$ puede dividirse en $i$ conjuntos, con $i \in {1, \dots, k}$, siendo $i$ 
-la cantidad de colores utilizada para colorear los vértices del grafo, de manera 
-que en cada uno de estos conjuntos no haya vértices adyacentes, pues los agrupamos 
-según el color que le fue asignado a cada vértice. Esto implica que el peso de 
-las aristas \textit{intrapartición} es nulo para todos los $i$ conjuntos, pues éstas no 
-existen, ya que las aritas presentes en $G$ no conectan vértices pertenecientes a 
-un mismo subconjunto de $V$. Por lo tanto, al ser el peso del conjunto $i$ nulo, 
-la suma de los pesos de las aristas \textit{intrapartición} será también nulo, por lo 
+De la misma forma, si el grafo $G$ es $k$-coloreable, significa que utilizando
+como máximo $k$ colores podemos $colorear$ los vértices del mismo, esto implica
+que $V \in G$ puede dividirse en $i$ conjuntos, con $i \in {1, \dots, k}$, siendo $i$
+la cantidad de colores utilizada para colorear los vértices del grafo, de manera
+que en cada uno de estos conjuntos no haya vértices adyacentes, pues los agrupamos
+según el color que le fue asignado a cada vértice. Esto implica que el peso de
+las aristas \textit{intrapartición} es nulo para todos los $i$ conjuntos, pues éstas no
+existen, ya que las aritas presentes en $G$ no conectan vértices pertenecientes a
+un mismo subconjunto de $V$. Por lo tanto, al ser el peso del conjunto $i$ nulo,
+la suma de los pesos de las aristas \textit{intrapartición} será también nulo, por lo
 que el peso de la $k$-partición de $G$ será nulo, por lo tanto vale que $k-PMP(G) = 0$.
 
-Es importante destacar que la relación planteada anteriormente y expresada mediante 
-la ecuación descripta más arriba sólo vale si la función de peso $w$ asigna a las 
-aristas valores positivos, caso contrario la partición peso mínimo podría ser una 
-cuyo peso sea negativo, la cantidad de aristas \textit{intrapartición} podría variar y el 
+Es importante destacar que la relación planteada anteriormente y expresada mediante
+la ecuación descripta más arriba sólo vale si la función de peso $w$ asigna a las
+aristas valores positivos, caso contrario la partición peso mínimo podría ser una
+cuyo peso sea negativo, la cantidad de aristas \textit{intrapartición} podría variar y el
 \textit{coloreo} del grafo $G$ necesitaría más de $k$ colores para llevarse a cabo.
 
 

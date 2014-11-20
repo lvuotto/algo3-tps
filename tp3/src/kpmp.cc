@@ -175,8 +175,9 @@ int main(int argc, char **argv)
   }
 
   Entrada entrada = leer_entrada();
-
   Particion particion(entrada.grafo, entrada.cantidad_de_conjuntos);
+  if (algoritmo == LOCAL)
+    particion = leer_solucion(entrada.grafo, entrada.cantidad_de_conjuntos); 
 
   bool primer_corrida = true;
   auto inicio = high_resolution_clock::now();
@@ -213,9 +214,6 @@ int main(int argc, char **argv)
         break;
       }
       case LOCAL: {
-        particion = leer_solucion(entrada.grafo, entrada.cantidad_de_conjuntos);
-        inicio = high_resolution_clock::now();
-
         switch (estrategia_vertices) {
           case MOVER: {
             kpmp_hl_mover_vertice(particion);

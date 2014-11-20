@@ -17,3 +17,5 @@ for i in {10..100}; do
   $KPMP -g -B 1 < $BENCHDIR/local.45.tmp >> $BENCHDIR/local.45.tmp 2> /dev/null
   $KPMP -B 10 -l < $BENCHDIR/local.45.tmp
 done
+
+rm -f local.*.tmp

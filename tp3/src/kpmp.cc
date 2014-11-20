@@ -173,6 +173,10 @@ int main(int argc, char **argv)
         abort();
     }
   }
+  
+  if (seed == 0)
+    seed = chrono::system_clock::now().time_since_epoch().count();
+  std::default_random_engine re(seed);
 
   Entrada entrada = leer_entrada();
   Particion particion(entrada.grafo, entrada.cantidad_de_conjuntos);
@@ -195,19 +199,19 @@ int main(int argc, char **argv)
       case GOLOSO: {
         switch (estategia_randomizar) {
           case NADA: {
-            particion = kpmp_hg(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, seed);
+            particion = kpmp_hg(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, re);
             break;
           }
           case ARISTAS: {
-            particion = kpmp_hg_random_aristas(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, seed);
+            particion = kpmp_hg_random_aristas(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, re);
             break;
           }
           case CONJUNTOS: {
-            particion = kpmp_hg_random_conjuntos(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, seed);
+            particion = kpmp_hg_random_conjuntos(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, re);
             break;
           }
           case AMBOS: {
-            particion = kpmp_hg_random_aristas_conjuntos(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, seed);
+            particion = kpmp_hg_random_aristas_conjuntos(entrada.grafo, entrada.cantidad_de_conjuntos, random_aristas, random_conjuntos, re);
             break;
           }
         }
@@ -231,11 +235,11 @@ int main(int argc, char **argv)
           case NADA: {
             switch (estrategia_vertices) {
               case MOVER: {
-                particion = kpmp_grasp(kpmp_hg, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
+                particion = kpmp_grasp(kpmp_hg, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, re);
                 break;
               }
               case INTERCAMBIAR: {
-                particion = kpmp_grasp(kpmp_hg, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
+                particion = kpmp_grasp(kpmp_hg, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, re);
                 break;
               }
             }
@@ -244,11 +248,11 @@ int main(int argc, char **argv)
           case ARISTAS: {
             switch (estrategia_vertices) {
               case MOVER: {
-                particion = kpmp_grasp(kpmp_hg_random_aristas, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
+                particion = kpmp_grasp(kpmp_hg_random_aristas, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, re);
                 break;
               }
               case INTERCAMBIAR: {
-                particion = kpmp_grasp(kpmp_hg_random_aristas, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
+                particion = kpmp_grasp(kpmp_hg_random_aristas, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, re);
                 break;
               }
             }
@@ -257,11 +261,11 @@ int main(int argc, char **argv)
           case CONJUNTOS: {
             switch (estrategia_vertices) {
               case MOVER: {
-                particion = kpmp_grasp(kpmp_hg_random_conjuntos, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
+                particion = kpmp_grasp(kpmp_hg_random_conjuntos, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, re);
                 break;
               }
               case INTERCAMBIAR: {
-                particion = kpmp_grasp(kpmp_hg_random_conjuntos, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
+                particion = kpmp_grasp(kpmp_hg_random_conjuntos, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, re);
                 break;
               }
             }
@@ -270,11 +274,11 @@ int main(int argc, char **argv)
           case AMBOS: {
             switch (estrategia_vertices) {
               case MOVER: {
-                particion = kpmp_grasp(kpmp_hg_random_aristas_conjuntos, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
+                particion = kpmp_grasp(kpmp_hg_random_aristas_conjuntos, kpmp_hl_mover_vertice, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, re);
                 break;
               }
               case INTERCAMBIAR: {
-                particion = kpmp_grasp(kpmp_hg_random_aristas_conjuntos, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, seed);
+                particion = kpmp_grasp(kpmp_hg_random_aristas_conjuntos, kpmp_hl_switch_vertices, entrada.grafo, entrada.cantidad_de_conjuntos, criterio_de_terminacion, repeticiones, random_aristas, random_conjuntos, re);
                 break;
               }
             }

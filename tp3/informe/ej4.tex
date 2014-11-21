@@ -31,7 +31,7 @@ Los algoritmos consisten en, partiendo de una solución inicial, probar sobre to
 kpmp_mover(particion) {
     pesoMin = peso(particion)
     sePuedeMejorar = true
-    \textbf{mientras} sePuedeMejorar {
+    mientras sePuedeMejorar {
         por cada vertice en vertices(particion) {
             conjuntoDelVertice = buscarConjunto(particion, vertice)
             pesoSinVertice = peso(particion) - costo(conjuntoDelVertice, vertice)

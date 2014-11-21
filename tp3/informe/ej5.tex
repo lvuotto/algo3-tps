@@ -5,7 +5,7 @@ El algoritmo de \textbf{GRASP} consiste en utilizar una
 \textit{heurística golosa aleatorizada} para obtener una primera solución
 y luego ir mejorándola aplicándole una \textit{heurística de búsqueda local}.
 
-Esto se repite hasta llegar a un \textit{criterio de terminación} dado, 
+Esto se repite hasta llegar a un \textit{criterio de terminación} dado,
 quedándose con la mejor solución encontrada hasta el momento.
 
 El algoritmo que diseñamos utiliza el algoritmo goloso planteado en el
@@ -33,23 +33,21 @@ Todos estos resultados fueron probados con ambos algoritmos de localidad.
 
 Por último también se combinaron todos con los 2 criterios de terminación, con distintos valores para las variables $X$ (independientes) detalladas anteriormente.
 
-\vspace*{0.5cm}
+\vspace*{0.35cm}
 
-\textbf{Pseudocódigo:}
+\textbf{Pseudocódigo del algoritmo GRASP:}
 
-\vspace*{0.3cm}
+\vspace*{0.1cm}
 
 \begin{verbatim}
 kpmp_grasp(funcionGoloso, funcionLocal, grafo, cantidadDeConjuntos, criterioDeTerminacion, X) {
     particion = funcionGoloso(grafo, cantidadDeConjuntos)
     funcionLocal(particion)
     pesoMin = peso(particion)
-
     si criterioDeTerminacion = MEJOR_LUEGO_DE_X_VECES {
         repetir X veces {
             nuevaParticion = funcionGoloso(grafo, cantidadDeConjuntos)
             funcionLocal(particion)
-
             si peso(nuevaParticion) < pesoMin {
                 pesoMin = peso(nuevaParticion)
                 particion = nuevaParticion
@@ -59,7 +57,6 @@ kpmp_grasp(funcionGoloso, funcionLocal, grafo, cantidadDeConjuntos, criterioDeTe
         nuevaParticion = funcionGoloso(grafo, cantidadDeConjuntos)
         funcionLocal(nuevaParticion)
         contadorRepeticiones = 1
-
         si peso(nuevaParticion) < pesoMin {
             pesoMin = peso(nuevaParticion)
             particion = nuevaParticion
@@ -68,7 +65,6 @@ kpmp_grasp(funcionGoloso, funcionLocal, grafo, cantidadDeConjuntos, criterioDeTe
             contadorRepeticiones += 1
         }
     }
-
     return particion
 }
 \end{verbatim}

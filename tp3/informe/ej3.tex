@@ -1,31 +1,27 @@
 \subsection{Descripción del algoritmo implementado.}
 \vspace*{0.3cm}
 
-La \textbf{heurística golosa} consiste en ir construyendo una solución
+La \textbf{heurística golosa} consiste en ir construyendo una solución,
 tomando en cada paso la mejor alternativa posible en ese momento para la
 solución parcial construída.
-
 
 Con la idea de que evitando las aristas más pesadas se puede reducir el peso
 total, el algoritmo empieza en ordenando las aristas por peso en orden
 descendente.
 
-Luego, por cada arista, se agregan sus 2 vértices a los conjuntos que
-resulten en el menor peso total, esto comenzaría separando los vértices
+Luego, por cada arista, se agregan sus 2 vértices a los conjuntos que resulten en el menor peso total. Esto comenzaría separando los vértices
 de las aristas más pesadas en distintos conjuntos.
 
 \vspace*{0.5cm}
 
-\textbf{Pseudocódigo:}
+\textbf{Pseudocódigo del algoritmo:}
 
 \vspace*{0.3cm}
 
 \begin{verbatim}
 goloso(grafo, cantidadDeConjuntos) {
     particion = Particion(grafo, cantidadDeConjuntos)
-
     aristas = ordenarPorPeso(aristas(grafo))
-
     por cada arista en aristas {
         agregarAlDeMenosPeso(particion, vertice1(arista))
         agregarAlDeMenosPeso(particion, vertice2(arista))
@@ -33,14 +29,16 @@ goloso(grafo, cantidadDeConjuntos) {
 
     return particion
 }
+\end{verbatim}
 
+\vspace*{0.3cm}
+
+\begin{verbatim}
 agregarAlDeMenosPeso(particion, vertice) {
     si contiene(particion, vertice)
         return
-
     minConjunto = primero(conjuntos(particion))
     minCosto = costo(minConjunto, vertice)
-
     por cada conjunto en conjuntos(particion) {
         si costo(conjunto, vertice) < minCosto {
             minConjunto = conjunto
@@ -48,7 +46,11 @@ agregarAlDeMenosPeso(particion, vertice) {
         }
     }
 }
+\end{verbatim}
 
+\vspace*{0.3cm}
+
+\begin{verbatim}
 costo(conjunto, nuevoVertice) {
     costo = 0
     por cada vertice en conjunto {
@@ -64,7 +66,7 @@ costo(conjunto, nuevoVertice) {
 \subsection{Análisis de complejidad en el peor caso.}
 \vspace*{0.3cm}
 
-Sea $G = (V, E)$ y consideremos $n = |V|$ y $m = |E|$.
+Sea $G = (V,E)$ y consideremos $n = |V|$ y $m = |E|$.
 
 La función \texttt{costo} recorre todos los vértices de un conjunto y calcula
 el peso de la adyacencia de 2 vértices (si existiese). Al usar una matriz de

@@ -2,7 +2,7 @@
 \vspace*{0.3cm}
 
 La \textbf{heurística de búsqueda local} consiste en comenzar con una
-solución dada, definir el concepto de solución \"vecina\", generar estas
+solución dada, definir el concepto de solución ``vecina'', generar estas
 soluciones vecinas y revisar si alguna es mejor a la actual.
 
 De existir, se toma esta como solución actual y se repite el proceso
@@ -31,7 +31,7 @@ Los algoritmos consisten en, partiendo de una solución inicial, probar sobre to
 
 \vspace*{0.5cm}
 
-\textbf{Pseudocódigo mover:}
+\textbf{Pseudocódigo con la estrategia mover:}
 
 \vspace*{0.3cm}
 
@@ -65,7 +65,7 @@ kpmp_mover(particion) {
 
 \newpage
 
-\textbf{Pseudocódigo intercambiar:}
+\textbf{Pseudocódigo con la estrategia intercambiar:}
 
 \vspace*{0.3cm}
 
@@ -110,7 +110,6 @@ kpmp_switch(particion) {
 \subsection{Análisis de complejidad del peor caso de una iteración del
             algoritmo de búsqueda local.}
 \vspace*{0.3cm}
-\textcolor{red}{\textbf{completar!}}
 
 Sea $G = (V,E)$ y consideremos $n = |V|$ y $m = |E|$.
 
@@ -118,12 +117,12 @@ La función \texttt{buscarConjunto} recorre todos los conjuntos y en cada uno
 busca, en tiempo logarítmico, el vértice dado. Esta función realiza sobre cada
 conjunto $O(\log(\text{cantidad de vértices del conjunto}))$ comparaciones,
 realizadas en $O(1)$. A su vez, la cantidad de elementos de cada conjunto está
-acotada por $n$. Luego, la complejidad de la función es $O(k\log(n))$, siendo
+acotada por $n$. Luego, la complejidad de esta función es $O(k\log(n))$, siendo
 $k$ el parámetro de entrada.
 
 \vspace*{0.3cm}
 
-En cada iteración, el algoritmo de busqueda local con la estrategia de
+En cada iteración, el algoritmo de búsqueda local con la estrategia de
 \textit{mover} comienza a recorrer cada vértice del grafo, realizando lo siguiente:
 \begin{itemize}
   \item Se llama a la función \texttt{buscarConjunto}, la cual pertenece a
@@ -169,25 +168,7 @@ es $O(n (k\log(n) + n (k\log(n) + k + n)) + k + n)$. Nuevamente, sólo
 considerando los casos donde $k \le n$, la complejidad se reduce a
 $O(n(n\log(n) + n (n\log(n) + n + n)) + n + n) = O(n (n\log(n) + n^2 \log(n)) + n) = O(n^3 \log(n))$.
 
-%~ El algoritmo intercambiar en cada iteración:
-%~
-%~ Tiene un ciclo exterior que recorre todos los vértices en $O(n)$ multiplicado
-%~ por un $buscarConjunto$ que es $O(k + log(n))$ más la complejidad del ciclo
-%~ interior.
-%~
-%~ El ciclo interior recorre todos los vértices en $O(n)$, en cada iteración hace
-%~ un $buscarConjunto$ en $O(k + log(n))$ y 4 cálculos de $costo$.
-%~
-%~ Por lo tanto el ciclo interior tiene complejidad $O(n * (k + log(n) + n))$,
-%~ es decir, $O(n^2 + kn)$.
-%~
-%~ El ciclo exterior entonces tiene complejidad $O(n * (k + log(n) + n^2 + nk))$,
-%~ es decir, $O(n^3 + n^2k)$.
-%~
-%~ Finalmente hace otros 4 cálculos de $costo$ en $O(n)$.
-%~
-%~ Luego, la complejidad total es de $O(n^3 + n^2k)$ que, en casos interesantes
-%~ con $k < n$, es equivalente a $O(n^3)$
+
 
 \newpage \subsection{Experimentación y gráficos.}
 \vspace*{0.3cm}

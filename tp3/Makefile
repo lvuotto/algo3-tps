@@ -18,10 +18,22 @@ test:
 benchmark:
 	$(BENCHDIR)/run.sh $(BINDIR)/kpmp $(TESTDIR)/random-test.rb $(BENCHDIR)
 
+benchmark1:
+	$(BENCHDIR)/run.1.sh $(BINDIR)/kpmp $(TESTDIR)/random-test.rb $(BENCHDIR)
+benchmark2:
+	$(BENCHDIR)/run.2.sh $(BINDIR)/kpmp $(TESTDIR)/random-test.rb $(BENCHDIR)
+benchmark3:
+	$(BENCHDIR)/run.3.sh $(BINDIR)/kpmp $(TESTDIR)/random-test.rb $(BENCHDIR)
+benchmark4:
+	$(BENCHDIR)/run.4.sh $(BINDIR)/kpmp $(TESTDIR)/random-test.rb $(BENCHDIR)
+
 plot:
 	TESTDIR=$(TESTDIR) BINDIR=$(BINDIR) IMGDIR=$(IMGDIR) $(BENCHDIR)/run.sh
 
-all: tp informe test plot
+dibujitos:
+	$(BENCHDIR)/grafico.sh $(BENCHDIR) $(IMGDIR)
+
+all: tp informe test plot dibujitos
 
 clean:
 	$(RM) $(BINDIR)/*

@@ -1,24 +1,37 @@
 \subsection{Descripción del algoritmo implementado.}
 \vspace*{0.3cm}
-\textcolor{red}{\textbf{completar!}}
 
-El algoritmo de \textbf{GRASP} diseñado tiene 2 criterios de terminación:
-\begin{enumerate}
-\item Elegir la mejor solución luego de $X$ iteraciones.
+El algoritmo de \textbf{GRASP} consiste en utilizar una
+\textit{heurística golosa aleatorizada} para obtener una primera solución
+y luego ir mejorándola aplicándole una \textit{heurística de búsqueda local}.
 
-\item Elegir la mejor solución luego de que éste se encuentre como solución $X$ veces. Si se encuentra una solución mejor, se resetea el contador.
-\end{enumerate}
+Esto se repite hasta llegar a un \textit{criterio de terminación} dado, 
+quedándose con la mejor solución encontrada hasta el momento.
 
-Para la selección de candidatos, en la \textit{heurística golosa aleatorizada} se plantean 2 formas:
+El algoritmo que diseñamos utiliza el algoritmo goloso planteado en el
+ejercicio 3 pero, para la selección de candidatos en la \textit{heurística golosa aleatorizada}, se plantean 2 alternativas:
 \begin{enumerate}
 \item En lugar de elegir la arista más pesada, se elige una al azar de las $X$ más pesadas.
 
 \item En lugar de poner el vértice en el conjunto que genere el menor peso, se elige un conjunto al azar de los $X$ que generan menor peso.
 \end{enumerate}
 
-Se probó con cada estrategia por separado y luego con ambas.
+Luego se mejora con alguno de los algoritmos de búsqueda local planteados
+en el ejercicio 4.
 
-También se probaron con ambos algoritmos de localidad.
+Y, finalmente, se diseñaron 2 criterios de terminación:
+\begin{enumerate}
+\item Elegir la mejor solución luego de $X$ iteraciones.
+
+\item Elegir la mejor solución luego de que éste se encuentre como solución $X$ veces. Si se encuentra una solución mejor, se resetea el contador.
+\end{enumerate}
+
+
+Se probó con cada estrategia de la \textit{heurística golosa aleatorizada} por separado y luego con ambas.
+
+Todos estos resultados fueron probados con ambos algoritmos de localidad.
+
+Por último también se combinaron todos con los 2 criterios de terminación, con distintos valores para las variables $X$ (independientes) detalladas anteriormente.
 
 \vspace*{0.5cm}
 

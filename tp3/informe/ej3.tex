@@ -61,7 +61,7 @@ $k$ = |conjuntos|
 La función $costo$ recorre todos los vértices de un conjunto y calcula el
 costo de la adyacencia de 2 vértices (si existiese), al usar una matriz de
 adyacencia para representar el grafo, esto es $O(1)$, por lo que la función
-tiene orden $O(cantidad de vértices en el conjunto)$
+tiene orden $O(cantidad de vertices en el conjunto)$
 
 \vspace*{0.3cm}
 
@@ -70,7 +70,7 @@ pertenece al nodo. De no hacerlo, recorre todos los conjuntos, calculando en
 cada uno el $costo$ de agregar el vértice.
 
 Recorrer todos los conjuntos es $O(k)$ y calcular el costo entonces es:
-$\sum_{i}^{k} cantidad de vértices del conjunto i$.
+$\sum_{i}^{k} cantidad de vertices del conjunto i$.
 
 Como los conjuntos son disjuntos (por ser una partición), entre todos los
 conjuntos va a haber a lo sumo $n$ vértices, por lo tanto esa sumatoria en

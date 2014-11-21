@@ -2,10 +2,11 @@
 \vspace*{0.3cm}
 
 Una relación posible entre k-PMP y el problema 3 del TP1 podría ser que, si
-k-PMP tiene una solución, de manera tal que el peso total de la $k$-partición sea menor o igual al umbral M de peligrosidad del P3 del TP1, esto significa que el P3 del TP1 tiene solución con k camiones, aunque no necesariamente sea la solución óptima a este problema.
+k-PMP tiene una solución válida, donde el peso total sea mínimo y además el peso total de la $k$-partición sea menor o igual al umbral $M$ de peligrosidad del problema 3 del TP1, esto significa que el problema 3 del TP1 tiene solución con $k$ camiones, aunque no necesariamente sea la solución óptima a este problema.
 
-Es decir, quizás el P3 del TP1 pueda resolverse utilizando menos de $k$ camiones, pero no podemos inferir esta información a partir del resultado del
-k-PMP, sólo saber si funciona para k.
+Es decir, quizás el problema 3 del TP1 pueda resolverse utilizando menos de $k$
+camiones, pero no podemos inferir esta información a partir del resultado del
+k-PMP, sólo saber si funciona para $k$.
 
 
 \newpage
@@ -56,5 +57,22 @@ cuyo peso sea negativo, la cantidad de aristas \textit{intrapartición} podría 
 \newpage
 \subsection{Situaciones de la vida real que pueden modelarse con k-PMP.}
 \vspace*{0.3cm}
-\textcolor{red}{\textbf{completar!}}
 
+La ciudad de \textit{Malos Ayres} se encuentra dividida en $k$ barrios, para una mejor administración. Una de las compañías encargadas de brindar servicios de telecomunicaciones (internet, telefonía, etc.), es \textit{Bad Conexion S.A.}.
+La compañia debe instalar $n$ antenas en la ciudad, de manera que pueda cubrir las necesidades de conexión de la misma.
+
+En la ciudad existe también un Ente Regulador de Telecomunicaciones (\textit{ENT}), que sanciona a las compañías cuyo servicio prestado posea una calidad por debajo del mínimo establecido por ley. Dicha calidad de servicio se mide en base al \textit{grado de conectividad global} que otorga cada compañia, el cual se calcula sumando el \textit{grado de conectividad local} asociado a cada uno de los $k$ barrios de la ciudad. \textit{Bad Conexion S.A.} encontró un hueco legal en esta disposición y decidió aprovecharse del mismo, aplicando un \textit{plan de ahorro en infraestructura}, aunque ésto tenga traiga aparejado una muy probable caída en la calidad del servicio en algunas localidades.
+
+Para esto, decide distribuir $n$ antenas entre los $k$ barrios, de manera tal que el \textit{grado de conectividad global} alcanzado sea el mínimo que esté por encima del fijado, evitando así ser sancionada por el \textit{ENT}, pero además reduciendo costos, ya que este grado puede ser mantenido aún brindando un servicio deficiente en algunos de los sectores de la ciudad.
+
+Vemos que es posible resolver este escenario ficticio que podría llegar a plantearse en la vida real utilizando k-PMP, si planteamos el grafo de la siguiente manera:
+
+\begin{itemize}
+\item Los $n$ nodos del grafo son las antenas a distribuir en las $k$ regiones.
+
+\item $k$ es la cantidad de regiones/barrios en las que se divide la ciudad.
+
+\item Dado un par de nodos $i, j$, la relación entre los mismos es simétrica, dado que lo que calcula la \textit{función de ``peso''} es el \textit{nivel de conectividad} y se aplica a la arista incidente a los mismos.
+\end{itemize}
+
+De esta forma, para calcular el ``peso'' (o nivel de conectividad) de una $k$-partición, se suman los ``pesos'' de las aristas intrapartición, obteniendo así el \textit{grado de conectividad global}. Si este grado \textit{global} se mantiene por encima del mínimo requerido, es una solución válida \textit{Bad Conexion S.A.}, pudiendo así lograr su cometido.

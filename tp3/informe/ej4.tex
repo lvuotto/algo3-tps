@@ -2,93 +2,101 @@
 \vspace*{0.3cm}
 \textcolor{red}{\textbf{completar!}}
 
-Planteamos las siguientes vecindades:
-- mover: Una partición es vecina de otra si consiste en mover un único vértice de un conjunto a otro.
-\begin{align*}
-  v \in V, u \in U, v \ne u \\
-  V \setminus \{v\} = U \setminus \{u\}
-\end{align*}
-- intercambiar: Una partición es vecina de otra si consiste en intercamiar 2 vértices de distintos conjuntos.
-\begin{align*}
-  v \in V, u \in U \\
-  V' = V \setminus \{v\} \cup \{u\} \\
-  U' = U \setminus \{u\} \cup \{v\}
-\end{align*}
+Para el algoritmo de \textbf{búsqueda local}, planteamos las siguientes 2 vecindades:
 
-Los algoritmos consisten en empezar con una solución y probar cuál de todas las
-vecinas tiene un peso menor, y continuar desde esa solución. Cuando no se pueda
-mejorar más, se termina.
+\begin{itemize}
+    \item mover: Una partición es vecina de otra si consiste en mover un único vértice de un conjunto a otro.
+    \begin{align*}
+        v \in V, u \in U, v \ne u \\
+        V \setminus \{v\} = U \setminus \{u\}
+    \end{align*}
 
-Pseudo mover:
-kpmp\_mover(particion) {
-	pesoMin = peso(particion)
-	sePuedeMejorar = true
+    \item intercambiar: Una partición es vecina de otra si consiste en intercamiar 2 vértices de distintos conjuntos.
+    \begin{align*}
+        v \in V, u \in U \\
+        V' = V \setminus \{v\} \cup \{u\} \\
+        U' = U \setminus \{u\} \cup \{v\}
+    \end{align*}
+\end{itemize}
 
-	mientras sePuedeMejorar {
-		por cada vértice en vértices(particion) {
-			conjuntoDelVertice = buscarConjunto(particion, vertice)
-			pesoSinVertice = peso(particion) - costo(conjuntoDelVertice, vertice)
+Los algoritmos consisten en, partiendo de una solución inicial, probar sobre todas las vecinas, y continuar desde la de menor peso. Cuando no se pueda mejorar más, finaliza la ejecución.
 
-			por cada conjunto en conjuntos(particion) excepto conjuntoDelVertice {
-				peso = pesoSinVertice + costo(conjunto, vertice)
+\vspace*{0.5cm}
 
-				si peso < pesoMin {
-					pesoMin = peso
-					verticeMin = vertice
-					conjuntoViejo = conjuntoDelVertice
-					conjuntoNuevo = conjunto
-				}
-			}
-		}
+\textbf{Pseudocódigo mover:}
 
-		si pesoMin < peso(particion) {
-			sacarVertice(conjuntoViejo, verticeMin)
-			agregarVertice(conjuntoNuevo, verticeMin)
-		} sino {
-			sePuedeMejorar = false
-		}
-	}
+\vspace*{0.3cm}
+
+\begin{verbatim}
+kpmp_mover(particion) {
+    pesoMin = peso(particion)
+    sePuedeMejorar = true
+    \textbf{mientras} sePuedeMejorar {
+        por cada vertice en vertices(particion) {
+            conjuntoDelVertice = buscarConjunto(particion, vertice)
+            pesoSinVertice = peso(particion) - costo(conjuntoDelVertice, vertice)
+            por cada conjunto en conjuntos(particion) excepto conjuntoDelVertice {
+                peso = pesoSinVertice + costo(conjunto, vertice)
+                si peso < pesoMin {
+                    pesoMin = peso
+                    verticeMin = vertice
+                    conjuntoViejo = conjuntoDelVertice
+                    conjuntoNuevo = conjunto
+                }
+            }
+        }
+        si pesoMin < peso(particion) {
+            sacarVertice(conjuntoViejo, verticeMin)
+            agregarVertice(conjuntoNuevo, verticeMin)
+        } sino {
+            sePuedeMejorar = false
+        }
+    }
 }
+\end{verbatim}
 
-Pesudo intercambiar:
+\newpage
+
+\textbf{Pseudocódigo intercambiar:}
+
+\vspace*{0.3cm}
+
+\begin{verbatim}
 kpmp_switch(particion) {
-	pesoMin = peso(particion)
-	sePuedeMejorar = true
-
-	mientras sePuedeMejorar {
-		por cada vértice1 en vértices(particion) {
-			conjuntoDelVertice1 = buscarConjunto(particion, vertice)
-
-			por cada vértice2 en vértices(partición) excepto que compartan conjunto {
-				conjuntoDelVertice2 = buscarConjunto(particion, vertice)
-
-				peso = peso(particion)
-					- costo(conjuntoDelVertice1, vertice1)
-					- costo(conjuntoDelVertice2, vertice2)
-					+ costo(conjuntoDelVertice1, vertice2)
-					+ costo(conjuntoDelVertice2, vertice1)
-
-
-				si peso < pesoMin {
-					pesoMin = peso
-					verticeMin1 = vertice1
-					verticeMin2 = vertice2
-					conjuntoMin1 = conjuntoDelVertice1
-					conjuntoMin2 = conjuntoDelVertice2
-				}
-			}
-		}
-
-		si pesoMin < peso(particion) {
-			sacarVertice(conjuntoDelVertice1, verticeMin1)
-			agregarVertice(conjuntoDelVertice1, verticeMin2)
-			sacarVertice(conjuntoDelVertice2, verticeMin2)
-			agregarVertice(conjuntoDelVertice2, verticeMin1)
-		} sino {
-			sePuedeMejorar = false
-		}
-	}
+    pesoMin = peso(particion)
+    sePuedeMejorar = true
+    mientras sePuedeMejorar {
+        por cada vertice1 en vertices(particion) {
+            conjuntoDelVertice1 = buscarConjunto(particion, vertice)
+            por cada vertice2 en vertices(particion) excepto que compartan conjunto {
+                conjuntoDelVertice2 = buscarConjunto(particion, vertice)
+                peso = peso(particion)
+                    - costo(conjuntoDelVertice1, vertice1)
+                    - costo(conjuntoDelVertice2, vertice2)
+                    + costo(conjuntoDelVertice1, vertice2)
+                    + costo(conjuntoDelVertice2, vertice1)
+                si peso < pesoMin {
+                    pesoMin = peso
+                    verticeMin1 = vertice1
+                    verticeMin2 = vertice2
+                    conjuntoMin1 = conjuntoDelVertice1
+                    conjuntoMin2 = conjuntoDelVertice2
+                }
+            }
+        }
+        si pesoMin < peso(particion) {
+            sacarVertice(conjuntoDelVertice1, verticeMin1)
+            agregarVertice(conjuntoDelVertice1, verticeMin2)
+            sacarVertice(conjuntoDelVertice2, verticeMin2)
+            agregarVertice(conjuntoDelVertice2, verticeMin1)
+        } sino {
+            sePuedeMejorar = false
+        }
+    }
 }
+\end{verbatim}
+
+
 
 \newpage
 \subsection{Análisis de complejidad del peor caso de una iteración del
@@ -96,46 +104,51 @@ kpmp_switch(particion) {
 \vspace*{0.3cm}
 \textcolor{red}{\textbf{completar!}}
 
-Sea $G = (V, E)$ y consideremos $n = |V|$ y $m = |E|$.
+Sea $G = (V,E)$ y consideremos $n = |V|$ y $m = |E|$.
 
 La función \texttt{buscarConjunto} recorre todos los conjuntos y en cada uno
-busca, logarítimicamente, el vértice dado. Esta función realiza sobre cada
+busca, en tiempo logarítmico, el vértice dado. Esta función realiza sobre cada
 conjunto $O(\log(\text{cantidad de vértices del conjunto}))$ comparaciones,
 realizadas en $O(1)$. A su vez, la cantidad de elementos de cada conjunto está
-acotada por $n$. Luego, la complejidad de la función es $O(k\log(n))$.
+acotada por $n$. Luego, la complejidad de la función es $O(k\log(n))$, siendo
+$k$ el parámetro de entrada.
 
 \vspace*{0.3cm}
 
-En cada iteración, el algoritmo de busqueda local con la estrategia de mover
-comienza a recorrer cada vértice del grafo, realizando lo siguiente:
+En cada iteración, el algoritmo de busqueda local con la estrategia de
+\textit{mover} comienza a recorrer cada vértice del grafo, realizando lo siguiente:
 \begin{itemize}
   \item Se llama a la función \texttt{buscarConjunto}, la cual pertenece a
   $O(k\log(n))$.
+
   \item Por cada conjunto de la partición, se calcula el peso obtenido al
   agregarlo al conjunto, llamando a la función \texttt{costo}. Al igual que en
   la función \texttt{agregarAlDeMenosPeso} explicada en el ítem anterior, esto
   pertenece a $O(k + n)$.
 \end{itemize}
 
-Al finalizar de recorrer cada vértice, se puede llegar a realizar 2 llamados a
+Luego de recorrer cada vértice, se pueden llegar a realizar 2 llamados a
 la función \texttt{costo}, que pertenece a $O(n)$.
 
 Por lo tanto, en cada iteración del algoritmo de busqueda local, la complejidad
-es $O(n (k\log(n) + k + n) + n)$, que tomando solo en cuenta los casos donde $k
-< n$, se reduce a $O(n (n\log(n) + n + n) + n) = O(n^2 \log(n))$.
+es $O(n (k\log(n) + k + n) + n)$, que tomando solo en cuenta los casos donde
+$k < n$, se reduce a $O(n (n\log(n) + n + n) + n) = O(n^2 \log(n))$.
 
 \vspace*{0.3cm}
 
 En cada iteración, el algoritmo de búsqueda local con la estrategia de
-intercambiar comienza a recorrer cada vértice del grafo, realizando lo
-siguiente:
+intercambiar comienza a recorrer cada vértice del grafo, realizando lo siguiente:
+
 \begin{itemize}
   \item Se llama a la función \texttt{buscarConjunto}, la cual pertenece a
   $O(k\log(n))$.
+
   \item Por cada uno de los otros vértices que no están en el mismo conjunto
-  que el vértice actual,
+  que el vértice actual:
+
   \begin{itemize}
     \item Se llama de nuevo a la función \texttt{buscarConjunto}.
+
     \item Se llama 4 veces a la función \texttt{costo}.
   \end{itemize}
 \end{itemize}
@@ -144,28 +157,27 @@ Finalmente, se pueden llegar a realizar 4 llamados más a la función
 \texttt{costo}.
 
 Por lo tanto, en cada iteración del algoritmo de búsqueda local, la complejidad
-es $O(n (k\log(n) + n (k\log(n) + k + n)) + k + n)$. De nuevo, solo
-considerando los casos donde $k \le n$, la complejidad se reduce a $O(n
-(n\log(n) + n (n\log(n) + n + n)) + n + n) = O(n (n\log(n) + n^2 \log(n)) + n)
-= O(n^3 \log(n))$.
+es $O(n (k\log(n) + n (k\log(n) + k + n)) + k + n)$. Nuevamente, sólo
+considerando los casos donde $k \le n$, la complejidad se reduce a
+$O(n(n\log(n) + n (n\log(n) + n + n)) + n + n) = O(n (n\log(n) + n^2 \log(n)) + n) = O(n^3 \log(n))$.
 
 %~ El algoritmo intercambiar en cada iteración:
-%~ 
+%~
 %~ Tiene un ciclo exterior que recorre todos los vértices en $O(n)$ multiplicado
 %~ por un $buscarConjunto$ que es $O(k + log(n))$ más la complejidad del ciclo
 %~ interior.
-%~ 
+%~
 %~ El ciclo interior recorre todos los vértices en $O(n)$, en cada iteración hace
 %~ un $buscarConjunto$ en $O(k + log(n))$ y 4 cálculos de $costo$.
-%~ 
+%~
 %~ Por lo tanto el ciclo interior tiene complejidad $O(n * (k + log(n) + n))$,
 %~ es decir, $O(n^2 + kn)$.
-%~ 
+%~
 %~ El ciclo exterior entonces tiene complejidad $O(n * (k + log(n) + n^2 + nk))$,
 %~ es decir, $O(n^3 + n^2k)$.
-%~ 
+%~
 %~ Finalmente hace otros 4 cálculos de $costo$ en $O(n)$.
-%~ 
+%~
 %~ Luego, la complejidad total es de $O(n^3 + n^2k)$ que, en casos interesantes
 %~ con $k < n$, es equivalente a $O(n^3)$
 

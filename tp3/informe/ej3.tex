@@ -51,51 +51,41 @@ costo(conjunto, nuevoVertice) {
 \subsection{Análisis de complejidad en el peor caso.}
 \vspace*{0.3cm}
 
-Llamemos:
-$n$ = |vertices|
-$m$ = |aristas|
-$k$ = |conjuntos|
+Sea $G = (V, E)$ y consideremos $n = |V|$ y $m = |E|$.
 
-\vspace*{0.3cm}
+La función \texttt{costo} recorre todos los vértices de un conjunto y calcula
+el peso de la adyacencia de 2 vértices (si existiese). Al usar una matriz de
+adyacencia para representar el grafo, se puede obtener el peso de una arista
+entre 2 vértices en $O(1)$, por lo que la función tiene orden $O(\text{cantidad
+de vértices del conjunto})$.
 
-La función $costo$ recorre todos los vértices de un conjunto y calcula el
-costo de la adyacencia de 2 vértices (si existiese), al usar una matriz de
-adyacencia para representar el grafo, esto es $O(1)$, por lo que la función
-tiene orden $O(cantidad de vertices en el conjunto)$
+La función \texttt{agregarAlDeMenosPeso} primero se fija en $O(k)$ si un
+vértice pertenece a la partición. De no hacerlo, recorre todos los conjuntos,
+calculando en cada uno el \texttt{costo} de agregar el vértice. Recorrer todos
+los conjuntos es $O(k)$ y calcular el costo en todos los conjuntos es entonces
+\begin{align*}
+  O(\sum_{i=1}^k \text{cantidad de vértices del conjunto } i)
+\end{align*}
 
-\vspace*{0.3cm}
+Al estar trabajndo con particiones, los vértices no se repiten en los distintos
+conjuntos, con lo que dicha complejidad se puede expresar como $O(n)$. Por lo
+tanto, el orden total de \texttt{agregarAlDeMenosPeso} es $O(k + n)$.
 
-La función $agregarAlDeMenosPeso$ primero se fija en $O(1)$ si un vértice
-pertenece al nodo. De no hacerlo, recorre todos los conjuntos, calculando en
-cada uno el $costo$ de agregar el vértice.
+Se procede a crear una partición con $k$ conjuntos, lo cual tiene orden $O(k)$,
+y luego se ordenan las aristas, lo cual tiene orden $O(m\log(m))$.
+Posteriormente, se entra en un ciclo que recorre todas las aristas, lo que tiene
+orden $O(m)$ multiplicado por el tiempo que tome el ciclo.
 
-Recorrer todos los conjuntos es $O(k)$ y calcular el costo entonces es:
-$\sum_{i}^{k} cantidad de vertices del conjunto i$.
+El ciclo llama 2 veces a la función \texttt{agregarAlDeMenosPeso}, que ya vimos
+que tiene orden $O(kn)$, por lo cual el ciclo tiene orden $O(m(k + n))$.
 
-Como los conjuntos son disjuntos (por ser una partición), entre todos los
-conjuntos va a haber a lo sumo $n$ vértices, por lo tanto esa sumatoria en
-realidad es $O(n)$.
+Por lo tanto, el costo total tiene orden: $O(k + m\log(m) + m(k + n))$.
 
-Finalmente el orden total es $O(k + n)$
-
-\vspace*{0.3cm}
-
-
-Primero se crea una partición con $k$ conjuntos, que toma un tiempo $O(k)$.
-
-Luego se ordenan las aristas, esto tiene orden $O(m * log(m))$.
-
-Posteriormente se entra en un ciclo que recorre todas las aristas, que toma
-$O(m)$ multiplicado por el tiempo que tome el ciclo.
-
-El ciclo realiza 2 veces $agregarAlDeMenosPeso$ que ya vimos toma $O(k + n)$,
-entonces el ciclo en total tiene orden $O(m * (k + n))$
-
-Por lo tanto, el costo total tiene orden: $O(k + m * log(m) + m * (k + n))$.
-
-Para los casos interesantes, cuando $k < n$ (de lo contrario se puede poner un
-nodo en cada uno para obtener peso 0) y, teniendo en cuenta que $O(m) = O(n^2)$,
-la complejidad también pertenece a $O(n^3)$.
+Cabe destacar que, como se explicó en el ítem 2, no vale la pena analizar los
+casos en que $k > n$. En estos casos, $O(k) \subseteq O(n)$. Además, siempre
+$O(m) \subseteq O(n^2)$. Por lo tanto, la complejidad del algoritmo es del
+orden de $O(n + n^2 \log(n^2) + n^2 (n + n)) = O(n + n^2 \log(n) + n^3) =
+O(n^3)$.
 
 \newpage
 \subsection{Instancias de k-PMP para las cuales la heurística no proporciona

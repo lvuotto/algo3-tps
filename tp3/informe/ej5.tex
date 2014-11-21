@@ -2,50 +2,65 @@
 \vspace*{0.3cm}
 \textcolor{red}{\textbf{completar!}}
 
-El algoritmo GRASP que diseñamos tiene 2 criterios de terminación:
-- Elegir el mejor luego de X iteraciones.
-- Elegir el mejor luego de que éste se encuentre como solución X veces, si se encuentra una solución mejor, se resetea el contador.
+El algoritmo de \textbf{GRASP} diseñado tiene 2 criterios de terminación:
+\begin{enumerate}
+\item Elegir la mejor solución luego de $X$ iteraciones.
 
-Para la selección de candidatos, el algoritmo goloso se plantean 2 formas de aleatorizar:
-- En lugar de elegir la arista más pesada, se elige una al azar de las X más pesadas.
-- En lugar de poner el vértice en el conjunto que genere el menor peso, se elige un conjunto al azar de los X que generan menor peso.
+\item Elegir la mejor solución luego de que éste se encuentre como solución $X$ veces. Si se encuentra una solución mejor, se resetea el contador.
+\end{enumerate}
 
-Se probó con cada una por separado y con las dos juntas.
+Para la selección de candidatos, en la \textit{heurística golosa aleatorizada} se plantean 2 formas:
+\begin{enumerate}
+\item En lugar de elegir la arista más pesada, se elige una al azar de las $X$ más pesadas.
+
+\item En lugar de poner el vértice en el conjunto que genere el menor peso, se elige un conjunto al azar de los $X$ que generan menor peso.
+\end{enumerate}
+
+Se probó con cada estrategia una por separado y luego con ambas.
 
 También se probaron con ambos algoritmos de localidad.
 
-Pseudo:
+\vspace*{0.5cm}
+
+\textbf{Pseudocódigo:}
+
+\vspace*{0.3cm}
+
+\begin{verbatim}
 kpmp_grasp(funcionGoloso, funcionLocal, grafo, cantidadDeConjuntos, criterioDeTerminacion, X) {
-	particion = funcionGoloso(grafo, cantidadDeConjuntos)
-	funcionLocal(particion)
-	pesoMin = peso(particion)
+    particion = funcionGoloso(grafo, cantidadDeConjuntos)
+    funcionLocal(particion)
+    pesoMin = peso(particion)
 
-	si criterioDeTerminacion = MEJOR_LUEGO_DE_X_VECES {
-		repetir X veces {
-			nuevaParticion = funcionGoloso(grafo, cantidadDeConjuntos)
-			funcionLocal(particion)
+    si criterioDeTerminacion = MEJOR_LUEGO_DE_X_VECES {
+        repetir X veces {
+            nuevaParticion = funcionGoloso(grafo, cantidadDeConjuntos)
+            funcionLocal(particion)
 
-			si peso(nuevaParticion) < pesoMin {
-				pesoMin = peso(nuevaParticion)
-				particion = nuevaParticion
-			}
-		}
-	} sino criterioDeTerminacion = CUANDO_EL_MEJOR_SE_REPITA_X_VECES {
-		nuevaParticion = funcionGoloso(grafo, cantidadDeConjuntos)
-		funcionLocal(nuevaParticion)
-		contadorRepeticiones = 1
+            si peso(nuevaParticion) < pesoMin {
+                pesoMin = peso(nuevaParticion)
+                particion = nuevaParticion
+            }
+        }
+    } sino criterioDeTerminacion = CUANDO_EL_MEJOR_SE_REPITA_X_VECES {
+        nuevaParticion = funcionGoloso(grafo, cantidadDeConjuntos)
+        funcionLocal(nuevaParticion)
+        contadorRepeticiones = 1
 
-		si peso(nuevaParticion) < pesoMin {
-			pesoMin = peso(nuevaParticion)
-			particion = nuevaParticion
-			contadorRepeticiones = 1
-		} sino peso(nuevaParticion = pesoMin) {
-			contadorRepeticiones += 1
-		}
-	}
+        si peso(nuevaParticion) < pesoMin {
+            pesoMin = peso(nuevaParticion)
+            particion = nuevaParticion
+            contadorRepeticiones = 1
+        } sino peso(nuevaParticion = pesoMin) {
+            contadorRepeticiones += 1
+        }
+    }
 
-	return particion
+    return particion
 }
+\end{verbatim}
+
+
 
 \newpage
 \subsection{Experimentación y gráficos.}

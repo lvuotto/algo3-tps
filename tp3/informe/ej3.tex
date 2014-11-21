@@ -142,4 +142,90 @@ la heurística falla consistentemente en dar una buena aproximación de la soluc
 \newpage \subsection{Experimentación y gráficos.}
 \vspace*{0.3cm}
 
-\textcolor{red}{\textbf{completar!}}
+\vspace*{0.3cm}
+
+\subsubsection{Test 1 - algoritmo goloso, sin aleatorización}
+
+(ver \verb|info.greedy.dat.promedio|) \medskip
+
+En este test, tenemos $n$ nodos, con $n$ inicializado en 100, incrementándose de a 10 hasta alcanzar 1000, $m$ inicializado en 500, incremendtándose de a 50 hasta alcanzar 5000 (vale 5 veces $n$) y $k$ vale $\frac{n}{20}$.
+
+Para cada instancia se toma el \textbf{valor mínimo} mediado en microsegundos luego de \textbf{10 corridas}.
+
+Dada una combinación de $m$, $n$ y $k$, se generaron 5 instancias aleatorias con dicha combinación y se consideró el promedio entre ellas.
+
+\vspace*{0.5cm}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grafico-greedy-ac.png}
+  \end{center}
+\end{figure}
+
+\vspace*{0.5cm}
+
+
+\newpage
+\subsubsection{Test 2 - algoritmo goloso, con aleatorización en las aritas}
+
+(ver \verb|info.2.k.dat|) \medskip
+
+En este test, tenemos $n$ nodos, con $n$ inicializado en 100, incrementándose de a 10 hasta alcanzar 1000, $m$ inicializado en 500, incremendtándose de a 50 hasta alcanzar 5000 (vale 5 veces $n$) y $k$ vale $\frac{n}{20}$.
+
+Para cada instancia se toma el \textbf{valor mínimo} mediado en microsegundos luego de \textbf{10 corridas}.
+
+Dada una combinación de $m$, $n$ y $k$, se generaron 5 instancias aleatorias con dicha combinación y se consideró el promedio entre ellas.
+
+\vspace*{0.5cm}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grafico-greedy-a.png}
+  \end{center}
+\end{figure}
+
+\vspace{0.5cm}
+
+
+\newpage
+\subsubsection{Test 3 - algoritmo goloso, con aleatorización en conjuntos}
+
+(ver \verb|info.2.k.dat|) \medskip
+
+En este test, tenemos $n$ nodos, con $n$ inicializado en 100, incrementándose de a 10 hasta alcanzar 1000, $m$ inicializado en 500, incremendtándose de a 50 hasta alcanzar 5000 (vale 5 veces $n$) y $k$ vale $\frac{n}{20}$.
+
+Para cada instancia se toma el \textbf{valor mínimo} mediado en microsegundos luego de \textbf{10 corridas}.
+
+Dada una combinación de $m$, $n$ y $k$, se generaron 5 instancias aleatorias con dicha combinación y se consideró el promedio entre ellas.
+
+\vspace*{0.5cm}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grafico-greedy-c.png}
+  \end{center}
+\end{figure}
+
+\vspace{0.5cm}
+
+
+\newpage
+\subsubsection{Test 4 - algoritmo goloso, con aleatorización en aristas y conjuntos}
+
+(ver \verb|info.2.k.dat|) \medskip
+
+En este test, tenemos $n$ nodos, con $n$ inicializado en 100, incrementándose de a 10 hasta alcanzar 1000, $m$ inicializado en 500, incremendtándose de a 50 hasta alcanzar 5000 (vale 5 veces $n$) y $k$ vale $\frac{n}{20}$.
+
+Para cada instancia se toma el \textbf{valor mínimo} mediado en microsegundos luego de \textbf{10 corridas}.
+
+Dada una combinación de $m$, $n$ y $k$, se generaron 5 instancias aleatorias con dicha combinación y se consideró el promedio entre ellas.
+
+\vspace*{0.5cm}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grafico-greedy.png}
+  \end{center}
+\end{figure}
+
+\vspace{0.5cm}

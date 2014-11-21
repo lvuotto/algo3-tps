@@ -37,11 +37,11 @@ Es importante destacar que la relación planteada anteriormente y expresada medi
 \vspace*{0.3cm}
 
 La ciudad de \textit{Malos Ayres} se encuentra dividida en $k$ barrios, para una mejor administración. Una de las compañías encargadas de brindar servicios de telecomunicaciones (internet, telefonía, etc.), es \textit{Bad Conexion S.A.}.
-La compañia debe instalar $n$ antenas en la ciudad, de manera que pueda cubrir las necesidades de conexión de la misma.
+La compañia debe instalar $n$ antenas en la ciudad, de manera que pueda cubrir las necesidades de conexión de la misma. Las antenas son provistas por el gobierno de la ciudad, pero la compañía debe hacerse cargo de planificar la distribución, logística e instalación de las mismas. El costo de instalar muchas antenas en una misma región es alto.
 
 En la ciudad existe también un Ente Regulador de Telecomunicaciones (\textit{ERT}), que sanciona a las compañías cuyo servicio prestado posea una calidad por debajo del mínimo establecido por ley. Dicha calidad de servicio se mide en base al \textit{grado de conectividad global} que otorga cada compañia, el cual se calcula sumando el \textit{grado de conectividad local} asociado a cada uno de los $k$ barrios de la ciudad. \textit{Bad Conexion S.A.} encontró un hueco legal en esta disposición y decidió aprovecharse del mismo, aplicando un \textit{plan de ahorro en infraestructura}, aunque ésto tenga traiga aparejado una muy probable caída en la calidad del servicio en algunas localidades.
 
-Para esto, decide distribuir $n$ antenas entre los $k$ barrios, de manera tal que el \textit{grado de conectividad global} alcanzado sea el mínimo que esté por encima del fijado, evitando así ser sancionada por el \textit{ERT}, pero además reduciendo costos, ya que este grado puede ser mantenido aún brindando un servicio deficiente en algunos de los sectores de la ciudad.
+Para esto, decide distribuir $n$ antenas entre los $k$ barrios, de manera tal que el \textit{grado de conectividad global} alcanzado sea el mínimo que esté por encima del fijado, evitando así ser sancionada por el \textit{ERT}, pero además reduciendo costos, ya que este grado puede ser mantenido aún brindando un servicio deficiente en algunos de los sectores de la ciudad. Recordemos que los costos de instalación se reducen si la densidad de antenas instaladas en una misma región es menor.
 
 Vemos que es posible resolver este escenario ficticio que podría llegar a plantearse en la vida real utilizando k-PMP, si planteamos el grafo de la siguiente manera:
 

@@ -1,8 +1,16 @@
 \subsection{Descripción del algoritmo implementado.}
 \vspace*{0.3cm}
-\textcolor{red}{\textbf{completar!}}
 
-Para el algoritmo de \textbf{búsqueda local}, planteamos las siguientes 2 vecindades:
+La \textbf{heurística de búsqueda local} consiste en comenzar con una
+solución dada, definir el concepto de solución \"vecina\", generar estas
+soluciones vecinas y revisar si alguna es mejor a la actual.
+
+De existir, se toma esta como solución actual y se repite el proceso
+buscando las vecinas de la nueva solución.
+
+\vspace*{0.3cm}
+
+Para nuestro algoritmo, planteamos las siguientes 2 vecindades:
 
 \begin{itemize}
     \item mover: Una partición es vecina de otra si consiste en mover un único vértice de un conjunto a otro.

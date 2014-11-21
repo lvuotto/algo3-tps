@@ -15,9 +15,6 @@ cortar la recursión.
 \subsection{Análisis de complejidad en el peor caso.}
 \vspace*{0.3cm}
 
-\textcolor{red}{\textbf{completar!}} Lo mismo que el TP pasado.
-
-
 En primer lugar, es necesario observar que, si $k > n$, la solución el problema
 es distribuir los vértices en $n$ particiones, es decir, poner un vértice en
 cada partición, obteniendo peso $0$ en total, pues no hay aristas
@@ -66,4 +63,25 @@ Luego, la complejidad total del algoritmo es
 \newpage \subsection{Experimentación y gráficos.}
 \vspace*{0.3cm}
 
-\textcolor{red}{\textbf{completar!}}
+\subsubsection{Test algoritmo exacto}
+
+(ver \verb|info.exacto.dat.promedio|) \medskip
+
+Para realizar este test, se generaron aleatoriamente grafos de $n$ nodos, con  $n$ inicializado en 5 e incrementándose de a 1, hasta alcanzar 30 y $m$
+(cantidad de aristas) vale $\frac{n^2}{5}$, $k$ vale $\frac{n}{3}$
+
+Para cada instancia se toma el \textbf{valor mínimo}, medido en microsegundos, luego de \textbf{10 corridas}.
+
+Dada una combinación de $m$, $n$ y $k$, se generaron 5 instancias aleatorias con dicha combinación y se consideró el promedio entre ellas.
+
+\vspace*{0.5cm}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grafico-exacto.png}
+  \end{center}
+\end{figure}
+
+\vspace*{0.5cm}
+
+En el gráfico puede apreciarse que el algoritmo es \textit{``lento''}, lo cual era esperado debido a su naturaleza exponencial.

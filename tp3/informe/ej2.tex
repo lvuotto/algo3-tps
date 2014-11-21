@@ -1,21 +1,70 @@
 \subsection{Descripción del algoritmo implementado. Podas y estrategias.}
 \vspace*{0.3cm}
 
-\textcolor{red}{\textbf{completar!}}
+El algoritmo consiste en un backtracking: recorre todos los vértices y todos
+los conjuntos posibles y, recursivamente, se fija cual es mejor.
 
-El algoritmo es un backtracking que recorre todos los nodos y todos los
-conjuntos posibles y, recursivamente, se fija cual es mejor.  La única poda
-consiste en cada iteración calcular si el peso actual de la partición es mayor
-al peso de la partición mínima encontrada hasta ese momento y, de ser así,
-cortar la recursión.
+La única poda consiste en cada iteración calcular si el peso actual de
+la partición es mayor al peso de la partición mínima encontrada hasta
+ese momento y, de ser así, cortar la recursión.
 
+\vspace*{0.5cm}
+
+\textbf{Pseudocódigo del algoritmo:}
+
+\vspace*{0.3cm}
+
+\begin{verbatim}
+exacto(grafo, cantidadDeConjuntos) {
+    particion = Particion(grafo, cantidadDeConjuntos)
+
+    si cantidadDeConjuntos >= cantidadDeVertices(grafo) {
+        por cada i en 1 a cantidadDeVertices(grafo) {
+            agregarVertice(particion, vertice: i, conjunto: i)
+        }
+
+        return particion
+    }
+
+    verticesPendientes : pila
+
+    por cada vertice en vertices(grafo) {
+        push(verticesPendientes, vertice)
+    }
+
+    particionMin = particion
+
+    backtracking(particion, particionMin, verticesPendientes, infinito)
+
+    return particionMin
+}
+
+backtracking(particion, particionMin, verticesPendientes, pesoMin) {
+    vertice = pop(verticesPendientes)
+
+    por cada conjunto en conjuntos(particion) {
+        agregarVertice(conjunto, vertice)
+
+        si vacio(verticesPendientes) {
+            si peso(particion) < pesoMin {
+                pesoMin = peso(particion)
+                particionMin = particion
+            }
+        } sino si peso(particion) < pesoMin {
+            backtracking(particion, particionMin, verticesPendientes, pesoMin)
+        }
+
+        sacarVertice(conjunto, vertice)
+    }
+
+    push(verticesPendientes, vertice)
+}
+\end{verbatim}
 
 \newpage
 
 \subsection{Análisis de complejidad en el peor caso.}
 \vspace*{0.3cm}
-
-\textcolor{red}{\textbf{completar!}} Lo mismo que el TP pasado.
 
 
 En primer lugar, es necesario observar que, si $k > n$, la solución el problema

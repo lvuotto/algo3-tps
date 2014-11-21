@@ -1,50 +1,63 @@
 \subsection{Descripción del algoritmo implementado.}
 \vspace*{0.3cm}
 
-\textcolor{red}{\textbf{completar!}}
+La \textbf{heurística golosa} consiste en ir construyendo una solución
+tomando en cada paso la mejor alternativa posible en ese momento para la
+solución parcial construída.
+
 
 Con la idea de que evitando las aristas más pesadas se puede reducir el peso
-total, el algoritmo consiste en ordenar las aristas por peso en orden
-descendente. Luego, por cada arista, se agregan sus 2 nodos a los conjuntos que
-resulten en el menor peso total.
+total, el algoritmo empieza en ordenando las aristas por peso en orden
+descendente.
 
-Pseudo:
+Luego, por cada arista, se agregan sus 2 vértices a los conjuntos que
+resulten en el menor peso total, esto comenzaría separando los vértices
+de las aristas más pesadas en distintos conjuntos.
+
+\vspace*{0.5cm}
+
+\textbf{Pseudocódigo:}
+
+\vspace*{0.3cm}
+
+\begin{verbatim}
 goloso(grafo, cantidadDeConjuntos) {
-	particion = Particion(grafo, cantidadDeConjuntos)
+    particion = Particion(grafo, cantidadDeConjuntos)
 
-	aristas = ordenarPorPeso(aristas(grafo))
+    aristas = ordenarPorPeso(aristas(grafo))
 
-	por cada arista en aristas {
-		agregarAlDeMenosPeso(particion, vertice1(arista))
-		agregarAlDeMenosPeso(particion, vertice2(arista))
-	}
+    por cada arista en aristas {
+        agregarAlDeMenosPeso(particion, vertice1(arista))
+        agregarAlDeMenosPeso(particion, vertice2(arista))
+    }
 
-	return particion
+    return particion
 }
 
 agregarAlDeMenosPeso(particion, vertice) {
-	si contiene(particion, vertice)
-		return
+    si contiene(particion, vertice)
+        return
 
-	minConjunto = primero(conjuntos(particion))
-	minCosto = costo(minConjunto, vertice)
+    minConjunto = primero(conjuntos(particion))
+    minCosto = costo(minConjunto, vertice)
 
-	por cada conjunto en conjuntos(particion) {
-		si costo(conjunto, vertice) < minCosto {
-			minConjunto = conjunto
-			minCosto = costo(conjunto, vertice)
-		}
-	}
+    por cada conjunto en conjuntos(particion) {
+        si costo(conjunto, vertice) < minCosto {
+            minConjunto = conjunto
+            minCosto = costo(conjunto, vertice)
+        }
+    }
 }
 
 costo(conjunto, nuevoVertice) {
-	costo = 0
-	por cada vertice en conjunto {
-		costo += costo(vertice, nuevoVertice)
-	}
+    costo = 0
+    por cada vertice en conjunto {
+        costo += costo(vertice, nuevoVertice)
+    }
 
-	return costo
+    return costo
 }
+\end{verbatim}
 
 
 \newpage

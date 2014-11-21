@@ -51,23 +51,51 @@ costo(conjunto, nuevoVertice) {
 \subsection{Análisis de complejidad en el peor caso.}
 \vspace*{0.3cm}
 
-\textcolor{red}{\textbf{completar!}}
+Llamemos:
+$n$ = |vertices|
+$m$ = |aristas|
+$k$ = |conjuntos|
 
-n = |vertices|
-m = |aristas|
-k = |conjuntos|
-Se ordenan las aristas. O(m * log(m)).
-Se recorren todas y por cada una se calcula el costo de agregarla a cada
-conjunto. Calcular el costo en un conjunto es O(n), porque se comparan todos
-los vértices, lo que llevaría a pensar que es O(k * n), pero como cada
-conjunto tiene vértices distintos que los otros, en total nunca se hacen más
-de n comparaciones de vértices. Es decir, O(k + n).
+\vspace*{0.3cm}
 
-Total: O(m * log(m) + m * (k + n))
+La función $costo$ recorre todos los vértices de un conjunto y calcula el
+costo de la adyacencia de 2 vértices (si existiese), al usar una matriz de
+adyacencia para representar el grafo, esto es $O(1)$, por lo que la función
+tiene orden $O(cantidad de vértices en el conjunto)$
 
-(Todas las otras cosas que se hacen son O(1))
+\vspace*{0.3cm}
+
+La función $agregarAlDeMenosPeso$ primero se fija en $O(1)$ si un vértice
+pertenece al nodo. De no hacerlo, recorre todos los conjuntos, calculando en
+cada uno el $costo$ de agregar el vértice.
+
+Recorrer todos los conjuntos es $O(k)$ y calcular el costo entonces es:
+$\sum_{i}^{k} cantidad de vértices del conjunto i$.
+
+Como los conjuntos son disjuntos (por ser una partición), entre todos los
+conjuntos va a haber a lo sumo $n$ vértices, por lo tanto esa sumatoria en
+realidad es $O(n)$.
+
+Finalmente el orden total es $O(k + n)$
+
+\vspace*{0.3cm}
 
 
+Primero se crea una partición con $k$ conjuntos, que toma un tiempo $O(k)$.
+
+Luego se ordenan las aristas, esto tiene orden $O(m * log(m))$.
+
+Posteriormente se entra en un ciclo que recorre todas las aristas, que toma
+$O(m)$ multiplicado por el tiempo que tome el ciclo.
+
+El ciclo realiza 2 veces $agregarAlDeMenosPeso$ que ya vimos toma $O(k + n)$,
+entonces el ciclo en total tiene orden $O(m * (k + n))$
+
+Por lo tanto, el costo total tiene orden: $O(k + m * log(m) + m * (k + n))$.
+
+Para los casos interesantes, cuando $k < n$ (de lo contrario se puede poner un
+nodo en cada uno para obtener peso 0) y, teniendo en cuenta que $O(m) = O(n^2)$,
+la complejidad también pertenece a $O(n^3)$.
 
 \newpage
 \subsection{Instancias de k-PMP para las cuales la heurística no proporciona

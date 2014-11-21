@@ -3,19 +3,21 @@
 \textcolor{red}{\textbf{completar!}}
 
 Planteamos las siguientes vecindades:
-- "mover": Una partición es vecina de otra si consiste en mover un único vértice de un conjunto a otro.
+- mover: Una partición es vecina de otra si consiste en mover un único vértice de un conjunto a otro.
 \begin{align*}
   v \in V, u \in U, v \ne u \\
   V \setminus \{v\} = U \setminus \{u\}
 \end{align*}
-- "intercambiar": Una partición es vecina de otra si consiste en intercamiar 2 vértices de distintos conjuntos.
+- intercambiar: Una partición es vecina de otra si consiste en intercamiar 2 vértices de distintos conjuntos.
 \begin{align*}
   v \in V, u \in U \\
   V' = V \setminus \{v\} \cup \{u\} \\
   U' = U \setminus \{u\} \cup \{v\}
 \end{align*}
 
-Los algoritmos consisten en empezar con una solución y probar cuál de todas las vecinas tiene un peso menor, y continuar desde esa solución. Cuando no se pueda mejorar más, se termina.
+Los algoritmos consisten en empezar con una solución y probar cuál de todas las
+vecinas tiene un peso menor, y continuar desde esa solución. Cuando no se pueda
+mejorar más, se termina.
 
 Pseudo mover:
 kpmp\_mover(particion) {
@@ -94,21 +96,59 @@ kpmp_switch(particion) {
 \vspace*{0.3cm}
 \textcolor{red}{\textbf{completar!}}
 
-n = |vertices|
-m = |aristas|
-k = |conjuntos|
+Llamemos:
+$n$ = |vertices|
+$m$ = |aristas|
+$k$ = |conjuntos|
 
-El algoritmo mover en cada iteración recorre todos los vértices, por cada uno
-recorre todos los conjuntos, y por cada uno calcula un costo, que es recorrer
-los vértices. Igualmente como en el goloso, se terminan haciendo n
-comparaciones en total ya que los conjuntos son disjuntos.  Al final, si hay
-uno mejor, se mueve el vértice generando 2 cálculos de costos.  En total: O((n
-* (k + n)) + n) = O(n^2 + kn)
+\vspace*{0.3cm}
 
-EL algoritmo intercambiar, recorre todos los vértices y, por cada uno,
-nuevamente los otros vértices, dentro de estos, calcula los costos.  Al final,
-si hay uno mejor, se intercambian los vértices generando 4 cálculos de costos.
-Total: O(n * n * n + n) = O(n^3)
+La función $buscarConjunto$ recorre todos los conjuntos y en cada uno busca,
+logarítimicamente, el vértice dado. De igual forma que $agregarAlDeMenosPeso$
+del ejercicio anterior, esta función tiene complejidad $O(k + log(n))$
+
+\vspace*{0.3cm}
+
+El algoritmo mover en cada iteración:
+
+Primero entra en un ciclo que recorre todos los vértices, con orden $O(n)$
+multiplicado por lo que tome el ciclo en sí.
+
+El ciclo comienza haciendo un $buscarConjunto$ en $O(k + log(n))$.
+
+Luego recorre todos los conjuntos y hace un cálculo de $costo$ para cada uno de
+ellos, como en la función $agregarAlDeMenosPeso$, esto tiene una complejidad
+$O(k + n)$.
+
+Finalmente, el ciclo entonces tiene complejidad $O(n * (k + n))$.
+
+Terminado el ciclo realiza un cambio de vértices que genera 2 cálculos de
+$costo$, en $O(n)$.
+
+Por lo que la iteración de todo el algoritmo tiene complejidad $O(n * (n + k))$,
+es decir, $O(n^2 + kn)$. Que en situaciones interesantes con $k < n$ es $O(n^2)$.
+
+\vspace*{0.3cm}
+
+El algoritmo intercambiar en cada iteración:
+
+Tiene un ciclo exterior que recorre todos los vértices en $O(n)$ multiplicado
+por un $buscarConjunto$ que es $O(k + log(n))$ más la complejidad del ciclo
+interior.
+
+El ciclo interior recorre todos los vértices en $O(n)$, en cada iteración hace
+un $buscarConjunto$ en $O(k + log(n))$ y 4 cálculos de $costo$.
+
+Por lo tanto el ciclo interior tiene complejidad $O(n * (k + log(n) + n))$,
+es decir, $O(n^2 + kn)$.
+
+El ciclo exterior entonces tiene complejidad $O(n * (k + log(n) + n^2 + nk))$,
+es decir, $O(n^3 + n^2k)$.
+
+Finalmente hace otros 4 cálculos de $costo$ en $O(n)$.
+
+Luego, la complejidad total es de $O(n^3 + n^2k)$ que, en casos interesantes
+con $k < n$, es equivalente a $O(n^3)$
 
 \newpage \subsection{Experimentación y gráficos.}
 \vspace*{0.3cm}

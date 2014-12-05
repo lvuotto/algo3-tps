@@ -37,7 +37,7 @@ void Particion::agregar_vertice(unsigned int conjunto, unsigned int vertice)
   peso_ -= conjuntos_[conjunto - 1].peso();
 
   conjuntos_[conjunto - 1].agregar_vertice(vertice);
-  vertices_[vertice] = true;
+  vertices_[vertice - 1] = true;
 
   peso_ += conjuntos_[conjunto - 1].peso();
 }
@@ -48,7 +48,7 @@ void Particion::sacar_vertice(unsigned int conjunto, unsigned int vertice)
   peso_ -= conjuntos_[conjunto - 1].peso();
 
   conjuntos_[conjunto - 1].sacar_vertice(vertice);
-  vertices_[vertice] = false;
+  vertices_[vertice - 1] = false;
 
   peso_ += conjuntos_[conjunto - 1].peso();
 }
@@ -82,7 +82,7 @@ unsigned int Particion::conjunto_del_vertice(unsigned int vertice)
 
 bool Particion::contiene_a(unsigned int vertice)
 {
-  return vertices_[vertice];
+  return vertices_[vertice - 1];
 }
 
 

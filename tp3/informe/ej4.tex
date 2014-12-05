@@ -1,33 +1,23 @@
 \subsection{Descripción del algoritmo implementado.}
 \vspace*{0.3cm}
 
-La \textbf{heurística de búsqueda local} consiste en comenzar con una
-solución dada, definir el concepto de solución ``vecina'', generar estas
-soluciones vecinas y revisar si alguna es mejor a la actual.
+La \textbf{heurística de búsqueda local} consiste en una heurística que comienza con una solución dada que intentamos mejorar. Llamaremos a esta solución ``candidata''. Luego, revisamos iterativamente sus soluciones ``vecinas''. Este conjunto de soluciones vecinas conforma el espacio de búsqueda y sus elementos son también potenciales soluciones candidatas. Esto sólo es posible si la vecindad contiene más elementos aparte de nuestra solución actual.
 
-De existir, se toma esta como solución actual y se repite el proceso
-buscando las vecinas de la nueva solución.
+Si existe una mejor solución, se toma como solución actual y se repite el proceso, buscando en la vecindad de la nueva solución.
+
+En particular, utilizamos una solución generada por la heurística golosa y verificamos mediante la búsqueda local si ésta es mejorable.
 
 \vspace*{0.3cm}
 
-Para nuestro algoritmo, planteamos las siguientes 2 vecindades:
+Para nuestro algoritmo, planteamos las siguientes 2 estrategias para elegir vecindades:
 
 \begin{itemize}
-    \item mover: Una partición es vecina de otra si consiste en mover un único vértice de un conjunto a otro.
-    \begin{align*}
-        v \in V, u \in U, v \ne u \\
-        V \setminus \{v\} = U \setminus \{u\}
-    \end{align*}
+    \item \textbf{mover:} Una partición es vecina de otra si consiste en mover un único vértice de un conjunto a otro, es decir, $P$ y $Q$ son vecinas si existen $v \in A \in P$ y $B \in Q$ tales que $A - v = B$.
 
-    \item intercambiar: Una partición es vecina de otra si consiste en intercamiar 2 vértices de distintos conjuntos.
-    \begin{align*}
-        v \in V, u \in U \\
-        V' = V \setminus \{v\} \cup \{u\} \\
-        U' = U \setminus \{u\} \cup \{v\}
-    \end{align*}
+    \item \textbf{intercambiar:} Una partición es vecina de otra si consiste en intercambiar 2 vértices de distintos conjuntos, es decir, $P$ y $Q$ son vecinas si existen $v \in A \in P$ y $w \in B \in Q$ tales que $(A - v) \cup \{w\} = (B - w) \cup \{v\}$.
 \end{itemize}
 
-Los algoritmos consisten en, partiendo de una solución inicial, probar sobre todas las vecinas, y continuar desde la de menor peso. Cuando no se pueda mejorar más, finaliza la ejecución.
+Los algoritmos consisten en, partiendo de una solución inicial, probar todas las soluciones vecinas, y continuar desde la de menor peso. Cuando no se pueda mejorar más, finaliza la ejecución.
 
 \vspace*{0.5cm}
 

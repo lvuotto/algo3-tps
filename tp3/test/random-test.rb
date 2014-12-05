@@ -23,5 +23,9 @@ puts "#{n} #{aristas_max} #{k}"
 
 (1..aristas_max).each do
   vertice1, vertice2 = aristas.pop
-  puts "#{vertice1} #{vertice2} #{rand(peso_maximo) / 100.0}"
+  begin
+    puts "#{vertice1} #{vertice2} #{rand(peso_maximo) / 100.0}"
+  rescue Errno::EPIPE
+    exit(74)
+  end
 end

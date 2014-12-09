@@ -16,6 +16,12 @@ Particion kpmp_hg(Grafo& grafo, unsigned int cantidad_de_conjuntos, unsigned int
     agregar_al_de_menos_peso(particion, it->vertice2());
   }
 
+  for (unsigned int vertice = 1; vertice <= grafo.cantidad_de_vertices(); vertice++) {
+    if (!particion.contiene_a(vertice)) {
+      particion.agregar_vertice(1, vertice);
+    }
+  }
+
   return particion;
 }
 
@@ -38,6 +44,12 @@ cantidad_de_conjuntos, unsigned int random_aristas, unsigned int, default_random
     aristas.pop_back();
   }
 
+  for (unsigned int vertice = 1; vertice <= grafo.cantidad_de_vertices(); vertice++) {
+    if (!particion.contiene_a(vertice)) {
+      particion.agregar_vertice(1, vertice);
+    }
+  }
+
   return particion;
 }
 
@@ -54,6 +66,12 @@ cantidad_de_conjuntos, unsigned int, unsigned int random_conjuntos, default_rand
   for (auto it = aristas.rbegin(); it != aristas.rend(); it++) {
     agregar_al_de_menos_peso_random(particion, it->vertice1(), random_conjuntos, re);
     agregar_al_de_menos_peso_random(particion, it->vertice2(), random_conjuntos, re);
+  }
+
+  for (unsigned int vertice = 1; vertice <= grafo.cantidad_de_vertices(); vertice++) {
+    if (!particion.contiene_a(vertice)) {
+      particion.agregar_vertice(1, vertice);
+    }
   }
 
   return particion;
@@ -76,6 +94,12 @@ cantidad_de_conjuntos, unsigned int random_aristas, unsigned int random_conjunto
     agregar_al_de_menos_peso_random(particion, aristas.back().vertice2(), random_conjuntos, re);
 
     aristas.pop_back();
+  }
+
+  for (unsigned int vertice = 1; vertice <= grafo.cantidad_de_vertices(); vertice++) {
+    if (!particion.contiene_a(vertice)) {
+      particion.agregar_vertice(1, vertice);
+    }
   }
 
   return particion;

@@ -128,8 +128,8 @@ Luego de recorrer cada vértice, se pueden llegar a realizar 2 llamados a
 la función \texttt{costo}, que pertenece a $O(n)$.
 
 Por lo tanto, en cada iteración del algoritmo de busqueda local, la complejidad
-es $O(n (k\log(n) + k + n) + n)$, que tomando solo en cuenta los casos donde
-$k < n$, se reduce a $O(n (n\log(n) + n + n) + n) = O(n^2 \log(n))$.
+es $O(n (k\log(n) + k + n) + n) = O(nk\log(n) + nk + n^2 + n) = O(nk\log(n) +
+n^2)$.
 
 \vspace*{0.3cm}
 
@@ -154,10 +154,8 @@ Finalmente, se pueden llegar a realizar 4 llamados más a la función
 \texttt{costo}.
 
 Por lo tanto, en cada iteración del algoritmo de búsqueda local, la complejidad
-es $O(n (k\log(n) + n (k\log(n) + k + n)) + k + n)$. Nuevamente, sólo
-considerando los casos donde $k \le n$, la complejidad se reduce a
-$O(n(n\log(n) + n (n\log(n) + n + n)) + n + n) = O(n (n\log(n) + n^2 \log(n)) + n) = O(n^3 \log(n))$.
-
+es $O(n (k\log(n) + n (k\log(n) + k + n)) + k + n)$. Desarrollando, la
+complejidad del algoritmo pertenece a $O(n^2k\log(n) + n^3)$.
 
 
 \newpage \subsection{Experimentación y gráficos.}

@@ -32,6 +32,7 @@ plot:
 
 dibujitos:
 	$(BENCHDIR)/grafico.sh $(BENCHDIR) $(IMGDIR)
+	$(BENCHDIR)/locales/graficar.sh
 
 all: tp informe test plot dibujitos
 

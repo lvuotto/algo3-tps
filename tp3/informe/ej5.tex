@@ -40,38 +40,18 @@ Por último también se combinaron todos con los 2 criterios de terminación, co
 \vspace*{0.1cm}
 
 \begin{verbatim}
-kpmp_grasp(funcionGoloso, funcionLocal, grafo, cantidadDeConjuntos, criterioDeTerminacion, X) {
-    particion = funcionGoloso(grafo, cantidadDeConjuntos)
-    funcionLocal(particion)
-    pesoMin = peso(particion)
-    si criterioDeTerminacion = MEJOR_LUEGO_DE_X_VECES {
-        repetir X veces {
-            nuevaParticion = funcionGoloso(grafo, cantidadDeConjuntos)
-            funcionLocal(particion)
-            si peso(nuevaParticion) < pesoMin {
-                pesoMin = peso(nuevaParticion)
-                particion = nuevaParticion
-            }
-        }
-    } sino criterioDeTerminacion = CUANDO_EL_MEJOR_SE_REPITA_X_VECES {
-        nuevaParticion = funcionGoloso(grafo, cantidadDeConjuntos)
-        funcionLocal(nuevaParticion)
-        contadorRepeticiones = 1
-        si peso(nuevaParticion) < pesoMin {
-            pesoMin = peso(nuevaParticion)
-            particion = nuevaParticion
-            contadorRepeticiones = 1
-        } sino peso(nuevaParticion = pesoMin) {
-            contadorRepeticiones += 1
-        }
-    }
-    return particion
-}
+GRASP:
+  Hasta que se cumpla el criterio de terminación hacer:
+    particion = heurísitica golosa aleatorizada
+    mejorar partición con una heurística de búsqueda local
+  Devolver la mejor partición hallada
+
+El criterio de terminación puede ser:
+- Ejecutar X veces
+- Repetir hasta que se encuentre la misma (mejor) solución X veces
 \end{verbatim}
-
-
 
 \newpage
 \subsection{Experimentación y gráficos.}
 \vspace*{0.3cm}
-\textcolor{red}{\textbf{completar!}}
+

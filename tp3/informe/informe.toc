@@ -15,15 +15,19 @@
 \contentsline {subsection}{\numberline {5.2}An\IeC {\'a}lisis de complejidad en el peor caso.}{13}{subsection.5.2}
 \contentsline {subsection}{\numberline {5.3}Instancias de k-PMP para las cuales la heur\IeC {\'\i }stica no proporciona una soluci\IeC {\'o}n \IeC {\'o}ptima.}{14}{subsection.5.3}
 \contentsline {subsection}{\numberline {5.4}Experimentaci\IeC {\'o}n y gr\IeC {\'a}ficos.}{15}{subsection.5.4}
-\contentsline {section}{\numberline {6}Ejercicio 4: Heur\IeC {\'\i }stica de b\IeC {\'u}squeda local para k-PMP}{16}{section.6}
-\contentsline {subsection}{\numberline {6.1}Descripci\IeC {\'o}n del algoritmo implementado.}{16}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}An\IeC {\'a}lisis de complejidad del peor caso de una iteraci\IeC {\'o}n del algoritmo de b\IeC {\'u}squeda local.}{18}{subsection.6.2}
-\contentsline {subsection}{\numberline {6.3}Experimentaci\IeC {\'o}n y gr\IeC {\'a}ficos.}{19}{subsection.6.3}
-\contentsline {subsubsection}{\numberline {6.3.1}Test 1 - algoritmo goloso, sin aleatorizaci\IeC {\'o}n}{19}{subsubsection.6.3.1}
-\contentsline {subsubsection}{\numberline {6.3.2}Test 2 - algoritmo goloso, con aleatorizaci\IeC {\'o}n en las aritas}{20}{subsubsection.6.3.2}
-\contentsline {subsubsection}{\numberline {6.3.3}Test 3 - algoritmo goloso, con aleatorizaci\IeC {\'o}n en conjuntos}{21}{subsubsection.6.3.3}
-\contentsline {subsubsection}{\numberline {6.3.4}Test 4 - algoritmo goloso, con aleatorizaci\IeC {\'o}n en aristas y conjuntos}{22}{subsubsection.6.3.4}
-\contentsline {section}{\numberline {7}Ejercicio 5: GRASP}{23}{section.7}
-\contentsline {subsection}{\numberline {7.1}Descripci\IeC {\'o}n del algoritmo implementado.}{23}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}Experimentaci\IeC {\'o}n y gr\IeC {\'a}ficos.}{24}{subsection.7.2}
-\contentsline {section}{\numberline {8}Ejercicio 6: Experimentaci\IeC {\'o}n general y comparativa de todos los m\IeC {\'e}todos implementados}{25}{section.8}
+\contentsline {subsubsection}{\numberline {5.4.1}Test 1 - algoritmo goloso, sin aleatorizaci\IeC {\'o}n}{15}{subsubsection.5.4.1}
+\contentsline {subsubsection}{\numberline {5.4.2}Test 2 - algoritmo goloso, con aleatorizaci\IeC {\'o}n en las aritas}{16}{subsubsection.5.4.2}
+\contentsline {subsubsection}{\numberline {5.4.3}Test 3 - algoritmo goloso, con aleatorizaci\IeC {\'o}n en conjuntos}{17}{subsubsection.5.4.3}
+\contentsline {subsubsection}{\numberline {5.4.4}Test 4 - algoritmo goloso, con aleatorizaci\IeC {\'o}n en aristas y conjuntos}{18}{subsubsection.5.4.4}
+\contentsline {section}{\numberline {6}Ejercicio 4: Heur\IeC {\'\i }stica de b\IeC {\'u}squeda local para k-PMP}{19}{section.6}
+\contentsline {subsection}{\numberline {6.1}Descripci\IeC {\'o}n del algoritmo implementado.}{19}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}An\IeC {\'a}lisis de complejidad del peor caso de una iteraci\IeC {\'o}n del algoritmo de b\IeC {\'u}squeda local.}{21}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}Experimentaci\IeC {\'o}n y gr\IeC {\'a}ficos.}{22}{subsection.6.3}
+\contentsline {subsubsection}{\numberline {6.3.1}Tiempos de ejecuci\IeC {\'o}n}{22}{subsubsection.6.3.1}
+\contentsline {subsubsection}{\numberline {6.3.2}Calidad}{24}{subsubsection.6.3.2}
+\contentsline {section}{\numberline {7}Ejercicio 5: GRASP}{26}{section.7}
+\contentsline {subsection}{\numberline {7.1}Descripci\IeC {\'o}n del algoritmo implementado.}{26}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Experimentaci\IeC {\'o}n y gr\IeC {\'a}ficos.}{28}{subsection.7.2}
+\contentsline {subsubsection}{\numberline {7.2.1}Criterio de aleatorizaci\IeC {\'o}n}{28}{subsubsection.7.2.1}
+\contentsline {subsubsection}{\numberline {7.2.2}Junto a la heur\IeC {\'\i }stica de b\IeC {\'u}squeda local}{29}{subsubsection.7.2.2}
+\contentsline {section}{\numberline {8}Ejercicio 6: Experimentaci\IeC {\'o}n general y comparativa de todos los m\IeC {\'e}todos implementados}{31}{section.8}

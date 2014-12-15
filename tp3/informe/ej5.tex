@@ -66,24 +66,25 @@ El criterio de terminación puede ser:
 \subsection{Experimentación y gráficos.}
 \vspace*{0.3cm}
 
-Nuestro algortimo con la meta-heurística GRASP tiene distintas variantes que
-pueden modificarse, vamos a analizar todas ellas para ver si existe una que
+Nuestro algortimo con la metaheurística GRASP tiene distintas variantes que
+pueden modificarse. Vamos a analizar todas ellas para ver si existe una que
 se comporte mejor en tiempo de ejecución y/o calidad de las soluciones
 provistas.
 
 \subsubsection{Criterio de aleatorización}
 
-Sobre el algoritmo goloso definido en el Ej 3, en lugar de elegir en cada
+Sobre el algoritmo goloso definido en el ejercicio 3, en lugar de elegir en cada
 iteración la arista de mayor peso, se puede elegir una al azar de las de mayor
-peso. También, en lugar de guardar el vértice en el conjunto al cuál le genere
+peso. También, en lugar de guardar el vértice en el conjunto al cual le genere
 el menor peso total, se puede seleccionar un conjunto al azar de entre los que
 generen el menor peso total.
 
 Se puede utilizar uno de esos criterios o los dos juntos, variando en cada
 caso la cantidad de mejores elementos a seleccionar aleatoriamente.
 
-Veamos como se comportan variando la cantidad de elementos, con un grafo de
-n = 500, m = 375, k = 15
+Veamos como se comportan variando la cantidad de elementos a elegir al azar,
+con un grafo de 500 vértices, con el 75\% de aristas para tener un grafo
+completo y $k$ valiendo 15.
 \vspace*{0.5cm}
 
 \begin{figure}[H]
@@ -97,13 +98,13 @@ n = 500, m = 375, k = 15
 Se puede apreciar claramente que al aleatorizar las aristas el tiempo crece
 en forma lineal con respecto a la cantidad de elementos a elegir. Esto se debe
 a que para elegir al azar entre los mejores, primero se están ordenando todos.
-Esto suma bastante más en el caso de las aristas, ya que (en este caso)
-empiezan en 375 y disminuyen de a una. En cambio los conjuntos están fijos en
-15 y ordenar 15 en cada iteración termina pareciendo constante.
+En el caso de la aristas, esto implica ordenar un conjunto de tamaño del orden
+de $n^2$. En cambio, los conjuntos están fijos en 15 y ordenarlos en cada
+iteración termina pareciendo constante.
 
 Para tener en cuenta en el futuro, este comportamiento se va a mantener en
 todos los casos interesantes, ya que si sabemos que van a haber casos con
-$k \geq 2*m$, simplemente separando todos los nodos de las $m$ aristas en 2
+$k \geq 2m$, simplemente separando todos los nodos de las $m$ aristas en 2
 conjuntos disitntos nos asegura un peso de 0, y se puede calcular fácilmente
 en orden lineal con respecto a $m$.
 
@@ -118,20 +119,19 @@ en orden lineal con respecto a $m$.
 \vspace*{0.5cm}
 
 Con respecto al peso, podemos ver que aumenta con respecto al goloso sin
-aleatorizar cuando aumenta el $x$. Esto tiene sentido, ya que en el caso
-$x$ = 15, con $k$ = 15, el algoritmo deja de ser goloso y pasa a ser totalmente
-al azar.
-Y que el algoritmo goloso sea mejor que algo totalmente al azar es una buena
-noticia.
+aleatorizar cuando aumenta el $X$. Esto tiene sentido, ya que en el caso $X$
+valiendo 15, con $k$ valiendo 15, el algoritmo deja de ser goloso y pasa a ser
+totalmente al azar.
 
-Lo que si se puede observar es que aleatorizar las aristas da un resultado
-apenas superior pero despreciable con respecto a no aleatorizar nada. Y no
-empeora al aumentar $x$.
-
-Veamos si estos comportamientos se mantienen fijando $x$ en 10 (dónde dentro
-de todo se mantiene acotado en las versiones) y modificando las otras variables.
+Lo que sí se puede observar es que aleatorizar las aristas da un resultado
+apenas peor, pero despreciable con respecto a no aleatorizar nada, y no empeora
+al aumentar $X$.
 
 \vspace*{0.5cm}
+
+Veamos si estos comportamientos se mantienen fijando $X$ en 10 (donde el peso
+total se mantiene relativamente acotado en todas las versiones) y modificando
+las otras variables.
 
 \begin{figure}[H]
   \begin{center}
@@ -139,23 +139,15 @@ de todo se mantiene acotado en las versiones) y modificando las otras variables.
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
-\vspace*{0.5cm}
-
 \begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/grasp-goloso-n-tiempo.png}
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
-Podemos observar el mismo comportamiento, con respecto al tiempo, que
-veníamos viendo: El tiempo depende de $n$ y aumenta al aleatorizar las aristas
-(y, obviamente, cuando se aleatorizan ambos).
-
-\vspace*{0.5cm}
+Podemos observar el mismo comportamiento, con respecto al tiempo, que veníamos
+viendo. El tiempo depende de $n$ y aumenta al aleatorizar las aristas (y,
+obviamente, cuando se aleatorizan ambos).
 
 \begin{figure}[H]
   \begin{center}
@@ -163,42 +155,35 @@ veníamos viendo: El tiempo depende de $n$ y aumenta al aleatorizar las aristas
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
-\vspace*{0.5cm}
-
 \begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/grasp-goloso-k-peso.png}
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
 Con la calidad también se destacan las mismas situaciones, aleatorizar los
 conjuntos genera consistentemente pesos mayores. Y aleatorizar las aristas da
 resultados muy similares a no aleatorizar, dando mejores resultados en algunos
 casos.
 
-Hasta ahora todo indicaría que si se quiere priorizar tiempos se debería
-elegir aleatorizar los conjuntos, pero si se prefiere calidad se debe
-aleatorizar las aristas.
-En ningún caso aleatorizar ambos ya que sería lo peor de los dos mundos.
+Hasta ahora todo indicaría que si se quiere priorizar tiempos se debería elegir
+aleatorizar los conjuntos, pero si se prefiere calidad se debe aleatorizar las
+aristas. En ningún caso conbiene aleatorizar ambos, ya que sería lo peor de los
+dos mundos.
 
-\subsubsection{Junto a la heurística de búsqueda local}
+\newpage \subsubsection{Junto a la heurística de búsqueda local}
 
-Sin embargo, el algoritmo goloso no se ejecuta solo, podría darse que
-una estrategia de peores resultados por sí misma, pero combinada con una
-búsqueda local termine siendo mejor. Por esta razón vamos a ver los mismos
-casos, pero luego de aplicarle un algoritmo de búsqueda local.
+Sin embargo, si el algoritmo goloso no se ejecuta solo, podría darse que una
+estrategia de peores resultados por sí misma, combinada con una búsqueda local,
+termine siendo mejor. Por esta razón vamos a ver los mismos casos, pero luego
+de aplicarle un algoritmo de búsqueda local.
 
-En el Ej. 4 identificamos que la heurística $mover$ se comporta mejor que
-la de $intercambiar$, tanto en calidad de soluciones como en tiempo de
-ejecución en todos los casos. Por lo tanto utilizaremos este para las pruebas.
+En el ejercicio identificamos que la heurística \textit{mover} se comporta
+mejor que la de \textit{intercambiar}, tanto en calidad de soluciones como en
+tiempo de ejecución en todos los casos. Por lo tanto utilizaremos este para las
+pruebas.
 
-Veamos primero los tiempos:
-
-\vspace*{0.5cm}
+Comparemos, en primer lugar, los tiempos:
 
 \begin{figure}[H]
   \begin{center}
@@ -206,19 +191,11 @@ Veamos primero los tiempos:
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
-\vspace*{0.5cm}
-
 \begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/grasp-local-n-tiempo.png}
   \end{center}
 \end{figure}
-
-\vspace*{0.5cm}
-
-\vspace*{0.5cm}
 
 \begin{figure}[H]
   \begin{center}
@@ -226,12 +203,10 @@ Veamos primero los tiempos:
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
 Estos experimentos muestran algo bastante particular: aleatorizar por aristas
 es lo que menos tiempo demora.
 
-En general los tiempos de todas las versiones redujeron sus diferencias, se
+En general, los tiempos de todas las versiones redujeron sus diferencias. Se
 puede observar que, aunque aleatorizar las aristas sea lo más eficiente, ya no
 hay una diferencia creciente entre las otras versiones del algoritmo, todas
 se comportan con un orden similar.

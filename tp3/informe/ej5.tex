@@ -54,11 +54,13 @@ GRASP:
     particion = heurísitica golosa aleatorizada
     mejorar partición con una heurística de búsqueda local
   Devolver la mejor partición hallada
+\end{verbatim}
 
 El criterio de terminación puede ser:
-- Ejecutar X veces
-- Repetir hasta que se encuentre la misma (mejor) solución X veces
-\end{verbatim}
+\begin{itemize}
+  \item Ejecutar $X$ veces.
+  \item Repetir hasta que se encuentre la misma (mejor) solución $X$ veces.
+\end{itemize}
 
 \newpage
 \subsection{Experimentación y gráficos.}
@@ -84,7 +86,7 @@ Veamos como se comportan variando la cantidad de elementos, con un grafo de
 n = 500, m = 375, k = 15
 \vspace*{0.5cm}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/grasp-goloso-x-tiempo.png}
   \end{center}
@@ -107,7 +109,7 @@ en orden lineal con respecto a $m$.
 
 \vspace*{0.5cm}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/grasp-goloso-x-peso.png}
   \end{center}
@@ -131,7 +133,7 @@ de todo se mantiene acotado en las versiones) y modificando las otras variables.
 
 \vspace*{0.5cm}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/grasp-goloso-k-tiempo.png}
   \end{center}
@@ -141,7 +143,7 @@ de todo se mantiene acotado en las versiones) y modificando las otras variables.
 
 \vspace*{0.5cm}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/grasp-goloso-n-tiempo.png}
   \end{center}
@@ -155,7 +157,7 @@ veníamos viendo: El tiempo depende de $n$ y aumenta al aleatorizar las aristas
 
 \vspace*{0.5cm}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/grasp-goloso-n-peso.png}
   \end{center}
@@ -165,7 +167,7 @@ veníamos viendo: El tiempo depende de $n$ y aumenta al aleatorizar las aristas
 
 \vspace*{0.5cm}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/grasp-goloso-k-peso.png}
   \end{center}
@@ -198,7 +200,7 @@ Veamos primero los tiempos:
 
 \vspace*{0.5cm}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/grasp-local-x-tiempo.png}
   \end{center}
@@ -208,7 +210,7 @@ Veamos primero los tiempos:
 
 \vspace*{0.5cm}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/grasp-local-n-tiempo.png}
   \end{center}
@@ -218,7 +220,7 @@ Veamos primero los tiempos:
 
 \vspace*{0.5cm}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/grasp-local-k-tiempo.png}
   \end{center}
@@ -242,7 +244,7 @@ Ahora veamos la calidad final que obtienen estos algoritmos:
 
 \vspace*{0.5cm}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/grasp-local-x-peso.png}
   \end{center}
@@ -252,7 +254,7 @@ Ahora veamos la calidad final que obtienen estos algoritmos:
 
 \vspace*{0.5cm}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/grasp-local-n-peso.png}
   \end{center}
@@ -262,7 +264,7 @@ Ahora veamos la calidad final que obtienen estos algoritmos:
 
 \vspace*{0.5cm}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/grasp-local-k-peso.png}
   \end{center}
@@ -297,7 +299,7 @@ Veamos como se comportan con respecto al tiempo de ejecución:
 
 \vspace*{0.5cm}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/grasp-criterio-tiempo.png}
   \end{center}
@@ -316,9 +318,9 @@ Veamos entonces los pesos de las soluciones encontradas:
 
 \vspace*{0.5cm}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
-    \includegraphics[scale=0.35]{imagenes/grasp-criterio-tiempo.png}
+    \includegraphics[scale=0.35]{imagenes/grasp-criterio-peso.png}
   \end{center}
 \end{figure}
 

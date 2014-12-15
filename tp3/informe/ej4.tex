@@ -1,7 +1,13 @@
 \subsection{Descripción del algoritmo implementado.}
 \vspace*{0.3cm}
 
-La \textbf{heurística de búsqueda local} consiste en una heurística que comienza con una solución dada que intentamos mejorar. Llamaremos a esta solución ``candidata''. Luego, revisamos iterativamente sus soluciones ``vecinas''. Este conjunto de soluciones vecinas conforma el espacio de búsqueda y sus elementos son también potenciales soluciones candidatas. Esto sólo es posible si la vecindad contiene más elementos aparte de nuestra solución actual.
+La \textbf{heurística de búsqueda local} consiste en una heurística que
+comienza con una solución dada que intentamos mejorar. Llamaremos a esta
+solución ``candidata''. Luego, revisamos iterativamente sus soluciones
+``vecinas''. Este conjunto de soluciones vecinas conforma el espacio de
+búsqueda y sus elementos son también potenciales soluciones candidatas. Esto
+sólo es posible si la vecindad contiene más elementos aparte de nuestra
+solución actual.
 
 Si existe una mejor solución, se toma como solución actual y se repite el proceso, buscando en la vecindad de la nueva solución.
 
@@ -164,76 +170,66 @@ complejidad del algoritmo pertenece a $O(n^2k\log(n) + n^3)$.
 
 Para comparar los tiempos de ejecución generamos diversos grafos de entrada
 variando sus tamaños y, además, probamos con una solución inicial completamente
-random y con una generada por el algoritmo goloso.
-\\
-
-Variando la cantidad de vértices de un grafo denso (m = 3/4 n), a partir de la
-solución que devuelve el algoritmo goloso. N va de 20 en 20.
+aleatoria y con una generada por el algoritmo goloso.
 \vspace*{0.5cm}
 
-\begin{figure}[h]
+Variando la cantidad de vértices de un grafo denso (tomando $m$ para tener el
+75\% de aristas de un grafo completo), a partir de la solución que devuelve el
+algoritmo goloso. $n$ crece de a 20, comenzando en 20 y terminando en 500.  $k$
+vale constantemente 10.
+
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/local-goloso-n-tiempo.png}
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
+Utilizando la misma configuración para $n$, $m$ y $k$, pero partiendo de una
+posible solución elegida al azar.
 
-Variando la cantidad de vértices de un grafo denso (m = 3/4 n), a partir de una
-solución al azar. N va de 20 en 20.
-\vspace*{0.5cm}
-
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/local-random-n-tiempo.png}
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
+Variando la cantidad de conjuntos de un grafo denso (200 vértices y 75\% de
+aristas para un grafo completo), a partir de la solución que devuelve el
+algoritmo goloso. $k$ aumenta de a 1, partiendo de 2, hasta 50.
 
-Variando la cantidad de conjuntos de un grafo denso (n = 200, m = 150), a partir
-de la solución que devuelve el algoritmo goloso. K aumenta de a 1.
-\vspace*{0.5cm}
-
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/local-goloso-k-tiempo.png}
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
+Utilizando la misma configuración para $n$, $m$ y $k$, pero partiendo de una
+posible solución elegida al azar.
 
-Variando la cantidad de conjuntos de un grafo denso (n = 200, m = 150), a partir
-de una solución al azar. K aumenta de a 1.
-\vspace*{0.5cm}
-
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/local-random-k-tiempo.png}
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
-
-Como puede observarse, en todos los casos el algortimo de $intercambiar$ es más
-lento que el algoritmo de $mover$.
-
-Algo que era esperable considerando que $intercambiar$ en cada iteración tiene
-orden $O(n^2k\log(n) + n^3)$ vs el $O(nk\log(n) + n^2)$ de $mover$.
+Como puede observarse, en todos los casos el algortimo de \textit{intercambiar}
+es más lento que el algoritmo de \textit{mover}, cosa que era esperable,
+considerando que \textit{intercambiar}, en cada iteración, tiene orden
+$O(n^2k\log(n) + n^3)$, mientras que \textit{mover} tiene orden $O(nk\log(n) +
+n^2)$.
 
 También se puede apreciar que el tiempo crece (en ambos casos) cuando aumenta
 el $n$, también razonable ya que la complejidad depende de éste.
 
-Sin embargo, aunque podría esperarse que también aumente ligado al $k$, con
-una solución al azar, el algoritmo $mover$ se mantiene constante y el
-algoritmo $intercambiar$ varía mucho, aunque también acotado. No sucede lo
-mismo cuando se comienza con la solución del goloso, que se comporta
+Sin embargo, aunque podría esperarse que también aumente ligado al $k$, con una
+solución al azar, el algoritmo \textit{mover} se mantiene constante y el
+algoritmo \textit{intercambiar} varía mucho, aunque también acotado. No sucede
+lo mismo cuando se comienza con la solución del goloso, que se comporta
 invérsamente a $k$.
 
 Esto seguramente se deba a que, con muchos conjuntos disponible, la heurísitica
 golosa da una solución muy cercana a la ideal. Luego, las heurísiticas de
-búsqueda local, necesitan ejecutarse pocas veces hasta encontrar un resultado
+búsqueda local necesitan ejecutarse pocas veces hasta encontrar un resultado
 que no puedan mejorar
 
 \newpage \subsubsection{Calidad}
@@ -243,70 +239,51 @@ utilizando las mismas variables que para comparar los tiempos de ejecución.
 
 Un peso menor indica una solución de mejor calidad, queremos ver si alguna
 de las dos heurísticas tiene una mejor calidad consistentemente.
-\\
 
-Variando la cantidad de vértices de un grafo denso (m = 3/4 n), a partir de la
-solución que devuelve el algoritmo goloso. N va de 20 en 20.
+Las configuraciones para $n$, $m$ y $k$ son las mismas que las utilizadas para
+comparar tiempos: los dos primeros corresponde a un grafo denso donde varía $n$
+y los dos últimos a un grafo denso donde varía $k$.
 \vspace*{0.5cm}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/local-goloso-n-peso.png}
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
-Variando la cantidad de vértices de un grafo denso (m = 3/4 n), a partir de una
-solución al azar. N va de 20 en 20.
-\vspace*{0.5cm}
-
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/local-random-n-peso.png}
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
-Variando la cantidad de conjuntos de un grafo denso (n = 200, m = 150), a partir
-de la solución que devuelve el algoritmo goloso. K aumenta de a 1.
-\vspace*{0.5cm}
-
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/local-goloso-k-peso.png}
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
-Variando la cantidad de conjuntos de un grafo denso (n = 200, m = 150), a partir
-de una solución al azar. K aumenta de a 1.
-\vspace*{0.5cm}
-
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/local-random-k-peso.png}
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
+Con estos gráficos se puede observar que el algoritmo \textit{mover} genera
+resultados con mejor calidad que el algoritmo \textit{intercambiar} para casi
+todos los casos.
 
-Con estos gráficos se puede observar que el algoritmo $mover$ genera resultados
-con mejor calidad que el algoritmo $intercambiar$ para casi todos los casos.
-
-Variando la cantidad de vértices, el algoritmo $mover$ da resultados muy similares
-empezando con la solución al azar tanto como con la solución generada por el
-algoritmo goloso. Sin embargo, el algoritmo $intercambiar$ encuentra una solución
-de calidad similar únicamente comenzando desde la solución del goloso.
-Empezando desde la solución al azar, el peso crece mucho más rápido que el peso
-del algoritmo $mover$.
+Variando la cantidad de vértices, el algoritmo \textit{mover} da resultados muy
+similares empezando con la solución al azar tanto como con la solución generada
+por el algoritmo goloso. Sin embargo, el algoritmo \textit{intercambiar}
+encuentra una solución de calidad similar únicamente comenzando desde la
+solución del goloso.  Empezando desde la solución al azar, el peso crece mucho
+más rápido que el peso del algoritmo \textit{mover}.
 
 Algo similar encontramos al variar la cantidad de conjuntos. Cuando se comienza
-desde una solución del goloso, se comportan de forma similar. Pero empezando con
-una solución aleatoria, el algoritmo $intercambiar$ no encuentra buenas soluciones
-con la misma consistencia que el algoritmo $mover$.
+desde una solución del goloso, se comportan de forma similar. Pero empezando
+con una solución aleatoria, el algoritmo \textit{intercambiar} no encuentra
+buenas soluciones con la misma consistencia que el algoritmo \textit{mover}.
 
 Luego de este análisis, con mejores tiempos y mejor calidad, queda muy evidente
-que conviene utilizar la heurística de búsqueda local $mover$.
+que conviene utilizar la heurística de búsqueda local \textit{mover}.

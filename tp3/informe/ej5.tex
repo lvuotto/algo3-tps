@@ -40,7 +40,7 @@ Se probó con cada estrategia de la \textit{heurística golosa aleatorizada} por
 
 Por último también se combinaron todos con los 2 criterios de terminación, con distintos valores para las variables $X$ (independientes) detalladas anteriormente.
 
-\vspace*{0.35cm}
+\vspace*{0.75cm}
 
 \textbf{Pseudocódigo del algoritmo GRASP:}
 
@@ -48,10 +48,10 @@ Por último también se combinaron todos con los 2 criterios de terminación, co
 
 \begin{verbatim}
 GRASP:
-  Hasta que se cumpla el criterio de terminación hacer:
-    particion = heurísitica golosa aleatorizada
-    mejorar partición con una heurística de búsqueda local
-  Devolver la mejor partición hallada
+  Hasta que se cumpla el criterio de terminacion hacer:
+    particion = heuristica golosa aleatorizada
+    mejorar particion con una heuristica de busqueda local
+  Devolver la mejor particion hallada
 \end{verbatim}
 
 El criterio de terminación puede ser:
@@ -64,20 +64,15 @@ El criterio de terminación puede ser:
 \subsection{Experimentación y gráficos.}
 \vspace*{0.3cm}
 
-Nuestro algortimo con la metaheurística GRASP tiene distintas variantes que
+Nuestro algoritmo con la meta-heurística GRASP tiene distintas variantes que
 pueden modificarse. Vamos a analizar todas ellas para ver si existe una que
-se comporte mejor en tiempo de ejecución y/o calidad de las soluciones
-provistas.
+se comporte mejor en tiempo de ejecución y/o calidad de las soluciones.
 
 \subsubsection{Criterio de aleatorización}
 
-Sobre el algoritmo goloso definido en el ejercicio 3, en lugar de elegir en cada
-iteración la arista de mayor peso, se puede elegir una al azar de las de mayor
-peso. También, en lugar de guardar el vértice en el conjunto al cual le genere
-el menor peso total, se puede seleccionar un conjunto al azar de entre los que
-generen el menor peso total.
+Sobre el algoritmo goloso definido en el ejercicio 3, en lugar de elegir en cada iteración la arista de mayor peso, se puede elegir una al azar de las de mayor peso. También, en lugar de guardar el vértice en el conjunto al cual le genere el menor peso total, se puede seleccionar un conjunto al azar de entre los que generen el menor peso total.
 
-Se puede utilizar uno de esos criterios o los dos juntos, variando en cada
+Se puede utilizar uno de esos criterios ó ambos, variando en cada
 caso la cantidad de mejores elementos a seleccionar aleatoriamente.
 
 Veamos como se comportan variando la cantidad de elementos a elegir al azar,
@@ -91,11 +86,12 @@ completo y $k$ valiendo 15.
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
+\vspace*{0.2cm}
 
-Se puede apreciar claramente que al aleatorizar las aristas el tiempo crece
-en forma lineal con respecto a la cantidad de elementos a elegir. Esto se debe
+Se puede apreciar claramente que, al aleatorizar las aristas, el tiempo crece
+linealmente con respecto a la cantidad de elementos a elegir. Esto se debe
 a que para elegir al azar entre los mejores, primero se están ordenando todos.
+
 En el caso de la aristas, esto implica ordenar un conjunto de tamaño del orden
 de $n^2$. En cambio, los conjuntos están fijos en 15 y ordenarlos en cada
 iteración termina pareciendo constante.
@@ -103,8 +99,11 @@ iteración termina pareciendo constante.
 Para tener en cuenta en el futuro, este comportamiento se va a mantener en
 todos los casos interesantes, ya que si sabemos que van a haber casos con
 $k \geq 2m$, simplemente separando todos los nodos de las $m$ aristas en 2
-conjuntos disitntos nos asegura un peso de 0, y se puede calcular fácilmente
-en orden lineal con respecto a $m$.
+conjuntos distintos nos asegura un peso de 0, y se puede calcular fácilmente.
+
+Esto suma bastante más en el caso de las aristas, ya que (en este caso)
+empiezan en 375 y disminuyen de a 1. En cambio, los conjuntos están fijos en
+15 y ordenar 15 en cada iteración termina pareciendo constante.
 
 \vspace*{0.5cm}
 
@@ -127,9 +126,7 @@ al aumentar $X$.
 
 \vspace*{0.5cm}
 
-Veamos si estos comportamientos se mantienen fijando $X$ en 10 (donde el peso
-total se mantiene relativamente acotado en todas las versiones) y modificando
-las otras variables.
+\newpage Veamos si estos comportamientos se mantienen fijando $X$ en 10 (donde el peso total se mantiene relativamente acotado en todas las versiones) y modificando las otras variables.
 
 \begin{figure}[H]
   \begin{center}

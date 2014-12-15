@@ -23,77 +23,15 @@ Los algoritmos consisten en, partiendo de una solución inicial, probar todas la
 
 \vspace*{0.5cm}
 
-\textbf{Pseudocódigo con la estrategia mover:}
+\textbf{Pseudocódigo de la heurística:}
 
 \vspace*{0.3cm}
 
 \begin{verbatim}
-kpmp_mover(particion) {
-    pesoMin = peso(particion)
-    sePuedeMejorar = true
-    mientras sePuedeMejorar {
-        por cada vertice en vertices(particion) {
-            conjuntoDelVertice = buscarConjunto(particion, vertice)
-            pesoSinVertice = peso(particion) - costo(conjuntoDelVertice, vertice)
-            por cada conjunto en conjuntos(particion) excepto conjuntoDelVertice {
-                peso = pesoSinVertice + costo(conjunto, vertice)
-                si peso < pesoMin {
-                    pesoMin = peso
-                    verticeMin = vertice
-                    conjuntoViejo = conjuntoDelVertice
-                    conjuntoNuevo = conjunto
-                }
-            }
-        }
-        si pesoMin < peso(particion) {
-            sacarVertice(conjuntoViejo, verticeMin)
-            agregarVertice(conjuntoNuevo, verticeMin)
-        } sino {
-            sePuedeMejorar = false
-        }
-    }
-}
-\end{verbatim}
-
-\newpage
-
-\textbf{Pseudocódigo con la estrategia intercambiar:}
-
-\vspace*{0.3cm}
-
-\begin{verbatim}
-kpmp_switch(particion) {
-    pesoMin = peso(particion)
-    sePuedeMejorar = true
-    mientras sePuedeMejorar {
-        por cada vertice1 en vertices(particion) {
-            conjuntoDelVertice1 = buscarConjunto(particion, vertice)
-            por cada vertice2 en vertices(particion) excepto que compartan conjunto {
-                conjuntoDelVertice2 = buscarConjunto(particion, vertice)
-                peso = peso(particion)
-                    - costo(conjuntoDelVertice1, vertice1)
-                    - costo(conjuntoDelVertice2, vertice2)
-                    + costo(conjuntoDelVertice1, vertice2)
-                    + costo(conjuntoDelVertice2, vertice1)
-                si peso < pesoMin {
-                    pesoMin = peso
-                    verticeMin1 = vertice1
-                    verticeMin2 = vertice2
-                    conjuntoMin1 = conjuntoDelVertice1
-                    conjuntoMin2 = conjuntoDelVertice2
-                }
-            }
-        }
-        si pesoMin < peso(particion) {
-            sacarVertice(conjuntoDelVertice1, verticeMin1)
-            agregarVertice(conjuntoDelVertice1, verticeMin2)
-            sacarVertice(conjuntoDelVertice2, verticeMin2)
-            agregarVertice(conjuntoDelVertice2, verticeMin1)
-        } sino {
-            sePuedeMejorar = false
-        }
-    }
-}
+mientras se haya cambiado la partición:
+  mínimo = partición de menor peso de la vecindad
+  si peso(minimo) < peso(particion)
+    partición = mínimo
 \end{verbatim}
 
 

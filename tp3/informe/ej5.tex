@@ -3,10 +3,12 @@
 
 El algoritmo de \textbf{GRASP} consiste en utilizar una
 \textit{heurística golosa aleatorizada} para obtener una primera solución
-y luego ir mejorándola aplicándole una \textit{heurística de búsqueda local}.
+y luego ir mejorándola, aplicándole una \textit{heurística de búsqueda local}.
 
 Esto se repite hasta llegar a un \textit{criterio de terminación} dado,
 quedándose con la mejor solución encontrada hasta el momento.
+
+\vspace{0.25cm}
 
 El algoritmo que diseñamos utiliza el algoritmo goloso planteado en el
 ejercicio 3 pero, para la selección de candidatos en la \textit{heurística
@@ -20,8 +22,9 @@ $X$ más pesadas.
 se elige un conjunto al azar de los $X$ que generan menor peso.
 \end{enumerate}
 
-Luego se mejora con alguno de los algoritmos de búsqueda local planteados
-en el ejercicio 4.
+\vspace{0.25cm}
+
+Luego se mejora con alguno de los algoritmos de búsqueda local planteados en el ejercicio 4.
 
 Y, finalmente, se diseñaron 2 criterios de terminación:
 
@@ -33,14 +36,9 @@ veces. Si se encuentra una solución mejor, se resetea el contador.
 \end{enumerate}
 
 
-Se probó con cada estrategia de la \textit{heurística golosa aleatorizada} por
-separado y luego con ambas.
+Se probó con cada estrategia de la \textit{heurística golosa aleatorizada} por separado y luego con ambas. Todos estos resultados fueron probados con ambos algoritmos de localidad.
 
-Todos estos resultados fueron probados con ambos algoritmos de localidad.
-
-Por último también se combinaron todos con los 2 criterios de terminación, con
-distintos valores para las variables $X$ (independientes) detalladas
-anteriormente.
+Por último también se combinaron todos con los 2 criterios de terminación, con distintos valores para las variables $X$ (independientes) detalladas anteriormente.
 
 \vspace*{0.35cm}
 

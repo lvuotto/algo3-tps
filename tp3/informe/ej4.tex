@@ -60,8 +60,7 @@ En cada iteración, el algoritmo de búsqueda local con la estrategia de
 
   \item Por cada conjunto de la partición, se calcula el peso obtenido al
   agregarlo al conjunto, llamando a la función \texttt{costo}. Al igual que en
-  la función \texttt{agregarAlDeMenosPeso} explicada en el ítem anterior, esto
-  pertenece a $O(k + n)$.
+  la función \texttt{agregarAlDeMenosPeso} explicada el análisis de complejidad del ejercicio 3, esto pertenece a $O(k + n)$.
 \end{itemize}
 
 Luego de recorrer cada vértice, se pueden llegar a realizar 2 llamados a
@@ -94,8 +93,8 @@ Finalmente, se pueden llegar a realizar 4 llamados más a la función
 \texttt{costo}.
 
 Por lo tanto, en cada iteración del algoritmo de búsqueda local, la complejidad
-es $O(n (k\log(n) + n (k\log(n) + k + n)) + k + n)$. Desarrollando, la
-complejidad del algoritmo pertenece a $O(n^2k\log(n) + n^3)$.
+es $O(n (k\log(n) + n (k\log(n) + k + n)) + k + n)$. Luego, la
+complejidad total del algoritmo pertenece a $O(n^2k\log(n) + n^3)$.
 
 
 \newpage \subsection{Experimentación y gráficos.}

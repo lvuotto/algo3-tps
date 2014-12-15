@@ -32,9 +32,20 @@ Experimentamos con distintos tipos de grafos, variando la cantidad de vértices,
 variando la cantidad de aristas según el grafo, con dos cantidades de conjuntos
 distintas y, para cada combinación de valores, generar 15 grafos distintos.
 
+El algoritmo exacto se dejó ejecutar hasta un máximo de 5 minutos, por
+ese motivo se corta entre los 15 y 20 vértices, según el grafo. Además, como el tiempo crece exponencialmente, se separaron los gráficos con el Exacto y sin éste para poder analizar mejor los otros algoritmos.
+
 Analicemos primero los tiempos:
 
-Árbol, k=3
+Árbol, k=3, con el algoritmo Exacto
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/ej6-arbol-k3-tiempo-exacto.png}
+  \end{center}
+\end{figure}
+
+Árbol, k=3, sin el algoritmo Exacto
 
 \begin{figure}[H]
   \begin{center}
@@ -42,7 +53,15 @@ Analicemos primero los tiempos:
   \end{center}
 \end{figure}
 
-Árbol, k=7
+Árbol, k=7, con el algoritmo Exacto
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/ej6-arbol-k7-tiempo-exacto.png}
+  \end{center}
+\end{figure}
+
+Árbol, k=7, sin el algoritmo Exacto
 
 \begin{figure}[H]
   \begin{center}
@@ -50,7 +69,15 @@ Analicemos primero los tiempos:
   \end{center}
 \end{figure}
 
-Completo, k=3
+Completo, k=3, con el algoritmo Exacto
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/ej6-completo-k3-tiempo-exacto.png}
+  \end{center}
+\end{figure}
+
+Completo, k=3, sin el algoritmo Exacto
 
 \begin{figure}[H]
   \begin{center}
@@ -58,7 +85,15 @@ Completo, k=3
   \end{center}
 \end{figure}
 
-Completo, k=7
+Completo, k=7, con el algoritmo Exacto
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/ej6-completo-k7-tiempo-exacto.png}
+  \end{center}
+\end{figure}
+
+Completo, k=7, sin el algoritmo Exacto
 
 \begin{figure}[H]
   \begin{center}
@@ -66,7 +101,15 @@ Completo, k=7
   \end{center}
 \end{figure}
 
-Denso, aristas con pesos iguales, k=3
+Denso, aristas con pesos iguales, k=3, con el algoritmo Exacto
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/ej6-denso-pesos-iguales-k3-tiempo-exacto.png}
+  \end{center}
+\end{figure}
+
+Denso, aristas con pesos iguales, k=3, sin el algoritmo Exacto
 
 \begin{figure}[H]
   \begin{center}
@@ -74,7 +117,15 @@ Denso, aristas con pesos iguales, k=3
   \end{center}
 \end{figure}
 
-Denso, aristas con pesos iguales, k=7
+Denso, aristas con pesos iguales, k=7, con el algoritmo Exacto
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/ej6-denso-pesos-iguales-k7-tiempo-exacto.png}
+  \end{center}
+\end{figure}
+
+Denso, aristas con pesos iguales, k=7, sin el algoritmo Exacto
 
 \begin{figure}[H]
   \begin{center}
@@ -82,7 +133,15 @@ Denso, aristas con pesos iguales, k=7
   \end{center}
 \end{figure}
 
-Denso, aristas con pesos distintos, k=3
+Denso, aristas con pesos distintos, k=3, con el algoritmo Exacto
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/ej6-denso-pesos-distintos-k3-tiempo-exacto.png}
+  \end{center}
+\end{figure}
+
+Denso, aristas con pesos distintos, k=3, sin el algoritmo Exacto
 
 \begin{figure}[H]
   \begin{center}
@@ -90,23 +149,21 @@ Denso, aristas con pesos distintos, k=3
   \end{center}
 \end{figure}
 
-Denso, aristas con pesos distintos, k=7
+Denso, aristas con pesos distintos, k=7, con el algoritmo Exacto
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/ej6-denso-pesos-distintos-k7-tiempo-exacto.png}
+  \end{center}
+\end{figure}
+
+Denso, aristas con pesos distintos, k=7, sin el algoritmo Exacto
 
 \begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/ej6-denso-pesos-distintos-k7-tiempo.png}
   \end{center}
 \end{figure}
-
-Aunque es difícil de graficar bien, el exacto crece mucho más rápido que todos
-los otros algoritmos.  Lo ejecutamos hasta $n = 18$, pero para que se puedan
-ver el resto de las líneas, a veces, lo cortamos incluso antes, como puede
-verse en el gráfico del grafo completo con $k = 7$.
-
-Eso puede hacer aparentar, en algunos casos (como en el gráfico de árbol con
-$k = 3$), que el exacto crece más lento, pero en realidad es que si agregáramos
-uno o más puntos, crecería tanto que el resto de las líneas parecerían rectas
-sobre el 0.
 
 Lo primero que se puede notar es que el goloso sin aleatorizar es el más
 rápido, algo completamente esperable, ya que se ejecuta solamente una vez

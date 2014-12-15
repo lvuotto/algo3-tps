@@ -289,3 +289,45 @@ los resultados, pero no tanto que terminen siendo soluciones aleatorias.
 
 \subsubsection{Criterio de terminación}
 
+Para ver qué criterio de terminación conviene elegir, analizamos ambos contra
+un conjunto de de 30 grafos distintos, 15 densos con 200 vértices y 15 completos
+con vértices entre 75 y 195 vértices, todos con una partición de 15 conjuntos.
+
+Veamos como se comportan con respecto al tiempo de ejecución:
+
+\vspace*{0.5cm}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grasp-criterio-tiempo.png}
+  \end{center}
+\end{figure}
+
+\vspace*{0.5cm}
+
+Ambos tienen resultados muy similares, algo que no esperábamos, ya que uno tiene
+una cantidad exacta de iteraciones y el otro podría tardar mucho más, ya que
+debe encontrar la misma solución varias veces.
+
+Esto significa que, para bien o para mal, está llegando a una misma solución
+consistentemente, a pesar de la aleatorización.
+
+Veamos entonces los pesos de las soluciones encontradas:
+
+\vspace*{0.5cm}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.35]{imagenes/grasp-criterio-tiempo.png}
+  \end{center}
+\end{figure}
+
+\vspace*{0.5cm}
+
+Analizando estos resultados, no parece haber mucha diferencia, ambos tienen
+resultados muy similares, tampoco parecen reducir mucho el peso al
+aumentar las repeticiones.
+
+Elegimos quedarnos con el criterio de cuando el mejor se repita X veces, con
+$X$ = 34, y con el criterio de parar luego de X veces con $X$ = 47, los que
+mejores resultados dieron, pero no es evidente que uno sea mejor que el otro.

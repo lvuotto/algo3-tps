@@ -34,6 +34,7 @@ dibujitos:
 	$(BENCHDIR)/grafico.sh $(BENCHDIR) $(IMGDIR)
 	$(BENCHDIR)/locales/graficar.sh
 	$(BENCHDIR)/grasp/graficar.sh
+	$(BENCHDIR)/ej6/graficar.sh
 
 all: tp informe test plot dibujitos
 

@@ -11,3 +11,6 @@ gnuplot -e "xlabel='Cantidad de vértices'" -e "datafile='benchmark/grasp/local_
 gnuplot -e "xlabel='Cantidad de vértices'" -e "datafile='benchmark/grasp/local_n.dat'" -e "outfile='informe/imagenes/grasp-local-n-tiempo.png'" benchmark/grasp/plotter.goloso.tiempo.gnu 2>&1
 gnuplot -e "xlabel='Cantidad de conjuntos'" -e "datafile='benchmark/grasp/local_k.dat'" -e "outfile='informe/imagenes/grasp-local-k-peso.png'" benchmark/grasp/plotter.goloso.peso.gnu 2>&1
 gnuplot -e "xlabel='Cantidad de conjuntos'" -e "datafile='benchmark/grasp/local_k.dat'" -e "outfile='informe/imagenes/grasp-local-k-tiempo.png'" benchmark/grasp/plotter.goloso.tiempo.gnu 2>&1
+
+gnuplot -e "datafile='benchmark/grasp/criterio.dat'" -e "outfile='informe/imagenes/grasp-criterio-tiempo.png'" benchmark/grasp/plotter.criterio.tiempo.gnu 2>&1
+gnuplot -e "datafile='benchmark/grasp/criterio.dat'" -e "outfile='informe/imagenes/grasp-criterio-peso.png'" benchmark/grasp/plotter.criterio.peso.gnu 2>&1

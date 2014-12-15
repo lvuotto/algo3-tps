@@ -11,11 +11,6 @@ PATH_DENSO_PESOS_DISTINTOS = 'benchmark/generadores/denso_pesos_distintos.rb SEE
 
 PATH_TMP_GRAFO = 'tmp_grafo.tmp'
 
-def obtener_resultados(metodo)
-
-  [output[3].to_i, output[4].to_f]
-end
-
 # n nada_tiempo nada_peso aristas_tiempo arsitas_peso conjuntos_tiempo conjuntos_peso ambos_tiempo ambos_peso
 case variable_analizar
 when 'x'

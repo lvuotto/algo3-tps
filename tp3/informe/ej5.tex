@@ -168,7 +168,7 @@ casos.
 
 Hasta ahora todo indicaría que si se quiere priorizar tiempos se debería elegir
 aleatorizar los conjuntos, pero si se prefiere calidad se debe aleatorizar las
-aristas. En ningún caso conbiene aleatorizar ambos, ya que sería lo peor de los
+aristas. En ningún caso conviene aleatorizar ambos, ya que sería lo peor de los
 dos mundos.
 
 \newpage \subsubsection{Junto a la heurística de búsqueda local}
@@ -204,7 +204,8 @@ Comparemos, en primer lugar, los tiempos:
 \end{figure}
 
 Estos experimentos muestran algo bastante particular: aleatorizar por aristas
-es lo que menos tiempo demora.
+es lo que menos tiempo demora, a diferencia de lo observado en la
+experimentación de la búsqueda local.
 
 En general, los tiempos de todas las versiones redujeron sus diferencias. Se
 puede observar que, aunque aleatorizar las aristas sea lo más eficiente, ya no
@@ -217,7 +218,6 @@ local.
 
 Ahora veamos la calidad final que obtienen estos algoritmos:
 
-\vspace*{0.5cm}
 
 \begin{figure}[H]
   \begin{center}
@@ -225,19 +225,11 @@ Ahora veamos la calidad final que obtienen estos algoritmos:
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
-\vspace*{0.5cm}
-
 \begin{figure}[H]
   \begin{center}
     \includegraphics[scale=0.35]{imagenes/grasp-local-n-peso.png}
   \end{center}
 \end{figure}
-
-\vspace*{0.5cm}
-
-\vspace*{0.5cm}
 
 \begin{figure}[H]
   \begin{center}
@@ -245,30 +237,27 @@ Ahora veamos la calidad final que obtienen estos algoritmos:
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
 Sorprendentemente, luego de aplicar la búsqueda local, se llega a resultados
-similares en todos los casos. En el gráfico que varía $x$ se puede apreciar
-que, aunque no son exactamente el mismo resultado, la diferencia es casi
+similares en todos los casos. En el gráfico que varía $X$ se puede apreciar
+que, aunque no son exactamente los mismos resultados, la diferencia es casi
 despreciable (menor al 1\% en la mayoría de los casos).
-
 
 Combinando cualquiera de las variedades de la heurística golosa con la
 búsqueda local obtenemos pesos similares, por lo que vamos a usar como
 determinante el tiempo.
 
 Consistentemente la utilización de aleatorizar únicamente las aristas dio
-mejores tiempos. Por lo tanto, ésta será la utilizada. La cantidad de
-aristas al azar a elegir no modifica el tiempo, apenas muy levemente el peso
-final. Elegimos utilizar $x$ = 10 ya que dio los mejores resultados combinando
-con la búsqueda local, es un número suficientemente grande para dar variedad a
+mejores tiempos. Por lo tanto, ésta será la utilizada. La cantidad de aristas
+al azar a elegir no modifica el tiempo y apenas muy levemente el peso final.
+Elegimos utilizar $X$ valiendo 10, ya que dio los mejores resultados combinando
+con la búsqueda local y es un número suficientemente grande para dar variedad a
 los resultados, pero no tanto que terminen siendo soluciones aleatorias.
 
-\subsubsection{Criterio de terminación}
+\newpage \subsubsection{Criterio de terminación}
 
 Para ver qué criterio de terminación conviene elegir, analizamos ambos contra
 un conjunto de de 30 grafos distintos, 15 densos con 200 vértices y 15 completos
-con vértices entre 75 y 195 vértices, todos con una partición de 15 conjuntos.
+con entre 75 y 195 vértices, todos con una partición de 15 conjuntos.
 
 Veamos como se comportan con respecto al tiempo de ejecución:
 
@@ -302,9 +291,10 @@ Veamos entonces los pesos de las soluciones encontradas:
 \vspace*{0.5cm}
 
 Analizando estos resultados, no parece haber mucha diferencia, ambos tienen
-resultados muy similares, tampoco parecen reducir mucho el peso al
+resultados muy similares. Tampoco parecen reducir mucho el peso al
 aumentar las repeticiones.
 
-Elegimos quedarnos con el criterio de cuando el mejor se repita X veces, con
-$X$ = 34, y con el criterio de parar luego de X veces con $X$ = 47, los que
-mejores resultados dieron, pero no es evidente que uno sea mejor que el otro.
+Elegimos quedarnos con el criterio de cuando el mejor se repita $X$ veces, con
+$X = 34$, y con el criterio de parar luego de X veces con $X = 47$, siendo que
+ambos dieron los mejores resultados, pero no es evidente que uno sea mejor que
+el otro.

@@ -47,18 +47,29 @@ Por último también se combinaron todos con los 2 criterios de terminación, co
 \vspace*{0.1cm}
 
 \begin{verbatim}
-GRASP:
-  Hasta que se cumpla el criterio de terminación hacer:
-    partición = heurística golosa aleatorizada
-    mejorar partición con una heurística de búsqueda local
-  Devolver la mejor partición hallada
-\end{verbatim}
+GRASP(X):
+  generar partición con el algoritmo goloso
+  mejorar la particion con búsqueda local
 
-El criterio de terminación puede ser:
-\begin{itemize}
-  \item Ejecutar $X$ veces.
-  \item Repetir hasta que se encuentre la misma (mejor) solución $X$ veces.
-\end{itemize}
+  Con criterio de ejecutar X veces
+    repetir X veces
+      generar partición con el algoritmo goloso
+      mejorar la particion con búsqueda local
+
+      si el peso es menor
+        reemplazar por la nueva partición
+
+  Con criterio de repetir hasta que se encuentre la mejor solución X veces
+    mientras el contador sea menor a X
+      generar partición con el algoritmo goloso
+      mejorar la particion con búsqueda local
+
+      si el peso es menor
+        reemplazar por la nueva partición
+        resetear el contador
+      si el peso es igual
+        aumentar el contador
+\end{verbatim}
 
 \newpage
 \subsection{Experimentación y gráficos.}

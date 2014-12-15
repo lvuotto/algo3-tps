@@ -23,15 +23,35 @@ Los algoritmos consisten en, partiendo de una solución inicial, probar todas la
 
 \vspace*{0.75cm}
 
-\textbf{Pseudocódigo de la heurística:}
+\textbf{Pseudocódigo de la heurística mover:}
 
 \vspace*{0.3cm}
 
 \begin{verbatim}
-mientras se haya cambiado la partición:
-  mínimo = partición de menor peso de la vecindad
-  si peso(minimo) < peso(particion)
-    partición = mínimo
+mientras se pueda mejorar
+  partición mínima =  mínimo peso(para cada vertice
+                                    para cada conjunto excepto el del vertice
+                                      mover vértice al conjunto)
+
+  si peso partición mínima < peso actual
+    intercambiar partición actual por la mínima
+  sino
+    ya no se puede mejorar
+\end{verbatim}
+
+\textbf{Pseudocódigo de la heurística intercambiar:}
+
+\vspace*{0.3cm}
+
+\begin{verbatim}
+mientras se pueda mejorar
+  partición mínima =  mínimo peso(para cada par de vértices
+                                    intercambiar vértices)
+
+  si peso partición mínima < peso actual
+    intercambiar partición actual por la mínima
+  sino
+    ya no se puede mejorar
 \end{verbatim}
 
 

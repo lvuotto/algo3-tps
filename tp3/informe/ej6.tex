@@ -1,6 +1,6 @@
 \subsection{Implementación elegida}
 
-Elegimos utilizar la metaheurística GRASP con el algoritmo goloso aleatorizado
+Elegimos utilizar la meta-heurística GRASP con el algoritmo goloso aleatorizado
 en la elección de aristas, eligiendo al azar una de las 10 más pesadas en cada
 iteración.
 
@@ -34,7 +34,7 @@ distintas y, para cada combinación de valores, generar 15 grafos distintos.
 
 Analicemos primero los tiempos:
 
-Arbol, k=3
+Árbol, k=3
 
 \begin{figure}[H]
   \begin{center}
@@ -42,7 +42,7 @@ Arbol, k=3
   \end{center}
 \end{figure}
 
-Arbol, k=7
+Árbol, k=7
 
 \begin{figure}[H]
   \begin{center}
@@ -109,7 +109,7 @@ uno o más puntos, crecería tanto que el resto de las líneas parecerían recta
 sobre el 0.
 
 Lo primero que se puede notar es que el goloso sin aleatorizar es el más
-rápido, algo completamente esperable, ya que se ejecuta sólamente una vez
+rápido, algo completamente esperable, ya que se ejecuta solamente una vez
 contra la ejecución de la heurística local y repetida decenas de veces en el
 GRASP.
 
@@ -122,7 +122,7 @@ goloso puro), con una pequeña ventaja el que realiza menos repeticiones.
 
 Sin embargo, todavía falta contrastar la calidad de estos:
 
-Arbol, k=3
+Árbol, k=3
 
 \begin{figure}[H]
   \begin{center}
@@ -196,7 +196,7 @@ sin que ninguno tenga peso inferior consistentemente sobre los otros dos.
 
 Considerando que la variación de GRASP que aleatoriza tanto aristas como
 conjuntos era más lento que los otros dos, podemos confirmar que la elección
-hecha fue la correcta: utilizando la metaheurísitica GRASP, aleatorizando la
+hecha fue la correcta: utilizando la meta-heurística GRASP, aleatorizando la
 selección de aristas en el algoritmo goloso, usando la vecindad \textit{mover}
 en el algoritmo de búsqueda local y sin importar el criterio de terminación,
 pero dando un número considerable de repeticiones (34 y 47), obtuvimos los

@@ -1,10 +1,10 @@
 \subsection{Implementación elegida}
 
-Elegimos utilizar la meta-heurística GRASP con el algoritmo goloso aleatorizado
+Elegimos utilizar la metaheurística GRASP con el algoritmo goloso aleatorizado
 en la elección de aristas, eligiendo al azar una de las 10 más pesadas en cada
 iteración.
 
-Luego aplicándole el algoritmo de búsqueda local que denominamos $mover$, que
+Luego aplicándole el algoritmo de búsqueda local que denominamos \textit{mover}, que
 define como vecindades a todas las particiones que difieren de la actual por
 tener un único vértice en un conjunto distinto.
 
@@ -19,13 +19,11 @@ Finalmente veremos los dos criterios de terminación:
 Vamos a contrastar los resultados contra las siguientes implementaciones:
 
 \begin{itemize}
-  \item Exacto (mientras el tiempo de ejecución sea menor a 5 minutos)
-
-  \item Goloso sin aleatorizar
-
-  \item GRASP, pero aleatorizando tanto aristas como conjuntos
-
-  \item GRASP, pero utilizando el algoritmo de búsqueda local $intercambiar$
+  \item Exacto (mientras el tiempo de ejecución sea menor a 5 minutos).
+  \item Goloso sin aleatorizar.
+  \item GRASP, pero aleatorizando tanto aristas como conjuntos.
+  \item GRASP, pero utilizando el algoritmo de búsqueda local
+  \textit{intercambiar}.
 \end{itemize}
 
 \subsection{Experimentación}
@@ -37,7 +35,6 @@ distintas y, para cada combinación de valores, generar 15 grafos distintos.
 Analicemos primero los tiempos:
 
 Arbol, k=3
-\vspace*{0.5cm}
 
 \begin{figure}[H]
   \begin{center}
@@ -45,10 +42,7 @@ Arbol, k=3
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
 Arbol, k=7
-\vspace*{0.5cm}
 
 \begin{figure}[H]
   \begin{center}
@@ -56,10 +50,7 @@ Arbol, k=7
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
 Completo, k=3
-\vspace*{0.5cm}
 
 \begin{figure}[H]
   \begin{center}
@@ -67,10 +58,7 @@ Completo, k=3
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
 Completo, k=7
-\vspace*{0.5cm}
 
 \begin{figure}[H]
   \begin{center}
@@ -78,10 +66,7 @@ Completo, k=7
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
 Denso, aristas con pesos iguales, k=3
-\vspace*{0.5cm}
 
 \begin{figure}[H]
   \begin{center}
@@ -89,10 +74,7 @@ Denso, aristas con pesos iguales, k=3
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
 Denso, aristas con pesos iguales, k=7
-\vspace*{0.5cm}
 
 \begin{figure}[H]
   \begin{center}
@@ -100,10 +82,7 @@ Denso, aristas con pesos iguales, k=7
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
 Denso, aristas con pesos distintos, k=3
-\vspace*{0.5cm}
 
 \begin{figure}[H]
   \begin{center}
@@ -111,10 +90,7 @@ Denso, aristas con pesos distintos, k=3
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
 Denso, aristas con pesos distintos, k=7
-\vspace*{0.5cm}
 
 \begin{figure}[H]
   \begin{center}
@@ -122,26 +98,24 @@ Denso, aristas con pesos distintos, k=7
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
 Aunque es difícil de graficar bien, el exacto crece mucho más rápido que todos
-los otros algoritmos.
-Lo ejecutamos hasta n=18, pero para que se puedan ver el resto de las líneas,
-a veces, lo cortamos incluso antes, como puede verse en el gráfico del grafo
-Completo con $k = 7$.
+los otros algoritmos.  Lo ejecutamos hasta $n = 18$, pero para que se puedan
+ver el resto de las líneas, a veces, lo cortamos incluso antes, como puede
+verse en el gráfico del grafo completo con $k = 7$.
 
-Eso puede hacer aparentar, en algunos casos (como en el gráfico de Arbol con
+Eso puede hacer aparentar, en algunos casos (como en el gráfico de árbol con
 $k = 3$), que el exacto crece más lento, pero en realidad es que si agregáramos
 uno o más puntos, crecería tanto que el resto de las líneas parecerían rectas
 sobre el 0.
 
-Lo primero que se puede notar, es que el goloso sin aleatorizar es el más
-rápido, algo completamente esperable, ya que se ejecuta sólamente una vez contra
-la ejecución de la heurística local y repetida decenas de veces en el GRASP.
+Lo primero que se puede notar es que el goloso sin aleatorizar es el más
+rápido, algo completamente esperable, ya que se ejecuta sólamente una vez
+contra la ejecución de la heurística local y repetida decenas de veces en el
+GRASP.
 
 Luego, también se observa que el peor de los GRASP es que utiliza la heurística
-local de $intercambiar$, seguido del algoritmo GRASP que aleatoriza tanto
-aristas como conjuntos.
+local de \textit{intercambiar}, seguido del algoritmo GRASP que aleatoriza
+tanto aristas como conjuntos.
 
 Los dos algoritmos elegidos son los que menor tiempo tardan (exceptuando el
 goloso puro), con una pequeña ventaja el que realiza menos repeticiones.
@@ -149,7 +123,6 @@ goloso puro), con una pequeña ventaja el que realiza menos repeticiones.
 Sin embargo, todavía falta contrastar la calidad de estos:
 
 Arbol, k=3
-\vspace*{0.5cm}
 
 \begin{figure}[H]
   \begin{center}
@@ -157,10 +130,7 @@ Arbol, k=3
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
 Completo, k=3
-\vspace*{0.5cm}
 
 \begin{figure}[H]
   \begin{center}
@@ -168,10 +138,7 @@ Completo, k=3
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
 Completo, k=7
-\vspace*{0.5cm}
 
 \begin{figure}[H]
   \begin{center}
@@ -179,10 +146,7 @@ Completo, k=7
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
 Denso, aristas con pesos iguales, k=3
-\vspace*{0.5cm}
 
 \begin{figure}[H]
   \begin{center}
@@ -190,10 +154,7 @@ Denso, aristas con pesos iguales, k=3
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
 Denso, aristas con pesos iguales, k=7
-\vspace*{0.5cm}
 
 \begin{figure}[H]
   \begin{center}
@@ -201,10 +162,7 @@ Denso, aristas con pesos iguales, k=7
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
 Denso, aristas con pesos distintos, k=3
-\vspace*{0.5cm}
 
 \begin{figure}[H]
   \begin{center}
@@ -212,10 +170,7 @@ Denso, aristas con pesos distintos, k=3
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
 Denso, aristas con pesos distintos, k=7
-\vspace*{0.5cm}
 
 \begin{figure}[H]
   \begin{center}
@@ -223,32 +178,29 @@ Denso, aristas con pesos distintos, k=7
   \end{center}
 \end{figure}
 
-\vspace*{0.5cm}
-
-Lo primero que podemos notar, es que en el árbol (un grafo bipartito, que puede
+Lo primero que podemos notar es que en el árbol (un grafo bipartito, que puede
 dividirse en 2 conjuntos y generar peso 0) y con $k = 3$, no todos llegan al
 resultado obvio. Con $k = 7$ (no graficado) todos los algoritmos encuentran la
 solución de peso 0.
 
-Lo siguiente que se hace evidente, es que ninguno logra llegar al resultado
+Lo siguiente que se hace evidente es que ninguno logra llegar al resultado
 exacto (para $n > 10$) y, sin embargo, dan resultados bastante similares,
 ninguno crece en mayor medida que los otros.
 
-Finalmente, el peor de todos, igualmente, es el goloso sin aleatorizar,
-seguido del GRASP que utiliza la heurística de búsqueda local de $intercambiar$.
+Finalmente, el peor de todos, igualmente, es el goloso sin aleatorizar, seguido
+del GRASP que utiliza la heurística de búsqueda local de \textit{intercambiar}.
 
-Los otros tres algoritmos: los dos elegidos y el GRASP que aleatoriza aristas y
-conjuntos, tienen resultados muy parecidos, con diferencias menores al 1\% y sin
-que ninguno tenga peso inferior consistentemente sobre los otros dos.
+Los otros tres algoritmos (los dos elegidos y GRASP, aleatorizando aristas y
+conjuntos) tienen resultados muy parecidos, con diferencias menores al 1\% y
+sin que ninguno tenga peso inferior consistentemente sobre los otros dos.
 
-Considerando que el que aleatoriza tanto aristas como conjuntos era más lento
-que los otros dos, podemos confirmar que la elección hecha fue la correcta:
-
-Utilizando la meta-heurísitica GRASP, aleatorizando la selección de aristas en
-el algoritmo goloso, usando la vecindad $mover$ en el algoritmo de búsqueda
-local y sin importar el criterio de terminación, pero dando un número
-considerable de repeticiones (34 y 47), obtuvimos los mejores resultados en
-todas las pruebas.
+Considerando que la variación de GRASP que aleatoriza tanto aristas como
+conjuntos era más lento que los otros dos, podemos confirmar que la elección
+hecha fue la correcta: utilizando la metaheurísitica GRASP, aleatorizando la
+selección de aristas en el algoritmo goloso, usando la vecindad \textit{mover}
+en el algoritmo de búsqueda local y sin importar el criterio de terminación,
+pero dando un número considerable de repeticiones (34 y 47), obtuvimos los
+mejores resultados en todas las pruebas.
 
 Sin embargo, no fueron lo suficientemente buenas como para dar el resultado
 exacto (o bastante cercano), por lo que queda abierto a mejoras.
@@ -257,5 +209,3 @@ Otro dato interesante es que la heurística golosa sin aleatorizar, aunque es
 definitivamente la de peor calidad, la diferencia de peso total no es tan grande,
 pero si lo es la diferencia en tiempos de ejecución, hasta 3 órdenes de magnitud
 más rápido para grafos densos.
-
-
